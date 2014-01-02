@@ -17,11 +17,9 @@ a:active, a:hover {
 }
 h1 {
     font-size:2em;
-    margin:0.67em 0
+    margin:0.67em 0;
 }
-b, strong {
-    font-weight:bold
-}
+
 *, *:before, *:after {
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
@@ -40,10 +38,10 @@ body {
     font-style:normal;
     line-height:1;
     position:relative;
-    cursor:default
+    cursor:default;
 }
 a:hover {
-    cursor:pointer
+    cursor:pointer;
 }
 
 .row {
@@ -53,56 +51,56 @@ a:hover {
     margin-top:0;
     margin-bottom:0;
     max-width:62.5rem;
-    *zoom:1
+    *zoom:1;
 }
 .row:before, .row:after {
     content:" ";
-    display:table
+    display:table;
 }
 .row:after {
-    clear:both
+    clear:both;
 }
 .column, .columns {
     position:relative;
     padding-left:0.9375rem;
     padding-right:0.9375rem;
     width:100%;
-    float:left
+    float:left;
 }
 @media only screen {
     .column, .columns {
         position:relative;
         padding-left:0.9375rem;
         padding-right:0.9375rem;
-        float:left
+        float:left;
     }
     .small-12 {
         position:relative;
-        width:100%
+        width:100%;
     }
     [class*="column"]+[class*="column"]:last-child {
-        float:right
+        float:right;
     }
     [class*="column"]+[class*="column"].end {
-        float:left
+        float:left;
     }
     .columns.small-centered {
         position:relative;
         margin-left:auto;
         margin-right:auto;
-        float:none !important
+        float:none !important;
     }
 }
 
 h1, p {
     margin:0;
     padding:0;
-    direction:ltr
+    direction:ltr;
 }
 a {
     color:#008cba;
     text-decoration:none;
-    line-height:inherit
+    line-height:inherit;
 }
 a:hover, a:focus {
     color:#0079a1
@@ -114,32 +112,23 @@ p {
     font-size:1rem;
     line-height:1.6;
     margin-bottom:1.25rem;
-    text-rendering:optimizeLegibility
+    text-rendering:optimizeLegibility;
 }
 h1 {
     font-family:"Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
     font-weight:300;
     font-style:normal;
+    font-size:2.125rem;
     color:#222;
     text-rendering:optimizeLegibility;
     margin-top:0.2rem;
     margin-bottom:0.5rem;
-    line-height:1.4
+    line-height:1.4;
 }
-h1 {
-    font-size:2.125rem
-}
-em, i {
-    font-style:italic;
-    line-height:inherit
-}
-strong, b {
-    font-weight:bold;
-    line-height:inherit
-}
+
 @media only screen and (min-width: 40.063em) {
     h1 {
-        line-height:1.4
-        font-size:2.75rem
+        line-height:1.4;
+        font-size:2.75rem;
     }
 }
