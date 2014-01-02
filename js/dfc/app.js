@@ -21,7 +21,7 @@ var DFC = (function _DFC() {
         // Clear any existing lens UIs
         $('[role="main"]').empty();
 
-        // Setup each lens UI
+        // Setup existing lens UIs
         $.each(lenses, function(i, lens) {
             _addLensUI(lens);
         });
