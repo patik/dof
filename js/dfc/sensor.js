@@ -2,28 +2,44 @@ DFC.sensor = (function sensor() {
     // http://www.dpreview.com/previews/panasonic-lumix-dmc-gm1/images/Sensors.png
     var sizes = [
             {
-                name: '1/3" CCD',
-                value: 0.139
+                name: 'iPhone 5',
+                value: 0.131406
+            },
+            {
+                name: '8mm',
+                value: 0.1626
+            },
+            {
+                name: 'iPhone 5S, 1/3" CCD',
+                value: 0.138696
+            },
+            {
+                name: '16mm film',
+                value: 0.293255
             },
             {
                 name: 'Nikon CX',
                 value: 0.37
             },
             {
-                name: '1" CCD',
+                name: '1" CCD (Nikon CX, Sony RX100)',
                 value: 0.37
             },
             {
                 name: 'Blackmagic Cine Cam',
-                value: 0.42
+                value: 0.420168
             },
             {
                 name: 'Four-Thirds',
                 value: 0.5
             },
             {
-                name: 'APS-C (Canon)',
+                name: 'APS-C, Canon EF-S',
                 value: 0.61728
+            },
+            {
+                name: '35mm film',
+                value: 0.62893
             },
             {
                 name: 'Nikon D3100/D3200',
@@ -34,15 +50,15 @@ DFC.sensor = (function sensor() {
                 value: 0.65789
             },
             {
-                name: 'Super 35',
+                name: 'Super 35mm film',
                 value: 0.7143
             },
             {
-                name: 'APS-H (Canon)',
-                value: 0.7692
+                name: 'APS-H (Canon 1D)',
+                value: 0.76923
             },
             {
-                name: 'Full Frame (Nikon FX)',
+                name: 'Full Frame (Nikon FX, Sony α, Canon EF)',
                 value: 1
             },
             {
@@ -53,7 +69,7 @@ DFC.sensor = (function sensor() {
 
         shortList = [
             {
-                name: 'Typical ultra-compact',
+                name: 'Ultra-compact or iPhone',
                 value: 0.139
             },
             {
@@ -62,7 +78,7 @@ DFC.sensor = (function sensor() {
             },
             {
                 name: 'APS-C',
-                value: 0.625
+                value: 0.61728
             },
             {
                 name: 'Full Frame',
