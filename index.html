@@ -50,14 +50,22 @@
                 <div class="row">
                     <div class="small-4 columns">
                         <label for="focalLength-{{index}}">Focal length</label>
-                        <input data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" class="focalLength" tabindex="1">
                     </div>
                     <div class="small-4 columns">
                         <label for="aperture-{{index}}">Aperture</label>
-                        <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
                     </div>
                     <div class="small-4 columns">
                         <label for="distance-{{index}}">Distance (ft)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-4 columns">
+                        <input data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" class="focalLength" tabindex="1">
+                    </div>
+                    <div class="small-4 columns">
+                        <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
+                    </div>
+                    <div class="small-4 columns">
                         <input data-lens-id="{{index}}" value="{{distance}}" type="number" minval="0" id="distance-{{index}}" class="distance" tabindex="1">
                     </div>
                 </div>
