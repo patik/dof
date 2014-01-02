@@ -5,15 +5,11 @@
         border: none;
     }
 
-    thead {
-        display: none;
-    }
-
-    td:nth-child(odd) {
+    dt {
         width: 55%;
     }
 
-    td:nth-child(even) {
+    dd {
         width: 45%;
     }
 
@@ -33,7 +29,8 @@
 
     &.collapsed {
         // Hide all but first row
-        tbody tr:not(.dof-display) {
+        dt:not(.dof-display),
+        dd:not(.dof-display) {
             display: none;
         }
 
@@ -54,4 +51,51 @@
 
 .dof {
     color: green;
+}
+
+// Adapted form Bootstrap v3.0.3 (http://getbootstrap.com)
+dl {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+dt,
+dd {
+  line-height: 1.428571429;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-left: 0;
+}
+
+.dl-horizontal {
+    border: solid 1px #ddd;
+
+    dt {
+        float: left;
+        width: 160px;
+        overflow: hidden;
+        clear: left;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    dd {
+        margin-left: 180px;
+
+        &:before,
+        &:after {
+            display: table;
+            content: " ";
+        }
+
+        &:after {
+            clear: both;
+        }
+    }
 }
