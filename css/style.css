@@ -1,34 +1,20 @@
-html {
-    font-family:sans-serif;
-    -ms-text-size-adjust:100%;
-    -webkit-text-size-adjust:100%
-}
-body {
-    margin:0
-}
-a {
-    background:transparent
-}
-a:focus {
-    outline:thin dotted
-}
-a:active, a:hover {
-    outline:0
-}
-h1 {
-    font-size:2em;
-    margin:0.67em 0;
-}
-
 *, *:before, *:after {
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
     box-sizing:border-box
 }
+
+html {
+    font-family:sans-serif;
+    -ms-text-size-adjust:100%;
+    -webkit-text-size-adjust:100%
+}
+
 html, body {
     font-size:100%
 }
 body {
+    margin:0;
     background:#fff;
     color:#222;
     padding:0;
@@ -40,8 +26,21 @@ body {
     position:relative;
     cursor:default;
 }
+a {
+    background:transparent;
+}
+a:focus {
+    outline:thin dotted;
+}
+a:active, a:hover {
+    outline:0;
+}
 a:hover {
     cursor:pointer;
+}
+h1 {
+    font-size:2em;
+    margin:0.67em 0;
 }
 
 .row {
@@ -103,7 +102,7 @@ a {
     line-height:inherit;
 }
 a:hover, a:focus {
-    color:#0079a1
+    color:#0079a1;
 }
 
 p {
