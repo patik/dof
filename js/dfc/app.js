@@ -60,8 +60,9 @@ var DFC = (function _DFC() {
     function _addLensUI(lens) {
         var $config;
 
-        if (!lens) {
-            setting = _createNewLens();
+        // `lens` is an event or not provided
+        if (!lens || lens.target) {
+            lens = _createNewLens();
         }
 
         $config = _createLensUI(lens);
