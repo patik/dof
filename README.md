@@ -1,3 +1,3 @@
-# Depth of Field Calculator
+# (Depth of Field Calculator](http://patik.com/depth-of-field/)
 
-Calculate the depth of field for multiple lens and compare them side-by-side.
+Calculate the depth of field for multiple lenses and compare them side-by-side.
