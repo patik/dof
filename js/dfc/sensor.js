@@ -1,84 +1,81 @@
 DFC.sensor = (function sensor() {
+    // https://en.wikipedia.org/wiki/Image_sensor_format
     // http://www.dpreview.com/previews/panasonic-lumix-dmc-gm1/images/Sensors.png
-    var sizes = [
+    var mainList = [
             {
                 name: 'iPhone 5',
-                value: 0.131406
+                value: 7.61
             },
             {
-                name: '8mm',
-                value: 0.1626
+                name: 'Standard 8mm film',
+                value: 7.28
             },
             {
                 name: 'iPhone 5S, 1/3" CCD',
-                value: 0.138696
+                value: 7.21
             },
             {
-                name: '16mm film',
-                value: 0.293255
+                name: 'Standard 16mm film',
+                value: 3.41
             },
             {
-                name: 'Nikon CX',
-                value: 0.37
-            },
-            {
-                name: '1" CCD (Nikon CX, Sony RX100)',
-                value: 0.37
+                name: '1" CCD, Nikon CX, Sony RX100',
+                value: 2.72
             },
             {
                 name: 'Blackmagic Cine Cam',
-                value: 0.420168
+                value: 3.02
             },
             {
                 name: 'Four-Thirds',
-                value: 0.5
+                value: 2
             },
             {
-                name: 'APS-C, Canon EF-S',
-                value: 0.61728
+                name: 'APS-C (Canon EF-S)',
+                value: 1.62
             },
             {
-                name: '35mm film',
-                value: 0.62893
+                name: 'Standard 35mm film',
+                value: 1.59
             },
             {
                 name: 'Nikon D3100/D3200',
-                value: 0.63694
+                value: 1.57
             },
             {
-                name: 'Nikon DX',
-                value: 0.65789
+                name: 'APS-C (Nikon, Pentax, Samsung, Sony)',
+                value: 1.53
             },
             {
                 name: 'Super 35mm film',
-                value: 0.7143
+                value: 1.39
             },
             {
                 name: 'APS-H (Canon 1D)',
-                value: 0.76923
+                value: 1.29
             },
             {
-                name: 'Full Frame (Nikon FX, Sony α, Canon EF)',
+                name: 'Full Frame',
                 value: 1
             },
             {
                 name: 'Leica S',
-                value: 1.25
+                value: 0.8
             }
         ],
 
         shortList = [
             {
                 name: 'Ultra-compact or iPhone',
-                value: 0.139
+                value: 7.21
             },
             {
                 name: 'Micro 4/3',
-                value: 0.5,
+                value: 2,
             },
             {
                 name: 'APS-C',
-                value: 0.61728
+                value: 1.62
             },
             {
                 name: 'Full Frame',
