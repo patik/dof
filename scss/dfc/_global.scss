@@ -2,6 +2,10 @@ html, body, input, select, button {
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+html, body {
+    background-color: #efefef;
+}
+
 [class*="column"] + [class*="column"]:last-child {
     float: left; // Override Foundation
 }
@@ -21,4 +25,8 @@ p a {
     &:active {
         text-decoration: none;
     }
+}
+
+.lens {
+    background-color: #fff;
 }
