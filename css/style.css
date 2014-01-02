@@ -86,7 +86,7 @@ a:hover {
     [class*="column"]+[class*="column"].end {
         float:left
     }
-    .column.small-centered, .columns.small-centered {
+    .columns.small-centered {
         position:relative;
         margin-left:auto;
         margin-right:auto;
@@ -94,7 +94,7 @@ a:hover {
     }
 }
 
-div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
+h1, p {
     margin:0;
     padding:0;
     direction:ltr
@@ -116,7 +116,7 @@ p {
     margin-bottom:1.25rem;
     text-rendering:optimizeLegibility
 }
-h1, h2 {
+h1 {
     font-family:"Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
     font-weight:300;
     font-style:normal;
@@ -129,9 +129,6 @@ h1, h2 {
 h1 {
     font-size:2.125rem
 }
-h2 {
-    font-size:1.6875rem
-}
 em, i {
     font-style:italic;
     line-height:inherit
@@ -141,13 +138,8 @@ strong, b {
     line-height:inherit
 }
 @media only screen and (min-width: 40.063em) {
-    h1, h2 {
-        line-height:1.4
-    }
     h1 {
+        line-height:1.4
         font-size:2.75rem
-    }
-    h2 {
-        font-size:2.3125rem
     }
 }
