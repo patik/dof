@@ -1,0 +1,7 @@
+// Trim some of the default padding
+.inputs {
+    .columns {
+        padding-left: $input-column-padding;
+        padding-right: $input-column-padding;
+    }
+}

@@ -5,3 +5,20 @@ html, body, input, select, button {
 [class*="column"] + [class*="column"]:last-child {
     float: left; // Override Foundation
 }
+
+@media (max-width: 30em) {
+    h1.subheader {
+        font-size: 1.3rem;
+        line-height: 1.2;
+    }
+}
+
+p a {
+    text-decoration: underline;
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+    }
+}
