@@ -187,6 +187,10 @@ DFC.aperture = (function aperture() {
             html += '>' + item.name + '</option>';
         }
 
+        if (typeof selectedAperture === 'number' || !isNaN(selectedAperture)) {
+            selectedAperture = _getNameBySize(selectedAperture);
+        }
+
         // Loop over all apertures
         $.each(sizes, createOptionHTML);
 
@@ -209,6 +213,27 @@ DFC.aperture = (function aperture() {
         });
 
         return size;
+    }
+
+    /**
+     * Retrieves the sensor name for a given multiplier value
+     * @param  {Number} size Multiplier value
+     * @return {String}      Sensor name
+     */
+    function _getNameBySize(size) {
+        var name = '';
+
+        size = parseFloat(size);
+
+        $.each(sizes, function(i, s) {
+            if (s.value === size) {
+                name = s.name;
+                // Quit loop
+                return false;
+            }
+        });
+
+        return name;
     }
 
     ////////////////////

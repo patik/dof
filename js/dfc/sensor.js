@@ -23,11 +23,15 @@ DFC.sensor = (function sensor() {
             },
             {
                 name: 'APS-C (Canon)',
-                value: 0.625
+                value: 0.61728
+            },
+            {
+                name: 'Nikon D3100/D3200',
+                value: 0.63694
             },
             {
                 name: 'Nikon DX',
-                value: 0.6667
+                value: 0.65789
             },
             {
                 name: 'Super 35',
@@ -47,7 +51,7 @@ DFC.sensor = (function sensor() {
             }
         ],
 
-        shortlist = [
+        shortList = [
             {
                 name: 'Typical ultra-compact',
                 value: 0.139
@@ -57,14 +61,16 @@ DFC.sensor = (function sensor() {
                 value: 0.5,
             },
             {
-                name: 'Typical DSLR',
+                name: 'APS-C',
                 value: 0.625
             },
             {
                 name: 'Full Frame',
                 value: 1
             }
-        ];
+        ],
+
+        fullList = shortList.concat(mainList);
 
     /////////////////////
     // Private methods //
@@ -95,14 +101,18 @@ DFC.sensor = (function sensor() {
             html += '>' + item.name + '</option>';
         }
 
+        if (typeof selectedSize === 'number' || !isNaN(selectedSize)) {
+            selectedSize = _getNameByMultiplier(selectedSize);
+        }
+
         // Shortlist
-        $.each(shortlist, createOptionHTML);
+        $.each(shortList, createOptionHTML);
 
         // Separator
         html += '</optgroup><optgroup label="Specific Cameras &amp; Mounts">';
 
-        // Full list
-        $.each(sizes, createOptionHTML);
+        // Main list
+        $.each(mainList, createOptionHTML);
 
         return html;
     }
@@ -113,10 +123,9 @@ DFC.sensor = (function sensor() {
      * @return {Number}      Multiplier value
      */
     function _getMultiplierByName(name) {
-        var allSizes = sizes.concat(shortlist),
-            multiplier = 0;
+        var multiplier = 0;
 
-        $.each(allSizes, function(i, size) {
+        $.each(fullList, function(i, size) {
             if (size.name === name) {
                 multiplier = size.value;
                 return false;
@@ -124,6 +133,27 @@ DFC.sensor = (function sensor() {
         });
 
         return multiplier;
+    }
+
+    /**
+     * Retrieves the sensor name for a given multiplier value
+     * @param  {Number} multiplier  Multiplier value
+     * @return {String}             Sensor name
+     */
+    function _getNameByMultiplier(multiplier) {
+        var name = '';
+
+        multiplier = parseFloat(multiplier);
+
+        $.each(fullList, function(i, size) {
+            if (size.value === multiplier) {
+                name = size.name;
+                // Quit loop
+                return false;
+            }
+        });
+
+        return name;
     }
 
     ////////////////////

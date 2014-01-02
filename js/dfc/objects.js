@@ -37,11 +37,11 @@ DFC.Dof = function _Dof(sensorSize, focalLength, aperture, distance) {
     }
 
     // Get numerical values for the sensor and aperture
-    if (typeof sensorSize === 'string') {
+    if (typeof sensorSize === 'string' && isNaN(sensorSize)) {
         sensorSize = DFC.sensor.getMultiplier(sensorSize);
     }
 
-    if (typeof aperture === 'string') {
+    if (typeof aperture === 'string' && isNaN(aperture)) {
         aperture = DFC.aperture.getSize(aperture);
     }
 

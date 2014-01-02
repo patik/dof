@@ -28,7 +28,7 @@ module.exports = function(grunt) {
         uglify: {
             dist: {
                 files: {
-                    'js/script.js': ['js/vendor/jquery.js', 'js/vendor/fastclick.js', '<%= dfc.js %>']
+                    'js/script.js': ['js/vendor/jquery.js', 'js/vendor/fastclick.js', 'js/vendor/handlebars-v1.2.0.js', '<%= dfc.js %>']
                 }
             }
         },

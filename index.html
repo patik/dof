@@ -21,6 +21,72 @@
             <button class="button add-config">Add</button>
         </div>
     </div>
+    <script id="lens-template" type="text/x-handlebars-template">
+        <form method="post" action="index.html" class="small-12 medium-6 large-4 columns lens" data-lens-id="{{index}}">
+            <div class="inputs">
+                <div class="row">
+                    <div class="small-8 columns"><h3>Lens {{index}}</h3></div>
+                    <div class="small-4 columns"><button data-lens-id="{{index}}" class="button radius right secondary tiny duplicate">Copy</button></div>
+                </div>
+                <div class="row">
+                    <div class="small-4 columns">
+                        <label for="focalLength-{{index}}">Focal length</label>
+                        <input data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" class="focalLength" tabindex="1">
+                    </div>
+                    <div class="small-4 columns">
+                        <label for="aperture-{{index}}">Aperture</label>
+                        <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
+                    </div>
+                    <div class="small-4 columns">
+                        <label for="distance-{{index}}">Distance (ft)</label>
+                        <input data-lens-id="{{index}}" value="{{distance}}" type="number" minval="0" id="distance-{{index}}" class="distance" tabindex="1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-3 columns">
+                        <label for="sensor-{{index}}">Sensor</label>
+                    </div>
+                    <div class="small-9 columns">
+                        <select data-lens-id="{{index}}" id="sensor-{{index}}" class="sensor" tabindex="1"></select>
+                    </div>
+                </div>
+            </div>
+            <table class="outputs collapsed">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="dof-display">
+                        <td><span>Depth of Field</span></td>
+                        <td><span class="dof"></span> <button class="tiny radius secondary output-toggle"><span>&#9660;</span><span>&#9650;</span></button></td>
+                    </tr>
+                    <tr>
+                        <td><abbr title="Circle of confusion">C.o.C.</abbr></td>
+                        <td class="coc"></td>
+                    </tr>
+                    <tr>
+                        <td>Hyperfocal distance</td>
+                        <td class="hf"></td>
+                    </tr>
+                    <tr>
+                        <td>Near limit</td>
+                        <td class="neardist"></td>
+                    </tr>
+                    <tr>
+                        <td>Far limit</td>
+                        <td class="fardist"></td>
+                    </tr>
+                    <tr>
+                        <td>1/8th depth of field</td>
+                        <td class="eighthDof"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>
