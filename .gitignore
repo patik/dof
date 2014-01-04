@@ -3,5 +3,4 @@
 *.sublime-*
 sftp-config.json
 node_modules
-
-template.html
+css
