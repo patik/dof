@@ -7,7 +7,7 @@ html, body {
 }
 
 [class*="column"] + [class*="column"]:last-child {
-    float: left; // Override Foundation
+    float: left; // Override Foundation so when there are two items in a 3x3 grid they don't leave an empty column between them
 }
 
 @media (max-width: 30em) {
@@ -25,8 +25,4 @@ p a {
     &:active {
         text-decoration: none;
     }
-}
-
-.lens {
-    background-color: #fff;
 }
