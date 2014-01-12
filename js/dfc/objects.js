@@ -74,3 +74,10 @@ DFC.Dof = function _Dof(sensor, focalLength, aperture, distance) {
 
     return this;
 };
+
+// Polyfills
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^\s+|\s+$/gm, '');
+    };
+}

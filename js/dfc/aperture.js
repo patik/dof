@@ -261,11 +261,25 @@ DFC.aperture = (function aperture() {
      */
     function getSize(fstop) {
         // Validate
-        if (typeof fstop !== 'string' || !fstop) {
-            return 0;
+        if (typeof fstop === 'string' && fstop) {
+            return _getSizeByName(fstop);
         }
 
-        return _getSizeByName(fstop);
+        return 0;
+    }
+
+    /**
+     * Handles requests for a aperture's size
+     * @param  {String} fstop Human-readable F-stop name
+     * @return {Number}       Aperture size
+     */
+    function getName(size) {
+        // Validate
+        if (typeof size === 'number' && size) {
+            return _getNameBySize(size);
+        }
+
+        return 0;
     }
 
     /////////
@@ -274,6 +288,7 @@ DFC.aperture = (function aperture() {
 
     return {
         getHTML: getHTML,
-        getSize: getSize
+        getSize: getSize,
+        getName: getName
     };
 }());

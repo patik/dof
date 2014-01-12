@@ -12,6 +12,7 @@ var DFC = (function _DFC() {
         $main = $('[role="main"]');
 
         //To do: Read from URL hash and watch hashchange(?) event
+        _readLensesFromHash();
 
         // Make sure there's at least one Lens object
         if (!lenses.length) {
@@ -41,20 +42,70 @@ var DFC = (function _DFC() {
             .on('click', '.duplicate', _duplicateLensUI)
 
             // Update existing lens
-            .on('change keyup blur', '.focalLength, .aperture, .distance, .sensor', _onChangeLensValue)
+            .on('change keyup blur', '.name, .focalLength, .aperture, .distance, .sensor', _onChangeLensValue)
+            .on('keydown', '.name', _onChangeLensValue)
 
             // Show/hide additional results
             .on('click', '.output-toggle', _toggleOutputs);
     }
 
-    function _createLensUI(lens) {
-        var context = {
-                index: lens.id,
-                distance: lens.distance,
-                focalLength: lens.focalLength
-            };
+    // example.com/#!Name%20of%20Lens,35,f-2,20,micro43
+    function _readLensesFromHash() {
+        var hash = window.location.hash.replace(/^\#!/, '');
 
-        return $(template(context));
+        if (!hash) {
+            return false;
+        }
+
+        hash.split('|').forEach(function (config) {
+            var lens = _createNewLens(),
+                props = config.split(',');
+
+            lens.name = decodeURIComponent(props[0]).trim();
+            lens.focalLength = parseInt(props[1], 10);
+            lens.distance = parseInt(props[2], 10);
+            lens.aperture = decodeURIComponent(props[3]).trim().replace('-', '/');
+            lens.sensor = DFC.sensor.getName(props[4].trim());
+
+            console.log('found lens from hash: ', lens);
+
+            _addLensUI(lens);
+        });
+    }
+
+    // example.com/#!Name%20of%20Lens,35,f-2,20,micro43
+    function _updateHash() {
+        var hash = '',
+            lensHashes = [];
+
+        $.each(lenses, function(i, lens) {
+            var pieces = [], apt;
+
+            pieces.push(encodeURIComponent(lens.name))
+            pieces.push(lens.focalLength);
+            pieces.push(lens.distance);
+
+            if (lens.aperture.indexOf('/') !== -1) {
+                apt = lens.aperture.replace('/', '-');
+            }
+            else {
+                apt = DFC.aperture.getName(parseFloat(lens.aperture));
+            }
+
+            pieces.push(apt.replace('/', '-'));
+
+            console.log(lens.sensor);
+            pieces.push(DFC.sensor.getKey(parseFloat(lens.sensor)));
+
+            lensHashes.push(pieces.join(','));
+        });
+
+        if (lensHashes.length) {
+            window.location.hash = '#!' + lensHashes.join('|')
+        }
+        else {
+            window.location.hash = '';
+        }
     }
 
     function _addLensUI(lens) {
@@ -68,6 +119,16 @@ var DFC = (function _DFC() {
         $config = _createLensUI(lens);
 
         _addLensUIToPage($config, lens);
+    }
+
+    function _createLensUI(lens) {
+        var context = {
+                index: lens.id,
+                distance: lens.distance,
+                focalLength: lens.focalLength
+            };
+
+        return $(template(context));
     }
 
     function _duplicateLensUI(evt) {
@@ -107,6 +168,9 @@ var DFC = (function _DFC() {
 
         // Update the outputs
         _updateOuput(lens.id, $config.closest('.lens'));
+
+        // Update the URL hash
+        _updateHash();
     }
 
     /**
@@ -121,23 +185,42 @@ var DFC = (function _DFC() {
 
     function _onChangeLensValue(evt) {
         var $input = $(this),
-            propRegex = /\b(focalLength|aperture|distance|sensor)\b/,
+            propRegex = /\b(name|focalLength|aperture|distance|sensor)\b/,
             className = $input.attr('class'),
-            property;
+            property, value;
 
         // Make sure the field represents a known property type
         if (!propRegex.test(className)) {
             return false;
         }
 
+        // Get the property name
         id = $input.data('lens-id');
         property = propRegex.exec(className)[1];
 
+        // Get the new value
+        if (property === 'name') {
+            // Stop the event if the user pressed the enter or escape keys
+            if (evt.type.indexOf('key') === 0 && (evt.which === 13 || evt.which === 27)) {
+                evt.preventDefault();
+                $input.text($input.text().replace(/\n/g, ''));
+                $input.blur();
+            }
+
+            value = $input.text().trim();
+        }
+        else {
+            value = $input.val();
+        }
+
         // Update the lens object with the new value
-        _updateLens(id, property, $input.val());
+        _updateLens(id, property, value);
 
         // Update the lens' output
         _updateOuput(id, $input.closest('.lens'));
+
+        // Update the URL hash
+        _updateHash();
     }
 
     function _updateLens(id, prop, val) {
