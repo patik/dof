@@ -1,6 +1,7 @@
 {
   "name": "DepthOfFieldCalculator",
   "version": "0.0.1",
+  "repository": "https://github.com/patik/depth-of-field.git",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
