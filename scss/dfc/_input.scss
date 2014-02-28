@@ -2,6 +2,11 @@
 .lens {
     position: relative;
     background-color: #fff;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 700;
+    }
 }
 
 @media only screen and (min-width: 40.063em) {
@@ -25,6 +30,16 @@
     .columns {
         padding-left: $input-column-padding;
         padding-right: $input-column-padding;
+    }
+
+    // Foundation overrides
+    input[type="number"] {
+        padding: 0.25rem;
+        height: 1.8rem;
+    }
+
+    select {
+        padding: 0.25rem;
     }
 }
 

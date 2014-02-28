@@ -24,7 +24,7 @@ DFC.sensor = (function sensor() {
             },
             {
                 name: '1" CCD, Nikon CX, Sony RX100',
-                key: '1inch',
+                key: '1in',
                 value: 2.72
             },
             {
@@ -69,7 +69,7 @@ DFC.sensor = (function sensor() {
             },
             {
                 name: 'Full Frame',
-                key: 'FullFrame',
+                key: 'full',
                 value: 1
             },
             {
@@ -97,7 +97,7 @@ DFC.sensor = (function sensor() {
             },
             {
                 name: 'Full Frame',
-                key: 'FullFrame',
+                key: 'full',
                 value: 1
             }
         ],
