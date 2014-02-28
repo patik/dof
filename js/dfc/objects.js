@@ -4,7 +4,7 @@ DFC.Lens = function _Lens(id) {
     this.id = 0;
     this.name = '';
     this.aperture = 'f/2';
-    this.sensor = 'Micro 4/3';
+    this.sensor = 'mft';
     this.focalLength = 35;
     this.distance = 20;
 

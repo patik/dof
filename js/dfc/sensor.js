@@ -34,7 +34,7 @@ DFC.sensor = (function sensor() {
             },
             {
                 name: 'Four-Thirds',
-                key: 'm43',
+                key: 'mft',
                 value: 2
             },
             {
@@ -82,18 +82,22 @@ DFC.sensor = (function sensor() {
         shortList = [
             {
                 name: 'Ultra-compact or iPhone',
+                key: 'iPhone5S',
                 value: 7.21
             },
             {
                 name: 'Micro 4/3',
+                key: 'mft',
                 value: 2,
             },
             {
                 name: 'APS-C',
+                key: 'APSCCanon',
                 value: 1.62
             },
             {
                 name: 'Full Frame',
+                key: 'FullFrame',
                 value: 1
             }
         ],
@@ -121,12 +125,12 @@ DFC.sensor = (function sensor() {
         function createOptionHTML(i, item) {
             html += '<option value="' + item.value + '"';
 
-            if (!foundSize && item.name === selectedSize) {
+            if (!foundSize && (item.name === selectedSize || item.key === selectedSize)) {
                 html += ' selected="selected"';
                 foundSize = true;
             }
 
-            html += '>' + item.name + '</option>';
+            html += ' data-sensor-key="' + item.key + '">' + item.name + '</option>';
         }
 
         if (typeof selectedSize === 'number' || !isNaN(selectedSize)) {
@@ -164,6 +168,24 @@ DFC.sensor = (function sensor() {
     }
 
     /**
+     * Retrieves the multiplier value for a given sensor key
+     * @param  {String} key  Sensor key
+     * @return {Number}      Multiplier value
+     */
+    function _getMultiplierByKey(key) {
+        var multiplier = 0;
+
+        $.each(fullList, function(i, size) {
+            if (size.key === key) {
+                multiplier = size.value;
+                return false;
+            }
+        });
+
+        return multiplier;
+    }
+
+    /**
      * Retrieves the sensor name for a given multiplier value
      * @param  {Number} multiplier  Multiplier value
      * @return {String}             Sensor name
@@ -192,7 +214,7 @@ DFC.sensor = (function sensor() {
     function _getNameByKey(key) {
         var name = '';
 
-        $.each(mainList, function(i, size) {
+        $.each(fullList, function(i, size) {
             if (size.key === key) {
                 name = size.name;
                 // Quit loop
@@ -211,8 +233,9 @@ DFC.sensor = (function sensor() {
     function _getKeyByName(name) {
         var key = '';
 
-        $.each(mainList, function(i, size) {
+        $.each(mainList.concat(shortList), function(i, size) {
             if (size.name === name) {
+                console.info('[_getKeyByName] match: ', size);
                 key = size.key;
                 // Quit loop
                 return false;
@@ -251,7 +274,7 @@ DFC.sensor = (function sensor() {
             return 0;
         }
 
-        return _getMultiplierByName(name);
+        return _getMultiplierByKey(name) || _getMultiplierByName(name);
     }
 
     /**

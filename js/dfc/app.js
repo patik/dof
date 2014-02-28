@@ -12,7 +12,7 @@ var DFC = (function _DFC() {
         $main = $('[role="main"]');
 
         //To do: Read from URL hash and watch hashchange(?) event
-        _readLensesFromHash();
+        // _readLensesFromHash();
 
         // Make sure there's at least one Lens object
         if (!lenses.length) {
@@ -25,6 +25,7 @@ var DFC = (function _DFC() {
         // Setup existing lens UIs
         $.each(lenses, function(i, lens) {
             _addLensUI(lens);
+            lens = _getNameFromUI(lens);
         });
 
         // Event listeners
@@ -49,9 +50,9 @@ var DFC = (function _DFC() {
             .on('click', '.output-toggle', _toggleOutputs);
     }
 
-    // example.com/#!Name%20of%20Lens,35,f-2,20,micro43
+    // example.com/#Name%20of%20Lens,35,f-2,20,mft
     function _readLensesFromHash() {
-        var hash = window.location.hash.replace(/^\#!/, '');
+        var hash = window.location.hash.replace(/^\#/, '');
 
         if (!hash) {
             return false;
@@ -61,11 +62,22 @@ var DFC = (function _DFC() {
             var lens = _createNewLens(),
                 props = config.split(',');
 
+            // Get each property but quit if any were empty
             lens.name = decodeURIComponent(props[0]).trim();
+            if (!lens.name) { return true; }
+
             lens.focalLength = parseInt(props[1], 10);
+            if (isNaN(lens.focalLength)) { return true; }
+
             lens.distance = parseInt(props[2], 10);
+            if (isNaN(lens.distance)) { return true; }
+
             lens.aperture = decodeURIComponent(props[3]).trim().replace('-', '/');
+            if (!lens.aperture) { return true; }
+
+            console.log('read from hash, sensor key is ', DFC.sensor.getName(props[4].trim()), ' from "' + props[4].trim() + '"');
             lens.sensor = DFC.sensor.getName(props[4].trim());
+            if (!lens.sensor) { return true; }
 
             console.log('found lens from hash: ', lens);
 
@@ -73,7 +85,7 @@ var DFC = (function _DFC() {
         });
     }
 
-    // example.com/#!Name%20of%20Lens,35,f-2,20,micro43
+    // example.com/#Name%20of%20Lens,35,f-2,20,mft
     function _updateHash() {
         var hash = '',
             lensHashes = [];
@@ -81,7 +93,7 @@ var DFC = (function _DFC() {
         $.each(lenses, function(i, lens) {
             var pieces = [], apt;
 
-            pieces.push(encodeURIComponent(lens.name))
+            pieces.push(encodeURIComponent(lens.name));
             pieces.push(lens.focalLength);
             pieces.push(lens.distance);
 
@@ -89,23 +101,37 @@ var DFC = (function _DFC() {
                 apt = lens.aperture.replace('/', '-');
             }
             else {
-                apt = DFC.aperture.getName(parseFloat(lens.aperture));
+                apt = DFC.aperture.getName(parseFloat(lens.aperture)).replace('/', '-');
             }
 
-            pieces.push(apt.replace('/', '-'));
+            pieces.push(apt);
 
-            console.log(lens.sensor);
-            pieces.push(DFC.sensor.getKey(parseFloat(lens.sensor)));
+            // console.log('Lens ID ' + lens.id + ', sensor: ', lens.sensor, ' -> ', DFC.sensor.getKey(parseFloat(lens.sensor)));
+            // console.log('Lens ID ' + lens.id + ', sensor: ', lens.sensor, ' -> ', DFC.sensor.getKey(lens.sensor));
+            console.log('Lens ID ' + lens.id + ', sensor key: ', lens.sensor);
+
+            // pieces.push(DFC.sensor.getKey(parseFloat(lens.sensor)));
+            // pieces.push(DFC.sensor.getKey(lens.sensor));
+            pieces.push(lens.sensor);
 
             lensHashes.push(pieces.join(','));
         });
 
         if (lensHashes.length) {
-            window.location.hash = '#!' + lensHashes.join('|')
+            window.location.hash = '#' + lensHashes.join('|');
         }
         else {
             window.location.hash = '';
         }
+    }
+
+    function _getNameFromUI(lens) {
+        if (!lens.name) {
+            // Get lens name from DOM
+            lens.name = $('[data-lens-id="' + lens.id + '"].name').text().trim();
+        }
+
+        return lens;
     }
 
     function _addLensUI(lens) {
@@ -169,6 +195,9 @@ var DFC = (function _DFC() {
         // Update the outputs
         _updateOuput(lens.id, $config.closest('.lens'));
 
+
+        lens = _getNameFromUI(lens);
+
         // Update the URL hash
         _updateHash();
     }
@@ -177,7 +206,6 @@ var DFC = (function _DFC() {
      * Toggle the visibility of additional outputs
      * `this` refers to the toggle button
      * @param  {Event} evt  Click event
-     * @return {[type]}     [description]
      */
     function _toggleOutputs(evt) {
         $(this).closest('.outputs').toggleClass('collapsed');
@@ -209,11 +237,16 @@ var DFC = (function _DFC() {
 
             value = $input.text().trim();
         }
+        else if (property === 'sensor') {
+            console.log('sensor selected option: ', $input.find('option:selected').get(0));
+            value = $input.find('option:selected').data('sensor-key');
+        }
         else {
             value = $input.val();
         }
 
         // Update the lens object with the new value
+        console.log('updating "' + property + '" to "' + value + '"');
         _updateLens(id, property, value);
 
         // Update the lens' output
