@@ -17,13 +17,27 @@ module.exports = function(grunt) {
                 options: {
                     style: 'compressed',
                     loadPath: ['scss'],
-                    compass: true
+                    compass: true,
+                    sourcemap: true
                 },
                 files: {
                     'css/dfc.css': '<%= dfc.scss %>'
                 }
             }
         },
+
+        // compass: {
+        //     dist: {
+        //         options: {
+        //             sassDir: 'scss',
+        //             cssDir: 'css',
+        //             outputStyle: 'compressed'
+        //         },
+        //         files: {
+        //             'css/dfc.css': '<%= dfc.scss %>'
+        //         }
+        //     }
+        // },
 
         uglify: {
             dist: {
@@ -55,6 +69,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-sass');
+    // grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
