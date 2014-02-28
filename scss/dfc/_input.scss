@@ -1,5 +1,6 @@
 // Lens configuration containers
 .lens {
+    position: relative;
     background-color: #fff;
 }
 
@@ -24,5 +25,21 @@
     .columns {
         padding-left: $input-column-padding;
         padding-right: $input-column-padding;
+    }
+}
+
+// Delete link
+.delete {
+    position: absolute;
+    bottom: 0.5em;
+    left: 0.5em;
+    font-size: 12px;
+    text-decoration: underline;
+    color: #bd240d;
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
     }
 }
