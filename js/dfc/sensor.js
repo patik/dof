@@ -235,7 +235,6 @@ DFC.sensor = (function sensor() {
 
         $.each(mainList.concat(shortList), function(i, size) {
             if (size.name === name) {
-                console.info('[_getKeyByName] match: ', size);
                 key = size.key;
                 // Quit loop
                 return false;

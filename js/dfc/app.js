@@ -75,11 +75,8 @@ var DFC = (function _DFC() {
             lens.aperture = decodeURIComponent(props[3]).trim().replace('-', '/');
             if (!lens.aperture) { return true; }
 
-            console.log('read from hash, sensor key is ', DFC.sensor.getName(props[4].trim()), ' from "' + props[4].trim() + '"');
             lens.sensor = DFC.sensor.getName(props[4].trim());
             if (!lens.sensor) { return true; }
-
-            console.log('found lens from hash: ', lens);
 
             _addLensUI(lens);
         });
@@ -105,13 +102,6 @@ var DFC = (function _DFC() {
             }
 
             pieces.push(apt);
-
-            // console.log('Lens ID ' + lens.id + ', sensor: ', lens.sensor, ' -> ', DFC.sensor.getKey(parseFloat(lens.sensor)));
-            // console.log('Lens ID ' + lens.id + ', sensor: ', lens.sensor, ' -> ', DFC.sensor.getKey(lens.sensor));
-            console.log('Lens ID ' + lens.id + ', sensor key: ', lens.sensor);
-
-            // pieces.push(DFC.sensor.getKey(parseFloat(lens.sensor)));
-            // pieces.push(DFC.sensor.getKey(lens.sensor));
             pieces.push(lens.sensor);
 
             lensHashes.push(pieces.join(','));
@@ -238,7 +228,6 @@ var DFC = (function _DFC() {
             value = $input.text().trim();
         }
         else if (property === 'sensor') {
-            console.log('sensor selected option: ', $input.find('option:selected').get(0));
             value = $input.find('option:selected').data('sensor-key');
         }
         else {
@@ -246,7 +235,6 @@ var DFC = (function _DFC() {
         }
 
         // Update the lens object with the new value
-        console.log('updating "' + property + '" to "' + value + '"');
         _updateLens(id, property, value);
 
         // Update the lens' output
