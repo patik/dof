@@ -47,8 +47,12 @@
         <form method="post" action="index.html" class="small-12 medium-6 large-4 columns lens" data-lens-id="{{index}}">
             <div class="inputs">
                 <div class="row">
-                    <div class="small-8 columns"><h3 data-lens-id="{{index}}" class="name" contenteditable>Lens {{index}}</h3></div>
-                    <div class="small-4 columns text-right middle"><button data-lens-id="{{index}}" class="button radius secondary tiny duplicate">Copy</button></div>
+                    <div class="small-8 columns">
+                        <h3 data-lens-id="{{index}}" class="name" contenteditable>Lens {{index}}</h3>
+                    </div>
+                    <div class="small-4 columns text-right middle">
+                        <button data-lens-id="{{index}}" class="button radius secondary tiny duplicate">Copy</button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="small-4 columns">
@@ -100,6 +104,7 @@
                 <dt>1/8th depth of field</dt>
                 <dd class="eighthDof"></dd>
             </dl>
+            <a data-lens-id="{{index}}" class="delete" href>Delete</a>
         </form>
     </script>
     <script src="js/script.js"></script>

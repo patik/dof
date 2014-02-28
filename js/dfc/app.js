@@ -2,6 +2,7 @@ var DFC = (function _DFC() {
     // List of all lenses
     var lenses = [],
         template = null,
+        $body = null,
         $main = null;
 
     /**
@@ -10,6 +11,7 @@ var DFC = (function _DFC() {
     function _init() {
         template = Handlebars.compile($("#lens-template").html());
         $main = $('[role="main"]');
+        $body = $('body');
 
         //To do: Read from URL hash and watch hashchange(?) event
         // _readLensesFromHash();
@@ -22,14 +24,8 @@ var DFC = (function _DFC() {
         // Clear any existing lens UIs
         $('[role="main"]').empty();
 
-        // Setup existing lens UIs
-        $.each(lenses, function(i, lens) {
-            _addLensUI(lens);
-            lens = _getNameFromUI(lens);
-        });
-
         // Event listeners
-        $('body')
+        $body
             // Prevent actual form submission and just update
             .on('submit', 'form', function(evt) {
                 evt.preventDefault();
@@ -42,12 +38,23 @@ var DFC = (function _DFC() {
             // Copy existing lens
             .on('click', '.duplicate', _duplicateLensUI)
 
+            // Delete existing lens
+            .on('click', '.delete', _deleteLensUI)
+
             // Update existing lens
             .on('change keyup blur', '.name, .focalLength, .aperture, .distance, .sensor', _onChangeLensValue)
             .on('keydown', '.name', _onChangeLensValue)
 
             // Show/hide additional results
-            .on('click', '.output-toggle', _toggleOutputs);
+            .on('click', '.output-toggle', _toggleOutputs)
+
+            .on('uiupdated', _onUIUpdated);
+
+        // Setup existing lens UIs
+        $.each(lenses, function(i, lens) {
+            _addLensUI(lens);
+            lens = _getNameFromUI(lens);
+        });
     }
 
     // example.com/#Name%20of%20Lens,35,f-2,20,mft
@@ -188,8 +195,28 @@ var DFC = (function _DFC() {
 
         lens = _getNameFromUI(lens);
 
-        // Update the URL hash
-        _updateHash();
+        $body.trigger('uiupdated');
+    }
+
+    function _deleteLensUI(evt) {
+        var $targ = $(evt.target),
+            id = $targ.data('lens-id'),
+            lens = _getLensById(id),
+            index = lenses.indexOf(lens);
+
+        evt.preventDefault();
+
+        if (index > -1) {
+            // Remove UI
+            $targ.closest('.lens').remove();
+
+            // Remove from list
+            console.log('lenses before: ', lenses);
+            lenses.splice(index, 1);
+            console.log('lenses after: ', lenses);
+
+            $body.trigger('uiupdated');
+        }
     }
 
     /**
@@ -199,6 +226,19 @@ var DFC = (function _DFC() {
      */
     function _toggleOutputs(evt) {
         $(this).closest('.outputs').toggleClass('collapsed');
+    }
+
+    function _onUIUpdated(evt) {
+        // Hide 'delete' link if there's only one lens
+        if ($('.lens').length === 1) {
+            $('.delete').hide();
+        }
+        else {
+            $('.delete').show();
+        }
+
+        // Update the URL hash
+        _updateHash();
     }
 
     function _onChangeLensValue(evt) {
