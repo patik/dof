@@ -219,6 +219,34 @@ var DFC = (function _DFC() {
         }
     }
 
+    function _resetLensUI(evt) {
+        var $targ = $(evt.target),
+            id = $targ.data('lens-id'),
+            lens = _getLensById(id),
+            $lens = $targ.closest('.lens'),
+            $defaults, prop;
+
+        evt.preventDefault();
+
+        if (lens) {
+            defaults = new DFC.Lens();
+
+            // Copy default values
+            for (prop in defaults) {
+                if (defaults.hasOwnProperty(prop) && prop !== 'id' && prop !== 'name') {
+                    _updateLens(lens.id, prop, defaults[prop]);
+                }
+            }
+
+            $lens.find('.focalLength').val(35);
+            $lens.find('.aperture').val(DFC.aperture.getSize(lens.aperture));
+            $lens.find('.distance').val(20);
+            $lens.find('.sensor').find('[data-sensor-key="mft"]').attr('selected','selected');
+
+            _updateOuput(lens.id, $lens);
+        }
+    }
+
     /**
      * Toggle the visibility of additional outputs
      * `this` refers to the toggle button

@@ -33,7 +33,7 @@ DFC.sensor = (function sensor() {
                 value: 3.02
             },
             {
-                name: 'Four-Thirds',
+                name: 'Micro Four-Thirds',
                 key: 'mft',
                 value: 2
             },
