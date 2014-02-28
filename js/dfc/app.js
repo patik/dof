@@ -41,6 +41,9 @@ var DFC = (function _DFC() {
             // Delete existing lens
             .on('click', '.delete', _deleteLensUI)
 
+            // Reset lens properties
+            .on('click', '.reset', _resetLensUI)
+
             // Update existing lens
             .on('change keyup blur', '.name, .focalLength, .aperture, .distance, .sensor', _onChangeLensValue)
             .on('keydown', '.name', _onChangeLensValue)
@@ -207,14 +210,11 @@ var DFC = (function _DFC() {
         evt.preventDefault();
 
         if (index > -1) {
+            // Remove from list
+            lenses.splice(index, 1);
+
             // Remove UI
             $targ.closest('.lens').remove();
-
-            // Remove from list
-            console.log('lenses before: ', lenses);
-            lenses.splice(index, 1);
-            console.log('lenses after: ', lenses);
-
             $body.trigger('uiupdated');
         }
     }

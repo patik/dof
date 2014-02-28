@@ -29,17 +29,27 @@
 }
 
 // Delete link
-.delete {
+.action-buttons {
     position: absolute;
     bottom: 0.5em;
     left: 0.5em;
-    font-size: 12px;
-    text-decoration: underline;
-    color: #bd240d;
 
-    &:hover,
-    &:focus,
-    &:active {
-        text-decoration: none;
+    a {
+        font-size: 12px;
+        text-decoration: underline;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+
+        &.delete {
+            color: #bd240d;
+        }
+
+        &.reset {
+
+        }
     }
 }
