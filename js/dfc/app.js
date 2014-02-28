@@ -41,6 +41,9 @@ var DFC = (function _DFC() {
             // Delete existing lens
             .on('click', '.delete', _deleteLensUI)
 
+            // Reset lens properties
+            .on('click', '.reset', _resetLensUI)
+
             // Update existing lens
             .on('change keyup blur', '.name, .focalLength, .aperture, .distance, .sensor', _onChangeLensValue)
             .on('keydown', '.name', _onChangeLensValue)
@@ -207,15 +210,40 @@ var DFC = (function _DFC() {
         evt.preventDefault();
 
         if (index > -1) {
+            // Remove from list
+            lenses.splice(index, 1);
+
             // Remove UI
             $targ.closest('.lens').remove();
-
-            // Remove from list
-            console.log('lenses before: ', lenses);
-            lenses.splice(index, 1);
-            console.log('lenses after: ', lenses);
-
             $body.trigger('uiupdated');
+        }
+    }
+
+    function _resetLensUI(evt) {
+        var $targ = $(evt.target),
+            id = $targ.data('lens-id'),
+            lens = _getLensById(id),
+            $lens = $targ.closest('.lens'),
+            $defaults, prop;
+
+        evt.preventDefault();
+
+        if (lens) {
+            defaults = new DFC.Lens();
+
+            // Copy default values
+            for (prop in defaults) {
+                if (defaults.hasOwnProperty(prop) && prop !== 'id' && prop !== 'name') {
+                    _updateLens(lens.id, prop, defaults[prop]);
+                }
+            }
+
+            $lens.find('.focalLength').val(35);
+            $lens.find('.aperture').val(DFC.aperture.getSize(lens.aperture));
+            $lens.find('.distance').val(20);
+            $lens.find('.sensor').find('[data-sensor-key="mft"]').attr('selected','selected');
+
+            _updateOuput(lens.id, $lens);
         }
     }
 
