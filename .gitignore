@@ -1,5 +1,7 @@
 *.DS_Store
 *.sublime-*
 sftp-config.json
+node_modules
+.sass-cache
 
 template.html
