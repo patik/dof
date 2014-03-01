@@ -17,11 +17,14 @@ html, body {
     }
 }
 
-// @media only screen and (min-width: 40.063em) {
-    h1 {
-        font-size: 1.75rem;
+h1 {
+    font-size: 1.75rem;
+
+    a,
+    a:hover {
+        color: inherit;
     }
-// }
+}
 
 p a {
     text-decoration: underline;
