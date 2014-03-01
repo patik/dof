@@ -92,7 +92,11 @@ var DFC = (function _DFC() {
             lens.sensor = props[4].trim();
             if (!lens.sensor) { return true; }
 
-            _addLensUI(lens);
+            _updateLens(lens.id, 'name', lens.name);
+            _updateLens(lens.id, 'focalLength', lens.focalLength);
+            _updateLens(lens.id, 'distance', lens.distance);
+            _updateLens(lens.id, 'aperture', lens.aperture);
+            _updateLens(lens.id, 'sensor', lens.sensor);
         });
     }
 
@@ -156,6 +160,7 @@ var DFC = (function _DFC() {
     function _createLensUI(lens) {
         var context = {
                 index: lens.id,
+                name: lens.name,
                 distance: lens.distance,
                 focalLength: lens.focalLength
             };
@@ -350,6 +355,10 @@ var DFC = (function _DFC() {
 
         // Create Lens object
         lens = new DFC.Lens(id);
+
+        if (!lens.name) {
+            lens.name = 'Lens ' + id;
+        }
 
         // Store it
         lenses.push(lens);
