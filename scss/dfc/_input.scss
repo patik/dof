@@ -84,3 +84,22 @@
         }
     }
 }
+
+.add-lens.ghost {
+    border: 1rem dashed #ddd;
+    border-radius: 12px;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+        background-color: #ddd;
+        border-color: #ccc;
+    }
+
+    div {
+        font-size: 2rem;
+        color: #999;
+        text-align: center;
+        margin: 4.1rem auto;
+    }
+}

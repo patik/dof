@@ -4,6 +4,7 @@ var DFC = (function _DFC() {
         template = null,
         $body = null,
         $main = null,
+        $ghost = null,
         $comparisonLinks = null;
 
     /**
@@ -13,6 +14,7 @@ var DFC = (function _DFC() {
         template = Handlebars.compile($("#lens-template").html());
         $main = $('[role="main"]');
         $body = $('body');
+        $ghost = $('.ghost');
         $comparisonLinks = $('.comparison-link');
 
         //To do: watch hashchange(?) event
@@ -24,7 +26,7 @@ var DFC = (function _DFC() {
         }
 
         // Clear any existing lens UIs
-        $('[role="main"]').empty();
+        $('[role="main"]').find('.lens').remove();
 
         // Event listeners
         $body
@@ -190,7 +192,7 @@ var DFC = (function _DFC() {
 
     function _addLensUIToPage($config, lens) {
         // To do: add `div.row` as appropriate?
-        $main.append($config);
+        $config.insertBefore($ghost);
 
         // Populate dropdowns
         $config.find('.sensor').html(DFC.sensor.getHTML(lens.sensor));
@@ -198,7 +200,6 @@ var DFC = (function _DFC() {
 
         // Update the outputs
         _updateOuput(lens.id, $config.closest('.lens'));
-
 
         lens = _getNameFromUI(lens);
 
