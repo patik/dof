@@ -24,8 +24,18 @@
         </div>
     </div>
     <div class="row">
-        <div class="small-12 columns">
+        <div class="small-8 columns">
             <p>Compare multiple camera lenses side-by-side</p>
+        </div>
+        <div class="small-4 columns text-right">
+            <div class="row">
+                <div class="small-6 columns">
+                    <label for="distance">Distance (ft)</label>
+                </div>
+                <div class="small-6 columns">
+                    <input type="number" minval="0" id="distance" class="distance" value="20" tabindex="1">
+                </div>
+            </div>
         </div>
     </div>
     <noscript>
@@ -59,25 +69,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <label for="focalLength-{{index}}">Focal length</label>
                     </div>
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <label for="aperture-{{index}}">Aperture</label>
-                    </div>
-                    <div class="small-4 columns">
-                        <label for="distance-{{index}}">Distance (ft)</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <input data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" class="focalLength" tabindex="1">
                     </div>
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
-                    </div>
-                    <div class="small-4 columns">
-                        <input data-lens-id="{{index}}" value="{{distance}}" type="number" minval="0" id="distance-{{index}}" class="distance" tabindex="1">
                     </div>
                 </div>
                 <div class="row">
