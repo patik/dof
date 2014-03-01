@@ -85,15 +85,21 @@
     }
 }
 
-.add-lens.ghost {
+.ghost {
     border: 1rem dashed #ddd;
+    background: transparent;
     border-radius: 0.375rem;
     cursor: pointer;
+    @include transition(border-color 100ms ease-in, background 100ms ease-in);
 
     &:focus,
     &:hover {
-        background-color: #ddd;
+        background: #ddd;
         border-color: #ccc;
+
+        div {
+            color: #666;
+        }
     }
 
     div {
@@ -101,5 +107,6 @@
         color: #999;
         text-align: center;
         margin: 4.1rem auto;
+        @include transition(color 100ms ease-in);
     }
 }
