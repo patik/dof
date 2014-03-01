@@ -72,7 +72,7 @@ var DFC = (function _DFC() {
             return false;
         }
 
-        hash.split('|').forEach(function (config) {
+        hash.split(';').forEach(function (config) {
             var lens = _createNewLens(),
                 props = config.split(',');
 
@@ -126,7 +126,7 @@ var DFC = (function _DFC() {
         });
 
         if (lensHashes.length) {
-            window.location.hash = '#' + lensHashes.join('|');
+            window.location.hash = '#' + lensHashes.join(';');
         }
         else {
             window.location.hash = '';
@@ -248,6 +248,7 @@ var DFC = (function _DFC() {
                 }
             }
 
+            // Update UI
             $lens.find('.focalLength').val(35);
             $lens.find('.aperture').val(DFC.aperture.getSize(lens.aperture));
             $lens.find('.distance').val(20);
