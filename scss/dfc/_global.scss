@@ -26,3 +26,20 @@ p a {
         text-decoration: none;
     }
 }
+
+[role="main"] {
+    margin-bottom: 2rem;
+}
+
+// Left-align headers (override Foundation)
+@media only screen and (min-width: 64.063em) {
+    // Header
+    [role="header"] .columns {
+        padding-left: 0.3%;
+    }
+
+    // Sub-header
+    [role="header"] + .row .columns {
+        padding-left: 0.6%;
+    }
+}

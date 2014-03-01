@@ -3,7 +3,8 @@ var DFC = (function _DFC() {
     var lenses = [],
         template = null,
         $body = null,
-        $main = null;
+        $main = null,
+        $comparisonLinks = null;
 
     /**
      * Initialize app
@@ -12,6 +13,7 @@ var DFC = (function _DFC() {
         template = Handlebars.compile($("#lens-template").html());
         $main = $('[role="main"]');
         $body = $('body');
+        $comparisonLinks = $('.comparison-link');
 
         //To do: watch hashchange(?) event
         _readLensesFromHash();
@@ -119,12 +121,12 @@ var DFC = (function _DFC() {
 
         if (lensHashes.length) {
             window.location.hash = '#' + lensHashes.join('|');
-            $('.comparison-link').attr('href', window.location.href);
         }
         else {
             window.location.hash = '';
-            $('.comparison-link').attr('href', '#');
         }
+
+        $comparisonLinks.attr('href', window.location.href);
     }
 
     function _getNameFromUI(lens) {
