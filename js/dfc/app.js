@@ -2,8 +2,10 @@ var DFC = (function _DFC() {
     // List of all lenses
     var lenses = [],
         template = null,
+        distance = 20,
         $body = null,
         $main = null,
+        $distance = null,
         $ghost = null,
         $comparisonLinks = null;
 
@@ -14,6 +16,7 @@ var DFC = (function _DFC() {
         template = Handlebars.compile($("#lens-template").html());
         $main = $('[role="main"]');
         $body = $('body');
+        $distance = $('.distance');
         $ghost = $('.ghost');
         $comparisonLinks = $('.comparison-link');
 
@@ -49,13 +52,16 @@ var DFC = (function _DFC() {
             .on('click', '.reset', _resetLensUI)
 
             // Update existing lens
-            .on('change keyup blur', '.name, .focalLength, .aperture, .distance, .sensor', _onChangeLensValue)
+            .on('change keyup blur', '.name, .focalLength, .aperture, .sensor', _onChangeLensValue)
             .on('keydown', '.name', _onChangeLensValue)
 
             // Show/hide additional results
             .on('click', '.output-toggle', _toggleOutputs)
 
             .on('uiupdated', _onUIUpdated);
+
+        // Distance
+        $distance.on('change keyup blur', _onChangeDistance);
 
         // Setup existing lens UIs
         $.each(lenses, function(i, lens) {
@@ -64,7 +70,7 @@ var DFC = (function _DFC() {
         });
     }
 
-    // example.com/#Name%20of%20Lens,35,f-2,20,mft
+    // example.com/#Name%20of%20Lens,35,f-2,mft
     function _readLensesFromHash() {
         var hash = window.location.hash.replace(/^\#/, '');
 
@@ -83,24 +89,20 @@ var DFC = (function _DFC() {
             lens.focalLength = parseInt(props[1], 10);
             if (isNaN(lens.focalLength)) { return true; }
 
-            lens.distance = parseInt(props[2], 10);
-            if (isNaN(lens.distance)) { return true; }
-
-            lens.aperture = decodeURIComponent(props[3]).trim().replace('-', '/');
+            lens.aperture = decodeURIComponent(props[2]).trim().replace('-', '/');
             if (!lens.aperture) { return true; }
 
-            lens.sensor = props[4].trim();
+            lens.sensor = props[3].trim();
             if (!lens.sensor) { return true; }
 
             _updateLens(lens.id, 'name', lens.name);
             _updateLens(lens.id, 'focalLength', lens.focalLength);
-            _updateLens(lens.id, 'distance', lens.distance);
             _updateLens(lens.id, 'aperture', lens.aperture);
             _updateLens(lens.id, 'sensor', lens.sensor);
         });
     }
 
-    // example.com/#Name%20of%20Lens,35,f-2,20,mft
+    // example.com/#Name%20of%20Lens,35,f-2,mft
     function _updateHash() {
         var hash = '',
             lensHashes = [];
@@ -110,7 +112,6 @@ var DFC = (function _DFC() {
 
             pieces.push(encodeURIComponent(lens.name));
             pieces.push(lens.focalLength);
-            pieces.push(lens.distance);
 
             if (lens.aperture.indexOf('/') !== -1) {
                 apt = lens.aperture.replace('/', '-');
@@ -161,7 +162,6 @@ var DFC = (function _DFC() {
         var context = {
                 index: lens.id,
                 name: lens.name,
-                distance: lens.distance,
                 focalLength: lens.focalLength
             };
 
@@ -251,7 +251,6 @@ var DFC = (function _DFC() {
             // Update UI
             $lens.find('.focalLength').val(35);
             $lens.find('.aperture').val(DFC.aperture.getSize(lens.aperture));
-            $lens.find('.distance').val(20);
             $lens.find('.sensor').find('[data-sensor-key="mft"]').attr('selected','selected');
 
             _updateOuput(lens.id, $lens);
@@ -280,9 +279,17 @@ var DFC = (function _DFC() {
         _updateHash();
     }
 
+    function _onChangeDistance(evt) {
+        distance = parseFloat($distance.val());
+
+        $.each(lenses, function(i, lens) {
+            _updateOuput(lens.id, $('form[data-lens-id="' + lens.id + '"'));
+        });
+    }
+
     function _onChangeLensValue(evt) {
         var $input = $(this),
-            propRegex = /\b(name|focalLength|aperture|distance|sensor)\b/,
+            propRegex = /\b(name|focalLength|aperture|sensor)\b/,
             className = $input.attr('class'),
             property, value;
 
@@ -398,7 +405,7 @@ var DFC = (function _DFC() {
             return;
         }
 
-        result = new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, lens.distance);
+        result = new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, distance);
 
         // Display values
         $container.find('.dof').text(result.dof);
