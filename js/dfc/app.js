@@ -70,7 +70,7 @@ var DFC = (function _DFC() {
         });
     }
 
-    // example.com/#Name%20of%20Lens,35,f-2,mft
+    // example.com/#20;Name%20of%20Lens,35,f-2,mft
     function _readLensesFromHash() {
         var hash = window.location.hash.replace(/^\#/, '');
 
@@ -78,7 +78,11 @@ var DFC = (function _DFC() {
             return false;
         }
 
-        hash.split(';').forEach(function (config) {
+        hash = hash.split(';');
+
+        distance = parseFloat(hash.shift());
+
+        hash.forEach(function (config) {
             var lens = _createNewLens(),
                 props = config.split(',');
 
@@ -102,7 +106,7 @@ var DFC = (function _DFC() {
         });
     }
 
-    // example.com/#Name%20of%20Lens,35,f-2,mft
+    // example.com/#20;Name%20of%20Lens,35,f-2,mft
     function _updateHash() {
         var hash = '',
             lensHashes = [];
@@ -126,8 +130,8 @@ var DFC = (function _DFC() {
             lensHashes.push(pieces.join(','));
         });
 
-        if (lensHashes.length) {
-            window.location.hash = '#' + lensHashes.join(';');
+        if (lensHashes.length || distance !== 20) {
+            window.location.hash = '#' + distance + ';' + lensHashes.join(';');
         }
         else {
             window.location.hash = '';
@@ -285,6 +289,8 @@ var DFC = (function _DFC() {
         $.each(lenses, function(i, lens) {
             _updateOuput(lens.id, $('form[data-lens-id="' + lens.id + '"'));
         });
+
+        _updateHash();
     }
 
     function _onChangeLensValue(evt) {
