@@ -1,0 +1,15 @@
+.docs {
+    background: #fff;
+
+    figure {
+        margin: 0.5rem auto 1rem auto;
+
+        &.max-width {
+            max-width: 300px;
+        }
+
+        img {
+            box-shadow: 0 0 1rem 0.25rem #ddd;
+        }
+    }
+}

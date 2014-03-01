@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Depth of Field Calculator &amp; Comparison Tool</title>
-    <link rel="stylesheet" href="css/dfc.css">
-    <script src="js/vendor/modernizr.js"></script>
+    <title>Documentation — Depth of Field Calculator &amp; Comparison Tool</title>
+    <link rel="stylesheet" href="../css/dfc.css">
+    <script src="../js/vendor/modernizr.js"></script>
     <meta name="author" content="Craig Patik">
     <meta name="description" content="Depth of field calculator and camera lens comparison tool">
     <meta name="keywords" content="camera, lens, photography, depth of field, calculator, compare, comparison">
@@ -17,7 +17,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
 </head>
-<body>
+<body class="docs">
     <div class="row" role="header">
         <div class="small-12 columns">
             <h1 class="subheader">Depth of Field Calculator &amp; Comparison Tool</h1>
@@ -25,16 +25,45 @@
     </div>
     <div class="row">
         <div class="small-12 columns">
-            <p>Compare multiple camera lenses side-by-side.</p>
+            <p>Documentation &amp; Usage</p>
         </div>
     </div>
+    <noscript>
+        <p>This tool requires <a href="http://enable-javascript.com/">JavaScript</a></p>
+    </noscript>
     <div role="main" class="row">
         <div class="small-12 columns">
-            <p>Full documentation yet to be written.</p>
+            <h2 id="calculate">Calculate depth of field</h2>
+            <p>For a given lens, enter the focal length, aperture, the distance to your subject, and the camera’s sensor size. The length of the depth of field is displayed below the fields and updates as you change the values.</p>
+            <figure class="max-width">
+                <img src="images/single-lens.png" alt="Screenshot of lens input">
+            </figure>
+            <div class="panel callout radius">Be sure to use the actual focal length of the lens (e.g. as printed on the front of the lens)&mdash;don’t convert it to the 35mm equivalent.</div>
+            <p>Feel free to give each lens a meaningful name to keep track of them.</p>
+            <figure class="max-width">
+                <img src="images/lens-name.png" alt="Renaming a lens">
+            </figure>
+        </div>
+        <div class="small-12 columns">
+            <h2 id="compare">Comparing lenses</h2>
+            <p>Click on the "Add Lens" box to add an additional lens, then enter the second lens’ characteristics.</p>
+            <figure>
+                <img src="images/comparison.png" alt="comparison of two lenses">
+            </figure>
+            <p>If the lenses are similar (i.e. same focal length) you may save time by using the Copy button to carry over the same values to the second lens.</p>
+            <p>You can add an unlimited number of lenses.</p>
+        </div>
+        <div class="small-12 columns">
+            <h2 id="sharing">Saving &amp; sharing</h2>
+            <p>At any time you can copy the address from your browser and send it to a friend. They will see the exact same lenses that you've entered.</p>
+            <p>You can also bookmark the page to come back to the same lens configuration later.</p>
+            <figure>
+                <img src="images/sharing.png" alt="screenshot with the browser address bar highlighted">
+            </figure>
         </div>
     </div>
     <div role="footer" class="row">
-        <div class="small-6 columns">
+        <div class="small-6 columns text-center">
             <p><a href="../">Back to the tool</a></p>
         </div>
         <div class="small-6 columns text-center">
