@@ -10,6 +10,8 @@ var DFC = (function _DFC() {
      * Initialize app
      */
     function _init() {
+        var $ghost = $('<div/>');
+
         template = Handlebars.compile($("#lens-template").html());
         $main = $('[role="main"]');
         $body = $('body');
@@ -60,6 +62,12 @@ var DFC = (function _DFC() {
             _addLensUI(lens);
             lens = _getNameFromUI(lens);
         });
+
+        // "Add Lens" ghost block
+        $ghost
+            .addClass('small-12 medium-6 large-4 columns add-lens ghost')
+            .html('<div>Add Lens</div>')
+            .appendTo($main);
     }
 
     // example.com/#Name%20of%20Lens,35,f-2,20,mft
@@ -198,7 +206,6 @@ var DFC = (function _DFC() {
 
         // Update the outputs
         _updateOuput(lens.id, $config.closest('.lens'));
-
 
         lens = _getNameFromUI(lens);
 
