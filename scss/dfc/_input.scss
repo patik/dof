@@ -6,6 +6,16 @@
     h3 {
         font-size: 1rem;
         font-weight: 700;
+        margin-top: 0.75rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: #ffc;
+            outline: none;
+            box-shadow: 0 0 5px #999;
+            cursor: text;
+        }
     }
 }
 
