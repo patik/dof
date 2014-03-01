@@ -13,8 +13,8 @@ var DFC = (function _DFC() {
         $main = $('[role="main"]');
         $body = $('body');
 
-        //To do: Read from URL hash and watch hashchange(?) event
-        // _readLensesFromHash();
+        //To do: watch hashchange(?) event
+        _readLensesFromHash();
 
         // Make sure there's at least one Lens object
         if (!lenses.length) {
@@ -85,7 +85,7 @@ var DFC = (function _DFC() {
             lens.aperture = decodeURIComponent(props[3]).trim().replace('-', '/');
             if (!lens.aperture) { return true; }
 
-            lens.sensor = DFC.sensor.getName(props[4].trim());
+            lens.sensor = props[4].trim();
             if (!lens.sensor) { return true; }
 
             _addLensUI(lens);
@@ -119,9 +119,11 @@ var DFC = (function _DFC() {
 
         if (lensHashes.length) {
             window.location.hash = '#' + lensHashes.join('|');
+            $('.comparison-link').attr('href', window.location.href);
         }
         else {
             window.location.hash = '';
+            $('.comparison-link').attr('href', '#');
         }
     }
 
