@@ -90,11 +90,16 @@
     border-radius: 12px;
     cursor: pointer;
 
+    &:focus,
+    &:hover {
+        background-color: #ddd;
+        border-color: #ccc;
+    }
+
     div {
-        width: 20%;
         font-size: 2rem;
         color: #999;
         text-align: center;
-        margin: 20% auto;
+        margin: 4.1rem auto;
     }
 }
