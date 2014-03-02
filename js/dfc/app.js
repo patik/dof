@@ -86,6 +86,7 @@ var DFC = (function _DFC() {
         hash = hash.split(';');
 
         distance = parseFloat(hash.shift());
+        $distance.val(distance);
 
         hash.forEach(function (config) {
             var lens = _createNewLens(),
