@@ -68,6 +68,16 @@
                     background: #dadada;
                 }
             }
+
+            [data-sort].sorted[data-sort-dir="asc"]::before {
+                top: 0.4rem;
+                left: 0.6rem;
+            }
+
+            [data-sort].sorted[data-sort-dir="desc"]::before {
+                top: 0.8rem;
+                left: 0.7rem;
+            }
         }
     }
 }

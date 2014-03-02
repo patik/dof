@@ -12,6 +12,7 @@ var DFC = (function _DFC() {
         $main = null,
         $distance = null,
         $addLens = null,
+        $sortToggle = null,
         $sortOptions = null,
         $comparisonLinks = null,
 
@@ -27,6 +28,7 @@ var DFC = (function _DFC() {
         $body = $('body');
         $distance = $('.distance');
         $addLens = $('.add-lens');
+        $sortToggle = $('.sort-toggle');
         $sortOptions = $('.table-header > .row');
         $comparisonLinks = $('.comparison-link');
 
@@ -490,25 +492,38 @@ var DFC = (function _DFC() {
     _sorting.settings = {};
 
     function _sortToggle(evt) {
-        var $targ = $(evt.target);
-
         evt.preventDefault();
 
-        if ($targ.is('.expanded')) {
+        if ($sortToggle.is('.expanded')) {
             // Collapse menu
-            $targ.removeClass('expanded');
+            $sortToggle.removeClass('expanded');
             $sortOptions.removeClass('expanded');
             $body.off('click', _onSortToggleBodyClick);
         }
         else {
             // Expand menu
-            $targ.addClass('expanded');
+            $sortToggle.addClass('expanded');
             $sortOptions.addClass('expanded');
+            $body.on('click', _onSortToggleBodyClick);
         }
     }
 
     function _onSortToggleBodyClick(evt) {
-        //
+        var $targ = $(evt.target);
+
+        // Click on menu item
+        if ($targ.closest('.row.expanded').length) {
+            console.log('Click on menu item');
+            _sortToggle(evt);
+        }
+        // Clicked outside the menu
+        else if (!$targ.closest('.sort-toggle').length) {
+            console.log('Clicked outside the menu');
+            // Collapse menu
+            $('.sort-toggle').removeClass('expanded');
+            $sortOptions.removeClass('expanded');
+            $body.off('click', _onSortToggleBodyClick);
+        }
     }
 
     /**
