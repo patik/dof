@@ -16,6 +16,7 @@
     <meta name="MobileOptimized" content="320">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
+    <script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
     <div class="row" role="header">
@@ -66,8 +67,8 @@
                 </div>
             </div>
         </div>
-        <div class="small-12 medium-6 large-4 columns add-lens ghost">
-            <div>Add<br>Lens</div>
+        <div class="small-12 medium-6 table-12 columns add-lens ghost">
+            <div><span>Add</span><span>Lens</span></div>
         </div>
     </div>
     <div role="footer" class="row">
@@ -136,10 +137,12 @@
                             <dd class="eighthDof"></dd>
                         </dl>
                     </div>
-                    <div class="small-12 table-2 columns action-buttons">
-                        <a data-lens-id="{{index}}" class="duplicate" role="button" href>Copy</button>
-                        <a data-lens-id="{{index}}" class="delete" role="button" href>Delete</a>
-                        <a data-lens-id="{{index}}" class="reset" role="button" href>Reset</a>
+                    <div class="small-12 table-2 columns">
+                        <a class="duplicate" data-lens-id="{{index}}" role="button" href>Copy</button>
+                        <div class="action-buttons">
+                            <a class="delete" data-lens-id="{{index}}" role="button" href>Delete</a>
+                            <a class="reset" data-lens-id="{{index}}" role="button" href>Reset</a>
+                        </div>
                     </div>
                 </div>
             </div>

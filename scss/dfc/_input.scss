@@ -1,7 +1,24 @@
 // Lens configuration containers
+$lens-table-border: 1px solid #ddd;
 .lens {
     position: relative;
-    background-color: #fff;
+    background: #fff;
+
+    @media #{$bp-table} {
+        margin-bottom: 0;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+        border: $lens-table-border;
+        border-bottom: none;
+
+        &:nth-child(odd) {
+            background: #f0f0f4;
+        }
+
+        &:last-child {
+            border-bottom: $lens-table-border;
+        }
+    }
 
     h3 {
         font-size: 1rem;
@@ -14,8 +31,8 @@
         &:hover,
         &:focus,
         &:active {
-            background-color: #ffc;
-            background-color: rgba(255, 203, 0, 0.1);
+            background: #ffc;
+            background: rgba(255, 203, 0, 0.1);
             outline: none;
             box-shadow: 0 0 5px #999;
             cursor: text;
@@ -23,21 +40,15 @@
     }
 }
 
+// Half-width lens blocks for medium viewports (since the `medium` grid is larger than the `table` grid)
 @media only screen and (min-width: 40.063em) and (max-width: $bp-table-width-max) {
-    .lens.small-12 {
+    .lens.small-12,
+    .ghost.small-12 {
         width: 48%;
         margin-left: 1%;
         margin-right: 1%;
     }
 }
-
-// @media (min-width: 64em) { // 1024px
-//     .lens.large-4 {
-//         width: 32%;
-//         margin-left: 0.6%;
-//         margin-right: 0.6%;
-//     }
-// }
 
 // Trim some of the default padding
 .inputs {
@@ -59,47 +70,41 @@
     }
 }
 
-// Delete link
-.action-buttons {
+// Action buttons
+[role="button"] {
     position: absolute;
     bottom: 0.5em;
     left: 0.5em;
+    font-size: 0.75rem;
+    text-decoration: underline;
 
-    a {
-        font-size: 0.75rem;
-        text-decoration: underline;
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+    }
 
-        &:hover,
-        &:focus,
-        &:active {
-            text-decoration: none;
-        }
+    &.delete {
+        color: darken(#bd240d, 10%);
+    }
 
-        &.delete {
-            color: darken(#bd240d, 10%);
-        }
-
-        &.reset {
-            margin-left: 1rem;
-        }
+    &.reset {
+        margin-left: 1rem;
     }
 
     @media #{$bp-table} {
         position: static;
         bottom: auto;
         left: auto;
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
 
-        a {
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
+        &.reset {
+            margin-left: 0;
+        }
 
-            &.reset {
-                margin-left: 0;
-            }
-
-            &:last-child {
-                margin-right: 0;
-            }
+        &:last-child {
+            margin-right: 0;
         }
     }
 }
@@ -127,5 +132,29 @@
         text-align: center;
         margin: 4.45rem auto;
         @include transition(color 100ms ease-in);
+
+        span {
+            display: block;
+        }
+    }
+
+    @media #{$bp-table} {
+        border-width: 0.2rem;
+
+        div {
+            margin: 0 auto;
+
+            span {
+                display: inline;
+            }
+
+            span:first-child {
+                padding-right: 0.2rem;
+            }
+
+            span:last-child {
+                padding-left: 0.2rem;
+            }
+        }
     }
 }

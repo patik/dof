@@ -57,13 +57,13 @@ p a {
 
 .table-header {
     display: none;
-}
 
-@media #{$bp-table} {
-    .table-header {
+    @media #{$bp-table} {
         display: block;
     }
+}
 
-    // Grid classes
+// Table grid classes
+@media #{$bp-table} {
     @include grid-html-classes($size:table);
 }
