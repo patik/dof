@@ -40,7 +40,7 @@
 }
 
 // Half-width lens blocks for medium viewports (since the `medium` grid is larger than the `table` grid)
-@media only screen and (min-width: 40.063em) and (max-width: $bp-table-width-max) {
+@media (min-width: 40.063em) and (max-width: $bp-table-width-max) {
     [role="main"] > .small-12 {
         width: 48%;
         margin-left: 1%;

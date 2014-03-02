@@ -12,6 +12,7 @@ var DFC = (function _DFC() {
         $main = null,
         $distance = null,
         $addLens = null,
+        $sortOptions = null,
         $comparisonLinks = null,
 
         // Sorting API
@@ -26,6 +27,7 @@ var DFC = (function _DFC() {
         $body = $('body');
         $distance = $('.distance');
         $addLens = $('.add-lens');
+        $sortOptions = $('.table-header > .row');
         $comparisonLinks = $('.comparison-link');
 
         //To do: watch hashchange(?) event
@@ -68,6 +70,7 @@ var DFC = (function _DFC() {
 
             // Sorting
             .on('click', '[data-sort]', _sortLenses)
+            .on('click', '.sort-toggle', _sortToggle)
 
             // Custom events
             .on('uiupdated', _onUIUpdated);
@@ -485,6 +488,28 @@ var DFC = (function _DFC() {
      * @type  {Object}
      */
     _sorting.settings = {};
+
+    function _sortToggle(evt) {
+        var $targ = $(evt.target);
+
+        evt.preventDefault();
+
+        if ($targ.is('.expanded')) {
+            // Collapse menu
+            $targ.removeClass('expanded');
+            $sortOptions.removeClass('expanded');
+            $body.off('click', _onSortToggleBodyClick);
+        }
+        else {
+            // Expand menu
+            $targ.addClass('expanded');
+            $sortOptions.addClass('expanded');
+        }
+    }
+
+    function _onSortToggleBodyClick(evt) {
+        //
+    }
 
     /**
      * Sorts lenses by a particular property and updates the view
