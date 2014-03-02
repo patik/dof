@@ -30,7 +30,7 @@ var DFC = (function _DFC() {
         $addLens = $('.add-lens');
         $sortToggle = $('.sort-toggle');
         $sortOptions = $('.table-header > .row');
-        $comparisonLinks = $('.comparison-link');
+        $comparisonLinks = $('.comparison-link, .subheader a');
 
         //To do: watch hashchange(?) event
         _readLensesFromHash();
@@ -149,12 +149,10 @@ var DFC = (function _DFC() {
         });
 
         if (lensHashes.length || distance !== 20) {
-            window.location.hash = '#' + distance + ';' + lensHashes.join(';');
-        }
-        else {
-            window.location.hash = '';
+            hash = '#' + distance + ';' + lensHashes.join(';');
         }
 
+        window.location.hash = hash;
         $comparisonLinks.attr('href', window.location.href);
     }
 
