@@ -43,6 +43,13 @@
             }
         }
     }
+
+    .table-row & {
+        dt,
+        dd {
+            width: auto;
+        }
+    }
 }
 
 .dof-display {
@@ -97,6 +104,16 @@ dd {
 
         &:after {
             clear: both;
+        }
+    }
+
+    .table-row & {
+        dt {
+            width: auto;
+        }
+
+        dd {
+            margin-left: 0;
         }
     }
 }
