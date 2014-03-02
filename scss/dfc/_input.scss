@@ -105,19 +105,20 @@
 }
 
 .add-lens {
-    border: 1rem dashed #ddd;
-    background: transparent;
+    border: 1rem dashed #ccc;
+    background: #ddd;
     border-radius: 0.375rem;
     cursor: pointer;
+    cursor: copy;
     @include transition(border-color 100ms ease-in, background 100ms ease-in);
 
     &:focus,
     &:hover {
-        background: #ddd;
-        border-color: #ccc;
+        background: rgba(green, 0.1);
+        border-color: rgba(green, 0.2);
 
         div {
-            color: #666;
+            color: green;
         }
     }
 
@@ -125,7 +126,7 @@
         font-size: 2rem;
         color: #999;
         text-align: center;
-        margin: 4.45rem auto;
+        margin: 6rem auto;
         @include transition(color 100ms ease-in);
 
         span {
