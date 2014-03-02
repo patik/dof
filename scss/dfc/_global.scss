@@ -79,6 +79,7 @@ p a {
 [data-sort] {
     position: relative;
     text-decoration: underline;
+    cursor: pointer;
 
     &:hover,
     &:focus,
