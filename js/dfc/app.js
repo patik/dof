@@ -285,11 +285,6 @@ var DFC = (function _DFC() {
             $('.delete').show();
         }
 
-        // Fix name heights (i.e. when text wraps)
-        $('.name').each(function() {
-            $(this).height(this.scrollHeight);
-        });
-
         // Update the URL hash
         _updateHash();
     }

@@ -1,5 +1,4 @@
 // Lens configuration containers
-$lens-table-border: 1px solid #ddd;
 .lens {
     position: relative;
     background: #fff;
@@ -25,7 +24,7 @@ $lens-table-border: 1px solid #ddd;
         font-weight: 700;
         margin-top: 0.5rem;
         padding: 0 0.25rem;
-        height: 1.9rem;
+        height: auto; // Will auto-grow and shrink to fit text
         line-height: 1.9rem;
 
         &:hover,
