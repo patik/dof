@@ -9,9 +9,9 @@
     <script src="js/vendor/modernizr.js"></script>
     <meta name="author" content="Craig Patik">
     <meta name="description" content="Depth of field calculator and camera lens comparison tool">
-    <meta name="keywords" content="camera, lens, photography, depth of field, calculator, compare, comparison">
+    <meta name="keywords" content="depth of field, camera, lens, photography, calculator, compare, comparison">
     <meta name="author" content="Craig Patik">
-    <link rel="canonical" href="http://patik.com/depth-of-field/">
+    <link rel="canonical" href="http://patik.com/dof/">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,12 +20,22 @@
 <body>
     <div class="row" role="header">
         <div class="small-12 columns">
-            <h1 class="subheader"><a href="http://patik.com/depth-of-field/">Depth of Field Calculator &amp; Comparison Tool</a></h1>
+            <h1 class="subheader"><a href="http://patik.com/dof/">Depth of Field Calculator &amp; Comparison Tool</a></h1>
         </div>
     </div>
     <div class="row">
-        <div class="small-12 columns">
+        <div class="small-12 medium-8 columns">
             <p>Compare multiple camera lenses side-by-side</p>
+        </div>
+        <div class="small-12 medium-4 columns text-right">
+            <div class="row">
+                <div class="small-8 columns">
+                    <label for="distance">Distance to subject (ft)</label>
+                </div>
+                <div class="small-4 columns">
+                    <input type="number" minval="0" id="distance" class="distance" value="20" tabindex="1">
+                </div>
+            </div>
         </div>
     </div>
     <noscript>
@@ -44,7 +54,7 @@
             <p><a href="docs/">About this tool</a></p>
         </div>
         <div class="small-12 medium-4 columns text-center">
-            <p><a href="https://github.com/patik/depth-of-field">View on GitHub</a></p>
+            <p><a href="https://github.com/patik/dof">View on GitHub</a></p>
         </div>
     </div>
     <script id="lens-template" type="text/x-handlebars-template">
@@ -59,25 +69,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <label for="focalLength-{{index}}">Focal length</label>
                     </div>
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <label for="aperture-{{index}}">Aperture</label>
-                    </div>
-                    <div class="small-4 columns">
-                        <label for="distance-{{index}}">Distance (ft)</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <input data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" class="focalLength" tabindex="1">
                     </div>
-                    <div class="small-4 columns">
+                    <div class="small-6 columns">
                         <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
-                    </div>
-                    <div class="small-4 columns">
-                        <input data-lens-id="{{index}}" value="{{distance}}" type="number" minval="0" id="distance-{{index}}" class="distance" tabindex="1">
                     </div>
                 </div>
                 <div class="row">

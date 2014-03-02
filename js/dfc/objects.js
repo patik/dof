@@ -6,7 +6,6 @@ DFC.Lens = function _Lens(id) {
     this.aperture = 'f/2';
     this.sensor = 'mft';
     this.focalLength = 35;
-    this.distance = 20;
 
     // Resolve ID
     if (typeof id === 'number' && id > 0) {
@@ -17,13 +16,13 @@ DFC.Lens = function _Lens(id) {
 };
 
 // Depth of field calculation constructor
-DFC.Dof = function _Dof(sensor, focalLength, aperture, distance) {
+DFC.Dof = function _Dof(sensor, focalLength, aperture, dstnce) {
     var hf, near, far, dof;
 
     /**
      * Convert millimeters to decimal feet and inches
      *
-     * @param dist      Length in millimeters
+     * @param  dist     Length in millimeters
      * @return {String} Length (feet/inches), or infinity
      */
     function _mmToFeet(dist) {
@@ -46,7 +45,7 @@ DFC.Dof = function _Dof(sensor, focalLength, aperture, distance) {
     }
 
     // Convert to millimeters
-    distance = distance * 12 * 25.4;
+    dstnce = dstnce * 12 * 25.4;
 
     // Convert sensor crop factor to a multiplier
     sensor = 1 / sensor;
@@ -54,8 +53,8 @@ DFC.Dof = function _Dof(sensor, focalLength, aperture, distance) {
     this.coc = Math.round(0.03 * sensor * 1000) / 1000;
     hf = Math.pow(focalLength, 2) / (aperture * this.coc) + (focalLength * 1.0);
 
-    near = (distance * (hf - focalLength)) / (hf + distance + (2 * focalLength));
-    far = (distance * (hf - focalLength)) / (hf - distance);
+    near = (dstnce * (hf - focalLength)) / (hf + dstnce + (2 * focalLength));
+    far = (dstnce * (hf - focalLength)) / (hf - dstnce);
 
     if (far <= 0) {
         far = Infinity;
