@@ -196,6 +196,8 @@ var DFC = (function _DFC() {
             lens = _createNewLens(),
             prop, $config;
 
+        evt.preventDefault();
+
         if (!sourceLens) {
             sourceLens = _createNewLens();
         }
@@ -273,7 +275,7 @@ var DFC = (function _DFC() {
             // Update UI
             $lens.find('.focalLength').val(35);
             $lens.find('.aperture').val(DFC.aperture.getSize(lens.aperture));
-            $lens.find('.sensor').find('[data-sensor-key="mft"]').attr('selected','selected');
+            $lens.find('.sensor').find('[data-sensor-key="APSCCanon"]').attr('selected','selected');
 
             _updateOuput(lens.id, $lens);
         }

@@ -4,7 +4,7 @@ DFC.Lens = function _Lens(id) {
     this.id = 0;
     this.name = '';
     this.aperture = 'f/2';
-    this.sensor = 'mft';
+    this.sensor = 'APSCCanon';
     this.focalLength = 35;
     this.dof = -1;
 
