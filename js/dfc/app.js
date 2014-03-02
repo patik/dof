@@ -12,7 +12,10 @@ var DFC = (function _DFC() {
         $main = null,
         $distance = null,
         $addLens = null,
-        $comparisonLinks = null;
+        $comparisonLinks = null,
+
+        // Sorting API
+        _sorting = {};
 
     /**
      * Initialize app
@@ -63,6 +66,10 @@ var DFC = (function _DFC() {
             // Show/hide additional results
             .on('click', '.output-toggle', _toggleOutputs)
 
+            // Sorting
+            .on('click', '[data-sort]', _sortLenses)
+
+            // Custom events
             .on('uiupdated', _onUIUpdated);
 
         // Distance
@@ -427,7 +434,96 @@ var DFC = (function _DFC() {
         $container.find('.neardist').text(result.near);
         $container.find('.fardist').text(result.far);
         $container.find('.focalLengthEquiv').text(result.focalLengthEquiv + 'mm');
+
+        _updateLens(id, 'dof', result.dofFloat);
     }
+
+    /////////////
+    // Sorting //
+    /////////////
+
+    _sorting.settings = {};
+
+    function _sortLenses(evt) {
+        var $targ = $(evt.target);
+
+        // Collect settings
+        _sorting.settings.type = $targ.data('sort');
+        _sorting.settings.dir = $targ.attr('data-sort-dir');
+
+        console.log('before: ', $targ.attr('data-sort-dir'));
+
+        // Sort array
+        lenses.sort(_sorting.compare);
+
+        // Clear out UI
+        $('[role="main"]').find('.lens').remove();
+
+        // Re-add all lenses
+        $.each(lenses, function(i, lens) {
+            _addLensUI(lens);
+        });
+
+        // Change direction for next time
+        if (_sorting.settings.dir === 'desc') {
+            $targ.attr('data-sort-dir', 'asc');
+        }
+        else {
+            $targ.attr('data-sort-dir', 'desc');
+        }
+        console.log('after: ', $targ.attr('data-sort-dir'));
+
+        // Move arrow to this column
+        $('.sorted').removeClass('sorted');
+        $targ.addClass('sorted');
+    }
+
+    _sorting.compare = function _sorting_compare(a, b) {
+        // Get the appropriate values to compare
+        if (_sorting.settings.type === 'sensor') {
+            a = DFC.sensor.getMultiplier(a.sensor);
+            b = DFC.sensor.getMultiplier(b.sensor);
+        }
+        else if (_sorting.settings.type === 'aperture') {
+            a = DFC.aperture.getSize(a.aperture);
+            b = DFC.aperture.getSize(b.aperture);
+        }
+        else {
+            a = a[_sorting.settings.type];
+            b = b[_sorting.settings.type];
+        }
+
+        if (_sorting.settings.dir === 'desc') {
+            return _sorting.compareDesc(a, b);
+        }
+        else {
+            return _sorting.compareAsc(a, b);
+        }
+    };
+
+    _sorting.compareDesc = function _sorting_compareDesc(a, b) {
+        if (a < b) {
+            return -1;
+        }
+        else if (a > b) {
+            return 1;
+        }
+        else { // a == b
+            return 0;
+        }
+    };
+
+    _sorting.compareAsc = function _sorting_compareAsc(a, b) {
+        if (a > b) {
+            return -1;
+        }
+        else if (a < b) {
+            return 1;
+        }
+        else { // a == b
+            return 0;
+        }
+    };
 
     // Init on document ready
     $(document).ready(_init);
