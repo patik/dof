@@ -116,6 +116,7 @@ dd {
 
     @media #{$bp-table} {
         dt {
+            clear: none;
             width: auto;
         }
 

@@ -273,7 +273,7 @@ var DFC = (function _DFC() {
      * @param  {Event} evt  Click event
      */
     function _toggleOutputs(evt) {
-        $(this).closest('.outputs').toggleClass('collapsed');
+        $(this).closest('.lens').find('.outputs').toggleClass('collapsed');
     }
 
     function _onUIUpdated(evt) {
