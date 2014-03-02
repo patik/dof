@@ -1,3 +1,5 @@
+@import "../foundation/components/_grid";
+
 html, body, input, select, button {
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
@@ -51,4 +53,21 @@ p a {
     [role="header"] + .row .columns {
         padding-left: 0.6%;
     }
+}
+
+.table-header {
+    display: none;
+
+    @media #{$bp-table} {
+        display: block;
+        min-height: 2rem;
+        line-height: normal;
+        vertical-align: middle;
+        font-weight: 600;
+    }
+}
+
+// Table grid classes
+@media #{$bp-table} {
+    @include grid-html-classes($size:table);
 }

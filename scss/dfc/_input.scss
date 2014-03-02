@@ -1,21 +1,37 @@
 // Lens configuration containers
 .lens {
     position: relative;
-    background-color: #fff;
+    background: #fff;
+
+    @media #{$bp-table} {
+        margin-bottom: 0;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+        border: $lens-table-border;
+        border-bottom: none;
+
+        &:nth-child(odd) {
+            background: #f0f0f4;
+        }
+
+        &:last-child {
+            border-bottom: $lens-table-border;
+        }
+    }
 
     h3 {
         font-size: 1rem;
         font-weight: 700;
         margin-top: 0.5rem;
         padding: 0 0.25rem;
-        height: 1.9rem;
+        height: auto; // Will auto-grow and shrink to fit text
         line-height: 1.9rem;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: #ffc;
-            background-color: rgba(255, 203, 0, 0.1);
+            background: #ffc;
+            background: rgba(255, 203, 0, 0.1);
             outline: none;
             box-shadow: 0 0 5px #999;
             cursor: text;
@@ -23,19 +39,12 @@
     }
 }
 
-@media only screen and (min-width: 40.063em) {
-    .lens.medium-6 {
+// Half-width lens blocks for medium viewports (since the `medium` grid is larger than the `table` grid)
+@media only screen and (min-width: 40.063em) and (max-width: $bp-table-width-max) {
+    [role="main"] > .small-12 {
         width: 48%;
         margin-left: 1%;
         margin-right: 1%;
-    }
-}
-
-@media (min-width: 64em) { // 1024px
-    .lens.large-4 {
-        width: 32%;
-        margin-left: 0.6%;
-        margin-right: 0.6%;
     }
 }
 
@@ -59,15 +68,18 @@
     }
 }
 
-// Delete link
+// Action buttons
 .action-buttons {
     position: absolute;
-    bottom: 0.5em;
+    bottom: 0.25em;
     left: 0.5em;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 
     a {
-        font-size: 12px;
+        font-size: 1rem;
         text-decoration: underline;
+        margin-right: 1rem;
 
         &:hover,
         &:focus,
@@ -78,14 +90,21 @@
         &.delete {
             color: darken(#bd240d, 10%);
         }
+    }
 
-        &.reset {
-            margin-left: 1rem;
+    @media #{$bp-table} {
+        position: static;
+        bottom: auto;
+        left: auto;
+
+        a {
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
         }
     }
 }
 
-.ghost {
+.add-lens {
     border: 1rem dashed #ddd;
     background: transparent;
     border-radius: 0.375rem;
@@ -108,5 +127,29 @@
         text-align: center;
         margin: 4.45rem auto;
         @include transition(color 100ms ease-in);
+
+        span {
+            display: block;
+        }
+    }
+
+    @media #{$bp-table} {
+        border-width: 0.2rem;
+
+        div {
+            margin: 0.25rem auto;
+
+            span {
+                display: inline;
+            }
+
+            span:first-child {
+                padding-right: 0.2rem;
+            }
+
+            span:last-child {
+                padding-left: 0.2rem;
+            }
+        }
     }
 }

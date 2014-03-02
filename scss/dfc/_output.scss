@@ -1,6 +1,6 @@
 .outputs {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
 
     [readonly] {
         border: none;
@@ -29,6 +29,8 @@
     }
 
     &.collapsed {
+        margin-bottom: 1.75rem;
+
         // Hide all but first row
         dt:not(.dof-display),
         dd:not(.dof-display) {
@@ -42,15 +44,41 @@
                 display: none;
             }
         }
+
+        @media #{$bp-table} {
+            margin-bottom: 0
+        }
+    }
+
+    &.row {
+        margin-bottom: 1.6rem;
+
+        @media #{$bp-table} {
+            margin-bottom: 0
+        }
+    }
+
+    @media #{$bp-table} {
+        margin-bottom: 0;
+
+        dt,
+        dd {
+            width: auto;
+        }
     }
 }
 
 .dof-display {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: bold;
+
+    @media #{$bp-table} {
+        font-size: 1rem;
+    }
 }
 
 .dof {
+    font-family: Menlo, Consolas, monospace;
     color: green;
 }
 
@@ -97,6 +125,17 @@ dd {
 
         &:after {
             clear: both;
+        }
+    }
+
+    @media #{$bp-table} {
+        dt {
+            clear: none;
+            width: auto;
+        }
+
+        dd {
+            margin-left: 0;
         }
     }
 }

@@ -2,3 +2,9 @@
 .js .show-for-js { display: inherit !important; }
 .no-js .hide-for-js { display: inherit !important; }
 .js .hide-for-js { display: none !important; }
+
+@media #{$bp-table} {
+    .hide-for-table {
+        display: none;
+    }
+}
