@@ -1,8 +1,13 @@
 var DFC = (function _DFC() {
-    // List of all lenses
-    var lenses = [],
+    var
+        // List of all lenses
+        lenses = [],
+
+        // Globals
         template = null,
         distance = 20,
+
+        // Cached element queries
         $body = null,
         $main = null,
         $distance = null,
