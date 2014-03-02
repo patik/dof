@@ -101,10 +101,27 @@ dd {
     }
 }
 
-.focal-length-equiv-wrapper {
-    font-size: 0.5rem;
+.focal-length-equiv-title {
+    font-size: 0.6rem;
+}
+
+.focalLengthEquiv {
+    display: block;
+    font-size: 0.8rem;
+}
+
+@media (min-width: 26em) and (max-width: 40em) {
+    .focal-length-equiv-title,
+    .focalLengthEquiv {
+        display: inline-block;
+        margin-top: 0.6rem;
+    }
+
+    .focal-length-equiv-title {
+        font-size: 0.8rem;
+    }
 
     .focalLengthEquiv {
-        font-size: 0.75rem;
+        margin-left: 0.5rem;
     }
 }
