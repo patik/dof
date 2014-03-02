@@ -455,7 +455,7 @@ var DFC = (function _DFC() {
      * @param   {jQuery}  $container  Container jQuery element
      */
     function _updateOuput(id, $container) {
-        var lens, result;
+        var lens, result, dof;
 
         // Triggered by an event
         if (typeof id === 'object' && id.target) {
@@ -471,8 +471,14 @@ var DFC = (function _DFC() {
 
         result = new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, distance);
 
+        // Add a space before single digit numbers to make them align vertically
+        dof = result.dof
+                .toString()
+                .replace(/^(\d)\'/, ' $1\'')
+                .replace(/\s(\d)\./, '  $1.');
+
         // Display values
-        $container.find('.dof').text(result.dof);
+        $container.find('.dof').text(dof);
         $container.find('.eighthDof').text(result.eighthDof);
         $container.find('.coc').text(result.coc + ' mm');
         $container.find('.hf').text(result.hf);

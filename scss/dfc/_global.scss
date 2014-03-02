@@ -1,5 +1,11 @@
 html, body, input, select, button {
-    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Open Sans", FreeSans, Helmet, "Helvetica Neue", Roboto, sans-serif;
+}
+
+h1,
+h2,
+[role="footer"] {
+    font-family: "Avenir", FreeSans, Helmet, "Helvetica Neue", Roboto, sans-serif;
 }
 
 html, body {

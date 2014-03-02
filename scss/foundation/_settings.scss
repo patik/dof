@@ -1,4 +1,4 @@
-// 
+//
 // FOUNDATION SETTINGS
 //
 
@@ -37,7 +37,8 @@
 // We use these to control various global styles
 // $body-bg: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+// $body-font-family: "Open Sans", FreeSans, Helmet, "Avenir New", "Helvetica Neue", Roboto, sans-serif;
+$body-font-family: "Avenir Next", FreeSans, Helmet, "Helvetica Neue", Roboto, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -1083,7 +1084,7 @@
 // $include-open-sans: true;
 
 // We use these to control header font styles
-// $header-font-family: join("Open Sans", $body-font-family);
+$header-font-family: $body-font-family; // join("Open Sans", $body-font-family);
 // $header-font-weight: 300;
 // $header-font-style: normal;
 // $header-font-color: #222;
@@ -1124,7 +1125,7 @@
 
 // We use these to style <code> tags
 // $code-color: darken($alert-color, 15%);
-// $code-font-family: Consolas, 'Liberation Mono', Courier, monospace;
+$code-font-family: Menlo, Consolas, 'Liberation Mono', Courier, monospace;
 // $code-font-weight: bold;
 
 // We use these to style anchors
