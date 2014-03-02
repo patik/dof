@@ -1,5 +1,3 @@
-@import "../foundation/components/_grid";
-
 html, body, input, select, button {
     font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
@@ -56,52 +54,5 @@ p a {
     // Sub-header
     [role="header"] + .row .columns {
         padding-left: 0.6%;
-    }
-}
-
-.table-header {
-    display: none;
-
-    @media #{$bp-table} {
-        display: block;
-        min-height: 2rem;
-        line-height: normal;
-        vertical-align: middle;
-        font-weight: 600;
-    }
-}
-
-// Table grid classes
-@media #{$bp-table} {
-    @include grid-html-classes($size:table);
-}
-
-[data-sort] {
-    position: relative;
-    text-decoration: underline;
-    cursor: pointer;
-
-    &:hover,
-    &:focus,
-    &:active {
-        text-decoration: none;
-    }
-
-    &.sorted {
-        &::before {
-            content: " ";
-            position: absolute;
-            top: 0.1rem;
-            left: -0.2rem;
-        }
-
-        &[data-sort-dir="desc"]::before {
-            top: 0.6rem;
-            @include css-triangle(6px, #444, top);
-        }
-
-        &[data-sort-dir="asc"]::before {
-            @include css-triangle(6px, #444, bottom);
-        }
     }
 }

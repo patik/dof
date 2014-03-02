@@ -12,6 +12,8 @@ var DFC = (function _DFC() {
         $main = null,
         $distance = null,
         $addLens = null,
+        $sortToggle = null,
+        $sortOptions = null,
         $comparisonLinks = null,
 
         // Sorting API
@@ -26,6 +28,8 @@ var DFC = (function _DFC() {
         $body = $('body');
         $distance = $('.distance');
         $addLens = $('.add-lens');
+        $sortToggle = $('.sort-toggle');
+        $sortOptions = $('.table-header > .row');
         $comparisonLinks = $('.comparison-link');
 
         //To do: watch hashchange(?) event
@@ -68,6 +72,7 @@ var DFC = (function _DFC() {
 
             // Sorting
             .on('click', '[data-sort]', _sortLenses)
+            .on('click', '.sort-toggle', _sortToggle)
 
             // Custom events
             .on('uiupdated', _onUIUpdated);
@@ -485,6 +490,41 @@ var DFC = (function _DFC() {
      * @type  {Object}
      */
     _sorting.settings = {};
+
+    function _sortToggle(evt) {
+        evt.preventDefault();
+
+        if ($sortToggle.is('.expanded')) {
+            // Collapse menu
+            $sortToggle.removeClass('expanded');
+            $sortOptions.removeClass('expanded');
+            $body.off('click', _onSortToggleBodyClick);
+        }
+        else {
+            // Expand menu
+            $sortToggle.addClass('expanded');
+            $sortOptions.addClass('expanded');
+            $body.on('click', _onSortToggleBodyClick);
+        }
+    }
+
+    function _onSortToggleBodyClick(evt) {
+        var $targ = $(evt.target);
+
+        // Click on menu item
+        if ($targ.closest('.row.expanded').length) {
+            console.log('Click on menu item');
+            _sortToggle(evt);
+        }
+        // Clicked outside the menu
+        else if (!$targ.closest('.sort-toggle').length) {
+            console.log('Clicked outside the menu');
+            // Collapse menu
+            $('.sort-toggle').removeClass('expanded');
+            $sortOptions.removeClass('expanded');
+            $body.off('click', _onSortToggleBodyClick);
+        }
+    }
 
     /**
      * Sorts lenses by a particular property and updates the view

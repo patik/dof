@@ -58,6 +58,7 @@ module.exports = function(grunt) {
                 files: ['scss/**/*.scss'],
                 tasks: ['sass'],
                 options: {
+                    // <script src="//localhost:35729/livereload.js"></script>
                     livereload: true
                 }
             },
