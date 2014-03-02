@@ -1,0 +1,202 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en"><![endif]-->
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Depth of Field Calculator &amp; Comparison Tool</title>
+    <link rel="stylesheet" href="css/dfc.css">
+    <script src="js/vendor/modernizr.js"></script>
+    <meta name="author" content="Craig Patik">
+    <meta name="description" content="Depth of field calculator and camera lens comparison tool">
+    <meta name="keywords" content="depth of field, camera, lens, photography, calculator, compare, comparison">
+    <meta name="author" content="Craig Patik">
+    <link rel="canonical" href="http://patik.com/dof/">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+</head>
+<body>
+    <div class="row" role="header">
+        <div class="small-12 columns">
+            <h1 class="subheader"><a href="http://patik.com/dof/">Depth of Field Calculator &amp; Comparison Tool</a></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-8 columns">
+            <p>Compare multiple camera lenses side-by-side</p>
+        </div>
+        <div class="small-12 medium-4 columns text-right">
+            <div class="row">
+                <div class="small-8 columns">
+                    <label for="distance">Distance to subject (ft)</label>
+                </div>
+                <div class="small-4 columns">
+                    <input type="number" minval="0" id="distance" class="distance" value="20" tabindex="1">
+                </div>
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <div class="row"><div class="small-12"><p>This tool requires <a href="http://enable-javascript.com/">JavaScript</a></p></div></div>
+    </noscript>
+    <div role="main" class="row">
+        <div class="small-12 columns lens table-header">
+            <div class="inputs">
+                <div class="row">
+                    <div class="small-2 columns">
+                        Name
+                    </div>
+                    <div class="small-2 columns">
+                        Focal length
+                    </div>
+                    <div class="small-2 columns">
+                        Aperture
+                    </div>
+                    <div class="small-2 columns">
+                        Sensor
+                    </div>
+                    <div class="small-2 columns">
+                        Depth of Field
+                    </div>
+                    <div class="small-2 columns">
+                        Actions
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="small-12 medium-6 large-4 columns add-lens ghost">
+            <div>Add<br>Lens</div>
+        </div>
+    </div>
+    <div role="footer" class="row">
+        <div class="small-12 medium-4 columns text-center">
+            <p><a href="#" class="comparison-link">Link to this comparison</a></p>
+        </div>
+        <div class="small-12 medium-4 columns text-center">
+            <p><a href="docs/">About this tool</a></p>
+        </div>
+        <div class="small-12 medium-4 columns text-center">
+            <p><a href="https://github.com/patik/dof">View on GitHub</a></p>
+        </div>
+    </div>
+    <script id="lens-template" type="text/x-handlebars-template">
+        <form method="post" action="index.html" class="small-12 columns lens table" data-lens-id="{{index}}">
+            <div class="inputs">
+                <div class="row">
+                    <div class="small-2 columns">
+                        <h3 data-lens-id="{{index}}" class="name" contenteditable>{{name}}</h3>
+                    </div>
+                    <div class="small-2 columns">
+                        <label class="hide" for="focalLength-{{index}}">Focal length</label>
+                        <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
+                        <span class="focal-length-equiv-wrapper"><span class="focal-length-equiv-title">35mm equiv:</span><span class="focalLengthEquiv"></span></span>
+                    </div>
+                    <div class="small-2 columns">
+                        <label class="hide" for="aperture-{{index}}">Aperture</label>
+                        <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
+                    </div>
+                    <div class="small-2 columns">
+                        <label class="hide" for="sensor-{{index}}">Sensor</label>
+                        <select data-lens-id="{{index}}" id="sensor-{{index}}" class="sensor" tabindex="1"></select>
+                    </div>
+                    <div class="small-2 columns">
+                        <dl class="dl-horizontal outputs collapsed">
+                            <dt class="dof-display hide"><span>Depth of Field</span></dt>
+                            <dd class="dof-display"><span class="dof"></span> <button class="tiny radius secondary output-toggle"><span>&#9650;</span><span>&#9660;</span></button></dd>
+
+                            <dt><abbr title="Circle of confusion">C.o.C.</abbr></dt>
+                            <dd class="coc"></dd>
+
+                            <dt>Hyperfocal distance</dt>
+                            <dd class="hf"></dd>
+
+                            <dt>Near limit</dt>
+                            <dd class="neardist"></dd>
+
+                            <dt>Far limit</dt>
+                            <dd class="fardist"></dd>
+
+                            <dt>1/8th depth of field</dt>
+                            <dd class="eighthDof"></dd>
+                        </dl>
+                    </div>
+                    <div class="small-2 columns action-buttons">
+                        <a data-lens-id="{{index}}" class="duplicate" role="button" href>Copy</button>
+                        <a data-lens-id="{{index}}" class="delete" role="button" href>Delete</a>
+                        <a data-lens-id="{{index}}" class="reset" role="button" href>Reset</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form method="post" action="index.html" class="small-12 medium-6 large-4 columns lens" data-lens-id="{{index}}">
+            <div class="inputs">
+                <div class="row">
+                    <div class="small-9 columns">
+                        <h3 data-lens-id="{{index}}" class="name" contenteditable>{{name}}</h3>
+                    </div>
+                    <div class="small-3 columns text-right middle">
+                        <button data-lens-id="{{index}}" class="button radius secondary tiny duplicate">Copy</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-8 columns">
+                        <label for="focalLength-{{index}}">Focal length</label>
+                    </div>
+                    <div class="small-4 columns">
+                        <label for="aperture-{{index}}">Aperture</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-8 columns">
+                        <div class="row">
+                            <div class="small-6 columns">
+                                <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
+                            </div>
+                            <div class="small-6 columns focal-length-equiv-wrapper">
+                                <span class="focal-length-equiv-title">35mm equiv:</span><span class="focalLengthEquiv"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small-4 columns">
+                        <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-3 columns">
+                        <label for="sensor-{{index}}">Sensor</label>
+                    </div>
+                    <div class="small-9 columns">
+                        <select data-lens-id="{{index}}" id="sensor-{{index}}" class="sensor" tabindex="1"></select>
+                    </div>
+                </div>
+            </div>
+            <dl class="dl-horizontal outputs collapsed">
+                <dt class="dof-display"><span>Depth of Field</span></dt>
+                <dd class="dof-display"><span class="dof"></span> <button class="tiny radius secondary output-toggle"><span>&#9650;</span><span>&#9660;</span></button></dd>
+
+                <dt><abbr title="Circle of confusion">C.o.C.</abbr></dt>
+                <dd class="coc"></dd>
+
+                <dt>Hyperfocal distance</dt>
+                <dd class="hf"></dd>
+
+                <dt>Near limit</dt>
+                <dd class="neardist"></dd>
+
+                <dt>Far limit</dt>
+                <dd class="fardist"></dd>
+
+                <dt>1/8th depth of field</dt>
+                <dd class="eighthDof"></dd>
+            </dl>
+            <div class="action-buttons">
+                <a data-lens-id="{{index}}" class="delete" href>Delete</a>
+                <a data-lens-id="{{index}}" class="reset" href>Reset</a>
+            </div>
+        </form>
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

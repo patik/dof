@@ -83,7 +83,14 @@
             margin-left: 1rem;
         }
     }
+
+    .table & {
+        position: static;
+        bottom: auto;
+        left: auto;
+    }
 }
+
 
 .ghost {
     border: 1rem dashed #ddd;
