@@ -53,8 +53,13 @@
 }
 
 .dof-display {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: bold;
+
+    .table-row & {
+        font-family: Menlo, Consolas, monospace;
+        font-size: 1rem;
+    }
 }
 
 .dof {

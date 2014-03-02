@@ -24,10 +24,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="small-12 medium-8 columns">
+        <div class="small-12 medium-7 columns">
             <p>Compare multiple camera lenses side-by-side</p>
         </div>
-        <div class="small-12 medium-4 columns text-right">
+        <div class="small-12 medium-5 columns text-right">
             <div class="row">
                 <div class="small-8 columns">
                     <label for="distance">Distance to subject (ft)</label>
@@ -89,9 +89,15 @@
                         <h3 data-lens-id="{{index}}" class="name" contenteditable>{{name}}</h3>
                     </div>
                     <div class="small-2 columns">
-                        <label class="hide" for="focalLength-{{index}}">Focal length</label>
-                        <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
-                        <span class="focal-length-equiv-wrapper"><span class="focal-length-equiv-title">35mm equiv:</span><span class="focalLengthEquiv"></span></span>
+                        <div class="row">
+                            <div class="small-6 columns">
+                                <label class="hide" for="focalLength-{{index}}">Focal length</label>
+                                <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
+                            </div>
+                            <div class="small-6 columns">
+                                <span class="focal-length-equiv-wrapper"><span class="focal-length-equiv-title">35mm equiv:</span><span class="focalLengthEquiv"></span></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="small-2 columns">
                         <label class="hide" for="aperture-{{index}}">Aperture</label>
