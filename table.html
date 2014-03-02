@@ -82,7 +82,7 @@
         </div>
     </div>
     <script id="lens-template" type="text/x-handlebars-template">
-        <form method="post" action="index.html" class="small-12 columns lens table-row" data-lens-id="{{index}}">
+        <form method="post" action="index.html" class="small-12 columns lens" data-lens-id="{{index}}">
             <div class="inputs">
                 <div class="row">
                     <div class="small-2 columns">
@@ -91,7 +91,7 @@
                     <div class="small-2 columns">
                         <div class="row">
                             <div class="small-6 columns">
-                                <label class="hide" for="focalLength-{{index}}">Focal length</label>
+                                <label class="hide-for-table" for="focalLength-{{index}}">Focal length</label>
                                 <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
                             </div>
                             <div class="small-6 columns">
@@ -100,16 +100,16 @@
                         </div>
                     </div>
                     <div class="small-2 columns">
-                        <label class="hide" for="aperture-{{index}}">Aperture</label>
+                        <label class="hide-for-table" for="aperture-{{index}}">Aperture</label>
                         <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
                     </div>
                     <div class="small-2 columns">
-                        <label class="hide" for="sensor-{{index}}">Sensor</label>
+                        <label class="hide-for-table" for="sensor-{{index}}">Sensor</label>
                         <select data-lens-id="{{index}}" id="sensor-{{index}}" class="sensor" tabindex="1"></select>
                     </div>
                     <div class="small-2 columns">
                         <dl class="dl-horizontal outputs collapsed">
-                            <dt class="dof-display hide"><span>Depth of Field</span></dt>
+                            <dt class="dof-display hide-for-table"><span>Depth of Field</span></dt>
                             <dd class="dof-display"><span class="dof"></span> <button class="tiny radius secondary output-toggle"><span>&#9650;</span><span>&#9660;</span></button></dd>
 
                             <dt><abbr title="Circle of confusion">C.o.C.</abbr></dt>
