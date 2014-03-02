@@ -426,6 +426,7 @@ var DFC = (function _DFC() {
         $container.find('.hf').text(result.hf);
         $container.find('.neardist').text(result.near);
         $container.find('.fardist').text(result.far);
+        $container.find('.focalLengthEquiv').text(result.focalLengthEquiv + 'mm');
     }
 
     // Init on document ready

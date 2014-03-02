@@ -69,18 +69,25 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-6 columns">
+                    <div class="small-8 columns">
                         <label for="focalLength-{{index}}">Focal length</label>
                     </div>
-                    <div class="small-6 columns">
+                    <div class="small-4 columns">
                         <label for="aperture-{{index}}">Aperture</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-6 columns">
-                        <input data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" class="focalLength" tabindex="1">
+                    <div class="small-8 columns">
+                        <div class="row">
+                            <div class="small-6 columns">
+                                <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
+                            </div>
+                            <div class="small-6 columns focal-length-equiv-wrapper">
+                                <span class="focal-length-equiv-title">35mm equiv:</span><span class="focalLengthEquiv"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="small-6 columns">
+                    <div class="small-4 columns">
                         <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
                     </div>
                 </div>

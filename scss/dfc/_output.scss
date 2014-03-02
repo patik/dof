@@ -100,3 +100,28 @@ dd {
         }
     }
 }
+
+.focal-length-equiv-title {
+    font-size: 0.6rem;
+}
+
+.focalLengthEquiv {
+    display: block;
+    font-size: 0.8rem;
+}
+
+@media (min-width: 26em) and (max-width: 40em) {
+    .focal-length-equiv-title,
+    .focalLengthEquiv {
+        display: inline-block;
+        margin-top: 0.6rem;
+    }
+
+    .focal-length-equiv-title {
+        font-size: 0.8rem;
+    }
+
+    .focalLengthEquiv {
+        margin-left: 0.5rem;
+    }
+}
