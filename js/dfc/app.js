@@ -175,8 +175,6 @@ var DFC = (function _DFC() {
                 focalLength: lens.focalLength
             };
 
-        console.log(template(context));
-
         return $(template(context));
     }
 
