@@ -11,7 +11,7 @@ var DFC = (function _DFC() {
         $body = null,
         $main = null,
         $distance = null,
-        $addNew = null,
+        $addLens = null,
         $comparisonLinks = null;
 
     /**
@@ -22,7 +22,7 @@ var DFC = (function _DFC() {
         $main = $('[role="main"]');
         $body = $('body');
         $distance = $('.distance');
-        $addNew = $('.add-new');
+        $addLens = $('.add-lens');
         $comparisonLinks = $('.comparison-link');
 
         //To do: watch hashchange(?) event
@@ -175,6 +175,8 @@ var DFC = (function _DFC() {
                 focalLength: lens.focalLength
             };
 
+        console.log(template(context));
+
         return $(template(context));
     }
 
@@ -207,7 +209,7 @@ var DFC = (function _DFC() {
 
     function _addLensUIToPage($config, lens) {
         // To do: add `div.row` as appropriate?
-        $config.insertBefore($addNew);
+        $config.insertBefore($addLens);
 
         // Populate dropdowns
         $config.find('.sensor').html(DFC.sensor.getHTML(lens.sensor));
