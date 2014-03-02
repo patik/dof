@@ -42,7 +42,7 @@
 // Half-width lens blocks for medium viewports (since the `medium` grid is larger than the `table` grid)
 @media only screen and (min-width: 40.063em) and (max-width: $bp-table-width-max) {
     .lens.small-12,
-    .ghost.small-12 {
+    .add-new.small-12 {
         width: 48%;
         margin-left: 1%;
         margin-right: 1%;
@@ -115,7 +115,7 @@
     }
 }
 
-.ghost {
+.add-new {
     border: 1rem dashed #ddd;
     background: transparent;
     border-radius: 0.375rem;
@@ -148,7 +148,7 @@
         border-width: 0.2rem;
 
         div {
-            margin: 0 auto;
+            margin: 0.25rem auto;
 
             span {
                 display: inline;

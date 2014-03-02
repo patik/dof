@@ -60,6 +60,10 @@ p a {
 
     @media #{$bp-table} {
         display: block;
+        min-height: 2rem;
+        line-height: normal;
+        vertical-align: middle;
+        font-weight: 600;
     }
 }
 

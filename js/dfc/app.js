@@ -11,7 +11,7 @@ var DFC = (function _DFC() {
         $body = null,
         $main = null,
         $distance = null,
-        $ghost = null,
+        $addNew = null,
         $comparisonLinks = null;
 
     /**
@@ -22,7 +22,7 @@ var DFC = (function _DFC() {
         $main = $('[role="main"]');
         $body = $('body');
         $distance = $('.distance');
-        $ghost = $('.ghost');
+        $addNew = $('.add-new');
         $comparisonLinks = $('.comparison-link');
 
         //To do: watch hashchange(?) event
@@ -207,7 +207,7 @@ var DFC = (function _DFC() {
 
     function _addLensUIToPage($config, lens) {
         // To do: add `div.row` as appropriate?
-        $config.insertBefore($ghost);
+        $config.insertBefore($addNew);
 
         // Populate dropdowns
         $config.find('.sensor').html(DFC.sensor.getHTML(lens.sensor));
