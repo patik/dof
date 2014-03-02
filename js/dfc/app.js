@@ -283,6 +283,11 @@ var DFC = (function _DFC() {
         $(this).closest('.lens').find('.outputs').toggleClass('collapsed');
     }
 
+    /**
+     * Updates aspects of the page when the UI has changed
+     *
+     * @param   {Event}  evt   Custom event
+     */
     function _onUIUpdated(evt) {
         // Hide 'delete' link if there's only one lens
         if ($('.lens').length === 1) {
@@ -296,6 +301,11 @@ var DFC = (function _DFC() {
         _updateHash();
     }
 
+    /**
+     * Updates each lens with a new distance value
+     *
+     * @param   {Event}  evt   Change event
+     */
     function _onChangeDistance(evt) {
         distance = parseFloat($distance.val());
 
@@ -306,6 +316,11 @@ var DFC = (function _DFC() {
         _updateHash();
     }
 
+    /**
+     * Updates a lens when one of its input values changes
+     *
+     * @param   {Event}  evt   Change, blur, or key event
+     */
     function _onChangeLensValue(evt) {
         var $input = $(this),
             propRegex = /\b(name|focalLength|aperture|sensor)\b/,
@@ -349,6 +364,14 @@ var DFC = (function _DFC() {
         _updateHash();
     }
 
+    /**
+     * Updates a single property for a Lens object
+     *
+     * @param   {String}  id    Lens ID
+     * @param   {String}  prop  Property name
+     * @param   {Mixed}  val    New value
+     * @return  {DFC.Lens}      Updated lens object
+     */
     function _updateLens(id, prop, val) {
         var lens = _getLensById(id);
 
@@ -368,6 +391,12 @@ var DFC = (function _DFC() {
         return lens;
     }
 
+    /**
+     * Creates a new Lens object
+     *
+     * @param   {String}  id  Lens ID
+     * @return  {DFC.Lens}    Lens object
+     */
     function _createNewLens(id) {
         var lens;
 
@@ -393,6 +422,12 @@ var DFC = (function _DFC() {
         return lens;
     }
 
+    /**
+     * Finds a Lens object based on its ID
+     *
+     * @param   {String}  id  Lens ID to search for
+     * @return  {DFC.Lens}    Lens object
+     */
     function _getLensById(id) {
         var foundLens = null;
 
@@ -408,6 +443,9 @@ var DFC = (function _DFC() {
 
     /**
      * Update display with calculated values
+     *
+     * @param   {String}  id          Lens ID
+     * @param   {jQuery}  $container  Container jQuery element
      */
     function _updateOuput(id, $container) {
         var lens, result;
@@ -442,16 +480,23 @@ var DFC = (function _DFC() {
     // Sorting //
     /////////////
 
+    /**
+     * Settings for the current/last column to be sorted
+     * @type  {Object}
+     */
     _sorting.settings = {};
 
+    /**
+     * Sorts lenses by a particular property and updates the view
+     *
+     * @param   {Event}  evt   Click event
+     */
     function _sortLenses(evt) {
         var $targ = $(evt.target);
 
         // Collect settings
         _sorting.settings.type = $targ.data('sort');
         _sorting.settings.dir = $targ.attr('data-sort-dir');
-
-        console.log('before: ', $targ.attr('data-sort-dir'));
 
         // Sort array
         lenses.sort(_sorting.compare);
@@ -471,13 +516,21 @@ var DFC = (function _DFC() {
         else {
             $targ.attr('data-sort-dir', 'desc');
         }
-        console.log('after: ', $targ.attr('data-sort-dir'));
 
         // Move arrow to this column
         $('.sorted').removeClass('sorted');
         $targ.addClass('sorted');
     }
 
+    /**
+     * Proxy function for comparing two lenses
+     * Makes some adjustments to the values being compared
+     *     then calls the appropriate less-than function
+     *
+     * @param   {DFC.Lens}  a  First lens
+     * @param   {DFC.Lens}  b  Second lens
+     * @return  {Number}       Result of comparison
+     */
     _sorting.compare = function _sorting_compare(a, b) {
         // Get the appropriate values to compare
         if (_sorting.settings.type === 'sensor') {
@@ -501,6 +554,13 @@ var DFC = (function _DFC() {
         }
     };
 
+    /**
+     * Less-than function for sorting descending
+     *
+     * @param   {DFC.Lens}  a  First lens
+     * @param   {DFC.Lens}  b  Second les
+     * @return  {Number}       Result of comparison
+     */
     _sorting.compareDesc = function _sorting_compareDesc(a, b) {
         if (a < b) {
             return -1;
@@ -513,6 +573,13 @@ var DFC = (function _DFC() {
         }
     };
 
+    /**
+     * Less-than function for sorting ascending
+     *
+     * @param   {DFC.Lens}  a  First lens
+     * @param   {DFC.Lens}  b  Second lens
+     * @return  {Number}       Result of comparison
+     */
     _sorting.compareAsc = function _sorting_compareAsc(a, b) {
         if (a > b) {
             return -1;
