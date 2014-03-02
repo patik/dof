@@ -16,7 +16,7 @@
     <meta name="MobileOptimized" content="320">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <!--<script src="//localhost:35729/livereload.js"></script>-->
+    <!----><script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
     <div class="row" role="header">
@@ -87,7 +87,7 @@
                     <div class="small-12 table-2 columns">
                         <h3 data-lens-id="{{index}}" class="name" contenteditable>{{name}}</h3>
                     </div>
-                    <div class="small-8 table-2 columns">
+                    <div class="small-9 table-2 columns">
                         <div class="row">
                             <div class="small-12 columns">
                                 <div class="row hide-for-table">
@@ -96,17 +96,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="small-6 columns">
+                                    <div class="small-8 columns">
                                         <input class="focalLength" data-lens-id="{{index}}" value="{{focalLength}}" type="number" id="focalLength-{{index}}" tabindex="1">
                                     </div>
-                                    <div class="small-6 columns">
-                                        <span class="focal-length-equiv-wrapper"><span class="focal-length-equiv-title">35mm equiv:</span><span class="focalLengthEquiv"></span></span>
+                                    <div class="small-4 columns">
+                                        <span class="focal-length-equiv-wrapper"><span class="focalLengthEquiv"></span><span class="focal-length-equiv-title">equivalent</span></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="small-4 table-2 columns">
+                    <div class="small-3 table-2 columns">
                         <label class="hide-for-table" for="aperture-{{index}}">Aperture</label>
                         <select data-lens-id="{{index}}" id="aperture-{{index}}" class="aperture" tabindex="1"></select>
                     </div>
