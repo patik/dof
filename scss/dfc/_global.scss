@@ -6,6 +6,10 @@ html, body, input, select, button {
 
 html, body {
     background: #efefef;
+
+    @media #{$bp-table} {
+        background: #fff;
+    }
 }
 
 [class*="column"] + [class*="column"]:last-child {
