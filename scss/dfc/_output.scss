@@ -1,6 +1,6 @@
 .outputs {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
 
     [readonly] {
         border: none;
@@ -29,6 +29,8 @@
     }
 
     &.collapsed {
+        margin-bottom: 1.75rem;
+
         // Hide all but first row
         dt:not(.dof-display),
         dd:not(.dof-display) {
@@ -41,6 +43,18 @@
             &:first-child {
                 display: none;
             }
+        }
+
+        @media #{$bp-table} {
+            margin-bottom: 0
+        }
+    }
+
+    &.row {
+        margin-bottom: 1.6rem;
+
+        @media #{$bp-table} {
+            margin-bottom: 0
         }
     }
 

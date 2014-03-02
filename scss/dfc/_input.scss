@@ -70,41 +70,48 @@
 }
 
 // Action buttons
-[role="button"] {
+.action-buttons {
     position: absolute;
-    bottom: 0.5em;
+    bottom: 0.25em;
     left: 0.5em;
-    font-size: 0.75rem;
-    text-decoration: underline;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 
-    &:hover,
-    &:focus,
-    &:active {
-        text-decoration: none;
-    }
+    a {
+        font-size: 1rem;
+        text-decoration: underline;
+        margin-right: 1rem;
 
-    &.delete {
-        color: darken(#bd240d, 10%);
-    }
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
 
-    &.reset {
-        margin-left: 1rem;
+        &.delete {
+            color: darken(#bd240d, 10%);
+        }
     }
 
     @media #{$bp-table} {
         position: static;
         bottom: auto;
         left: auto;
-        font-size: 0.9rem;
-        margin-right: 0.5rem;
 
-        &.reset {
-            margin-left: 0;
+        a {
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
         }
+    //     font-size: 0.9rem;
+    //     margin-right: 0.5rem;
 
-        &:last-child {
-            margin-right: 0;
-        }
+    //     &.reset {
+    //         margin-left: 0;
+    //     }
+
+    //     &:last-child {
+    //         margin-right: 0;
+    //     }
     }
 }
 
