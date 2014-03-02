@@ -447,8 +447,11 @@ var DFC = (function _DFC() {
     function _sortLenses(evt) {
         var $targ = $(evt.target);
 
+        // Collect settings
         _sorting.settings.type = $targ.data('sort');
-        _sorting.settings.dir = $targ.data('sort-dir');
+        _sorting.settings.dir = $targ.attr('data-sort-dir');
+
+        console.log('before: ', $targ.attr('data-sort-dir'));
 
         // Sort array
         lenses.sort(_sorting.compare);
@@ -463,11 +466,16 @@ var DFC = (function _DFC() {
 
         // Change direction for next time
         if (_sorting.settings.dir === 'desc') {
-            $targ.data('sort-dir', 'asc');
+            $targ.attr('data-sort-dir', 'asc');
         }
         else {
-            $targ.data('sort-dir', 'desc');
+            $targ.attr('data-sort-dir', 'desc');
         }
+        console.log('after: ', $targ.attr('data-sort-dir'));
+
+        // Move arrow to this column
+        $('.sorted').removeClass('sorted');
+        $targ.addClass('sorted');
     }
 
     _sorting.compare = function _sorting_compare(a, b) {
@@ -486,11 +494,9 @@ var DFC = (function _DFC() {
         }
 
         if (_sorting.settings.dir === 'desc') {
-            console.log('descending ', a, ' and ', b);
             return _sorting.compareDesc(a, b);
         }
         else {
-            console.log(' ascending ', a, ' and ', b);
             return _sorting.compareAsc(a, b);
         }
     };
@@ -502,8 +508,7 @@ var DFC = (function _DFC() {
         else if (a > b) {
             return 1;
         }
-        else {
-            // a == b
+        else { // a == b
             return 0;
         }
     };
@@ -515,8 +520,7 @@ var DFC = (function _DFC() {
         else if (a < b) {
             return 1;
         }
-        else {
-            // a == b
+        else { // a == b
             return 0;
         }
     };
