@@ -6,6 +6,7 @@ DFC.Lens = function _Lens(id) {
     this.aperture = 'f/2';
     this.sensor = 'mft';
     this.focalLength = 35;
+    this.dof = -1;
 
     // Resolve ID
     if (typeof id === 'number' && id > 0) {
@@ -68,6 +69,7 @@ DFC.Dof = function _Dof(sensor, focalLength, aperture, dstnce) {
     }
 
     // Convert for display
+    this.dofFloat = dof;
     this.dof = _mmToFeet(dof);
     this.eighthDof = _mmToFeet(dof / 8);
     this.hf = _mmToFeet(hf);
