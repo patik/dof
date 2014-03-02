@@ -1,5 +1,3 @@
-@import "../foundation/components/_grid";
-
 @media #{$bp-table} {
     .table-header > .row {
         display: block;
@@ -12,21 +10,21 @@
 
 @media #{$bp-table-max} {
     [role="main"] {
-        margin-top: 1.6rem;
+        margin-top: 1.8rem;
         position: relative;
     }
 
     .sort-toggle {
         position: absolute;
         top: -2.4rem;
-        left: 0.5rem;
+        right: 0.5rem;
 
         // Override Foundation button styles
         &.button {
-            padding-top: 0.5rem; // 0.875rem;
-            padding-right: 2rem; // 1.75rem;
-            padding-bottom: 0.4rem; // 0.9375rem;
-            padding-left: 0.75rem; // 1.75rem;
+            padding-top: 0.5rem;
+            padding-right: 2rem;
+            padding-bottom: 0.4rem;
+            padding-left: 0.75rem;
         }
 
         &::before {
@@ -34,7 +32,7 @@
             position: absolute;
             top: 0.7rem;
             right: 0.75rem;
-            @include css-triangle(6px, #444, top);
+            @include css-triangle(6px, #efefef, top);
         }
     }
 
@@ -45,11 +43,12 @@
             display: block;
             position: absolute;
             top: -0.2rem;
-            left: 1.5rem;
+            right: 1.5rem;
             max-width: 12rem;
             background-color: #eee;
             border: 1px solid #ddd;
             border-radius: 0.25rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
             z-index: 2;
 
             .columns {
