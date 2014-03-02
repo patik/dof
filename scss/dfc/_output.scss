@@ -44,7 +44,7 @@
         }
     }
 
-    .table-row & {
+    @media #{$bp-table} {
         margin-bottom: 0;
 
         dt,
@@ -58,13 +58,13 @@
     font-size: 1.25rem;
     font-weight: bold;
 
-    .table-row & {
-        font-family: Menlo, Consolas, monospace;
+    @media #{$bp-table} {
         font-size: 1rem;
     }
 }
 
 .dof {
+    font-family: Menlo, Consolas, monospace;
     color: green;
 }
 
@@ -114,7 +114,7 @@ dd {
         }
     }
 
-    .table-row & {
+    @media #{$bp-table} {
         dt {
             width: auto;
         }

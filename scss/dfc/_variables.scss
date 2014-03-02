@@ -1,3 +1,6 @@
 $input-column-padding: 0.5rem !default;
 
-$bp-table: "(min-width: 48em)" !default;
+$bp-table-width: 48em !default;
+$bp-table-width-max: 47.9375em !default;
+
+$bp-table: "(min-width: #{$bp-table-width})" !default;
