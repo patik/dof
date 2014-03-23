@@ -92,7 +92,9 @@ var DFC = (function _DFC() {
         });
 
         $chart = $('#dofChart');
-        _chart.create();
+
+        // Needed to avoid race condition, see http://www.chartjs.org/docs/#generalIssues-browserSupport
+        $(window).on('load', _chart.create);
     }
 
     _chart.data = {
@@ -103,14 +105,14 @@ var DFC = (function _DFC() {
                 strokeColor : "rgba(220,220,220,1)",
                 pointColor : "rgba(220,220,220,1)",
                 pointStrokeColor : "#fff",
-                data : [5,10,15,20,25,30,35]
+                data : [5,10,15,20,25,30,35,40,45,50]
             },
             {
                 fillColor : "rgba(151,187,205,0.5)",
                 strokeColor : "rgba(151,187,205,1)",
                 pointColor : "rgba(151,187,205,1)",
                 pointStrokeColor : "#fff",
-                data : [5,15,25,35,45,55,65]
+                data : [5,15,25,35,45,55,65,75,85,95]
             }
         ]
     };
@@ -121,7 +123,7 @@ var DFC = (function _DFC() {
         scaleSteps: null, //Number - The number of steps in a hard coded scale. ** Required if scaleOverride is true **
         scaleStepWidth: null, //Number - The value jump in the hard coded scale
         scaleStartValue: null, //Number - The scale starting value
-        scaleLineColor: 'rgba(0,0,0,.1)', //String - Colour of the scale line
+        scaleLineColor: 'rgba(0, 0, 0, 0.1)', //String - Colour of the scale line
         scaleLineWidth: 1, //Number - Pixel width of the scale line
         scaleShowLabels: true, //Boolean - Whether to show labels on the scale
         scaleLabel: '<%=value%>', //Interpolated JS string - can access value
@@ -131,9 +133,6 @@ var DFC = (function _DFC() {
         scaleShowGridLines: true, //Boolean - Whether grid lines are shown across the chart
         scaleGridLineColor: 'rgba(0,0,0,.05)', //String - Colour of the grid lines
         scaleGridLineWidth: 1,  //Number - Width of the grid lines
-        bezierCurve: true, //Boolean - Whether the line is curved between points
-        pointDot: true, //Boolean - Whether to show a dot for each point
-        pointDotRadius: 3, //Number - Radius of each point dot in pixels
         pointDotStrokeWidth: 1, //Number - Pixel width of point dot stroke
         datasetStroke: true, //Boolean - Whether to show a stroke for datasets
         datasetStrokeWidth: 2, //Number - Pixel width of dataset stroke
@@ -143,11 +142,18 @@ var DFC = (function _DFC() {
         onAnimationComplete: null, //Function - Fires when the animation is complete
 
         // Customized
+        bezierCurve: false, //Boolean - Whether the line is curved between points
+        pointDot: true, //Boolean - Whether to show a dot for each point
+        pointDotRadius: 2, //Number - Radius of each point dot in pixels
         scaleFontFamily: 'Open Sans', //String - Scale label font declaration for the scale label
         datasetFill: false //Boolean - Whether to fill the dataset with a colour
     };
 
-    _chart.create = function _chart_creat() {
+    _chart.create = function _chart_create() {
+        dofChart = new Chart($chart.get(0).getContext('2d')).Line(_chart.data, _chart.options);
+    };
+
+    _chart.update = function _chart_update() {
         dofChart = new Chart($chart.get(0).getContext('2d')).Line(_chart.data, _chart.options);
     };
 

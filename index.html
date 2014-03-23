@@ -16,6 +16,9 @@
     <meta name="MobileOptimized" content="320">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
+    <!--[if lte IE 8]>
+        <script src="js/vendor/excanvas.min.js"></script>
+    <![endif]-->
 </head>
 <body>
     <div class="row" role="header">
@@ -69,7 +72,7 @@
             <div><span>Add</span><span>Lens</span></div>
         </div>
         <div class="chart-container">
-            <canvas id="dofChart" width="400" height="400"></canvas>
+            <canvas id="dofChart"></canvas>
         </div>
     </div>
     <div role="footer" class="row">
