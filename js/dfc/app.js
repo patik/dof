@@ -101,7 +101,7 @@ var DFC = (function _DFC() {
             text: '' // Have to set an empty string to avoid rendering a generic title
         },
         xAxis: {
-            categories: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+            categories: ["5'", "10'", "15'", "20'", "25'", "30'", "35'", "40'", "45'", "50'"],
             title: {
                 text: 'Distance to subject (feet)'
             }
@@ -131,10 +131,10 @@ var DFC = (function _DFC() {
 
         _chart.timer = setTimeout(_chart.clearTimer, 1000);
 
+        distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
         // Clear existing data
         _chart.data.series = [];
-
-        distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
         // Create data set for each lens
         lenses.forEach(function _chart_update_lenses(lens, i) {
@@ -628,12 +628,10 @@ var DFC = (function _DFC() {
 
         // Click on menu item
         if ($targ.closest('.row.expanded').length) {
-            console.log('Click on menu item');
             _sortToggle(evt);
         }
         // Clicked outside the menu
         else if (!$targ.closest('.sort-toggle').length) {
-            console.log('Clicked outside the menu');
             // Collapse menu
             $('.sort-toggle').removeClass('expanded');
             $sortOptions.removeClass('expanded');
