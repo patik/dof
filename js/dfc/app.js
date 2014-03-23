@@ -92,98 +92,76 @@ var DFC = (function _DFC() {
             lens = _getNameFromUI(lens);
         });
 
-        $chart = $('#dofChart');
-
-        // Needed to avoid race condition, see http://www.chartjs.org/docs/#generalIssues-browserSupport
-        $(window).on('load', _chart.update);
+        // $chart = $('#dofChart');
+        _chart.update();
     }
 
     _chart.data = {
-        labels: ["5'", "10'", "15'", "20'", "25'", "30'", "35'", "40'", "45'", "50'"],
-        datasets: [
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '' // 'Fruit Consumption'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+            title: {
+                text: '' // 'Fruit eaten'
+            }
+        },
+        series: [
             {
-                fillColor : "rgba(220,220,220,0.5)",
-                strokeColor : "rgba(220,220,220,1)",
-                pointColor : "rgba(220,220,220,1)",
-                pointStrokeColor : "#fff",
-                data : [] // [5,10,15,20,25,30,35,40,45,50]
+                name: 'Jane',
+                data: [1, 0, 4]
             },
             {
-                fillColor : "rgba(151,187,205,0.5)",
-                strokeColor : "rgba(151,187,205,1)",
-                pointColor : "rgba(151,187,205,1)",
-                pointStrokeColor : "#fff",
-                data : [] // [5,15,25,35,45,55,65,75,85,95]
+                name: 'John',
+                data: [5, 7, 3]
             }
         ]
     };
 
     _chart.options = {
-        scaleOverlay: false, //Boolean - If we show the scale above the chart data
-        scaleOverride: false, //Boolean - If we want to override with a hard coded scale
-        scaleSteps: null, //Number - The number of steps in a hard coded scale. ** Required if scaleOverride is true **
-        scaleStepWidth: null, //Number - The value jump in the hard coded scale
-        scaleStartValue: null, //Number - The scale starting value
-        scaleLineColor: 'rgba(0, 0, 0, 0.1)', //String - Colour of the scale line
-        scaleLineWidth: 1, //Number - Pixel width of the scale line
-        scaleShowLabels: true, //Boolean - Whether to show labels on the scale
-        scaleLabel: '<%=value%>', //Interpolated JS string - can access value
-        scaleFontSize: 12, //Number - Scale label font size in pixels
-        scaleFontStyle: 'normal', //String - Scale label font weight style
-        scaleFontColor: '#666',     //String - Scale label font colour
-        scaleShowGridLines: true, //Boolean - Whether grid lines are shown across the chart
-        scaleGridLineColor: 'rgba(0,0,0,.05)', //String - Colour of the grid lines
-        scaleGridLineWidth: 1,  //Number - Width of the grid lines
-        pointDotStrokeWidth: 1, //Number - Pixel width of point dot stroke
-        datasetStroke: true, //Boolean - Whether to show a stroke for datasets
-        datasetStrokeWidth: 2, //Number - Pixel width of dataset stroke
-        animation: true, //Boolean - Whether to animate the chart
-        animationSteps: 60, //Number - Number of animation steps
-        animationEasing: 'easeOutQuart', //String - Animation easing effect
-        onAnimationComplete: null, //Function - Fires when the animation is complete
-
-        // Customized
-        bezierCurve: false, //Boolean - Whether the line is curved between points
-        pointDot: true, //Boolean - Whether to show a dot for each point
-        pointDotRadius: 2, //Number - Radius of each point dot in pixels
-        scaleFontFamily: 'Open Sans', //String - Scale label font declaration for the scale label
-        datasetFill: false //Boolean - Whether to fill the dataset with a colour
     };
 
     _chart.draw = function _chart_create() {
-        var $parent = $('#dofChart').parent();
-        $parent.empty();
-        $parent.append(
-            $('<canvas/>').attr('id', 'dofChart')
-        );
-
-        dofChart = new Chart($('#dofChart').get(0).getContext('2d')).Line(_chart.data, _chart.options);
+        $('#dofChart').highcharts(_chart.data);
     };
 
     _chart.update = function _chart_update() {
         var distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
-        // Create datasets
-        lenses.forEach(function (lens, i) {
-            var values = [];
+        // Clear existing data
+        _chart.data.series = [];
 
-            console.info('Lens: ', lens);
+        // Create data set for each lens
+        lenses.forEach(function (lens, i) {
+            var obj = {
+                    name: lens.name,
+                    data: []
+                };
+
+            // Collect dof for each distance
             distances.forEach(function (distance) {
                 var dof = _getDof(lens, distance),
+                    regex = /(\d+)\'\s(\d+\.\d+)\"/,
                     numeric, dec;
 
                 // Convert to decimal values
-                numeric = /(\d+)\'\s(\d+\.\d+)\"/.exec(dof);
-                dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
+                if (regex.test(dof)) {
+                    numeric = regex.exec(dof);
+                    dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
 
-                console.log('dof at ' + distance + 'ft is ', dof, ' or ', dec);
-
-                values.push(dec);
+                    obj.data.push(dec);
+                }
+                else {
+                    obj.data.push(0);
+                }
             });
 
-            console.log('------------');
-
-            _chart.data.datasets[i].data = values;
+            _chart.data.series.push(obj);
         });
 
         // Update and draw chart

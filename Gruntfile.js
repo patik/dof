@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'js/script.js': ['js/vendor/jquery.js', 'js/vendor/fastclick.js', 'js/vendor/handlebars-v1.2.0.js', 'js/vendor/chart.min.js', '<%= dfc.js %>', 'js/vendor/ga.js']
+                    'js/script.js': ['js/vendor/jquery.js', 'js/vendor/fastclick.js', 'js/vendor/handlebars-v1.2.0.js', 'js/vendor/highcharts.js', '<%= dfc.js %>', 'js/vendor/ga.js']
                 }
             }
         },
