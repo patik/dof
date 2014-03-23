@@ -104,11 +104,14 @@ var DFC = (function _DFC() {
             text: '' // 'Fruit Consumption'
         },
         xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+            categories: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+            title: {
+                text: 'Distance to subject (feet)' // 'Fruit eaten'
+            }
         },
         yAxis: {
             title: {
-                text: '' // 'Fruit eaten'
+                text: 'Depth of Field' // 'Fruit eaten'
             }
         },
         series: [
@@ -147,17 +150,17 @@ var DFC = (function _DFC() {
             distances.forEach(function (distance) {
                 var dof = _getDof(lens, distance),
                     regex = /(\d+)\'\s(\d+\.\d+)\"/,
-                    numeric, dec;
+                    numeric, dec = 0;
 
                 // Convert to decimal values
                 if (regex.test(dof)) {
                     numeric = regex.exec(dof);
                     dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
-
-                    obj.data.push(dec);
                 }
-                else {
-                    obj.data.push(0);
+
+                // Filter out unplottable values
+                if (dec > 0 && dec < Infinity) {
+                    obj.data.push(dec);
                 }
             });
 
