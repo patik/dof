@@ -17,7 +17,10 @@ var DFC = (function _DFC() {
         $comparisonLinks = null,
 
         // Sorting API
-        _sorting = {};
+        _sorting = {},
+
+        // Chart API
+        _chart = {};
 
     /**
      * Initialize app
@@ -75,7 +78,8 @@ var DFC = (function _DFC() {
             .on('click', '.sort-toggle', _sortToggle)
 
             // Custom events
-            .on('uiupdated', _onUIUpdated);
+            .on('uiupdated', _onUIUpdated)
+            .on('updatechart', _chart.update);
 
         // Distance
         $distance.on('change keyup blur', _onChangeDistance);
@@ -85,6 +89,8 @@ var DFC = (function _DFC() {
             _addLensUI(lens);
             lens = _getNameFromUI(lens);
         });
+
+        _chart.update();
     }
 
     // example.com/#20;Name%20of%20Lens,35,f-2,mft
@@ -304,6 +310,8 @@ var DFC = (function _DFC() {
 
         // Update the URL hash
         _updateHash();
+
+        $body.trigger('updatechart');
     }
 
     /**
@@ -485,7 +493,118 @@ var DFC = (function _DFC() {
         $container.find('.focalLengthEquiv').text(result.focalLengthEquiv + 'mm');
 
         _updateLens(id, 'dof', result.dofFloat);
+
+        $body.trigger('updatechart');
     }
+
+    /**
+     * Determine the depth-of-field for a given lens
+     *
+     * @param   {Object}  lens      Lens object
+     * @param   {Number}  distance  Distance value
+     *
+     * @return  {String}            Depth of field in feet and inches
+     */
+    function _getDof(lens, distance) {
+        if (!lens) {
+            return;
+        }
+
+        return (new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, distance)).dof;
+    }
+
+    ///////////
+    // Chart //
+    ///////////
+
+    // Default data for rendering the chart
+    _chart.data = {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '' // Have to set an empty string to avoid rendering a generic title
+        },
+        xAxis: {
+            categories: ["5'", "10'", "15'", "20'", "25'", "30'", "35'", "40'", "45'", "50'"],
+            title: {
+                text: 'Distance to subject (feet)'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Depth of Field'
+            }
+        },
+        series: []
+    };
+
+    /**
+     * Draws the chart using the current data
+     */
+    _chart.draw = function _chart_create() {
+        $('.chart').highcharts(_chart.data);
+    };
+
+    /**
+     * Updates the chart data
+     */
+    _chart.update = function _chart_update() {
+        var distances;
+
+        // Update the chart once per series of changes, rather than every single change
+        if (_chart.timer) {
+            return false;
+        }
+
+        _chart.timer = setTimeout(_chart.clearTimer, 1000);
+
+        distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
+        // Clear existing data
+        _chart.data.series = [];
+
+        // Create data set for each lens
+        lenses.forEach(function _chart_update_lenses(lens, i) {
+            var obj = {
+                    name: lens.name,
+                    data: []
+                };
+
+            // Collect dof for each distance
+            distances.forEach(function _chart_update_distances(distance) {
+                var dof = _getDof(lens, distance),
+                    regex = /(\d+)\'\s(\d+\.\d+)\"/,
+                    dec = 0,
+                    numeric;
+
+                // Convert to decimal values
+                if (regex.test(dof)) {
+                    numeric = regex.exec(dof);
+                    dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
+                }
+
+                // Filter out unplottable values
+                if (dec > 0 && dec < Infinity) {
+                    obj.data.push(dec);
+                }
+            });
+
+            _chart.data.series.push(obj);
+        });
+
+        // Draw updated chart
+        _chart.draw();
+    };
+
+    // Tracks whether there is a pending re-draw of the chart
+    _chart.timer = null;
+
+    // Clears the re-draw flag
+    _chart.clearTimer = function _chart_clearTimer() {
+        clearTimeout(_chart.timer);
+        _chart.timer = null;
+    };
 
     /////////////
     // Sorting //
@@ -519,12 +638,10 @@ var DFC = (function _DFC() {
 
         // Click on menu item
         if ($targ.closest('.row.expanded').length) {
-            console.log('Click on menu item');
             _sortToggle(evt);
         }
         // Clicked outside the menu
         else if (!$targ.closest('.sort-toggle').length) {
-            console.log('Clicked outside the menu');
             // Collapse menu
             $('.sort-toggle').removeClass('expanded');
             $sortOptions.removeClass('expanded');
