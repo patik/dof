@@ -19,10 +19,8 @@ var DFC = (function _DFC() {
         // Sorting API
         _sorting = {},
 
-        // Chart
-        _chart = {},
-        $chart = null,
-        dofChart = null;
+        // Chart API
+        _chart = {};
 
     /**
      * Initialize app
@@ -81,7 +79,7 @@ var DFC = (function _DFC() {
 
             // Custom events
             .on('uiupdated', _onUIUpdated)
-            .on('updatechart', _chart.asyncUpdate);
+            .on('updatechart', _chart.update);
 
         // Distance
         $distance.on('change keyup blur', _onChangeDistance);
@@ -92,7 +90,6 @@ var DFC = (function _DFC() {
             lens = _getNameFromUI(lens);
         });
 
-        // $chart = $('#dofChart');
         _chart.update();
     }
 
@@ -101,56 +98,57 @@ var DFC = (function _DFC() {
             type: 'line'
         },
         title: {
-            text: '' // 'Fruit Consumption'
+            text: '' // Have to set an empty string to avoid rendering a generic title
         },
         xAxis: {
             categories: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
             title: {
-                text: 'Distance to subject (feet)' // 'Fruit eaten'
+                text: 'Distance to subject (feet)'
             }
         },
         yAxis: {
             title: {
-                text: 'Depth of Field' // 'Fruit eaten'
+                text: 'Depth of Field'
             }
         },
-        series: [
-            {
-                name: 'Jane',
-                data: [1, 0, 4]
-            },
-            {
-                name: 'John',
-                data: [5, 7, 3]
-            }
-        ]
+        series: []
     };
 
     _chart.options = {
     };
 
     _chart.draw = function _chart_create() {
-        $('#dofChart').highcharts(_chart.data);
+        $('.chart').highcharts(_chart.data);
     };
 
     _chart.update = function _chart_update() {
-        var distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+        var distances;
+
+        // Update the chart once per series of changes, rather than every single change
+        if (_chart.timer) {
+            return false;
+        }
+
+        _chart.timer = setTimeout(_chart.clearTimer, 1000);
 
         // Clear existing data
         _chart.data.series = [];
 
+        distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
         // Create data set for each lens
-        lenses.forEach(function (lens, i) {
+        lenses.forEach(function _chart_update_lenses(lens, i) {
             var obj = {
                     name: lens.name,
                     data: []
                 };
 
             // Collect dof for each distance
-            distances.forEach(function (distance) {
+            distances.forEach(function _chart_update_distances(distance) {
                 var dof = _getDof(lens, distance),
                     regex = /(\d+)\'\s(\d+\.\d+)\"/,
-                    numeric, dec = 0;
+                    dec = 0,
+                    numeric;
 
                 // Convert to decimal values
                 if (regex.test(dof)) {
@@ -167,22 +165,11 @@ var DFC = (function _DFC() {
             _chart.data.series.push(obj);
         });
 
-        // Update and draw chart
+        // Draw updated chart
         _chart.draw();
     };
 
     _chart.timer = null;
-
-    // Update the chart once per series of changes, rather than every single change
-    _chart.asyncUpdate = function _chart_asyncUpdate() {
-        if (!_chart.timer) {
-            _chart.update();
-            _chart.timer = setTimeout(_chart.clearTimer, 1000);
-        }
-        else {
-            console.log('not updating chart yet');
-        }
-    };
 
     _chart.clearTimer = function _chart_clearTimer() {
         clearTimeout(_chart.timer);
