@@ -80,7 +80,8 @@ var DFC = (function _DFC() {
             .on('click', '.sort-toggle', _sortToggle)
 
             // Custom events
-            .on('uiupdated', _onUIUpdated);
+            .on('uiupdated', _onUIUpdated)
+            .on('updatechart', _chart.asyncUpdate);
 
         // Distance
         $distance.on('change keyup blur', _onChangeDistance);
@@ -150,7 +151,7 @@ var DFC = (function _DFC() {
     };
 
     _chart.draw = function _chart_create() {
-        dofChart = new Chart($chart.get(0).getContext('2d')).Line(_chart.data, _chart.options);
+        dofChart = new Chart($('#dofChart').get(0).getContext('2d')).Line(_chart.data, _chart.options);
     };
 
     _chart.update = function _chart_update() {
@@ -181,6 +182,24 @@ var DFC = (function _DFC() {
 
         // Update and draw chart
         _chart.draw();
+    };
+
+    _chart.timer = null;
+
+    // Update the chart once per series of changes, rather than every single change
+    _chart.asyncUpdate = function _chart_asyncUpdate() {
+        if (!_chart.timer) {
+            _chart.update();
+            _chart.timer = setTimeout(_chart.clearTimer, 1000);
+        }
+        else {
+            console.log('not updating chart yet');
+        }
+    };
+
+    _chart.clearTimer = function _chart_clearTimer() {
+        clearTimeout(_chart.timer);
+        _chart.timer = null;
     };
 
     // example.com/#20;Name%20of%20Lens,35,f-2,mft
@@ -400,6 +419,8 @@ var DFC = (function _DFC() {
 
         // Update the URL hash
         _updateHash();
+
+        $body.trigger('updatechart');
     }
 
     /**
@@ -581,8 +602,18 @@ var DFC = (function _DFC() {
         $container.find('.focalLengthEquiv').text(result.focalLengthEquiv + 'mm');
 
         _updateLens(id, 'dof', result.dofFloat);
+
+        $body.trigger('updatechart');
     }
 
+    /**
+     * Determine the depth-of-field for a given lens
+     *
+     * @param   {Object}  lens      Lens object
+     * @param   {Number}  distance  Distance value
+     *
+     * @return  {String}            Depth of field in feet and inches
+     */
     function _getDof(lens, distance) {
         if (!lens) {
             return;
