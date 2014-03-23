@@ -94,7 +94,7 @@ var DFC = (function _DFC() {
         $chart = $('#dofChart');
 
         // Needed to avoid race condition, see http://www.chartjs.org/docs/#generalIssues-browserSupport
-        $(window).on('load', _chart.create);
+        $(window).on('load', _chart.update);
     }
 
     _chart.data = {
@@ -105,14 +105,14 @@ var DFC = (function _DFC() {
                 strokeColor : "rgba(220,220,220,1)",
                 pointColor : "rgba(220,220,220,1)",
                 pointStrokeColor : "#fff",
-                data : [5,10,15,20,25,30,35,40,45,50]
+                data : [] // [5,10,15,20,25,30,35,40,45,50]
             },
             {
                 fillColor : "rgba(151,187,205,0.5)",
                 strokeColor : "rgba(151,187,205,1)",
                 pointColor : "rgba(151,187,205,1)",
                 pointStrokeColor : "#fff",
-                data : [5,15,25,35,45,55,65,75,85,95]
+                data : [] // [5,15,25,35,45,55,65,75,85,95]
             }
         ]
     };
@@ -149,12 +149,38 @@ var DFC = (function _DFC() {
         datasetFill: false //Boolean - Whether to fill the dataset with a colour
     };
 
-    _chart.create = function _chart_create() {
+    _chart.draw = function _chart_create() {
         dofChart = new Chart($chart.get(0).getContext('2d')).Line(_chart.data, _chart.options);
     };
 
     _chart.update = function _chart_update() {
-        dofChart = new Chart($chart.get(0).getContext('2d')).Line(_chart.data, _chart.options);
+        var distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
+        // Create datasets
+        lenses.forEach(function (lens, i) {
+            var values = [];
+
+            console.info('Lens: ', lens);
+            distances.forEach(function (distance) {
+                var dof = _getDof(lens, distance),
+                    numeric, dec;
+
+                // Convert to decimal values
+                numeric = /(\d+)\'\s(\d+\.\d+)\"/.exec(dof);
+                dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
+
+                console.log('dof at ' + distance + 'ft is ', dof, ' or ', dec);
+
+                values.push(dec);
+            });
+
+            console.log('------------');
+
+            _chart.data.datasets[i].data = values;
+        });
+
+        // Update and draw chart
+        _chart.draw();
     };
 
     // example.com/#20;Name%20of%20Lens,35,f-2,mft
@@ -555,6 +581,14 @@ var DFC = (function _DFC() {
         $container.find('.focalLengthEquiv').text(result.focalLengthEquiv + 'mm');
 
         _updateLens(id, 'dof', result.dofFloat);
+    }
+
+    function _getDof(lens, distance) {
+        if (!lens) {
+            return;
+        }
+
+        return (new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, distance)).dof;
     }
 
     /////////////
