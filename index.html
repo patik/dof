@@ -3,7 +3,7 @@
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
     <title>Depth of Field Calculator &amp; Comparison Tool</title>
     <link rel="stylesheet" href="css/dfc.css">
     <script src="js/vendor/modernizr.js"></script>
@@ -16,9 +16,6 @@
     <meta name="MobileOptimized" content="320">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <!--[if lte IE 8]>
-        <script src="js/vendor/excanvas.min.js"></script>
-    <![endif]-->
 </head>
 <body>
     <div class="row" role="header">
@@ -71,9 +68,7 @@
         <div class="small-12 medium-6 table-12 columns add-lens">
             <div><span>Add</span><span>Lens</span></div>
         </div>
-        <div class="chart-container">
-            <canvas id="dofChart" width="400" height="400"></canvas>
-        </div>
+        <div class="chart"></div>
     </div>
     <div role="footer" class="row">
         <div class="small-12 medium-4 columns text-center">
