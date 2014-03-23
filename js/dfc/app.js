@@ -151,6 +151,12 @@ var DFC = (function _DFC() {
     };
 
     _chart.draw = function _chart_create() {
+        var $parent = $('#dofChart').parent();
+        $parent.empty();
+        $parent.append(
+            $('<canvas/>').attr('id', 'dofChart')
+        );
+
         dofChart = new Chart($('#dofChart').get(0).getContext('2d')).Line(_chart.data, _chart.options);
     };
 
