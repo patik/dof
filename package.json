@@ -1,6 +1,6 @@
 {
     "name": "DepthOfFieldCalculator",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "repository": "https://github.com/patik/dof.git",
     "devDependencies": {
         "grunt": "^0.4.4",
