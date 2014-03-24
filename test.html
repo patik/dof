@@ -6,22 +6,24 @@
     <title>DoF Test</title>
 </head>
 <body>
+    <p>Psst... check the console</p>
     <script src="js/dfc/dof.js"></script>
     <script>
-        var x = new DoF();
-        console.log('x: ', x);
-        var y = x.result(20);
-        console.log('dof: ', y.dof);
-        console.log('dofFeet: ', y.dofFeet);
-        console.log('coc: ', y.coc);
-        console.log('eighthDof: ', y.eighthDof);
-        console.log('eighthDofFeet: ', y.eighthDofFeet);
-        console.log('hf: ', y.hf);
-        console.log('hfFeet: ', y.hfFeet);
-        console.log('near: ', y.near);
-        console.log('nearFeet: ', y.nearFeet);
-        console.log('far: ', y.far);
-        console.log('farFeet: ', y.farFeet);
+        var lens = new DoF();
+        console.log('lens: ', lens);
+        var result = lens.result(20);
+        console.log('Results for a distance of 20 feet: ', result);
+        console.log('dof: ', result.dof);
+        console.log('dofFeet: ', result.dofFeet);
+        console.log('coc: ', result.coc);
+        console.log('eighthDof: ', result.eighthDof);
+        console.log('eighthDofFeet: ', result.eighthDofFeet);
+        console.log('hf: ', result.hf);
+        console.log('hfFeet: ', result.hfFeet);
+        console.log('near: ', result.near);
+        console.log('nearFeet: ', result.nearFeet);
+        console.log('far: ', result.far);
+        console.log('farFeet: ', result.farFeet);
     </script>
 </body>
 </html>

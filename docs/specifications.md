@@ -18,7 +18,7 @@ That will give us a lens object with default values:
 ```js
 lens.focalLength = 35;   // millimeters
 lens.aperture = 'f/2';
-lens.sensor = 1;         // i.e. standard full frame
+lens.cropFactor = 1;     // i.e. standard full frame
 ```
 
 Let's change those to fit the particular lens we have in mind
@@ -27,7 +27,7 @@ Let's change those to fit the particular lens we have in mind
 // Required
 lens.focalLength = 35;   // millimeters
 lens.aperture = 'f/2.5'; // or just a float: `2.5`
-lens.sensor = 1.62;      // Sensor crop factor
+lens.cropFactor = 1.62;  // Sensor crop factor
 ```
 
 Alternatively, we could have just passed those values in at the start:
@@ -50,15 +50,15 @@ lens.id = 1234;       // Optional, any data type you'd like
 You can change any of the defaults. For example, you might want to calculate the depth of field for many lenses with a common sensor crop factor of `1.62`:
 
 ```js
-DoF.settings.sensor = 1.62;
+DoF.setDefaults({cropFactor: 1.62});
 ```
 
 The complete list:
 
 ```js
-DoF.settings.focalLength = 50;   // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
-DoF.settings.aperture = 'f/2.5'; // String in the format `"f/2.5"`, or the float value `2.5`
-DoF.settings.sensor = 1.62;      // Number; crop factor
+DoF.setDefaults({focalLength: 50});  // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
+DoF.setDefaults({aperture: 2.5});    // String in the format `"f/2.5"`, or the float value `2.5`
+DoF.setDefaults({cropFactor: 1.62}); // Number; sensor's crop factor compared to full frame
 ```
 
 ## Calculate the depth of field
@@ -84,6 +84,8 @@ result.hf        // Hyperfocal distance; float
 result.near      // Distance to the nearest edge of the in-focus field; float
 result.far       // Distance to the farthest edge of the in-focus field; float
 ```
+
+Note that the value of those properties may be `Infinity`. This is especially common with small sensor sizes (large crop factors), short focal lengths, and/or small apertures (large `f/` values).
 
 All of those properties have an equivalent property with the value represent as a string, for example `20' 5.2"` for 20 feet, 5.2 inches. The names of the properties are the same, but with `"Feet"` appended (e.g. `dof` becomes `dofFeet`).
 

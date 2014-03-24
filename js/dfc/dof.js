@@ -1,12 +1,12 @@
 (function () {
-    var isCommonJS = (typeof module !== 'undefined' && module.exports);
-
     var defaults = {
-        focalLength: 35, // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
-        aperture: 2, // String in the format `"f/2.5"`, or the float value `2.5`
-        sensor: 1,       // Crop factor
-        distance: 20     // Distance to the subject (feet)
-    };
+            focalLength: 35, // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
+            aperture: 2, // String in the format `"f/2.5"`, or the float value `2.5`
+            sensor: 1,       // Crop factor
+            distance: 20     // Distance to the subject (feet)
+        },
+        apertureRegex = /^f\/(\d+(?:\.\d+)?)$/,
+        isCommonJS = (typeof module !== 'undefined' && module.exports);
 
     /**
      * Lens constructor
@@ -18,8 +18,6 @@
      * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
      */
     function DoF(focalLength, aperture, sensor, id, name) {
-        var apertureRegex = /^f\/(\d+(?:\.\d+)?)$/;
-
         if (typeof focalLength === 'number') {
             this.focalLength = focalLength;
         }
@@ -54,6 +52,33 @@
         }
     }
 
+    DoF.setDefaults = function _setDefaults(options) {
+        if (typeof options !== 'object' || !options) {
+            return;
+        }
+
+        if (options.focalLength && !isNaN(options.focalLength)) {
+            defaults.focalLength = parseFloat(options.focalLength);
+        }
+
+        if (options.aperture && !isNaN(options.aperture)) {
+            if (typeof options.aperture === 'string') {
+                defaults.aperture = parseFloat(options.aperture);
+            }
+            else {
+                defaults.aperture = options.aperture;
+            }
+        }
+
+        if (options.sensor && !isNaN(options.sensor)) {
+            defaults.sensor = parseFloat(options.sensor);
+        }
+
+        if (options.distance && !isNaN(options.distance)) {
+            defaults.distance = parseFloat(options.distance);
+        }
+    };
+
     /**
      * Convert millimeters to decimal feet and inches
      *
@@ -74,11 +99,6 @@
         var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist),
             feet = parseFloat(parts[1]),
             inches = parseFloat(parts[2]);
-
-        console.log('feet: ', feet);
-        console.log('inches: ', inches);
-        console.log('inches, converted: ', inches / 12);
-        console.log('total: ', feet + (inches / 12));
 
         return parseFloat(feet + (inches / 12));
     };
