@@ -1,23 +1,30 @@
 (function () {
     var defaults = {
             focalLength: 35, // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
-            aperture: 2, // String in the format `"f/2.5"`, or the float value `2.5`
-            sensor: 1,       // Crop factor
+            aperture: 2,     // String in the format `"f/2.5"`, or the float value `2.5`
+            cropFactor: 1,   // Sensor crop factor (compared to full frame; 2 = half the size)
             distance: 20     // Distance to the subject (feet)
         },
         apertureRegex = /^f\/(\d+(?:\.\d+)?)$/,
-        isCommonJS = (typeof module !== 'undefined' && module.exports);
+        isCommonJS = (typeof module !== 'undefined' && module.exports),
+        _feetToFloat = function _feetToFloat(dist) {
+            var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist),
+                feet = parseFloat(parts[1]),
+                inches = parseFloat(parts[2]);
+
+            return parseFloat(feet + (inches / 12));
+        };
 
     /**
      * Lens constructor
      *
      * @param  {Number}  focalLength  Actual local length in millimeters
      * @param  {Mixed}   aperture     Aperture as a float or a string like "f/2.5"
-     * @param  {Number}  sensor       Sensor crop factor
+     * @param  {Number}  cropFactor       Sensor crop factor
      * @param  {Mixed}   id           Optional, arbitrary ID for tracking by the consumer
      * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
      */
-    function DoF(focalLength, aperture, sensor, id, name) {
+    function DoF(focalLength, aperture, cropFactor, id, name) {
         if (typeof focalLength === 'number') {
             this.focalLength = focalLength;
         }
@@ -35,11 +42,11 @@
             this.aperture = defaults.aperture;
         }
 
-        if (typeof sensor === 'number') {
-            this.sensor = sensor;
+        if (typeof cropFactor === 'number') {
+            this.cropFactor = cropFactor;
         }
         else {
-            this.sensor = defaults.sensor;
+            this.cropFactor = defaults.cropFactor;
         }
 
         // Optional properties
@@ -70,8 +77,8 @@
             }
         }
 
-        if (options.sensor && !isNaN(options.sensor)) {
-            defaults.sensor = parseFloat(options.sensor);
+        if (options.cropFactor && !isNaN(options.cropFactor)) {
+            defaults.cropFactor = parseFloat(options.cropFactor);
         }
 
         if (options.distance && !isNaN(options.distance)) {
@@ -95,15 +102,7 @@
                : Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
     };
 
-    var _feetToFloat = function _feetToFloat(dist) {
-        var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist),
-            feet = parseFloat(parts[1]),
-            inches = parseFloat(parts[2]);
-
-        return parseFloat(feet + (inches / 12));
-    };
-
-    DoF.prototype._calculate = function _calculate(focalLength, aperture, sensor, distance) {
+    DoF.prototype._calculate = function _calculate(focalLength, aperture, cropFactor, distance) {
         var result = {},
             hf, near, far, dof;
 
@@ -111,12 +110,12 @@
         distance = distance * 12 * 25.4;
 
         // Get 35mm-equivalent focal length
-        result.focalLengthEquiv = Math.round10(sensor * focalLength);
+        result.focalLengthEquiv = Math.round10(cropFactor * focalLength);
 
         // Convert sensor crop factor to a multiplier
-        sensor = 1 / sensor;
+        cropFactor = 1 / cropFactor;
 
-        result.coc = Math.round(0.03 * sensor * 1000) / 1000;
+        result.coc = Math.round(0.03 * cropFactor * 1000) / 1000;
         hf = Math.pow(focalLength, 2) / (aperture * result.coc) + (focalLength * 1.0);
 
         near = (distance * (hf - focalLength)) / (hf + distance + (2 * focalLength));
@@ -155,7 +154,7 @@
             distance = parseFloat(distance);
         }
 
-        return that._calculate(that.focalLength, that.aperture, that.sensor, distance);
+        return that._calculate(that.focalLength, that.aperture, that.cropFactor, distance);
     };
 
     // Make the constructor public
@@ -167,15 +166,9 @@
     }
 }());
 
-// Polyfills
-if (!String.prototype.trim) {
-    String.prototype.trim = function () {
-        return this.replace(/^\s+|\s+$/gm, '');
-    };
-}
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#Example:_Decimal_rounding
+// Math.round10 polyfill for decimal rounding
 (function() {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#Example:_Decimal_rounding
     // Decimal round
     if (!Math.round10) {
         /**
@@ -205,7 +198,7 @@ if (!String.prototype.trim) {
             return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
         };
 
-        Math.round10 = function(value) {
+        Math.round10 = function _math_round10(value) {
             return decimalAdjust('round', value, -1);
         };
     }
