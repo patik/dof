@@ -33,7 +33,7 @@ lens.sensor = 1.62;      // Sensor multiplier/crop factor
 Alternatively, we could have just passed those values in at the start:
 
 ```js
-var lens = new DoF(35, 'f/2.5', 1.62 /*, 'My Lens', '1234' */ );
+var lens = new DoF(35, 'f/2.5', 1.62 /*, '1234', 'My Lens' */ );
 ```
 
 ### Managing multiple lenses
