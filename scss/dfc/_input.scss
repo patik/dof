@@ -129,8 +129,12 @@
         font-size: 2rem;
         color: #999;
         text-align: center;
-        margin: 6rem auto;
+        margin: 3rem auto;
         @include transition(color 100ms ease-in);
+
+        @media (min-width: 40em) and #{$bp-table-max} {
+            margin: 6rem auto;
+        }
 
         span {
             display: block;

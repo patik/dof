@@ -90,6 +90,22 @@ var DFC = (function _DFC() {
             lens = _getNameFromUI(lens);
         });
 
+        // Chart
+        Highcharts.setOptions({
+            chart: {
+                type: 'line',
+                animation: false,
+                style: {
+                    fontFamily: '"Open Sans", sans-serif'
+                }
+            },
+            plotOptions: {
+                series: {
+                    animation: false
+                }
+            }
+        });
+
         _chart.update();
     }
 
@@ -519,11 +535,9 @@ var DFC = (function _DFC() {
 
     // Default data for rendering the chart
     _chart.data = {
-        chart: {
-            type: 'line'
-        },
+        series: [], // Will be populated with the data points
         title: {
-            text: '' // Have to set an empty string to avoid rendering a generic title
+            text: 'Sample Depths of Field for These Lenses'
         },
         xAxis: {
             categories: ["5'", "10'", "15'", "20'", "25'", "30'", "35'", "40'", "45'", "50'"],
@@ -533,10 +547,9 @@ var DFC = (function _DFC() {
         },
         yAxis: {
             title: {
-                text: 'Depth of Field'
+                text: 'Depth of Field (feet)'
             }
-        },
-        series: []
+        }
     };
 
     /**
@@ -566,7 +579,7 @@ var DFC = (function _DFC() {
 
         // Create data set for each lens
         lenses.forEach(function _chart_update_lenses(lens, i) {
-            var obj = {
+            var graphLine = {
                     name: lens.name,
                     data: []
                 };
@@ -586,11 +599,11 @@ var DFC = (function _DFC() {
 
                 // Filter out unplottable values
                 if (dec > 0 && dec < Infinity) {
-                    obj.data.push(dec);
+                    graphLine.data.push(dec);
                 }
             });
 
-            _chart.data.series.push(obj);
+            _chart.data.series.push(graphLine);
         });
 
         // Draw updated chart
