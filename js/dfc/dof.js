@@ -70,13 +70,6 @@
                : Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
     };
 
-    var _feetToString = function _feetToString(dist) {
-        var feet = Math.floor(dist).toString(),
-            inchesDecimal = dist % 1;
-
-        return feet + "' " + Math.round10(inchesDecimal * 12) + '"';
-    };
-
     var _feetToFloat = function _feetToFloat(dist) {
         var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist),
             feet = parseFloat(parts[1]),
@@ -120,14 +113,14 @@
         // Gather all values
         result.dofFeet = this._mmToFeet(dof);
         result.dof = _feetToFloat(result.dofFeet);
-        result.eighthDof = this._mmToFeet(dof / 8);
-        result.eighthDofFeet = _feetToString(dof / 8);
-        result.hf = this._mmToFeet(hf);
-        result.hfFeet = _feetToString(hf);
-        result.near = this._mmToFeet(near);
-        result.nearFeet = _feetToString(near);
-        result.far = this._mmToFeet(far);
-        result.farFeet = _feetToString(far);
+        result.eighthDofFeet = this._mmToFeet(dof / 8);
+        result.eighthDof = _feetToFloat(result.eighthDofFeet);
+        result.hfFeet = this._mmToFeet(hf);
+        result.hf = _feetToFloat(result.hfFeet);
+        result.nearFeet = this._mmToFeet(near);
+        result.near = _feetToFloat(result.nearFeet);
+        result.farFeet = this._mmToFeet(far);
+        result.far = _feetToFloat(result.farFeet);
 
         return result;
     };
