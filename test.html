@@ -11,19 +11,20 @@
     <script>
         var lens = new DoF();
         console.log('lens: ', lens);
+
         var result = lens.result(20);
         console.log('Results for a distance of 20 feet: ', result);
         console.log('dof: ', result.dof);
-        console.log('dofFeet: ', result.dofFeet);
+        console.log('dof (string): ', result.toString.dof);
         console.log('coc: ', result.coc);
         console.log('eighthDof: ', result.eighthDof);
-        console.log('eighthDofFeet: ', result.eighthDofFeet);
+        console.log('eighthDof (string): ', result.toString.eighthDof);
         console.log('hf: ', result.hf);
-        console.log('hfFeet: ', result.hfFeet);
+        console.log('hf (string): ', result.toString.hf);
         console.log('near: ', result.near);
-        console.log('nearFeet: ', result.nearFeet);
+        console.log('near (string): ', result.toString.near);
         console.log('far: ', result.far);
-        console.log('farFeet: ', result.farFeet);
+        console.log('far (string): ', result.toString.far);
     </script>
 </body>
 </html>

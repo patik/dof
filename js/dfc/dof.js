@@ -104,7 +104,8 @@
 
     DoF.prototype._calculate = function _calculate(focalLength, aperture, cropFactor, distance) {
         var result = {},
-            hf, near, far, dof;
+            hf, near, far, dof,
+            dofFeet, eighthDofFeet, hfFeet, nearFeet, farFeet;
 
         // Convert to millimeters
         distance = distance * 12 * 25.4;
@@ -130,16 +131,21 @@
         }
 
         // Gather all values
-        result.dofFeet = this._mmToFeet(dof);
-        result.dof = _feetToFloat(result.dofFeet);
-        result.eighthDofFeet = this._mmToFeet(dof / 8);
-        result.eighthDof = _feetToFloat(result.eighthDofFeet);
-        result.hfFeet = this._mmToFeet(hf);
-        result.hf = _feetToFloat(result.hfFeet);
-        result.nearFeet = this._mmToFeet(near);
-        result.near = _feetToFloat(result.nearFeet);
-        result.farFeet = this._mmToFeet(far);
-        result.far = _feetToFloat(result.farFeet);
+        dofFeet = this._mmToFeet(dof);
+        result.toString = function() {
+            return dofFeet;
+        };
+
+        result.toString.dof = dofFeet;
+        result.dof = _feetToFloat(result.toString.dof);
+        result.toString.eighthDof = this._mmToFeet(dof / 8);
+        result.eighthDof = _feetToFloat(result.toString.eighthDof);
+        result.toString.hf = this._mmToFeet(hf);
+        result.hf = _feetToFloat(result.toString.hf);
+        result.toString.near = this._mmToFeet(near);
+        result.near = _feetToFloat(result.toString.near);
+        result.toString.far = this._mmToFeet(far);
+        result.far = _feetToFloat(result.toString.far);
 
         return result;
     };
