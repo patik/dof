@@ -90,6 +90,22 @@ var DFC = (function _DFC() {
             lens = _getNameFromUI(lens);
         });
 
+        // Chart
+        Highcharts.setOptions({
+            chart: {
+                type: 'line',
+                animation: false,
+                style: {
+                    fontFamily: '"Open Sans", sans-serif'
+                }
+            },
+            plotOptions: {
+                series: {
+                    animation: false
+                }
+            }
+        });
+
         _chart.update();
     }
 
@@ -506,7 +522,7 @@ var DFC = (function _DFC() {
      * @return  {String}            Depth of field in feet and inches
      */
     function _getDof(lens, distance) {
-        if (!lens) {
+        if (!lens || typeof distance !== 'number') {
             return;
         }
 
@@ -519,24 +535,21 @@ var DFC = (function _DFC() {
 
     // Default data for rendering the chart
     _chart.data = {
-        chart: {
-            type: 'line'
-        },
+        series: [], // Will be populated with the data points
         title: {
-            text: '' // Have to set an empty string to avoid rendering a generic title
+            text: 'Sample Depths of Field for These Lenses'
         },
         xAxis: {
-            categories: ["5'", "10'", "15'", "20'", "25'", "30'", "35'", "40'", "45'", "50'"],
+            categories: [], // Will be populated along with the data points
             title: {
                 text: 'Distance to subject (feet)'
             }
         },
         yAxis: {
             title: {
-                text: 'Depth of Field'
+                text: 'Depth of Field (feet)'
             }
-        },
-        series: []
+        }
     };
 
     /**
@@ -550,7 +563,8 @@ var DFC = (function _DFC() {
      * Updates the chart data
      */
     _chart.update = function _chart_update() {
-        var distances;
+        var distances,
+            mostDataPoints = 0;
 
         // Update the chart once per series of changes, rather than every single change
         if (_chart.timer) {
@@ -566,10 +580,11 @@ var DFC = (function _DFC() {
 
         // Create data set for each lens
         lenses.forEach(function _chart_update_lenses(lens, i) {
-            var obj = {
+            var graphLine = {
                     name: lens.name,
                     data: []
-                };
+                },
+                mostDataPoints = 0;
 
             // Collect dof for each distance
             distances.forEach(function _chart_update_distances(distance) {
@@ -584,13 +599,28 @@ var DFC = (function _DFC() {
                     dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
                 }
 
-                // Filter out unplottable values
-                if (dec > 0 && dec < Infinity) {
-                    obj.data.push(dec);
+                // Filter out impractical values
+                if (dec > 0 && dec < 200) {
+                    graphLine.data.push(dec);
                 }
             });
 
-            _chart.data.series.push(obj);
+            // Check if this item has the most plotable data points
+            if (graphLine.data.length > mostDataPoints) {
+                mostDataPoints = graphLine.data.length;
+            }
+
+            _chart.data.series.push(graphLine);
+        });
+
+        // Track how many x-axis points to show
+        if (mostDataPoints < distances.length) {
+            distances.splice(distances.length - mostDataPoints + 1, mostDataPoints);
+        }
+
+        // Update the x-axis chart option
+        _chart.data.xAxis.categories = distances.map(function _chart_update_distancesMap(i){
+            return i + 'ft';
         });
 
         // Draw updated chart
