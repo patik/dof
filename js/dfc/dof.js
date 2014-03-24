@@ -4,7 +4,7 @@
     var defaults = {
         focalLength: 35, // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
         aperture: 2, // String in the format `"f/2.5"`, or the float value `2.5`
-        sensor: 1,       // Crop factor/multiplier
+        sensor: 1,       // Crop factor
         distance: 20     // Distance to the subject (feet)
     };
 
@@ -13,7 +13,7 @@
      *
      * @param  {Number}  focalLength  Actual local length in millimeters
      * @param  {Mixed}   aperture     Aperture as a float or a string like "f/2.5"
-     * @param  {Number}  sensor       Sensor crop factor or multiplier
+     * @param  {Number}  sensor       Sensor crop factor
      * @param  {Mixed}   id           Optional, arbitrary ID for tracking by the consumer
      * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
      */

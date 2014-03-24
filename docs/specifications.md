@@ -27,7 +27,7 @@ Let's change those to fit the particular lens we have in mind
 // Required
 lens.focalLength = 35;   // millimeters
 lens.aperture = 'f/2.5'; // or just a float: `2.5`
-lens.sensor = 1.62;      // Sensor multiplier/crop factor
+lens.sensor = 1.62;      // Sensor crop factor
 ```
 
 Alternatively, we could have just passed those values in at the start:
@@ -58,7 +58,7 @@ The complete list:
 ```js
 DoF.settings.focalLength = 50;   // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
 DoF.settings.aperture = 'f/2.5'; // String in the format `"f/2.5"`, or the float value `2.5`
-DoF.settings.sensor = 1.62;      // Number; crop factor/multiplier
+DoF.settings.sensor = 1.62;      // Number; crop factor
 ```
 
 ## Calculate the depth of field
