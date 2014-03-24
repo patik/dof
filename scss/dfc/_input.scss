@@ -126,13 +126,14 @@
     }
 
     div {
-        font-size: 2rem;
+        font-size: 1.5rem;
         color: #999;
         text-align: center;
-        margin: 3rem auto;
+        margin: 1rem auto;
         @include transition(color 100ms ease-in);
 
         @media (min-width: 40em) and #{$bp-table-max} {
+            font-size: 2rem;
             margin: 6rem auto;
         }
 
