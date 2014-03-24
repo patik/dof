@@ -522,7 +522,7 @@ var DFC = (function _DFC() {
      * @return  {String}            Depth of field in feet and inches
      */
     function _getDof(lens, distance) {
-        if (!lens) {
+        if (!lens || typeof distance !== 'number') {
             return;
         }
 
@@ -540,7 +540,7 @@ var DFC = (function _DFC() {
             text: 'Sample Depths of Field for These Lenses'
         },
         xAxis: {
-            categories: ["5'", "10'", "15'", "20'", "25'", "30'", "35'", "40'", "45'", "50'"],
+            categories: [], // Will be populated along with the data points
             title: {
                 text: 'Distance to subject (feet)'
             }
@@ -563,7 +563,8 @@ var DFC = (function _DFC() {
      * Updates the chart data
      */
     _chart.update = function _chart_update() {
-        var distances;
+        var distances,
+            mostDataPoints = 0;
 
         // Update the chart once per series of changes, rather than every single change
         if (_chart.timer) {
@@ -582,7 +583,8 @@ var DFC = (function _DFC() {
             var graphLine = {
                     name: lens.name,
                     data: []
-                };
+                },
+                mostDataPoints = 0;
 
             // Collect dof for each distance
             distances.forEach(function _chart_update_distances(distance) {
@@ -597,13 +599,28 @@ var DFC = (function _DFC() {
                     dec = parseFloat(parseInt(numeric[1], 10) + parseFloat(numeric[2]/12));
                 }
 
-                // Filter out unplottable values
-                if (dec > 0 && dec < Infinity) {
+                // Filter out impractical values
+                if (dec > 0 && dec < 200) {
                     graphLine.data.push(dec);
                 }
             });
 
+            // Check if this item has the most plotable data points
+            if (graphLine.data.length > mostDataPoints) {
+                mostDataPoints = graphLine.data.length;
+            }
+
             _chart.data.series.push(graphLine);
+        });
+
+        // Track how many x-axis points to show
+        if (mostDataPoints < distances.length) {
+            distances.splice(distances.length - mostDataPoints + 1, mostDataPoints);
+        }
+
+        // Update the x-axis chart option
+        _chart.data.xAxis.categories = distances.map(function _chart_update_distancesMap(i){
+            return i + 'ft';
         });
 
         // Draw updated chart
