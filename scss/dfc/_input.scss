@@ -48,6 +48,12 @@
         font-size: 1rem;
         padding: 0.25rem;
     }
+
+    @media #{$bp-table} {
+        .row .columns.table-no-padding-left { // `.row` and `.columns` needed for specificity to override Foundation
+            padding-left: 0;
+        }
+    }
 }
 
 // Action buttons
