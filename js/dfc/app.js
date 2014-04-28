@@ -181,7 +181,7 @@ var DFC = (function _DFC() {
     function _getNameFromUI(lens) {
         if (!lens.name) {
             // Get lens name from DOM
-            lens.name = $('[data-lens-id="' + lens.id + '"].name').text().trim();
+            lens.name = $('[data-lens-id="' + lens.id + '"].name').val().trim();
         }
 
         return lens;
@@ -370,11 +370,11 @@ var DFC = (function _DFC() {
             // Stop the event if the user pressed the enter or escape keys
             if (evt.type.indexOf('key') === 0 && (evt.which === 13 || evt.which === 27)) {
                 evt.preventDefault();
-                $input.text($input.text().replace(/\n/g, ''));
+                $input.val($input.val().replace(/\n/g, ''));
                 $input.blur();
             }
 
-            value = $input.text().trim();
+            value = $input.val().trim();
         }
         else if (property === 'sensor') {
             value = $input.find('option:selected').data('sensor-key');

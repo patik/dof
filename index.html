@@ -88,7 +88,8 @@
             <div class="inputs">
                 <div class="row">
                     <div class="small-12 table-2 columns">
-                        <h3 data-lens-id="{{index}}" class="name" contenteditable>{{name}}</h3>
+                        <label class="hide-for-table" for="name-{{index}}">Lens name</label>
+                        <input class="name" data-lens-id="{{index}}" value="{{name}}" type="text" id="name-{{index}}" tabindex="1">
                     </div>
                     <div class="small-9 table-2 columns">
                         <div class="row">

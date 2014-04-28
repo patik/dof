@@ -18,25 +18,6 @@
             border-bottom: $lens-table-border;
         }
     }
-
-    h3 {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-top: 0.5rem;
-        padding: 0 0.25rem;
-        height: auto; // Will auto-grow and shrink to fit text
-        line-height: 1.9rem;
-
-        &:hover,
-        &:focus,
-        &:active {
-            background: #ffc;
-            background: rgba(255, 203, 0, 0.1);
-            outline: none;
-            box-shadow: 0 0 5px #999;
-            cursor: text;
-        }
-    }
 }
 
 // Half-width lens blocks for medium viewports (since the `medium` grid is larger than the `table` grid)
@@ -56,6 +37,7 @@
     }
 
     // Foundation overrides
+    input[type="text"],
     input[type="number"] {
         padding: 0.25rem 0.5rem;
         height: 2rem;
