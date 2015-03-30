@@ -38,6 +38,11 @@ DFC.sensor = (function sensor() {
                 value: 2
             },
             {
+                name: '1.5" (Canon G1 X II)',
+                key: '15in',
+                value: 1.92
+            },
+            {
                 name: 'APS-C (Canon EF-S)',
                 key: 'APSCCanon',
                 value: 1.62
