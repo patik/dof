@@ -12,6 +12,20 @@ module.exports = function(grunt) {
             scss: ['scss/dfc.scss']
         },
 
+        // Supported options: http://jshint.com/docs/
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true,
+                browser: true,
+                unused: 'vars',
+            },
+            files: [
+                'dof.js',
+                'js/dfc/*.js',
+            ],
+        },
+
         // https://github.com/sindresorhus/grunt-sass
         sass: {
             options: {
@@ -36,13 +50,38 @@ module.exports = function(grunt) {
 
         uglify: {
             options: {
-                sourceMap: 'js/script.map'
+                preserveComments: 'some',
+                mangle: false,
             },
+
+            build: {
+                options: {
+                    sourceMap: true,
+                },
+                files: {
+                    'js/script.js': [
+                                        'js/vendor/jquery.js',
+                                        'js/vendor/fastclick.js',
+                                        'js/vendor/handlebars-v1.2.0.js',
+                                        'js/vendor/highcharts.js',
+                                        '<%= dfc.js %>',
+                                        'js/vendor/ga.js',
+                                    ]
+                }
+            },
+
             dist: {
                 files: {
-                    'js/script.js': ['js/vendor/jquery.js', 'js/vendor/fastclick.js', 'js/vendor/handlebars-v1.2.0.js', 'js/vendor/highcharts.js', '<%= dfc.js %>', 'js/vendor/ga.js']
+                    'js/script.js': [
+                                        'js/vendor/jquery.js',
+                                        'js/vendor/fastclick.js',
+                                        'js/vendor/handlebars-v1.2.0.js',
+                                        'js/vendor/highcharts.js',
+                                        '<%= dfc.js %>',
+                                        'js/vendor/ga.js',
+                                    ]
                 }
-            }
+            },
         },
 
         watch: {
@@ -78,9 +117,9 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Distribution
-    grunt.registerTask('default', ['sass:dist', 'uglify', 'clean']);
+    grunt.registerTask('default', ['sass:dist', 'uglify:dist', 'clean']);
     grunt.registerTask('dist', ['default']);
 
     // Development
-    grunt.registerTask('build', ['sass:build', 'uglify', 'watch']);
+    grunt.registerTask('build', ['sass:build', 'uglify:build', 'watch']);
 };
