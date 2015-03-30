@@ -58,7 +58,7 @@ DFC.sensor = (function sensor() {
                 value: 1.57
             },
             {
-                name: 'APS-C (Nikon, Pentax, Samsung, Sony)',
+                name: 'APS-C (Sony, Nikon, Pentax, Samsung)',
                 key: 'APSC',
                 value: 1.53
             },
@@ -86,7 +86,7 @@ DFC.sensor = (function sensor() {
 
         shortList = [
             {
-                name: 'Ultra-compact or iPhone',
+                name: 'iPhone or ultra-compact',
                 key: 'iPhone5S',
                 value: 7.21
             },
@@ -96,9 +96,9 @@ DFC.sensor = (function sensor() {
                 value: 2,
             },
             {
-                name: 'APS-C',
-                key: 'APSCCanon',
-                value: 1.62
+                name: 'APS-C (Sony, Nikon, etc)',
+                key: 'APSC',
+                value: 1.53
             },
             {
                 name: 'Full Frame',

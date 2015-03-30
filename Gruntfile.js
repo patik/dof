@@ -12,32 +12,27 @@ module.exports = function(grunt) {
             scss: ['scss/dfc.scss']
         },
 
+        // https://github.com/sindresorhus/grunt-sass
         sass: {
+            options: {
+                outputStyle: 'nested',
+            },
+
             dist: {
+                files: {
+                    'css/dfc.css': '<%= dfc.scss %>'
+                },
+            },
+
+            build: {
                 options: {
-                    style: 'compressed',
-                    loadPath: ['scss'],
-                    compass: true,
-                    sourcemap: true
+                    sourceMap: true,
                 },
                 files: {
                     'css/dfc.css': '<%= dfc.scss %>'
-                }
-            }
+                },
+            },
         },
-
-        // compass: {
-        //     dist: {
-        //         options: {
-        //             sassDir: 'scss',
-        //             cssDir: 'css',
-        //             outputStyle: 'compressed'
-        //         },
-        //         files: {
-        //             'css/dfc.css': '<%= dfc.scss %>'
-        //         }
-        //     }
-        // },
 
         uglify: {
             options: {
@@ -69,14 +64,23 @@ module.exports = function(grunt) {
                     livereload: true
                 }
             }
-        }
+        },
+
+        clean: {
+            dist: [
+                '**/*.map',
+                '.sass-cache',
+            ]
+        },
     });
 
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    // grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    // Load all Grunt tasks
+    require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('compile', ['sass', 'uglify']);
-    grunt.registerTask('default', ['compile', 'watch']);
+    // Distribution
+    grunt.registerTask('default', ['sass:dist', 'uglify', 'clean']);
+    grunt.registerTask('dist', ['default']);
+
+    // Development
+    grunt.registerTask('build', ['sass:build', 'uglify', 'watch']);
 };
