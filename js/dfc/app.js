@@ -26,7 +26,7 @@ var DFC = (function _DFC() {
      * Initialize app
      */
     function _init() {
-        template = Handlebars.compile($("#lens-template").html());
+        template = Handlebars.compile($('#lens-template').html());
         $main = $('[role="main"]');
         $body = $('body');
         $distance = $('.distance');
@@ -295,7 +295,7 @@ var DFC = (function _DFC() {
             // Update UI
             $lens.find('.focalLength').val(35);
             $lens.find('.aperture').val(DFC.aperture.getSize(lens.aperture));
-            $lens.find('.sensor').find('[data-sensor-key="APSCCanon"]').attr('selected','selected');
+            $lens.find('.sensor').find('[data-sensor-key="APSC"]').attr('selected', 'selected');
 
             _updateOuput(lens.id, $lens);
         }
