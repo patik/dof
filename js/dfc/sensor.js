@@ -86,7 +86,7 @@ DFC.sensor = (function sensor() {
 
         shortList = [
             {
-                name: 'Ultra-compact or iPhone',
+                name: 'iPhone or ultra-compact',
                 key: 'iPhone5S',
                 value: 7.21
             },
