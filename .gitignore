@@ -6,4 +6,5 @@ node_modules
 css
 test.html
 js/script.js
+js/_build.js
 *.map

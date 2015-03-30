@@ -12,6 +12,16 @@ module.exports = function(grunt) {
             scss: ['scss/dfc.scss']
         },
 
+        vendor: {
+            js: [
+                    'js/vendor/jquery.js',
+                    'js/vendor/fastclick.js',
+                    'js/vendor/handlebars-v1.2.0.js',
+                    'js/vendor/highcharts.js',
+                    'js/vendor/ga.js',
+                ],
+        },
+
         // Supported options: http://jshint.com/docs/
         jshint: {
             options: {
@@ -59,28 +69,25 @@ module.exports = function(grunt) {
                     sourceMap: true,
                 },
                 files: {
-                    'js/script.js': [
-                                        'js/vendor/jquery.js',
-                                        'js/vendor/fastclick.js',
-                                        'js/vendor/handlebars-v1.2.0.js',
-                                        'js/vendor/highcharts.js',
-                                        '<%= dfc.js %>',
-                                        'js/vendor/ga.js',
-                                    ]
+                    'js/_build.js': ['<%= dfc.js %>']
                 }
             },
 
             dist: {
                 files: {
-                    'js/script.js': [
-                                        'js/vendor/jquery.js',
-                                        'js/vendor/fastclick.js',
-                                        'js/vendor/handlebars-v1.2.0.js',
-                                        'js/vendor/highcharts.js',
-                                        '<%= dfc.js %>',
-                                        'js/vendor/ga.js',
-                                    ]
+                    'js/_build.js': ['<%= dfc.js %>']
                 }
+            },
+        },
+
+        concat: {
+            // Prepend pre-minified vendor scripts
+            js: {
+                src: [
+                        '<%= vendor.js %>',
+                        'js/_build.js',
+                    ],
+                dest: 'js/script.js',
             },
         },
 
@@ -90,7 +97,7 @@ module.exports = function(grunt) {
             },
             styles: {
                 files: ['scss/**/*.scss'],
-                tasks: ['sass'],
+                tasks: ['sass:build'],
                 options: {
                     // <script src="//localhost:35729/livereload.js"></script>
                     livereload: true
@@ -98,7 +105,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= dfc.js %>'],
-                tasks: ['uglify'],
+                tasks: ['uglify:build'],
                 options: {
                     livereload: true
                 }
@@ -107,6 +114,7 @@ module.exports = function(grunt) {
 
         clean: {
             dist: [
+                'js/_build.js',
                 '**/*.map',
                 '.sass-cache',
             ]
@@ -117,9 +125,9 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Distribution
-    grunt.registerTask('default', ['sass:dist', 'uglify:dist', 'clean']);
+    grunt.registerTask('default', ['sass:dist', 'uglify:dist', 'concat', 'clean']);
     grunt.registerTask('dist', ['default']);
 
     // Development
-    grunt.registerTask('build', ['sass:build', 'uglify:build', 'watch']);
+    grunt.registerTask('build', ['sass:build', 'uglify:build', 'concat', 'watch']);
 };
