@@ -1,24 +1,30 @@
-(function (name, definition) {
-    if (typeof define === "function" && define.amd) {
+(function (global, name, definition) {
+    // Require
+    if (typeof define === 'function' && define.amd) {
         define([], definition);
     }
+    // CommonJS
     else if (typeof module !== 'undefined' && module.exports) {
         module.exports = DoF;
     }
     // Fall back to a global variable
     else {
-        window[name] = definition();
+        global[name] = definition();
     }
-}('DoF',
+}(
+    this,
+    'DoF',
     function () {
         var defaults = {
                 focalLength: 35, // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
                 aperture: 2,     // String in the format `"f/2.5"`, or the float value `2.5`
                 cropFactor: 1,   // Sensor crop factor (compared to full frame; 2 = half the size)
                 distance: 20     // Distance to the subject (feet)
-            },
-            apertureRegex = /^f\/(\d+(?:\.\d+)?)$/,
-            _feetToFloat = function _feetToFloat(dist) {
+            };
+
+        var apertureRegex = /^f\/(\d+(?:\.\d+)?)$/;
+
+        var _feetToFloat = function _feetToFloat(dist) {
                 var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist),
                     feet = parseFloat(parts[1]),
                     inches = parseFloat(parts[2]);
@@ -104,19 +110,31 @@
          * @return {String} Length (feet/inches), or infinity
          */
         DoF.prototype._mmToFeet = function _mmToFeet(dist) {
-            var feet, inches;
+            var feet;
+            var inches;
 
             // Convert millimeters to inches
             dist = dist / 25.4;
 
-            return dist === Infinity ? Infinity
-                   : Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
+            if (dist === Infinity) {
+                return Infinity
+            }
+            else {
+                return Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
+            }
         };
 
         DoF.prototype._calculate = function _calculate(focalLength, aperture, cropFactor, distance) {
-            var result = {},
-                hf, near, far, dof,
-                dofFeet, eighthDofFeet, hfFeet, nearFeet, farFeet;
+            var result = {};
+            var hf;
+            var near;
+            var far;
+            var dof;
+            var dofFeet
+            var eighthDofFeet;
+            var hfFeet;
+            var nearFeet;
+            var farFeet;
 
             // Convert to millimeters
             distance = distance * 12 * 25.4;
