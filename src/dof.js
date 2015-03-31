@@ -16,18 +16,18 @@
     'DoF',
     function () {
         var defaults = {
-                focalLength: 35, // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
+                focalLength: 35, // Number, in millimeters. This must be the actual focal length, not the 35mm equivalent value
                 aperture: 2,     // String in the format `"f/2.5"`, or the float value `2.5`
-                cropFactor: 1,   // Sensor crop factor (compared to full frame; 2 = half the size)
+                cropFactor: 1,   // Sensor crop factor (compared to full frame; 2 = a half-size sensor)
                 distance: 20     // Distance to the subject (feet)
             };
 
         var apertureRegex = /^f\/(\d+(?:\.\d+)?)$/;
 
-        var _feetToFloat = function _feetToFloat(dist) {
-                var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist),
-                    feet = parseFloat(parts[1]),
-                    inches = parseFloat(parts[2]);
+        var feetToFloat = function _feetToFloat(dist) {
+                var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist);
+                var feet = parseFloat(parts[1]);
+                var inches = parseFloat(parts[2]);
 
                 return parseFloat(feet + (inches / 12));
             };
@@ -41,7 +41,7 @@
          * @param  {Mixed}   id           Optional, arbitrary ID for tracking by the consumer
          * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
          */
-        function DoF(focalLength, aperture, cropFactor, id, name) {
+        var DoF = function (focalLength, aperture, cropFactor, id, name) {
             if (typeof focalLength === 'number') {
                 this.focalLength = focalLength;
             }
@@ -166,21 +166,21 @@
             };
 
             result.toString.dof = dofFeet;
-            result.dof = _feetToFloat(result.toString.dof);
+            result.dof = feetToFloat(result.toString.dof);
             result.toString.eighthDof = this._mmToFeet(dof / 8);
-            result.eighthDof = _feetToFloat(result.toString.eighthDof);
+            result.eighthDof = feetToFloat(result.toString.eighthDof);
             result.toString.hf = this._mmToFeet(hf);
-            result.hf = _feetToFloat(result.toString.hf);
+            result.hf = feetToFloat(result.toString.hf);
             result.toString.near = this._mmToFeet(near);
-            result.near = _feetToFloat(result.toString.near);
+            result.near = feetToFloat(result.toString.near);
             result.toString.far = this._mmToFeet(far);
-            result.far = _feetToFloat(result.toString.far);
+            result.far = feetToFloat(result.toString.far);
 
             return result;
         };
 
         DoF.prototype.result = function _result(distance) {
-            var that = this;
+            var _this = this;
 
             if (isNaN(distance)) {
                 distance = defaults.distance;
@@ -189,7 +189,7 @@
                 distance = parseFloat(distance);
             }
 
-            return that._calculate(that.focalLength, that.aperture, that.cropFactor, distance);
+            return _this._calculate(_this.focalLength, _this.aperture, _this.cropFactor, distance);
         };
 
         return DoF;
@@ -214,17 +214,22 @@
             if (typeof exp === 'undefined' || +exp === 0) {
                 return Math[type](value);
             }
+
             value = +value;
             exp = +exp;
+
             // If the value is not a number or the exp is not an integer...
             if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
                 return NaN;
             }
+
             // Shift
             value = value.toString().split('e');
             value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+
             // Shift back
             value = value.toString().split('e');
+
             return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
         };
 

@@ -18,7 +18,10 @@ DFC.Lens = function _Lens(id) {
 
 // Depth of field calculation constructor
 DFC.Dof = function _Dof(sensor, focalLength, aperture, dstnce) {
-    var hf, near, far, dof;
+    var hf;
+    var near;
+    var far;
+    var dof;
 
     /**
      * Convert millimeters to decimal feet and inches
@@ -26,15 +29,16 @@ DFC.Dof = function _Dof(sensor, focalLength, aperture, dstnce) {
      * @param  dist     Length in millimeters
      * @return {String} Length (feet/inches), or infinity
      */
-    function _mmToFeet(dist) {
-        var feet, inches;
+    var mmToFeet = function (dist) {
+        var feet;
+        var inches;
 
         // Convert millimeters to inches
         dist = dist / 25.4;
 
         return dist === Infinity ? Infinity
                : Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
-    }
+    };
 
     // Get numerical values for the sensor and aperture
     if (typeof sensor === 'string' && isNaN(sensor)) {
@@ -70,11 +74,11 @@ DFC.Dof = function _Dof(sensor, focalLength, aperture, dstnce) {
 
     // Convert for display
     this.dofFloat = dof;
-    this.dof = _mmToFeet(dof);
-    this.eighthDof = _mmToFeet(dof / 8);
-    this.hf = _mmToFeet(hf);
-    this.near = _mmToFeet(near);
-    this.far = _mmToFeet(far);
+    this.dof = mmToFeet(dof);
+    this.eighthDof = mmToFeet(dof / 8);
+    this.hf = mmToFeet(hf);
+    this.near = mmToFeet(near);
+    this.far = mmToFeet(far);
 
     return this;
 };

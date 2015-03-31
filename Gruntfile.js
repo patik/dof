@@ -43,7 +43,7 @@ module.exports = function(grunt) {
                 unused: 'vars',
             },
             files: [
-                'src/dof.js',
+                '<%= dof.js %>',
                 'src/gui/js/dfc/*.js',
             ],
         },

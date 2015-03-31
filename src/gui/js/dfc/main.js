@@ -1,26 +1,25 @@
 var DFC = (function _DFC() {
-    var
         // List of all lenses
-        lenses = [],
+    var lenses = [];
 
-        // Globals
-        template = null,
-        distance = 20,
+    // Globals
+    var template = null;
+    var distance = 20;
 
-        // Cached element queries
-        $body = null,
-        $main = null,
-        $distance = null,
-        $addLens = null,
-        $sortToggle = null,
-        $sortOptions = null,
-        $comparisonLinks = null,
+    // Cached element queries
+    var $body = null;
+    var $main = null;
+    var $distance = null;
+    var $addLens = null;
+    var $sortToggle = null;
+    var $sortOptions = null;
+    var $comparisonLinks = null;
 
-        // Sorting API
-        _sorting = {},
+    // Sorting API
+    var _sorting = {};
 
-        // Chart API
-        _chart = {};
+    // Chart API
+    var _chart = {};
 
     /**
      * Initialize app
@@ -49,7 +48,7 @@ var DFC = (function _DFC() {
         // Event listeners
         $body
             // Prevent actual form submission and just update
-            .on('submit', 'form', function(evt) {
+            .on('submit', 'form', function (evt) {
                 evt.preventDefault();
                 return false;
             })
@@ -85,7 +84,7 @@ var DFC = (function _DFC() {
         $distance.on('change keyup blur', _onChangeDistance);
 
         // Setup existing lens UIs
-        $.each(lenses, function(i, lens) {
+        $.each(lenses, function (i, lens) {
             _addLensUI(lens);
             lens = _getNameFromUI(lens);
         });
@@ -151,7 +150,7 @@ var DFC = (function _DFC() {
         var hash = '',
             lensHashes = [];
 
-        $.each(lenses, function(i, lens) {
+        $.each(lenses, function (i, lens) {
             var pieces = [], apt;
 
             pieces.push(encodeURIComponent(lens.name));
@@ -211,10 +210,11 @@ var DFC = (function _DFC() {
     }
 
     function _duplicateLensUI(evt) {
-        var sourceId = $(evt.target).data('lens-id'),
-            sourceLens = _getLensById(sourceId),
-            lens = _createNewLens(),
-            prop, $config;
+        var sourceId = $(evt.target).data('lens-id');
+        var sourceLens = _getLensById(sourceId);
+        var lens = _createNewLens();
+        var prop;
+        var $config;
 
         evt.preventDefault();
 
@@ -256,10 +256,10 @@ var DFC = (function _DFC() {
     }
 
     function _deleteLensUI(evt) {
-        var $targ = $(evt.target),
-            id = $targ.data('lens-id'),
-            lens = _getLensById(id),
-            index = lenses.indexOf(lens);
+        var $targ = $(evt.target);
+        var id = $targ.data('lens-id');
+        var lens = _getLensById(id);
+        var index = lenses.indexOf(lens);
 
         evt.preventDefault();
 
@@ -274,11 +274,12 @@ var DFC = (function _DFC() {
     }
 
     function _resetLensUI(evt) {
-        var $targ = $(evt.target),
-            id = $targ.data('lens-id'),
-            lens = _getLensById(id),
-            $lens = $targ.closest('.lens'),
-            $defaults, prop;
+        var $targ = $(evt.target);
+        var id = $targ.data('lens-id');
+        var lens = _getLensById(id);
+        var $lens = $targ.closest('.lens');
+        var $defaults;
+        var prop;
 
         evt.preventDefault();
 
@@ -338,7 +339,7 @@ var DFC = (function _DFC() {
     function _onChangeDistance(evt) {
         distance = parseFloat($distance.val());
 
-        $.each(lenses, function(i, lens) {
+        $.each(lenses, function (i, lens) {
             _updateOuput(lens.id, $('form[data-lens-id="' + lens.id + '"'));
         });
 
@@ -351,10 +352,11 @@ var DFC = (function _DFC() {
      * @param   {Event}  evt   Change, blur, or key event
      */
     function _onChangeLensValue(evt) {
-        var $input = $(this),
-            propRegex = /\b(name|focalLength|aperture|sensor)\b/,
-            className = $input.attr('class'),
-            property, value;
+        var $input = $(this);
+        var propRegex = /\b(name|focalLength|aperture|sensor)\b/;
+        var className = $input.attr('class');
+        var property;
+        var value;
 
         // Make sure the field represents a known property type
         if (!propRegex.test(className)) {
@@ -410,7 +412,7 @@ var DFC = (function _DFC() {
         }
 
         // Replace item in array with updated object
-        $.each(lenses, function(i, lens) {
+        $.each(lenses, function (i, lens) {
             if (lens.id === id) {
                 lenses[i] = lens;
                 return false;
@@ -460,7 +462,7 @@ var DFC = (function _DFC() {
     function _getLensById(id) {
         var foundLens = null;
 
-        $.each(lenses, function(i, lens) {
+        $.each(lenses, function (i, lens) {
             if (lens.id === id) {
                 foundLens = lens;
                 return false;
@@ -477,7 +479,9 @@ var DFC = (function _DFC() {
      * @param   {jQuery}  $container  Container jQuery element
      */
     function _updateOuput(id, $container) {
-        var lens, result, dof;
+        var lens;
+        var result;
+        var dof;
 
         // Triggered by an event
         if (typeof id === 'object' && id.target) {
@@ -563,8 +567,8 @@ var DFC = (function _DFC() {
      * Updates the chart data
      */
     _chart.update = function _chart_update() {
-        var distances,
-            mostDataPoints = 0;
+        var distances;
+        var mostDataPoints = 0;
 
         // Update the chart once per series of changes, rather than every single change
         if (_chart.timer) {
@@ -579,19 +583,19 @@ var DFC = (function _DFC() {
         _chart.data.series = [];
 
         // Create data set for each lens
-        lenses.forEach(function _chart_update_lenses(lens, i) {
+        lenses.forEach(function (lens, i) {
             var graphLine = {
                     name: lens.name,
                     data: []
-                },
-                mostDataPoints = 0;
+                };
+            var mostDataPoints = 0;
 
             // Collect dof for each distance
-            distances.forEach(function _chart_update_distances(distance) {
-                var dof = _getDof(lens, distance),
-                    regex = /(\d+)\'\s(\d+\.\d+)\"/,
-                    dec = 0,
-                    numeric;
+            distances.forEach(function (distance) {
+                var dof = _getDof(lens, distance);
+                var regex = /(\d+)\'\s(\d+\.\d+)\"/;
+                var dec = 0;
+                var numeric;
 
                 // Convert to decimal values
                 if (regex.test(dof)) {
@@ -619,7 +623,7 @@ var DFC = (function _DFC() {
         }
 
         // Update the x-axis chart option
-        _chart.data.xAxis.categories = distances.map(function _chart_update_distancesMap(i){
+        _chart.data.xAxis.categories = distances.map(function (i){
             return i + 'ft';
         });
 
@@ -698,7 +702,7 @@ var DFC = (function _DFC() {
         $('[role="main"]').find('.lens').remove();
 
         // Re-add all lenses
-        $.each(lenses, function(i, lens) {
+        $.each(lenses, function (i, lens) {
             _addLensUI(lens);
         });
 
@@ -792,7 +796,7 @@ var DFC = (function _DFC() {
 }());
 
 // Enable FastClick
-$(function() {
+$(function () {
     if(typeof FastClick !== 'undefined') {
         FastClick.attach(document.body);
     }

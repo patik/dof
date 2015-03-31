@@ -119,15 +119,15 @@ DFC.sensor = (function sensor() {
      * @return {String}              HTML of all `<option>`s
      */
     function _createHTML(selectedSize) {
-        var html = '<optgroup label="Common Sizes">',
-            foundSize = false;
+        var html = '<optgroup label="Common Sizes">';
+        var foundSize = false;
 
         /**
          * Adds the HTML for an item's `option` element to the main `html` string
          * @param  {Number} i    Index of the array being iterated over
          * @param  {Object} item Sensor size object
          */
-        function createOptionHTML(i, item) {
+        var createOptionHTML = function (i, item) {
             html += '<option value="' + item.value + '"';
 
             if (!foundSize && (item.name === selectedSize || item.key === selectedSize)) {
@@ -136,7 +136,7 @@ DFC.sensor = (function sensor() {
             }
 
             html += ' data-sensor-key="' + item.key + '">' + item.name + '</option>';
-        }
+        };
 
         if (typeof selectedSize === 'number' || !isNaN(selectedSize)) {
             selectedSize = _getNameByMultiplier(selectedSize);
@@ -162,7 +162,7 @@ DFC.sensor = (function sensor() {
     function _getMultiplierByName(name) {
         var multiplier = 0;
 
-        $.each(fullList, function(i, size) {
+        $.each(fullList, function (i, size) {
             if (size.name === name) {
                 multiplier = size.value;
                 return false;
@@ -180,7 +180,7 @@ DFC.sensor = (function sensor() {
     function _getMultiplierByKey(key) {
         var multiplier = 0;
 
-        $.each(fullList, function(i, size) {
+        $.each(fullList, function (i, size) {
             if (size.key === key) {
                 multiplier = size.value;
                 return false;
@@ -200,7 +200,7 @@ DFC.sensor = (function sensor() {
 
         multiplier = parseFloat(multiplier);
 
-        $.each(fullList, function(i, size) {
+        $.each(fullList, function (i, size) {
             if (size.value === multiplier) {
                 name = size.name;
                 // Quit loop
@@ -219,7 +219,7 @@ DFC.sensor = (function sensor() {
     function _getNameByKey(key) {
         var name = '';
 
-        $.each(fullList, function(i, size) {
+        $.each(fullList, function (i, size) {
             if (size.key === key) {
                 name = size.name;
                 // Quit loop
@@ -238,7 +238,7 @@ DFC.sensor = (function sensor() {
     function _getKeyByName(name) {
         var key = '';
 
-        $.each(mainList.concat(shortList), function(i, size) {
+        $.each(mainList.concat(shortList), function (i, size) {
             if (size.name === name) {
                 key = size.key;
                 // Quit loop
