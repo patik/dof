@@ -2,23 +2,35 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        foundation: {
-            js: ['js/foundation/foundation.js', 'js/foundation/foundation.*.js'],
-            scss: ['scss/foundation.scss']
+        dof: {
+            js: ['src/dof.js']
         },
 
-        dfc: {
-            js: ['js/dfc/app.js', 'js/dfc/objects.js', 'js/dfc/aperture.js', 'js/dfc/sensor.js'],
-            scss: ['scss/dfc.scss']
+        gui: {
+            js: [
+                    'src/gui/js/dfc/main.js',
+                    'src/gui/js/dfc/objects.js',
+                    'src/gui/js/dfc/aperture.js',
+                    'src/gui/js/dfc/sensor.js',
+                ],
+            scss: ['src/gui/scss/app.scss'],
+        },
+
+        foundation: {
+            js: [
+                    'src/gui/js/foundation/foundation.js',
+                    'src/gui/js/foundation/foundation.*.js'
+                ],
+            scss: ['src/gui/scss/foundation.scss'],
         },
 
         vendor: {
             js: [
-                    'js/vendor/jquery.js',
-                    'js/vendor/fastclick.js',
-                    'js/vendor/handlebars-v1.2.0.js',
-                    'js/vendor/highcharts.js',
-                    'js/vendor/ga.js',
+                    'src/gui/js/vendor/jquery.js',
+                    'src/gui/js/vendor/fastclick.js',
+                    'src/gui/js/vendor/handlebars-v1.2.0.js',
+                    'src/gui/js/vendor/highcharts.js',
+                    'src/gui/js/vendor/ga.js',
                 ],
         },
 
@@ -31,8 +43,8 @@ module.exports = function(grunt) {
                 unused: 'vars',
             },
             files: [
-                'dof.js',
-                'js/dfc/*.js',
+                'src/dof.js',
+                'src/gui/js/dfc/*.js',
             ],
         },
 
@@ -44,7 +56,7 @@ module.exports = function(grunt) {
 
             dist: {
                 files: {
-                    'css/dfc.css': '<%= dfc.scss %>'
+                    'dist/gui/css/app.css': '<%= gui.scss %>'
                 },
             },
 
@@ -53,7 +65,7 @@ module.exports = function(grunt) {
                     sourceMap: true,
                 },
                 files: {
-                    'css/dfc.css': '<%= dfc.scss %>'
+                    'dist/gui/css/app.css': '<%= gui.scss %>'
                 },
             },
         },
@@ -69,47 +81,108 @@ module.exports = function(grunt) {
                     sourceMap: true,
                 },
                 files: {
-                    'js/_build.js': ['<%= dfc.js %>']
-                }
+                    'dist/dof.js': ['<%= dof.js %>'],
+                },
             },
 
             dist: {
                 files: {
-                    'js/_build.js': ['<%= dfc.js %>']
-                }
+                    'dist/dof.js': ['<%= dof.js %>'],
+                },
+            },
+
+            buildGUI: {
+                options: {
+                    sourceMap: true,
+                },
+                files: {
+                    'dist/gui/js/_build.js': ['<%= gui.js %>'],
+                },
+            },
+
+            distGUI: {
+                files: {
+                    'dist/gui/js/_build.js': ['<%= gui.js %>'],
+                },
             },
         },
 
         concat: {
             // Prepend pre-minified vendor scripts
-            js: {
+            distJS: {
                 src: [
                         '<%= vendor.js %>',
-                        'js/_build.js',
+                        'dist/gui/js/_build.js',
                     ],
-                dest: 'js/script.js',
+                dest: 'dist/gui/js/app.js',
+            },
+
+            buildJS: {
+                options: {
+                    footer: '<script src="//localhost:35729/livereload.js"></script>',
+                },
+                src: [
+                        '<%= vendor.js %>',
+                        'dist/gui/js/_build.js',
+                    ],
+                dest: 'dist/gui/js/app.js',
             },
         },
 
-        watch: {
-            grunt: {
-                files: ['Gruntfile.js']
+        copy: {
+            html: {
+                expand: true,
+                cwd: 'src/',
+                src: ['gui/**/*.html'],
+                dest: 'dist/',
+                filter: 'isFile'
             },
+            scripts: {
+                expand: true,
+                cwd: 'src/',
+                src: ['gui/js/vendor/modernizr.js'],
+                dest: 'dist/',
+                filter: 'isFile'
+            },
+            // images: {
+            //     expand: true,
+            //     cwd: 'src/',
+            //     src: [
+            //             'cui/images/**.*',
+            //             'project/images/**.*',
+            //             'components/*/images/**.*'
+            //         ],
+            //     dest: 'dist/images',
+            //     filter: 'isFile',
+            //     flatten: true
+            // }
+        },
+
+        watch: {
             styles: {
-                files: ['scss/**/*.scss'],
+                files: ['src/scss/**/*.scss'],
                 tasks: ['sass:build'],
                 options: {
-                    // <script src="//localhost:35729/livereload.js"></script>
                     livereload: true
-                }
+                },
             },
             js: {
-                files: ['<%= dfc.js %>'],
+                files: [
+                    '<%= gui.js %>',
+                    '<%= dof.js %>',
+                ],
                 tasks: ['uglify:build'],
                 options: {
                     livereload: true
-                }
-            }
+                },
+            },
+            html: {
+                files: ['src/**/*.html'],
+                tasks: ['copy:html'],
+                options: {
+                    livereload: true
+                },
+            },
         },
 
         clean: {
@@ -117,17 +190,31 @@ module.exports = function(grunt) {
                 'js/_build.js',
                 '**/*.map',
                 '.sass-cache',
-            ]
+            ],
         },
     });
 
     // Load all Grunt tasks
     require('load-grunt-tasks')(grunt);
 
+    ////////////
+    // Module //
+    ////////////
+
     // Distribution
-    grunt.registerTask('default', ['sass:dist', 'uglify:dist', 'concat', 'clean']);
+    grunt.registerTask('default', ['uglify:dist', 'concat:distJS', 'clean']);
     grunt.registerTask('dist', ['default']);
 
     // Development
-    grunt.registerTask('build', ['sass:build', 'uglify:build', 'concat', 'watch']);
+    grunt.registerTask('build', ['uglify:build', 'concat:buildJS', 'watch']);
+
+    /////////
+    // GUI //
+    /////////
+
+    // Distribution
+    grunt.registerTask('dist-gui', ['sass:dist', 'uglify:dist', 'uglify:distGUI', 'copy', 'clean']);
+
+    // Development
+    grunt.registerTask('build-gui', ['sass:build', 'uglify:build', 'uglify:buildGUI', 'concat:buildJS', 'copy', 'watch']);
 };
