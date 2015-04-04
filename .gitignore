@@ -2,8 +2,5 @@
 .sass-cache
 *.sublime-*
 sftp-config.json
+dist/
 node_modules
-css
-test.html
-js/script.js
-*.map

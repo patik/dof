@@ -1,0 +1,32 @@
+{
+    "name": "dof",
+    "main": "dof.js",
+    "version": "1.0.0",
+    "homepage": "https://github.com/patik/dof",
+    "authors": [
+        "Craig Patik <craig@patik.com>"
+    ],
+    "description": "Depth-of-field calculator for comparing camera lenses",
+    "moduleType": [
+        "amd",
+        "globals",
+        "node"
+    ],
+    "keywords": [
+        "depth-of-field",
+        "lens",
+        "camera",
+        "sensor",
+        "calculator",
+        "focal-length",
+        "photography"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
