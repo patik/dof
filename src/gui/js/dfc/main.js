@@ -495,7 +495,7 @@ var DFC = (function _DFC() {
             return;
         }
 
-        result = new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, distance);
+        result = new Dof(lens.sensor, lens.focalLength, lens.aperture, distance);
 
         // Add a space before single digit numbers to make them align vertically
         dof = result.dof
@@ -530,7 +530,7 @@ var DFC = (function _DFC() {
             return;
         }
 
-        return (new DFC.Dof(lens.sensor, lens.focalLength, lens.aperture, distance)).dof;
+        return (new Dof(lens.sensor, lens.focalLength, lens.aperture, distance)).dof;
     }
 
     ///////////
