@@ -1,6 +1,6 @@
 {
     "name": "dof",
-    "description": "Depth-of-field calculator for camera lenses",
+    "description": "Depth-of-field calculator for comparing camera lenses",
     "version": "1.0.0",
     "repository": {
         "type": "git",
