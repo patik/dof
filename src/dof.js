@@ -32,12 +32,115 @@
                 return parseFloat(feet + (inches / 12));
             };
 
+        var _calculate = function _calculate(focalLength, aperture, cropFactor, distance) {
+            var result = {};
+            var hf;
+            var near;
+            var far;
+            var dof;
+            var dofFeet
+            var eighthDofFeet;
+            var hfFeet;
+            var nearFeet;
+            var farFeet;
+
+            // Convert to millimeters
+            distance = distance * 12 * 25.4;
+
+            // Get 35mm-equivalent focal length
+            result.focalLengthEquiv = _decimalAdjust(cropFactor * focalLength);
+
+            // Convert sensor crop factor to a multiplier
+            cropFactor = 1 / cropFactor;
+
+            result.coc = Math.round(0.03 * cropFactor * 1000) / 1000;
+            hf = Math.pow(focalLength, 2) / (aperture * result.coc) + (focalLength * 1.0);
+
+            near = (distance * (hf - focalLength)) / (hf + distance + (2 * focalLength));
+            far = (distance * (hf - focalLength)) / (hf - distance);
+
+            if (far <= 0) {
+                far = Infinity;
+                dof = Infinity;
+            }
+            else {
+                dof = far - near;
+            }
+
+            // Gather all values
+            dofFeet = _mmToFeet(dof);
+            result.toString = function() {
+                return dofFeet;
+            };
+
+            result.toString.dof = dofFeet;
+            result.dof = feetToFloat(result.toString.dof);
+            result.toString.eighthDof = _mmToFeet(dof / 8);
+            result.eighthDof = feetToFloat(result.toString.eighthDof);
+            result.toString.hf = _mmToFeet(hf);
+            result.hf = feetToFloat(result.toString.hf);
+            result.toString.near = _mmToFeet(near);
+            result.near = feetToFloat(result.toString.near);
+            result.toString.far = _mmToFeet(far);
+            result.far = feetToFloat(result.toString.far);
+
+            return result;
+        };
+
+        /**
+         * Convert millimeters to decimal feet and inches
+         *
+         * @param  dist     Length in millimeters
+         * @return {String} Length (feet/inches), or infinity
+         */
+        var _mmToFeet = function _mmToFeet(dist) {
+            var feet;
+            var inches;
+
+            // Convert millimeters to inches
+            dist = dist / 25.4;
+
+            if (dist === Infinity) {
+                return Infinity
+            }
+            else {
+                return Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
+            }
+        };
+
+        /**
+         * Decimal adjustment of a number.
+         * Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#Example:_Decimal_rounding
+         *
+         * @param   {Number}    value   The number
+         * @returns {Number}            The adjusted value
+         */
+        var _decimalAdjust = function _decimalAdjust(value) {
+            var exp = -1; // The exponent (the 10 logarithm of the adjustment base)
+
+            value = +value;
+
+            // If the value is not a number or the exp is not an integer...
+            if (isNaN(value)) {
+                return NaN;
+            }
+
+            // Shift
+            value = value.toString().split('e');
+            value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+
+            // Shift back
+            value = value.toString().split('e');
+
+            return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+        };
+
         /**
          * Lens constructor
          *
          * @param  {Number}  focalLength  Actual local length in millimeters
          * @param  {Mixed}   aperture     Aperture as a float or a string like "f/2.5"
-         * @param  {Number}  cropFactor       Sensor crop factor
+         * @param  {Number}  cropFactor   Sensor crop factor
          * @param  {Mixed}   id           Optional, arbitrary ID for tracking by the consumer
          * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
          */
@@ -103,83 +206,7 @@
             }
         };
 
-        /**
-         * Convert millimeters to decimal feet and inches
-         *
-         * @param  dist     Length in millimeters
-         * @return {String} Length (feet/inches), or infinity
-         */
-        DoF.prototype._mmToFeet = function _mmToFeet(dist) {
-            var feet;
-            var inches;
-
-            // Convert millimeters to inches
-            dist = dist / 25.4;
-
-            if (dist === Infinity) {
-                return Infinity
-            }
-            else {
-                return Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"';
-            }
-        };
-
-        DoF.prototype._calculate = function _calculate(focalLength, aperture, cropFactor, distance) {
-            var result = {};
-            var hf;
-            var near;
-            var far;
-            var dof;
-            var dofFeet
-            var eighthDofFeet;
-            var hfFeet;
-            var nearFeet;
-            var farFeet;
-
-            // Convert to millimeters
-            distance = distance * 12 * 25.4;
-
-            // Get 35mm-equivalent focal length
-            result.focalLengthEquiv = Math.round10(cropFactor * focalLength);
-
-            // Convert sensor crop factor to a multiplier
-            cropFactor = 1 / cropFactor;
-
-            result.coc = Math.round(0.03 * cropFactor * 1000) / 1000;
-            hf = Math.pow(focalLength, 2) / (aperture * result.coc) + (focalLength * 1.0);
-
-            near = (distance * (hf - focalLength)) / (hf + distance + (2 * focalLength));
-            far = (distance * (hf - focalLength)) / (hf - distance);
-
-            if (far <= 0) {
-                far = Infinity;
-                dof = Infinity;
-            }
-            else {
-                dof = far - near;
-            }
-
-            // Gather all values
-            dofFeet = this._mmToFeet(dof);
-            result.toString = function() {
-                return dofFeet;
-            };
-
-            result.toString.dof = dofFeet;
-            result.dof = feetToFloat(result.toString.dof);
-            result.toString.eighthDof = this._mmToFeet(dof / 8);
-            result.eighthDof = feetToFloat(result.toString.eighthDof);
-            result.toString.hf = this._mmToFeet(hf);
-            result.hf = feetToFloat(result.toString.hf);
-            result.toString.near = this._mmToFeet(near);
-            result.near = feetToFloat(result.toString.near);
-            result.toString.far = this._mmToFeet(far);
-            result.far = feetToFloat(result.toString.far);
-
-            return result;
-        };
-
-        DoF.prototype.result = function _result(distance) {
+        DoF.prototype.getResult = function _getResult(distance) {
             var _this = this;
 
             if (isNaN(distance)) {
@@ -189,53 +216,9 @@
                 distance = parseFloat(distance);
             }
 
-            return _this._calculate(_this.focalLength, _this.aperture, _this.cropFactor, distance);
+            return _calculate(_this.focalLength, _this.aperture, _this.cropFactor, distance);
         };
 
         return DoF;
     }
 ));
-
-// Math.round10 polyfill for decimal rounding
-(function() {
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#Example:_Decimal_rounding
-    // Decimal round
-    if (!Math.round10) {
-        /**
-         * Decimal adjustment of a number.
-         *
-         * @param   {String}    type    The type of adjustment.
-         * @param   {Number}    value   The number.
-         * @param   {Integer}   exp     The exponent (the 10 logarithm of the adjustment base).
-         * @returns {Number}            The adjusted value.
-         */
-        var decimalAdjust = function _decimalAdjust(type, value, exp) {
-            // If the exp is undefined or zero...
-            if (typeof exp === 'undefined' || +exp === 0) {
-                return Math[type](value);
-            }
-
-            value = +value;
-            exp = +exp;
-
-            // If the value is not a number or the exp is not an integer...
-            if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
-                return NaN;
-            }
-
-            // Shift
-            value = value.toString().split('e');
-            value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
-
-            // Shift back
-            value = value.toString().split('e');
-
-            return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
-        };
-
-        Math.round10 = function _math_round10(value) {
-            return decimalAdjust('round', value, -1);
-        };
-    }
-})();
-
