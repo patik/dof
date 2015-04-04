@@ -5,7 +5,7 @@
     }
     // CommonJS
     else if (typeof module !== 'undefined' && module.exports) {
-        module.exports = DoF;
+        module.exports = name;
     }
     // Fall back to a global variable
     else {
@@ -73,7 +73,7 @@
 
             // Gather all values
             dofFeet = _mmToFeet(dof);
-            result.toString = function() {
+            result.toString = function () {
                 return dofFeet;
             };
 

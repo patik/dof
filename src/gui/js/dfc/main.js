@@ -481,7 +481,7 @@ var DFC = (function _DFC() {
     function _updateOuput(id, $container) {
         var lens;
         var result;
-        var dof;
+        var depth;
 
         // Triggered by an event
         if (typeof id === 'object' && id.target) {
@@ -498,14 +498,14 @@ var DFC = (function _DFC() {
         result = (new DoF(lens.focalLength, lens.aperture, DFC.sensor.getMultiplier(lens.sensor))).getResult(distance);
 
         // Add a space before single digit numbers to make them align vertically
-        dof = result.toString.dof
+        depth = result.toString.dof
                 .toString()
                 .replace(/^(\d)\'/, ' $1\'')
                 .replace(/\s(\d)\./, '  $1.');
 
 
         // Display values
-        $container.find('.dof').text(dof);
+        $container.find('.dof').text(depth);
         $container.find('.eighthDof').text(result.eighthDof);
         $container.find('.coc').text(result.coc + ' mm');
         $container.find('.hf').text(result.hf);
@@ -572,7 +572,7 @@ var DFC = (function _DFC() {
         var mostDataPoints = 0;
 
         // Update the chart once per series of changes, rather than every single change
-        if (1 === 1 || _chart.timer) {
+        if (_chart.timer) {
             return false;
         }
 

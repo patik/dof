@@ -121,7 +121,7 @@ module.exports = function(grunt) {
                 files: [
                     '<%= gui.js %>',
                 ],
-                tasks: ['uglify:buildGUI'],
+                tasks: ['uglify:build'],
                 options: {
                     livereload: true
                 },
