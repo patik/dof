@@ -495,13 +495,14 @@ var DFC = (function _DFC() {
             return;
         }
 
-        result = new Dof(lens.sensor, lens.focalLength, lens.aperture, distance);
+        result = (new DoF(lens.focalLength, lens.aperture, DFC.sensor.getMultiplier(lens.sensor))).getResult(distance);
 
         // Add a space before single digit numbers to make them align vertically
-        dof = result.dof
+        dof = result.toString.dof
                 .toString()
                 .replace(/^(\d)\'/, ' $1\'')
                 .replace(/\s(\d)\./, '  $1.');
+
 
         // Display values
         $container.find('.dof').text(dof);
@@ -512,7 +513,7 @@ var DFC = (function _DFC() {
         $container.find('.fardist').text(result.far);
         $container.find('.focalLengthEquiv').text(result.focalLengthEquiv + 'mm');
 
-        _updateLens(id, 'dof', result.dofFloat);
+        _updateLens(id, 'dof', result.dof);
 
         $body.trigger('updatechart');
     }
@@ -530,7 +531,7 @@ var DFC = (function _DFC() {
             return;
         }
 
-        return (new Dof(lens.sensor, lens.focalLength, lens.aperture, distance)).dof;
+        return (new DoF(lens.focalLength, lens.aperture, DFC.sensor.getMultiplier(lens.sensor))).getResult(distance).toString.dof;
     }
 
     ///////////
@@ -571,7 +572,7 @@ var DFC = (function _DFC() {
         var mostDataPoints = 0;
 
         // Update the chart once per series of changes, rather than every single change
-        if (_chart.timer) {
+        if (1 === 1 || _chart.timer) {
             return false;
         }
 
@@ -801,3 +802,10 @@ $(function () {
         FastClick.attach(document.body);
     }
 });
+
+// Polyfills
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^\s+|\s+$/gm, '');
+    };
+}
