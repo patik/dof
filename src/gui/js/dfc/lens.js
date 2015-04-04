@@ -15,10 +15,3 @@ DFC.Lens = function _Lens(id) {
 
     return this;
 };
-
-// Polyfills
-if (!String.prototype.trim) {
-    String.prototype.trim = function () {
-        return this.replace(/^\s+|\s+$/gm, '');
-    };
-}

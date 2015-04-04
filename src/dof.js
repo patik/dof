@@ -24,12 +24,20 @@
 
         var apertureRegex = /^f\/(\d+(?:\.\d+)?)$/;
 
-        var feetToFloat = function _feetToFloat(dist) {
-                var parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist);
-                var feet = parseFloat(parts[1]);
-                var inches = parseFloat(parts[2]);
+        var _feetToFloat = function _feetToFloat(dist) {
+                var parts
+                var feet;
+                var inches;
 
-                return parseFloat(feet + (inches / 12));
+                if (/^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.test(dist)) {
+                    parts = /^(\d+(?:\.\d+)?)\'\s+(\d+(?:\.\d+)?)\"$/.exec(dist);
+                    feet = parseFloat(parts[1]);
+                    inches = parseFloat(parts[2]);
+
+                    return parseFloat(feet + (inches / 12));
+                }
+
+                return dist;
             };
 
         var _calculate = function _calculate(focalLength, aperture, cropFactor, distance) {
@@ -74,15 +82,15 @@
             };
 
             result.toString.dof = dofFeet;
-            result.dof = feetToFloat(result.toString.dof);
+            result.dof = _feetToFloat(result.toString.dof);
             result.toString.eighthDof = _mmToFeet(dof / 8);
-            result.eighthDof = feetToFloat(result.toString.eighthDof);
+            result.eighthDof = _feetToFloat(result.toString.eighthDof);
             result.toString.hf = _mmToFeet(hf);
-            result.hf = feetToFloat(result.toString.hf);
+            result.hf = _feetToFloat(result.toString.hf);
             result.toString.near = _mmToFeet(near);
-            result.near = feetToFloat(result.toString.near);
+            result.near = _feetToFloat(result.toString.near);
             result.toString.far = _mmToFeet(far);
-            result.far = feetToFloat(result.toString.far);
+            result.far = _feetToFloat(result.toString.far);
 
             return result;
         };
@@ -145,6 +153,10 @@
          * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
          */
         var DoF = function (focalLength, aperture, cropFactor, id, name) {
+            if (typeof focalLength === 'string' && focalLength.length) {
+                focalLength = parseFloat(focalLength);
+            }
+
             if (typeof focalLength === 'number') {
                 this.focalLength = focalLength;
             }
