@@ -3,26 +3,18 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         dof: {
-            js: ['src/dof.js']
+            js: ['dof.js']
         },
 
         gui: {
             js: [
-                    'src/dof.js',
+                    'dof.js',
                     'src/gui/js/dfc/main.js',
                     'src/gui/js/dfc/lens.js',
                     'src/gui/js/dfc/aperture.js',
                     'src/gui/js/dfc/sensor.js',
                 ],
             scss: ['src/gui/scss/app.scss'],
-        },
-
-        foundation: {
-            js: [
-                    'src/gui/js/foundation/foundation.js',
-                    'src/gui/js/foundation/foundation.*.js'
-                ],
-            scss: ['src/gui/scss/foundation.scss'],
         },
 
         vendor: {
@@ -81,27 +73,11 @@ module.exports = function(grunt) {
                     sourceMap: true,
                 },
                 files: {
-                    'dist/dof.js': ['<%= dof.js %>'],
-                },
-            },
-
-            dist: {
-                files: {
-                    'dist/dof.js': ['<%= dof.js %>'],
-                },
-            },
-
-            buildGUI: {
-                options: {
-                    sourceMap: true,
-                    // footer: '(function(){var s=document.createElement("script");s.src="//localhost:35729/livereload.js";document.head.appendChild(s);}());',
-                },
-                files: {
                     'dist/gui/js/app.js': ['<%= gui.js %>'],
                 },
             },
 
-            distGUI: {
+            dist: {
                 files: {
                     'dist/gui/js/app.js': ['<%= gui.js %>'],
                 },
@@ -177,7 +153,7 @@ module.exports = function(grunt) {
 
     // Distribution
     grunt.registerTask('default', [
-        'uglify:dist',
+        'jshint',
         'clean',
     ]);
 
@@ -185,7 +161,7 @@ module.exports = function(grunt) {
 
     // Development
     grunt.registerTask('build', [
-        'uglify:build',
+        'jshint',
         'watch',
     ]);
 
@@ -196,7 +172,8 @@ module.exports = function(grunt) {
     // Distribution
     grunt.registerTask('dist-gui', [
         'sass:dist',
-        'uglify:distGUI',
+        'jshint',
+        'uglify:dist',
         'concat:vendorJS',
         'copy',
         'clean',
@@ -205,7 +182,8 @@ module.exports = function(grunt) {
     // Development
     grunt.registerTask('build-gui', [
         'sass:build',
-        'uglify:buildGUI',
+        'jshint',
+        'uglify:build',
         'concat:vendorJS',
         'copy',
         'watch',

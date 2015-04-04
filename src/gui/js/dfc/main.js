@@ -278,7 +278,7 @@ var DFC = (function _DFC() {
         var id = $targ.data('lens-id');
         var lens = _getLensById(id);
         var $lens = $targ.closest('.lens');
-        var $defaults;
+        var defaults;
         var prop;
 
         evt.preventDefault();
