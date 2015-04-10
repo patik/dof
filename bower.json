@@ -21,7 +21,7 @@
         "focal-length",
         "photography"
     ],
-    "license": "MIT",
+    "license": "ISC",
     "ignore": [
         "**/.*",
         "node_modules",
