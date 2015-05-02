@@ -107,6 +107,13 @@ module.exports = function(grunt) {
                 dest: 'dist/',
                 filter: 'isFile',
             },
+            images: {
+                expand: true,
+                cwd: 'src/',
+                src: ['gui/about/images/*.png'],
+                dest: 'dist/',
+                filter: 'isFile',
+            },
         },
 
         watch: {
