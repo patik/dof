@@ -1,3 +1,5 @@
+const feetPattern = /^(\d+(?:\.\d+)?)'\s+(\d+(?:\.\d+)?)"$/
+
 /**
  * Converts an imperial distance in standard notation to decimal
  *
@@ -7,16 +9,12 @@
  * @return        Distance in decimal
  */
 export function feetToFloat(dist: string): number {
-    let parts: RegExpExecArray | null
-    let feet: number
-    let inches: number
-
-    if (/^(\d+(?:\.\d+)?)'\s+(\d+(?:\.\d+)?)"$/.test(dist)) {
-        parts = /^(\d+(?:\.\d+)?)'\s+(\d+(?:\.\d+)?)"$/.exec(dist)
+    if (feetPattern.test(dist)) {
+        const parts = feetPattern.exec(dist)
 
         if (parts) {
-            feet = parseFloat(parts[1])
-            inches = parseFloat(parts[2])
+            const feet = parseFloat(parts[1])
+            const inches = parseFloat(parts[2])
 
             return feet + inches / 12
         }

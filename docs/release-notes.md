@@ -1,6 +1,12 @@
 # Release Notes
 
-## 0.1.0
+## 2.0.0
+
+- Consumable NPM module for use in any app
+- Revamped GUI
+- Project is modernized for more reliability and easier maintenance
+
+## 1.0.0
 
 - public API for making calculations directly within your own app
 
