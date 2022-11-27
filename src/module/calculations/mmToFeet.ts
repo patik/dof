@@ -6,11 +6,11 @@
  */
 export function mmToFeet(dist: number): string {
     // Convert millimeters to inches
-    dist = dist / 25.4
+    const inches = dist / 25.4
 
-    if (dist === Infinity) {
+    if (inches === Infinity) {
         return 'Infinity'
     } else {
-        return Math.floor(dist / 12) + "' " + (dist % 12).toFixed(1) + '"'
+        return Math.floor(inches / 12) + "' " + (inches % 12).toFixed(1) + '"'
     }
 }
