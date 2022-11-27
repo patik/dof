@@ -2,8 +2,8 @@
  * Decimal adjustment of a number.
  * Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#Example:_Decimal_rounding
  *
- * @param   {Number}    value   The number
- * @returns {Number}            The adjusted value
+ * @param   value   The number
+ * @returns         The adjusted value
  */
 export function decimalAdjust(value: number): number {
     const exp = -1 // The exponent (the 10 logarithm of the adjustment base)

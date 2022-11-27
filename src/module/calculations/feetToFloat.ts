@@ -3,8 +3,8 @@
  *
  * @example `5' 6"` -> 5.5
  *
- * @param {String} dist  Distance in standard notation (X' Y")
- * @return {String}      Distance in decimal
+ * @param   dist  Distance in standard notation (X' Y")
+ * @return        Distance in decimal
  */
 export function feetToFloat(dist: string): number {
     let parts: RegExpExecArray | null

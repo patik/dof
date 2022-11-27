@@ -2,7 +2,7 @@
  * Convert millimeters to feet
  *
  * @param  dist     Length in millimeters
- * @return {String} Length (feet/inches) as a decimal, or infinity
+ * @return          Length (feet/inches) as a decimal, or infinity
  */
 export function mmToFeet(dist: number): string {
     // Convert millimeters to inches

@@ -19,12 +19,12 @@ const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
  * @param  name         Optional, arbitrary name for tracking by the consumer
  */
 export class DepthOfFieldLens {
-    distance: number
-    focalLength: number
-    aperture: number
-    cropFactor: number
-    name = ''
-    id = ''
+    readonly distance: number
+    readonly focalLength: number
+    readonly aperture: number
+    readonly cropFactor: number
+    readonly name: string = ''
+    readonly id: string = ''
 
     constructor({
         focalLength,
