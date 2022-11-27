@@ -3,7 +3,7 @@ var DoF = require('./index')
 describe('Module basics', () => {
     afterEach(() => {
         // Reset defaults
-        DoF.setDefaults({ focalLength: 35, cropFactor: 1, aperture: 2 })
+        DoF.setDefaults({ focalLength: 35, aperture: 2, cropFactor: 1, distance: 20 })
     })
 
     test('constructor will create an object with the default settings', () => {
@@ -24,12 +24,12 @@ describe('Module basics', () => {
         expect(lens.id).toBe(1234)
     })
 
-    test('changes to default settings are retained', () => {
+    test('changes to default settings are accepted and applied', () => {
         // First, create a lens with the original defaults
         var lens1 = new DoF()
 
         // Then change the defaults
-        DoF.setDefaults({ focalLength: 40, cropFactor: 1.62, aperture: 3.5 })
+        DoF.setDefaults({ focalLength: 40, aperture: 3.5, cropFactor: 1.62, distance: 25 })
 
         // Make a new lens, which should receive the new defaults
         var lens2 = new DoF()
