@@ -28,8 +28,8 @@ export default function calculateResult(
     cropFactor = 1 / cropFactor
 
     result.coc = Math.round(0.03 * cropFactor * 1000) / 1000
-    const hf = Math.pow(focalLength, 2) / (aperture * result.coc) + focalLength * 1.0
 
+    const hf = Math.pow(focalLength, 2) / (aperture * result.coc) + focalLength * 1.0
     const near = (distance * (hf - focalLength)) / (hf + distance + 2 * focalLength)
     let far = (distance * (hf - focalLength)) / (hf - distance)
 
@@ -48,15 +48,10 @@ export default function calculateResult(
     }
 
     // result.dof = dof
-    // result.toString.dof = dofFeet
     result.dof = feetToFloat(dofFeet)
-    // result.toString.eighthDof = _mmToFeet(dof / 8)
     result.eighthDof = feetToFloat(mmToFeet(dof / 8))
-    // result.toString.hf = _mmToFeet(hf)
     result.hf = feetToFloat(mmToFeet(hf))
-    // result.toString.near = _mmToFeet(near)
     result.near = feetToFloat(mmToFeet(near))
-    // result.toString.far = _mmToFeet(far)
     result.far = feetToFloat(mmToFeet(far))
 
     return result

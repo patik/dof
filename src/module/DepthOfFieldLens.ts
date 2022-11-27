@@ -12,7 +12,7 @@ const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 /**
  * Lens constructor
  *
- * @param  focalLength  Actual local length in millimeters
+ * @param  focalLength  Actual local length in millimeters (not the 35mm-equivalent)
  * @param  aperture     Aperture as a float or a string like "f/2.5"
  * @param  cropFactor   Sensor crop factor
  * @param  id           Optional, arbitrary ID for tracking by the consumer
