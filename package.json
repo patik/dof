@@ -1,7 +1,7 @@
 {
     "name": "dof",
     "description": "Depth-of-field calculator for comparing camera lenses",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/patik/dof.git"
@@ -15,18 +15,51 @@
         "grunt-contrib-watch": "^0.6.1",
         "grunt-contrib-uglify": "^0.8.1",
         "grunt-sass": "0.16.1",
-        "load-grunt-tasks": "^3.1.0"
+        "load-grunt-tasks": "^3.1.0",
+        "@types/chai": "^4.1.6",
+        "@types/mocha": "^9.0.0",
+        "@types/node": "^18.7.18",
+        "@typescript-eslint/eslint-plugin": "^5.3.0",
+        "@typescript-eslint/parser": "^5.3.0",
+        "chai": "^4.1.2",
+        "conventional-changelog-cli": "^2.0.12",
+        "coveralls": "^3.0.3",
+        "cz-conventional-changelog": "^3.0.2",
+        "eslint": "^8.2.0",
+        "mocha": "^10.0.0",
+        "nyc": "^15.0.0",
+        "source-map-support": "^0.5.12",
+        "ts-node": "^10.0.0",
+        "typescript": "^4.0.3"
     },
     "bugs": {
         "url": "https://github.com/patik/dof/issues"
     },
     "homepage": "https://github.com/patik/dof",
-    "main": "dof.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
     "directories": {
         "doc": "docs"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "yarn clean && yarn lint && tsc",
+        "changelog": "conventional-changelog -p angular -u",
+        "changelog:update": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+        "clean": "(rm -r ./.nyc_output || true) && (rm -r ./coverage || true) && (rm -r ./dist || true)",
+        "clean:all": "yarn clean && (rm -r ./node_modules || true)",
+        "cover": "nyc yarn test",
+        "cover:check": "nyc --check-coverage yarn test",
+        "coveralls": "nyc report --reporter=text-lcov | coveralls",
+        "lint": "eslint --ext .ts --fix src/**/*.ts test/**/*.ts",
+        "preversion": "yarn build && yarn cover:check",
+        "postversion": "git push && git push --tags",
+        "prepare": "yarn build",
+        "test": "mocha",
+        "upgrade": "npx npm-check -u",
+        "version": "yarn build && yarn changelog:update"
     },
     "keywords": [
         "depth-of-field",
@@ -37,6 +70,14 @@
         "focal-length",
         "photography"
     ],
-    "author": "Craig Patik <craig@patik.com> (http://patik.com)",
-    "license": "ISC"
+    "author": {
+        "name": "Craig Patik",
+        "url": "http://patik.com"
+    },
+    "license": "BSD-3-Clause",
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
 }

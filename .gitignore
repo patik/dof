@@ -1,6 +1,11 @@
+# Generated directories:
+.nyc_output/
+coverage/
+dist/
+node_modules/
+
+# Project files:
+*.sublime-*
 *.DS_Store
 .sass-cache
-*.sublime-*
 sftp-config.json
-dist/
-node_modules
