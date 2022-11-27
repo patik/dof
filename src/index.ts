@@ -9,17 +9,9 @@ type Result = {
     toString: () => string
 }
 
-// type Lens = {
-//     focalLength: number
-//     aperture: number
-//     cropFactor: number
-//     name: string
-//     id: string
-// }
-
 type Options = {
     focalLength: number
-    aperture: number
+    aperture: string | number
     cropFactor: number
     distance: number
 }
@@ -163,13 +155,20 @@ function _decimalAdjust(value: number): number {
  * @param  {Mixed}   name         Optional, arbitrary name for tracking by the consumer
  */
 class DoF {
+    distance: number
     focalLength: number
     aperture: number
     cropFactor: number
     name = ''
     id = ''
 
-    constructor(focalLength: number, aperture: string | number, cropFactor: number, id: string | number, name: string) {
+    constructor({
+        focalLength,
+        aperture,
+        cropFactor,
+        id,
+        name,
+    }: Options & { id?: string | number; name?: string } = defaults) {
         this.focalLength = focalLength
 
         if (typeof aperture === 'number') {
@@ -188,6 +187,8 @@ class DoF {
             this.cropFactor = defaults.cropFactor
         }
 
+        this.distance = defaults.distance
+
         // Optional properties
         if (typeof id === 'string') {
             this.id = id
@@ -198,19 +199,19 @@ class DoF {
         }
     }
 
-    setDefaults(options: Options) {
+    public setDefaults(options: Options) {
         if (typeof options !== 'object' || !options) {
-            return
+            return this
         }
 
         if (options.focalLength && !isNaN(options.focalLength)) {
             defaults.focalLength = options.focalLength
         }
 
-        if (options.aperture && !isNaN(options.aperture)) {
+        if (options.aperture) {
             if (typeof options.aperture === 'string') {
                 defaults.aperture = parseFloat(options.aperture)
-            } else {
+            } else if (!isNaN(options.aperture)) {
                 defaults.aperture = options.aperture
             }
         }
@@ -222,10 +223,12 @@ class DoF {
         if (options.distance && !isNaN(options.distance)) {
             defaults.distance = options.distance
         }
+
+        return this
     }
 
-    getResult(distance: number) {
-        if (isNaN(distance)) {
+    getResult(distance?: number) {
+        if (!distance || isNaN(distance)) {
             distance = defaults.distance
         } else if (typeof distance === 'string') {
             distance = parseFloat(distance)

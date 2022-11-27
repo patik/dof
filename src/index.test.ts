@@ -1,13 +1,8 @@
-var DoF = require('./index')
+import DoF from './index'
 
 describe('Module basics', () => {
-    afterEach(() => {
-        // Reset defaults
-        DoF.setDefaults({ focalLength: 35, aperture: 2, cropFactor: 1, distance: 20 })
-    })
-
     test('constructor will create an object with the default settings', () => {
-        var lens = new DoF()
+        const lens = new DoF()
 
         expect(lens.focalLength).toBe(35)
         expect(lens.aperture).toBe(2)
@@ -15,24 +10,25 @@ describe('Module basics', () => {
     })
 
     test('constructor will create an object with the provided settings', () => {
-        var lens = new DoF(40, 'f/2.5', 1.62, 1234, 'My Lens')
+        const lens = new DoF({
+            focalLength: 40,
+            aperture: 'f/2.5',
+            cropFactor: 1.62,
+            distance: 25,
+            id: '1234',
+            name: 'My Lens',
+        })
 
         expect(lens.focalLength).toBe(40)
         expect(lens.aperture).toBe(2.5)
         expect(lens.cropFactor).toBe(1.62)
         expect(lens.name).toBe('My Lens')
-        expect(lens.id).toBe(1234)
+        expect(lens.id).toBe('1234')
     })
 
-    test('changes to default settings are accepted and applied', () => {
-        // First, create a lens with the original defaults
-        var lens1 = new DoF()
-
-        // Then change the defaults
-        DoF.setDefaults({ focalLength: 40, aperture: 3.5, cropFactor: 1.62, distance: 25 })
-
-        // Make a new lens, which should receive the new defaults
-        var lens2 = new DoF()
+    test('default settings are used if no options are provided, otherwise the options are used', () => {
+        const lens1 = new DoF()
+        const lens2 = new DoF({ focalLength: 40, aperture: 3.5, cropFactor: 1.62, distance: 25 })
 
         expect(lens1.focalLength).toBe(35)
         expect(lens1.aperture).toBe(2)
@@ -46,8 +42,8 @@ describe('Module basics', () => {
 
 describe('Calculating the depth of field', () => {
     test('with default settings', () => {
-        var lens = new DoF()
-        var result = lens.getResult()
+        const lens = new DoF()
+        const result = lens.getResult()
 
         expect(result.dof).toBe(13.1)
         expect(result.dof.toString()).toBe('13.1')
@@ -70,8 +66,8 @@ describe('Calculating the depth of field', () => {
     })
 
     test('with a specific distance value', () => {
-        var lens = new DoF()
-        var result = lens.getResult(15)
+        const lens = new DoF()
+        const result = lens.getResult(15)
 
         expect(result.dof).toBe(7.083333333333333)
         expect(result.dof.toString()).toBe('7.083333333333333')
