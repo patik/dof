@@ -1,8 +1,8 @@
-import DoF from './index'
+import { DepthOfFieldLens } from './DepthOfFieldLens'
 
 describe('Module basics', () => {
     test('constructor will create an object with the default settings', () => {
-        const lens = new DoF()
+        const lens = new DepthOfFieldLens()
 
         expect(lens.focalLength).toBe(35)
         expect(lens.aperture).toBe(2)
@@ -10,7 +10,7 @@ describe('Module basics', () => {
     })
 
     test('constructor will create an object with the provided settings', () => {
-        const lens = new DoF({
+        const lens = new DepthOfFieldLens({
             focalLength: 40,
             aperture: 'f/2.5',
             cropFactor: 1.62,
@@ -27,8 +27,8 @@ describe('Module basics', () => {
     })
 
     test('default settings are used if no options are provided, otherwise the options are used', () => {
-        const lens1 = new DoF()
-        const lens2 = new DoF({ focalLength: 40, aperture: 3.5, cropFactor: 1.62, distance: 25 })
+        const lens1 = new DepthOfFieldLens()
+        const lens2 = new DepthOfFieldLens({ focalLength: 40, aperture: 3.5, cropFactor: 1.62, distance: 25 })
 
         expect(lens1.focalLength).toBe(35)
         expect(lens1.aperture).toBe(2)
@@ -42,7 +42,7 @@ describe('Module basics', () => {
 
 describe('Calculating the depth of field', () => {
     test('with default settings', () => {
-        const lens = new DoF()
+        const lens = new DepthOfFieldLens()
         const result = lens.getResult()
 
         expect(result.dof).toBe(13.1)
@@ -66,7 +66,7 @@ describe('Calculating the depth of field', () => {
     })
 
     test('with a specific distance value', () => {
-        const lens = new DoF()
+        const lens = new DepthOfFieldLens()
         const result = lens.getResult(15)
 
         expect(result.dof).toBe(7.083333333333333)
