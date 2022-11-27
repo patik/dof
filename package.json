@@ -39,12 +39,11 @@
         "cover": "nyc yarn test",
         "cover:check": "nyc --check-coverage yarn test",
         "coveralls": "nyc report --reporter=text-lcov | coveralls",
-        "lint": "eslint --ext .ts --fix src/**/*.ts test/**/*.ts",
+        "lint": "eslint --ext .ts --fix src/**/*.ts",
         "preversion": "yarn build && yarn cover:check",
         "postversion": "git push && git push --tags",
         "test": "jest",
-        "upgrade": "npx npm-check -u",
-        "version": "yarn build && yarn changelog:update"
+        "upgrade": "npx npm-check -u"
     },
     "keywords": [
         "depth-of-field",

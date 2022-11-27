@@ -2,6 +2,17 @@ import { decimalAdjust } from './decimalAdjust'
 import { feetToFloat } from './feetToFloat'
 import { mmToFeet } from './mmToFeet'
 
+type Result = {
+    dof: number
+    focalLengthEquiv: number
+    eighthDof: number
+    hf: number
+    near: number
+    far: number
+    coc: number
+    toString: () => string
+}
+
 export default function calculateResult(
     focalLength: number,
     aperture: number,

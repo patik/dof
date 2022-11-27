@@ -1,5 +1,12 @@
 import calculate from './calculations'
 
+type Options = {
+    focalLength: number
+    aperture: string | number
+    cropFactor: number
+    distance: number
+}
+
 const defaults = Object.freeze({
     focalLength: 35,
     aperture: 2,
