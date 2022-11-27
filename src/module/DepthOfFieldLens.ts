@@ -1,22 +1,22 @@
-import { calculateResult } from './calculateResult'
+import calculate from './calculations'
 
-const defaults = {
+const defaults = Object.freeze({
     focalLength: 35,
     aperture: 2,
     cropFactor: 1,
     distance: 20, // Distance to the subject (feet)
-}
+})
 
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 
 /**
  * Lens constructor
  *
- * @param  {Number}            focalLength  Actual local length in millimeters
- * @param  {Number | String}   aperture     Aperture as a float or a string like "f/2.5"
- * @param  {Number}            cropFactor   Sensor crop factor
- * @param  {Number | String}   id           Optional, arbitrary ID for tracking by the consumer
- * @param  {Number | String}   name         Optional, arbitrary name for tracking by the consumer
+ * @param  focalLength  Actual local length in millimeters
+ * @param  aperture     Aperture as a float or a string like "f/2.5"
+ * @param  cropFactor   Sensor crop factor
+ * @param  id           Optional, arbitrary ID for tracking by the consumer
+ * @param  name         Optional, arbitrary name for tracking by the consumer
  */
 export class DepthOfFieldLens {
     distance: number
@@ -63,34 +63,6 @@ export class DepthOfFieldLens {
         }
     }
 
-    public setDefaults(options: Options) {
-        if (typeof options !== 'object' || !options) {
-            return this
-        }
-
-        if (options.focalLength && !isNaN(options.focalLength)) {
-            defaults.focalLength = options.focalLength
-        }
-
-        if (options.aperture) {
-            if (typeof options.aperture === 'string') {
-                defaults.aperture = parseFloat(options.aperture)
-            } else if (!isNaN(options.aperture)) {
-                defaults.aperture = options.aperture
-            }
-        }
-
-        if (options.cropFactor && !isNaN(options.cropFactor)) {
-            defaults.cropFactor = options.cropFactor
-        }
-
-        if (options.distance && !isNaN(options.distance)) {
-            defaults.distance = options.distance
-        }
-
-        return this
-    }
-
     getResult(distance?: number) {
         if (!distance || isNaN(distance)) {
             distance = defaults.distance
@@ -98,6 +70,6 @@ export class DepthOfFieldLens {
             distance = parseFloat(distance)
         }
 
-        return calculateResult(this.focalLength, this.aperture, this.cropFactor, distance)
+        return calculate(this.focalLength, this.aperture, this.cropFactor, distance)
     }
 }
