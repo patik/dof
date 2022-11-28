@@ -1,7 +1,6 @@
 # Depth of Field Calculator
 
-A simple JavaScript tool for calculating the depth of field of a camera lens
-
+A JavaScript tool for calculating the depth of field of a camera lens
 
 ## Overview
 
@@ -10,39 +9,29 @@ The general idea is to create a **lens object**, with specified aperture, focal 
 ## Create a lens object
 
 ```js
-var lens = new DoF();
+const lens = new Lens();
 ```
 
 That will give us a lens object with default values:
 
 ```js
-lens.focalLength = 35;   // millimeters
-lens.aperture = 'f/2';
-lens.cropFactor = 1;     // i.e. standard full frame
+lens.focalLength // 35 (millimeters)
+lens.aperture    // 'f/2';
+lens.cropFactor  // 1 (i.e. standard full frame)
 ```
 
-Let's change those to fit the particular lens we have in mind
+Let's change those to fit the particular lens we have in mind:
 
 ```js
-// Required
-lens.focalLength = 35;   // millimeters
-lens.aperture = 'f/2.5'; // or just a float: `2.5`
-lens.cropFactor = 1.62;  // sensor crop factor
-```
-
-Alternatively, we could have just passed those values in at the start:
-
-```js
-var lens = new DoF(35, 'f/2.5', 1.62 /*, '1234', 'My Lens' */ );
+const lens = new Lens(35, 'f/2.5', 1.62, 'my-lens-ID');
 ```
 
 ### Managing multiple lenses
 
-If we're creating multiple lenses, we can assign arbitrary names and IDs to keep track of them:
+If we're creating multiple lenses, we can assign arbitrary IDs to keep track of them:
 
 ```js
-lens.name = 'My Lens';  // Optional; any data type you'd like
-lens.id = 1234;         // Optional; any data type you'd like
+lens.id = '1234';         // Optional; string
 ```
 
 ### Changing default values
@@ -68,23 +57,23 @@ To perform a calculation you must specify the distance between the camera and th
 
 ```js
 // Specify distance directly
-var result1 = lens.result(20);   // 20 feet, the default value
-var result2 = lens.result(21.5); // 21 feet 6 inches
+const result1 = lens.dof(20);   // 20 feet, the default value
+const result2 = lens.dof(21.5); // 21 feet 6 inches
 
 // Set a default
 DoF.setDefaults({distance: 20.5});
-var result = lens.result();
+const result = lens.dof();
 ```
 
 The `result` object contains several properties:
 
 ```js
-result.dof       // Total length of the depth of field; float (e.g. `20.5`)
-result.eighthDof // One-eighth of the depth of field; float (e.g. `2.5625`)
-result.hf        // Hyperfocal distance; float
-result.near      // Distance to the nearest edge of the in-focus field; float
-result.far       // Distance to the farthest edge of the in-focus field; float
-result.coc       // Circle of confusion; float, millimeters
+result.dof       // Total length of the depth of field; float (e.g. `20.5`), meters or feet
+result.eighthDof // One-eighth of the depth of field; float (e.g. `2.5625`), meters or feet
+result.hf        // Hyperfocal distance; float, meters or feet
+result.near      // Distance to the nearest edge of the in-focus field; float, meters or feet
+result.far       // Distance to the farthest edge of the in-focus field; float, meters or feet
+result.coc       // Circle of confusion; float, always millimeters
 ```
 
 Note that the value of those properties may be `Infinity`. This is especially common with small sensor sizes (large crop factors), short focal lengths, and/or small apertures (large `f/` values).
@@ -92,7 +81,7 @@ Note that the value of those properties may be `Infinity`. This is especially co
 You can use the `.toString()` method to get the depth of field value as a string. For example, `20' 5.2"` is 20 feet, 5.2 inches.
 
 ```js
-var str = result.toString();
+const str = result.toString();
 ```
 
 All properties have an equivalent string representation, accessible through the `.toString` property:
@@ -108,14 +97,14 @@ result.toString.far
 A shorthand way to quickly acquire the depth of field value:
 
 ```js
-var num = lens.result().dof;        // float
-var str = lens.result().toString(); // string
+const num = lens.dof().dof;        // float
+const str = lens.dof().toString(); // string
 ```
 
 Or with a specific distance value:
 
 ```js
-var num = lens.result(15).dof;        // float
-var str = lens.result(15).toString(); // string
+const num = lens.dof(15).dof;        // float
+const str = lens.dof(15).toString(); // string
 ```
 

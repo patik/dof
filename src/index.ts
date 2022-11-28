@@ -1,5 +1,5 @@
-import { DepthOfFieldLens } from './module/DepthOfFieldLens'
+import { Lens } from './module/Lens'
 
-export type DepthOfFieldLensType = typeof DepthOfFieldLens
+export type LensType = typeof Lens
 
-export default DepthOfFieldLens
+export default Lens

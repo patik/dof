@@ -1,8 +1,8 @@
-import { DepthOfFieldLens } from './DepthOfFieldLens'
+import { Lens } from './Lens'
 
-describe('Module basics', () => {
+describe('Class basics', () => {
     test('constructor will create an object with the default settings', () => {
-        const lens = new DepthOfFieldLens()
+        const lens = new Lens()
 
         expect(lens.focalLength).toBe(35)
         expect(lens.aperture).toBe(2)
@@ -10,7 +10,7 @@ describe('Module basics', () => {
     })
 
     test('constructor will create an object with the provided settings', () => {
-        const lens = new DepthOfFieldLens({
+        const lens = new Lens({
             focalLength: 40,
             aperture: 'f/2.5',
             cropFactor: 1.62,
@@ -24,7 +24,7 @@ describe('Module basics', () => {
     })
 
     test('when an unknown aperture is given, the default is used instead', () => {
-        const lens = new DepthOfFieldLens({
+        const lens = new Lens({
             aperture: 'f/3.5',
         })
 
@@ -36,8 +36,8 @@ describe('Module basics', () => {
     })
 
     test('default settings are used if no options are provided, otherwise the options are used', () => {
-        const lens1 = new DepthOfFieldLens()
-        const lens2 = new DepthOfFieldLens({ focalLength: 40, aperture: 3.4, cropFactor: 1.62 })
+        const lens1 = new Lens()
+        const lens2 = new Lens({ focalLength: 40, aperture: 3.4, cropFactor: 1.62 })
 
         expect(lens1.focalLength).toBe(35)
         expect(lens1.aperture).toBe(2)
@@ -52,8 +52,8 @@ describe('Module basics', () => {
 describe('Calculating the depth of field', () => {
     describe('with the default distance', () => {
         test('metric units (5 meters)', () => {
-            const lens = new DepthOfFieldLens()
-            const result = lens.getResult()
+            const lens = new Lens()
+            const result = lens.dof()
 
             expect(result.dof).toBe(2.584690961719362)
             expect(result.dof.toString()).toBe('2.584690961719362')
@@ -76,8 +76,8 @@ describe('Calculating the depth of field', () => {
         })
 
         test('imperial units (15 feet)', () => {
-            const lens = new DepthOfFieldLens()
-            const result = lens.getResult(undefined, true)
+            const lens = new Lens()
+            const result = lens.dof(undefined, true)
 
             expect(result.dof).toBe(7.012923816256398)
             expect(result.dof.toString()).toBe(`7.012923816256398`)
@@ -102,8 +102,8 @@ describe('Calculating the depth of field', () => {
 
     describe('with a specific distance value', () => {
         test('metric units (meters)', () => {
-            const lens = new DepthOfFieldLens()
-            const result = lens.getResult(15)
+            const lens = new Lens()
+            const result = lens.dof(15)
 
             expect(result.dof).toBe(47.51986889872889)
             expect(result.dof.toString()).toBe('47.51986889872889')
@@ -126,8 +126,8 @@ describe('Calculating the depth of field', () => {
         })
 
         test('imperial units (feet)', () => {
-            const lens = new DepthOfFieldLens()
-            const result = lens.getResult(25, true)
+            const lens = new Lens()
+            const result = lens.dof(25, true)
 
             expect(result.dof).toBe(21.549811571081538)
             expect(result.dof.toString()).toBe('21.549811571081538')

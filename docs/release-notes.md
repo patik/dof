@@ -3,7 +3,7 @@
 ## 2.0.0
 
 - Consumable NPM module for use in any app
-- Revamped GUI
+- Metric measurements by default
 - Project is modernized for more reliability and easier maintenance
 
 ## 1.0.0

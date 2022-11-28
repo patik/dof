@@ -26,7 +26,7 @@ const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
  * @param  cropFactor   Sensor crop factor
  * @param  id           Optional, arbitrary ID for tracking by the consumer
  */
-export class DepthOfFieldLens {
+export class Lens {
     readonly focalLength: number
     readonly aperture: number
     readonly cropFactor: number
@@ -52,7 +52,7 @@ export class DepthOfFieldLens {
      * @param distance Distance to the subject, in meters
      * @param imperialUnits Whether to use imperial units (feet) instead of metric
      */
-    getResult(distance?: number, imperialUnits = false) {
+    dof(distance?: number, imperialUnits = false) {
         if (distance === undefined || isNaN(distance)) {
             distance = imperialUnits ? defaults.distanceImperial : defaults.distanceMetric
         } else if (typeof distance === 'string') {
