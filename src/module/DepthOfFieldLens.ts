@@ -1,82 +1,64 @@
+import { getActualAperture } from './aperture'
 import calculate from './calculations'
 
 type Options = {
-    focalLength: number
-    aperture: string | number
-    cropFactor: number
-    distance: number
+    focalLength?: number
+    aperture?: string | number
+    cropFactor?: number
 }
 
 const defaults = Object.freeze({
     focalLength: 35,
     aperture: 2,
     cropFactor: 1,
-    distance: 20, // Distance to the subject (feet)
+    distanceMetric: 5, // Distance to the subject, in meters
+    distanceImperial: 15, // Distance to the subject, in feet
+    id: undefined,
 })
 
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 
 /**
- * Lens constructor
+ * Depth of Field Lens object which can be used to calculate the depth of field at various distances
  *
  * @param  focalLength  Actual local length in millimeters (not the 35mm-equivalent)
  * @param  aperture     Aperture as a float or a string like "f/2.5"
  * @param  cropFactor   Sensor crop factor
  * @param  id           Optional, arbitrary ID for tracking by the consumer
- * @param  name         Optional, arbitrary name for tracking by the consumer
  */
 export class DepthOfFieldLens {
-    readonly distance: number
     readonly focalLength: number
     readonly aperture: number
     readonly cropFactor: number
-    readonly name: string = ''
-    readonly id: string = ''
+    readonly id: string | undefined
 
-    constructor({
-        focalLength,
-        aperture,
-        cropFactor,
-        id,
-        name,
-    }: Options & { id?: string | number; name?: string } = defaults) {
-        this.focalLength = focalLength
+    constructor({ focalLength, aperture, cropFactor, id }: Options & { id?: string } = defaults) {
+        this.focalLength = typeof focalLength === 'number' ? focalLength : defaults.focalLength
+        this.cropFactor = typeof cropFactor === 'number' ? cropFactor : defaults.cropFactor
+        this.id = typeof id === 'number' || typeof id === 'string' ? id : defaults.id
 
         if (typeof aperture === 'number') {
-            this.aperture = aperture
-        } else if (typeof aperture === 'string' && apertureRegex.test(aperture)) {
-            const match = apertureRegex.exec(aperture)
-
-            this.aperture = parseFloat(match ? match[1] : '0')
-        } else {
-            this.aperture = defaults.aperture
+            aperture = `f/${aperture}`
+        } else if (typeof aperture !== 'string' || !apertureRegex.test(aperture)) {
+            aperture = `f/${defaults.aperture}`
         }
 
-        if (typeof cropFactor === 'number') {
-            this.cropFactor = cropFactor
-        } else {
-            this.cropFactor = defaults.cropFactor
-        }
-
-        this.distance = defaults.distance
-
-        // Optional properties
-        if (typeof id === 'string') {
-            this.id = id
-        }
-
-        if (typeof name === 'string') {
-            this.name = name
-        }
+        this.aperture = getActualAperture(aperture) ?? defaults.aperture
     }
 
-    getResult(distance?: number) {
-        if (!distance || isNaN(distance)) {
-            distance = defaults.distance
+    /**
+     * Determines the depth of field for the lens at the given distance
+     *
+     * @param distance Distance to the subject, in meters
+     * @param imperialUnits Whether to use imperial units (feet) instead of metric
+     */
+    getResult(distance?: number, imperialUnits = false) {
+        if (distance === undefined || isNaN(distance)) {
+            distance = imperialUnits ? defaults.distanceImperial : defaults.distanceMetric
         } else if (typeof distance === 'string') {
             distance = parseFloat(distance)
         }
 
-        return calculate(this.focalLength, this.aperture, this.cropFactor, distance)
+        return calculate(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)
     }
 }

@@ -1,15 +1,14 @@
 import { decimalAdjust } from './decimalAdjust'
-import { feetToFloat } from './feetToFloat'
-import { mmToFeet } from './mmToFeet'
+import { formatFeet } from './formatFeet'
 
 type Result = {
-    dof: number
-    focalLengthEquiv: number
-    eighthDof: number
-    hf: number
-    near: number
-    far: number
-    coc: number
+    dof: number // The length of the depth of field
+    focalLengthEquiv: number // The focal length in 35mm-equivalency
+    eighthDof: number // One-eighth of the depth of field
+    hf: number // Hyperfocal distance
+    near: number // DoF near limit
+    far: number // DoF far limit
+    coc: number // Circle of confusion
     toString: () => string
 }
 
@@ -17,7 +16,8 @@ export default function calculateResult(
     focalLength: number,
     aperture: number,
     cropFactor: number,
-    distance: number
+    distance: number,
+    imperialUnits: boolean
 ): Result {
     const result: Result = {
         dof: 0,
@@ -28,9 +28,11 @@ export default function calculateResult(
         far: 0,
         coc: 0,
     }
+    // e.g. 1 foot is 30.48% of 1 meter
+    const unitMultiplier = imperialUnits ? 0.3048 : 1
 
     // Convert to millimeters
-    distance = distance * 12 * 25.4
+    distance = distance * 1000 * unitMultiplier
 
     // Get 35mm-equivalent focal length
     result.focalLengthEquiv = decimalAdjust(cropFactor * focalLength)
@@ -40,30 +42,33 @@ export default function calculateResult(
 
     result.coc = Math.round(0.03 * cropFactor * 1000) / 1000
 
-    const hf = Math.pow(focalLength, 2) / (aperture * result.coc) + focalLength * 1.0
-    const near = (distance * (hf - focalLength)) / (hf + distance + 2 * focalLength)
-    let far = (distance * (hf - focalLength)) / (hf - distance)
+    result.hf = Math.pow(focalLength, 2) / (aperture * result.coc) + focalLength * 1.0
+    result.near = (distance * (result.hf - focalLength)) / (result.hf + distance - 2 * focalLength)
+    result.far = (distance * (result.hf - focalLength)) / (result.hf - distance)
 
-    let dof: number
-    if (far <= 0) {
-        far = Infinity
-        dof = Infinity
+    // Undo conversion to millimeters
+    result.hf = result.hf / 1000.0 / unitMultiplier
+    result.near = result.near / 1000.0 / unitMultiplier
+    result.far = result.far / 1000.0 / unitMultiplier
+
+    if (result.far <= 0) {
+        result.far = Infinity
+        result.dof = Infinity
     } else {
-        dof = far - near
+        result.dof = result.far - result.near
     }
 
-    // Gather all values
-    const dofFeet = mmToFeet(dof)
-    result.toString = function () {
-        return dofFeet
-    }
+    result.eighthDof = result.dof / 8
 
-    // result.dof = dof
-    result.dof = feetToFloat(dofFeet)
-    result.eighthDof = feetToFloat(mmToFeet(dof / 8))
-    result.hf = feetToFloat(mmToFeet(hf))
-    result.near = feetToFloat(mmToFeet(near))
-    result.far = feetToFloat(mmToFeet(far))
+    if (imperialUnits) {
+        result.toString = function () {
+            return formatFeet(result.dof)
+        }
+    } else {
+        result.toString = function () {
+            return `${result.dof}`
+        }
+    }
 
     return result
 }
