@@ -1,5 +1,5 @@
-import { getActualAperture } from './aperture'
-import calculate from './calculations'
+import { getActualAperture } from './utilities/aperture'
+import { calculateDepthOfField } from './utilities/calculateDepthOfField'
 
 type Options = {
     focalLength?: number
@@ -59,6 +59,6 @@ export class DepthOfFieldLens {
             distance = parseFloat(distance)
         }
 
-        return calculate(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)
+        return calculateDepthOfField(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)
     }
 }

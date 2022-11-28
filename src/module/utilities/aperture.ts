@@ -1,3 +1,4 @@
+// Map of human-friendly values with the actual values
 const apertureMap: Record<string, number> = {
     'f/1': 1,
     'f/1.2': 1.189207,

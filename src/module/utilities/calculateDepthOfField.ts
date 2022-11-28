@@ -12,7 +12,7 @@ type Result = {
     toString: () => string
 }
 
-export default function calculateResult(
+export function calculateDepthOfField(
     focalLength: number,
     aperture: number,
     cropFactor: number,

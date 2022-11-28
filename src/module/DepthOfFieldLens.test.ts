@@ -14,13 +14,13 @@ describe('Module basics', () => {
             focalLength: 40,
             aperture: 'f/2.5',
             cropFactor: 1.62,
-            id: '1234',
+            id: 'ab cd',
         })
 
         expect(lens.focalLength).toBe(40)
         expect(lens.aperture).toBe(2.519842)
         expect(lens.cropFactor).toBe(1.62)
-        expect(lens.id).toBe('1234')
+        expect(lens.id).toBe('ab cd')
     })
 
     test('when an unknown aperture is given, the default is used instead', () => {
