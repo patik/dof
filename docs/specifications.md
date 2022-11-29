@@ -108,4 +108,3 @@ Or with a specific distance value:
 const num = lens.dof(15).dof;        // float
 const str = lens.dof(15).toString(); // string
 ```
-

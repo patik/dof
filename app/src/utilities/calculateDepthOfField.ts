@@ -12,6 +12,15 @@ type Result = {
     toString: () => string
 }
 
+/**
+ * Returns the depth of field characteristics for a given lens' attributes
+ *
+ * @param focalLength
+ * @param aperture
+ * @param cropFactor
+ * @param distance
+ * @param imperialUnits
+ */
 export function calculateDepthOfField(
     focalLength: number,
     aperture: number,

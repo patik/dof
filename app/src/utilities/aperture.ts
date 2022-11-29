@@ -4,6 +4,9 @@ function isApertureString(str: string): str is ApertureString {
     return apertureRegex.test(str)
 }
 
+/**
+ * Turns user input into a workable aperture value that can be used for calculations
+ */
 export function toActualAperture({
     input,
     defaultOptionsAperture,
