@@ -1,3 +1,40 @@
+const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
+
+function isApertureString(str: string): str is ApertureString {
+    return apertureRegex.test(str)
+}
+
+export function toApertureString({
+    input,
+    defaultOptionsAperture,
+    customSettingsAperture,
+}: {
+    input?: string | number
+    customSettingsAperture?: string | number
+    defaultOptionsAperture: ApertureString
+}): ApertureString {
+    let aperture: ApertureString | undefined = undefined
+    const asString = String(input)
+
+    if (typeof input === 'number') {
+        aperture = `f/${input}`
+    } else if (isApertureString(asString)) {
+        aperture = asString
+    } else {
+        if (typeof customSettingsAperture === 'number') {
+            aperture = `f/${customSettingsAperture}`
+        } else if (typeof customSettingsAperture === 'string' && isApertureString(customSettingsAperture)) {
+            aperture = customSettingsAperture
+        }
+    }
+
+    if (!aperture) {
+        aperture = defaultOptionsAperture
+    }
+
+    return aperture
+}
+
 // Map of human-friendly values with the actual values
 const apertureMap: Record<string, number> = {
     'f/1': 1,

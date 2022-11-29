@@ -1,49 +1,37 @@
-import { getActualAperture } from './utilities/aperture'
+import { combineSettings } from './utilities/combineSettings'
 import { calculateDepthOfField } from './utilities/calculateDepthOfField'
 
-type Options = {
-    focalLength?: number
-    aperture?: string | number
-    cropFactor?: number
-}
-
-const defaults = Object.freeze({
+export const defaultOptions: DefaultOptions = Object.freeze({
     focalLength: 35,
-    aperture: 2,
+    aperture: 'f/2',
     cropFactor: 1,
-    distanceMetric: 5, // Distance to the subject, in meters
-    distanceImperial: 15, // Distance to the subject, in feet
     id: undefined,
 })
 
-const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
+const defaultDistanceMetric = 5 // Distance to the subject, when meters are used
+const defaultDistanceImperial = 15 // Distance to the subject, when feet are used
 
 /**
  * Depth of Field Lens object which can be used to calculate the depth of field at various distances
  *
  * @param  focalLength  Actual local length in millimeters (not the 35mm-equivalent)
- * @param  aperture     Aperture as a float or a string like "f/2.5"
+ * @param  aperture     Aperture as a string in the format "f/2.5"
  * @param  cropFactor   Sensor crop factor
  * @param  id           Optional, arbitrary ID for tracking by the consumer
  */
 export class Lens {
-    readonly focalLength: number
-    readonly aperture: number
-    readonly cropFactor: number
-    readonly id: string | undefined
+    readonly focalLength: Settings['focalLength']
+    readonly aperture: Settings['aperture']
+    readonly cropFactor: Settings['cropFactor']
+    readonly id: Settings['id']
 
-    constructor({ focalLength, aperture, cropFactor, id }: Options & { id?: string } = defaults) {
-        this.focalLength = typeof focalLength === 'number' ? focalLength : defaults.focalLength
-        this.cropFactor = typeof cropFactor === 'number' ? cropFactor : defaults.cropFactor
-        this.id = typeof id === 'number' || typeof id === 'string' ? id : defaults.id
+    constructor({ focalLength, aperture, cropFactor, id }: Options = {}, customDefaults = defaultOptions) {
+        const settings = combineSettings({ focalLength, aperture, cropFactor, id }, customDefaults)
 
-        if (typeof aperture === 'number') {
-            aperture = `f/${aperture}`
-        } else if (typeof aperture !== 'string' || !apertureRegex.test(aperture)) {
-            aperture = `f/${defaults.aperture}`
-        }
-
-        this.aperture = getActualAperture(aperture) ?? defaults.aperture
+        this.focalLength = settings.focalLength
+        this.aperture = settings.aperture
+        this.cropFactor = settings.cropFactor
+        this.id = settings.id
     }
 
     /**
@@ -54,11 +42,19 @@ export class Lens {
      */
     dof(distance?: number, imperialUnits = false) {
         if (distance === undefined || isNaN(distance)) {
-            distance = imperialUnits ? defaults.distanceImperial : defaults.distanceMetric
+            distance = imperialUnits ? defaultDistanceImperial : defaultDistanceMetric
         } else if (typeof distance === 'string') {
             distance = parseFloat(distance)
         }
 
         return calculateDepthOfField(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)
+    }
+}
+
+export function createLensMaker(customDefaults: Options = defaultOptions) {
+    const baseSettings = Object.assign({}, customDefaults, defaultOptions)
+
+    return (opts: Options = {}) => {
+        return new Lens(opts, baseSettings)
     }
 }

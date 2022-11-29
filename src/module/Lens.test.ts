@@ -1,4 +1,4 @@
-import { Lens } from './Lens'
+import { createLensMaker, Lens } from './Lens'
 
 describe('Class basics', () => {
     test('constructor will create an object with the default settings', () => {
@@ -37,7 +37,7 @@ describe('Class basics', () => {
 
     test('default settings are used if no options are provided, otherwise the options are used', () => {
         const lens1 = new Lens()
-        const lens2 = new Lens({ focalLength: 40, aperture: 3.4, cropFactor: 1.62 })
+        const lens2 = new Lens({ focalLength: 40, aperture: 'f/3.4', cropFactor: 1.62 })
 
         expect(lens1.focalLength).toBe(35)
         expect(lens1.aperture).toBe(2)
@@ -148,5 +148,35 @@ describe('Calculating the depth of field', () => {
             expect(result.coc).toBe(0.03)
             expect(result.coc.toString()).toBe('0.03')
         })
+    })
+})
+
+describe('Generating lenses with custom defaults using createLensMaker', () => {
+    test('creates lenses with the default settings', () => {
+        const lensMaker = createLensMaker()
+        const lens1 = lensMaker()
+        const lens2 = lensMaker()
+
+        expect(lens1.focalLength).toBe(35)
+        expect(lens1.aperture).toBe(2)
+        expect(lens1.cropFactor).toBe(1)
+
+        expect(lens2.focalLength).toBe(35)
+        expect(lens2.aperture).toBe(2)
+        expect(lens2.cropFactor).toBe(1)
+    })
+
+    test('creates lenses with custom default settings', () => {
+        const lensMaker = createLensMaker({ focalLength: 55, aperture: 'f/3.4', cropFactor: 3 })
+        const lens1 = lensMaker()
+        const lens2 = lensMaker()
+
+        expect(lens1.focalLength).toBe(55)
+        expect(lens1.aperture).toBe(3.4)
+        expect(lens1.cropFactor).toBe(3)
+
+        expect(lens2.focalLength).toBe(55)
+        expect(lens2.aperture).toBe(3.4)
+        expect(lens2.cropFactor).toBe(3)
     })
 })
