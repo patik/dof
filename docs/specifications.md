@@ -34,35 +34,36 @@ If we're creating multiple lenses, we can assign arbitrary IDs to keep track of 
 lens.id = '1234';         // Optional; string
 ```
 
-### Changing default values
+### Reusing default values
 
-You can change any of the defaults. For example, you might want to calculate the depth of field for many lenses with a common sensor crop factor of `1.62`:
+You can create function which generates lenses using your own set of defauls. For example, you might want to calculate the depth of field for many lenses with a common sensor crop factor of `1.62`:
 
 ```js
-DoF.setDefaults({cropFactor: 1.62});
+const lensMaker = createLensMaker({ cropFactor: 1.62 })
+
+const lens1 = lensMaker()
+const lens2 = lensMaker({ aperture: 'f/3.6' })
 ```
 
-The complete list:
+The complete list of configurable defaults:
 
 ```js
-DoF.setDefaults({focalLength: 50});  // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
-DoF.setDefaults({aperture: 2.5});    // String in the format `"f/2.5"`, or the float value `2.5`
-DoF.setDefaults({cropFactor: 1.62}); // Number; sensor's crop factor compared to full frame
-DoF.setDefaults({distance: 25});     // Number, in feet
+focalLength: 35  // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
+aperture: 'f/2'  // String in the format `"f/2.5"`
+cropFactor: 1    // Floating point number; sensor's crop factor compared to full frame
 ```
 
 ## Calculate the depth of field
 
-To perform a calculation you must specify the distance between the camera and the subject. You can either set a default or pass a particular distance. The value must be a number as measured in feet.
+To perform a calculation you must specify the distance between the camera and the subject. You can either set a default or pass a particular distance. The value must be a number as measured in meters (default) or feet.
 
 ```js
 // Specify distance directly
-const result1 = lens.dof(20);   // 20 feet, the default value
-const result2 = lens.dof(21.5); // 21 feet 6 inches
+const result1 = lens.dof(5);   // 5 mmeters, the default value
+const result2 = lens.dof(22.6); // 22 meters 60 centimeters
 
-// Set a default
-DoF.setDefaults({distance: 20.5});
-const result = lens.dof();
+// Imperial units
+const result2 = lens.dof(15, true) // 15 feet, the default value
 ```
 
 The `result` object contains several properties:
@@ -87,7 +88,7 @@ const str = result.toString();
 All properties have an equivalent string representation, accessible through the `.toString` property:
 
 ```js
-result.toString.dof       // Same as `result.toString()`
+result.toString.dof        // Same as `result.toString()`
 result.toString.eighthDof
 result.toString.hf
 result.toString.near

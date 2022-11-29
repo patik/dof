@@ -50,9 +50,3 @@ export class Lens {
         return calculateDepthOfField(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)
     }
 }
-
-export function createLensMaker(customDefaults: Options = defaultOptions) {
-    return (opts: Options = {}) => {
-        return new Lens(opts, customDefaults)
-    }
-}
