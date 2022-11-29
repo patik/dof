@@ -1,4 +1,4 @@
-import { getActualAperture, toApertureString } from './aperture'
+import { toActualAperture } from './aperture'
 import { defaultOptions } from '../Lens'
 
 /**
@@ -28,22 +28,16 @@ export function combineSettings(
         definedCropFactor = defaultOptions.cropFactor
     }
 
-    aperture = toApertureString({
+    aperture = toActualAperture({
         input: aperture,
         defaultOptionsAperture: defaultOptions.aperture,
         customSettingsAperture: defaultSettings.aperture,
     })
 
-    const actualAperture = getActualAperture(aperture)
-
-    if (!actualAperture) {
-        throw new Error(`invalid aperture: ${aperture}`)
-    }
-
     const result: Settings = {
         focalLength: definedFocalLength,
         cropFactor: definedCropFactor,
-        aperture: actualAperture,
+        aperture,
         id: id ?? defaultSettings.id ?? '',
     }
 

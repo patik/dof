@@ -4,7 +4,7 @@ function isApertureString(str: string): str is ApertureString {
     return apertureRegex.test(str)
 }
 
-export function toApertureString({
+export function toActualAperture({
     input,
     defaultOptionsAperture,
     customSettingsAperture,
@@ -12,7 +12,7 @@ export function toApertureString({
     input?: string | number
     customSettingsAperture?: string | number
     defaultOptionsAperture: ApertureString
-}): ApertureString {
+}): number {
     let aperture: ApertureString | undefined = undefined
     const asString = String(input)
 
@@ -28,11 +28,17 @@ export function toApertureString({
         }
     }
 
-    if (!aperture) {
+    if (!aperture || !getActualAperture(aperture)) {
         aperture = defaultOptionsAperture
     }
 
-    return aperture
+    const actualAperture = getActualAperture(aperture)
+
+    if (!actualAperture) {
+        throw new Error(`invalid aperture: ${aperture}`)
+    }
+
+    return actualAperture
 }
 
 // Map of human-friendly values with the actual values

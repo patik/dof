@@ -25,7 +25,7 @@ export class Lens {
     readonly cropFactor: Settings['cropFactor']
     readonly id: Settings['id']
 
-    constructor({ focalLength, aperture, cropFactor, id }: Options = {}, customDefaults = defaultOptions) {
+    constructor({ focalLength, aperture, cropFactor, id }: Options = {}, customDefaults: Options = defaultOptions) {
         const settings = combineSettings({ focalLength, aperture, cropFactor, id }, customDefaults)
 
         this.focalLength = settings.focalLength
@@ -52,9 +52,7 @@ export class Lens {
 }
 
 export function createLensMaker(customDefaults: Options = defaultOptions) {
-    const baseSettings = Object.assign({}, customDefaults, defaultOptions)
-
     return (opts: Options = {}) => {
-        return new Lens(opts, baseSettings)
+        return new Lens(opts, customDefaults)
     }
 }

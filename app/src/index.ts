@@ -1,4 +1,4 @@
-import { Lens } from './module/Lens'
+import { Lens } from './Lens'
 
 export type LensType = typeof Lens
 

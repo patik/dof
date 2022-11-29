@@ -32,7 +32,7 @@ describe('Class basics', () => {
 
         expect(lens.focalLength).toBe(35)
         expect(lens.cropFactor).toBe(1)
-        expect(lens.id).toBeUndefined()
+        expect(lens.id).toBe('')
     })
 
     test('default settings are used if no options are provided, otherwise the options are used', () => {
@@ -172,11 +172,11 @@ describe('Generating lenses with custom defaults using createLensMaker', () => {
         const lens2 = lensMaker()
 
         expect(lens1.focalLength).toBe(55)
-        expect(lens1.aperture).toBe(3.4)
+        expect(lens1.aperture).toBe(3.363586)
         expect(lens1.cropFactor).toBe(3)
 
         expect(lens2.focalLength).toBe(55)
-        expect(lens2.aperture).toBe(3.4)
+        expect(lens2.aperture).toBe(3.363586)
         expect(lens2.cropFactor).toBe(3)
     })
 })
