@@ -7,7 +7,7 @@ describe('combineSettings', () => {
                 focalLength: 35,
                 aperture: 2,
                 cropFactor: 1,
-                id: '',
+                id: undefined,
             })
         })
 
@@ -16,7 +16,7 @@ describe('combineSettings', () => {
                 focalLength: 35,
                 aperture: 2,
                 cropFactor: 1,
-                id: '',
+                id: undefined,
             })
         })
     })
@@ -34,7 +34,7 @@ describe('combineSettings', () => {
                 focalLength: 40,
                 aperture: 2,
                 cropFactor: 1,
-                id: '',
+                id: undefined,
             })
         })
 
@@ -50,7 +50,7 @@ describe('combineSettings', () => {
                 focalLength: 35,
                 aperture: 3.363586,
                 cropFactor: 1,
-                id: '',
+                id: undefined,
             })
         })
 
@@ -67,7 +67,7 @@ describe('combineSettings', () => {
                 focalLength: 35,
                 aperture: 2,
                 cropFactor: 2,
-                id: '',
+                id: undefined,
             })
         })
 
@@ -118,7 +118,7 @@ describe('combineSettings', () => {
                     focalLength: 40,
                     aperture: 2,
                     cropFactor: 1,
-                    id: '',
+                    id: undefined,
                 })
             })
 
@@ -131,7 +131,7 @@ describe('combineSettings', () => {
                     focalLength: 35,
                     aperture: 3.363586,
                     cropFactor: 1,
-                    id: '',
+                    id: undefined,
                 })
             })
 
@@ -144,7 +144,7 @@ describe('combineSettings', () => {
                     focalLength: 35,
                     aperture: 2,
                     cropFactor: 2,
-                    id: '',
+                    id: undefined,
                 })
             })
 
@@ -191,7 +191,7 @@ describe('combineSettings', () => {
                     focalLength: 40,
                     aperture: 2,
                     cropFactor: 1,
-                    id: '',
+                    id: undefined,
                 })
             })
 
@@ -207,7 +207,7 @@ describe('combineSettings', () => {
                     focalLength: 35,
                     aperture: 3.363586,
                     cropFactor: 1,
-                    id: '',
+                    id: undefined,
                 })
             })
 
@@ -223,7 +223,7 @@ describe('combineSettings', () => {
                     focalLength: 35,
                     aperture: 2,
                     cropFactor: 2,
-                    id: '',
+                    id: undefined,
                 })
             })
 
@@ -279,7 +279,7 @@ describe('combineSettings', () => {
                 focalLength: 40,
                 aperture: 2,
                 cropFactor: 1,
-                id: '',
+                id: undefined,
             })
         })
 
@@ -297,7 +297,7 @@ describe('combineSettings', () => {
                 focalLength: 35,
                 aperture: 3.363586,
                 cropFactor: 1,
-                id: '',
+                id: undefined,
             })
         })
 
@@ -315,7 +315,7 @@ describe('combineSettings', () => {
                 focalLength: 35,
                 aperture: 2,
                 cropFactor: 2,
-                id: '',
+                id: undefined,
             })
         })
 

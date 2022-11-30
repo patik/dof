@@ -31,7 +31,7 @@ const lens = new Lens(35, 'f/2.5', 1.62, 'my-lens-ID');
 If we're creating multiple lenses, we can assign arbitrary IDs to keep track of them:
 
 ```js
-lens.id = '1234';         // Optional; string
+lens.id = '1234';  // Optional; string
 ```
 
 ### Reusing default values

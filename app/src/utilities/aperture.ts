@@ -1,51 +1,7 @@
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 
-function isApertureString(str: string): str is ApertureString {
-    return apertureRegex.test(str)
-}
-
-/**
- * Turns user input into a workable aperture value that can be used for calculations
- */
-export function toActualAperture({
-    input,
-    defaultOptionsAperture,
-    customSettingsAperture,
-}: {
-    input?: string | number
-    customSettingsAperture?: string | number
-    defaultOptionsAperture: ApertureString
-}): number {
-    let aperture: ApertureString | undefined = undefined
-    const asString = String(input)
-
-    if (typeof input === 'number') {
-        aperture = `f/${input}`
-    } else if (isApertureString(asString)) {
-        aperture = asString
-    } else {
-        if (typeof customSettingsAperture === 'number') {
-            aperture = `f/${customSettingsAperture}`
-        } else if (typeof customSettingsAperture === 'string' && isApertureString(customSettingsAperture)) {
-            aperture = customSettingsAperture
-        }
-    }
-
-    if (!aperture || !getActualAperture(aperture)) {
-        aperture = defaultOptionsAperture
-    }
-
-    const actualAperture = getActualAperture(aperture)
-
-    if (!actualAperture) {
-        throw new Error(`invalid aperture: ${aperture}`)
-    }
-
-    return actualAperture
-}
-
-// Map of human-friendly values with the actual values
-const apertureMap: Record<string, number> = {
+// Map of human-friendly values to their precise numeric values
+const preciseApertureMap: Record<string, number> = {
     'f/1': 1,
     'f/1.2': 1.189207,
     'f/1.4': 1.414214,
@@ -89,15 +45,88 @@ const apertureMap: Record<string, number> = {
     'f/64': 64,
 }
 
-export function getActualAperture(humanValue: string): number | undefined {
+// It's possible that lenses might excede what we have listed in this map, so let's give the benefit of the doubt and accept those numbers as-is. To do this, we need to know the smallest and largest values in our map.
+const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1 : -1))
+const smallestDocumentedAperture = sortedValues.slice(undefined, 1)[0]
+const largestDocumentedAperture = sortedValues.slice(-1)[0]
+
+function getPreciseAperture(humanValue: string): number | undefined {
     if (
-        humanValue in apertureMap &&
-        Object.prototype.hasOwnProperty.call(apertureMap, humanValue) &&
-        apertureMap[humanValue]
+        humanValue in preciseApertureMap &&
+        Object.prototype.hasOwnProperty.call(preciseApertureMap, humanValue) &&
+        preciseApertureMap[humanValue]
     ) {
-        return apertureMap[humanValue]
+        return preciseApertureMap[humanValue]
     }
 
     // Jest needs an explicit return for each code path
     return
+}
+
+function isApertureString(value?: string): value is ApertureString {
+    return typeof value === 'string' && apertureRegex.test(value)
+}
+
+/**
+ * Turns user input into a workable aperture value that can be used for calculations
+ */
+export function toActualAperture({
+    input,
+    defaultOptionsAperture,
+    customSettingsAperture,
+}: {
+    input?: string | number
+    customSettingsAperture?: string | number
+    defaultOptionsAperture: ApertureString
+}): number {
+    // The value is not in our map, but perhaps the user is looking for something larger or smaller than what we have documented
+    if (
+        typeof input === 'number' &&
+        input > 0 &&
+        input < Infinity &&
+        (input < smallestDocumentedAperture || input > largestDocumentedAperture)
+    ) {
+        return input
+    }
+
+    let apertureString: ApertureString | undefined = undefined
+
+    if (typeof input === 'number') {
+        apertureString = `f/${input}`
+    } else if (isApertureString(input)) {
+        apertureString = input
+    } else {
+        if (typeof customSettingsAperture === 'number') {
+            apertureString = `f/${customSettingsAperture}`
+        } else if (typeof customSettingsAperture === 'string' && isApertureString(customSettingsAperture)) {
+            apertureString = customSettingsAperture
+        }
+    }
+
+    let preciseAperture: number | undefined = apertureString ? getPreciseAperture(apertureString) : undefined
+
+    if (!preciseAperture) {
+        // The value is not in our map, but perhaps the user is looking for something larger or smaller than what we have documented
+        const inputAsNumber = typeof input === 'number' ? input : Number(input?.replace('f/', ''))
+
+        if (
+            inputAsNumber > 0 &&
+            inputAsNumber < Infinity &&
+            (inputAsNumber < smallestDocumentedAperture || inputAsNumber > largestDocumentedAperture)
+        ) {
+            return inputAsNumber
+        }
+    }
+
+    // Fall back to the default value if we couldn't figure out how to extract one from the input
+    if (!preciseAperture) {
+        preciseAperture = getPreciseAperture(defaultOptionsAperture)
+    }
+
+    // Still did not find something—very unlikely, so let's throw an exception
+    if (!preciseAperture) {
+        throw new Error(`Could not find a valid aperture for this string: ${apertureString}`)
+    }
+
+    return preciseAperture
 }

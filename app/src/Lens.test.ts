@@ -32,7 +32,7 @@ describe('Class basics', () => {
 
         expect(lens.focalLength).toBe(35)
         expect(lens.cropFactor).toBe(1)
-        expect(lens.id).toBe('')
+        expect(lens.id).toBeUndefined()
     })
 
     test('default settings are used if no options are provided, otherwise the options are used', () => {

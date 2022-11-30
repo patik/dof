@@ -11,7 +11,7 @@ type Settings = {
     focalLength: number
     aperture: number
     cropFactor: number
-    id: string
+    id?: string
 }
 
 type ApertureString = `f/${string}`

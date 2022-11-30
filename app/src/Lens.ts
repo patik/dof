@@ -1,7 +1,7 @@
 import { combineSettings } from './utilities/combineSettings'
 import { calculateDepthOfField } from './utilities/calculateDepthOfField'
 
-export const defaultOptions: DefaultOptions = Object.freeze({
+export const builtInDefaults: DefaultOptions = Object.freeze({
     focalLength: 35,
     aperture: 'f/2',
     cropFactor: 1,
@@ -23,9 +23,9 @@ export class Lens {
     readonly focalLength: Settings['focalLength']
     readonly aperture: Settings['aperture']
     readonly cropFactor: Settings['cropFactor']
-    readonly id: Settings['id']
+    readonly id: Settings['id'] | undefined
 
-    constructor({ focalLength, aperture, cropFactor, id }: Options = {}, customDefaults: Options = defaultOptions) {
+    constructor({ focalLength, aperture, cropFactor, id }: Options = {}, customDefaults: Options = builtInDefaults) {
         const settings = combineSettings({ focalLength, aperture, cropFactor, id }, customDefaults)
 
         this.focalLength = settings.focalLength
