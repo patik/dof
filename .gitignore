@@ -1,6 +1,7 @@
-*.DS_Store
-.sass-cache
-*.sublime-*
-sftp-config.json
+app/coverage/
 dist/
-node_modules
+node_modules/
+yarn-error.log
+*.sublime-*
+*.DS_Store
+
