@@ -16,27 +16,19 @@ That will give us a lens object with default values:
 
 ```js
 lens.focalLength // 35 (millimeters)
-lens.aperture    // 'f/2';
+lens.aperture    // 'f/2'
 lens.cropFactor  // 1 (i.e. standard full frame)
 ```
 
 Let's change those to fit the particular lens we have in mind:
 
 ```js
-const lens = new Lens(35, 'f/2.5', 1.62, 'my-lens-ID');
-```
-
-#### Managing multiple lenses
-
-If we're creating multiple lenses, we can assign arbitrary IDs to keep track of them:
-
-```js
-lens.id = '1234';  // Optional; string
+const lens = new Lens(35, 'f/2.5', 1.62);
 ```
 
 #### Reusing default values
 
-You can create function which generates lenses using your own set of defauls. For example, you might want to calculate the depth of field for many lenses with a common sensor crop factor of `1.62`:
+You can create function which generates lenses in bulk using your own set of defauls. For example, you might want to calculate the depth of field for many lenses with a common sensor crop factor of `1.62`:
 
 ```js
 const lensMaker = createLensMaker({ cropFactor: 1.62 })
@@ -51,6 +43,16 @@ The complete list of configurable defaults:
 focalLength: 35  // Number, in millimeters; this must be the actual focal length, not the 35mm equivalent value
 aperture: 'f/2'  // String in the format `"f/2.5"`
 cropFactor: 1    // Floating point number; sensor's crop factor compared to full frame
+```
+
+#### Managing multiple lenses
+
+Lenses can be assigned arbitrary IDs to make it easier to keep track of them:
+
+```js
+const lens = new Lens(35, 'f/2.5', 1.62, 'my-lens-ID'); // Optional; string
+
+console.log(lens.id) // 'my-lens-ID'
 ```
 
 ### Calculate the depth of field
@@ -109,6 +111,9 @@ const num = lens.dof(15).dof;        // float
 const str = lens.dof(15).toString(); // string
 ```
 
+### TypeScript support
+
+`Lens()` instances use the `DepthOfFieldLens` type which can be imported from the module.
 
 ## GUI Web App
 
