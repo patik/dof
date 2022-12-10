@@ -43,8 +43,6 @@ export class Lens {
     dof(distance?: number, imperialUnits = false) {
         if (distance === undefined || isNaN(distance)) {
             distance = imperialUnits ? defaultDistanceImperial : defaultDistanceMetric
-        } else if (typeof distance === 'string') {
-            distance = parseFloat(distance)
         }
 
         return calculateDepthOfField(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)

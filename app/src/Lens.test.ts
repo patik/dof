@@ -101,7 +101,7 @@ describe('Calculating the depth of field', () => {
     })
 
     describe('with a specific distance value', () => {
-        test('metric units (meters)', () => {
+        test('metric units (meters), using a number', () => {
             const lens = new Lens()
             const result = lens.dof(15)
 

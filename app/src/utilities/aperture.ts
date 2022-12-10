@@ -123,8 +123,9 @@ export function toActualAperture({
         preciseAperture = getPreciseAperture(defaultOptionsAperture)
     }
 
-    // Still did not find something—very unlikely, so let's throw an exception
+    // Still did not find something. This is exceedingly unlikely (it's only possible if defaultOptionsAperture is invalid) so let's throw an exception
     if (!preciseAperture) {
+        /* istanbul ignore next */
         throw new Error(`Could not find a valid aperture for this string: ${apertureString}`)
     }
 
