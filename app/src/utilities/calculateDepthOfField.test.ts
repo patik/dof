@@ -47,6 +47,29 @@ describe('Calculating the depth of field with calculateDepthOfField', () => {
             expect(result.coc).toBe(0.015)
             expect(result.coc.toString()).toBe('0.015')
         })
+
+        test('such that the far end of the range is infinity', () => {
+            const result = calculateDepthOfField(24, 16, 1, 5, false)
+
+            expect(result.dof).toBe(Infinity)
+            expect(result.dof.toString()).toBe('Infinity')
+            expect(result.toString()).toBe('Infinity')
+
+            expect(result.eighthDof).toBe(Infinity)
+            expect(result.eighthDof.toString()).toBe('Infinity')
+
+            expect(result.hf).toBe(1.224)
+            expect(result.hf.toString()).toBe('1.224')
+
+            expect(result.near).toBe(0.9715025906735751)
+            expect(result.near.toString()).toBe('0.9715025906735751')
+
+            expect(result.far).toBe(Infinity)
+            expect(result.far.toString()).toBe('Infinity')
+
+            expect(result.coc).toBe(0.03)
+            expect(result.coc.toString()).toBe('0.03')
+        })
     })
 
     describe('imperial units (feet)', () => {

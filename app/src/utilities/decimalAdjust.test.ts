@@ -13,5 +13,7 @@ describe('decimalAdjust', () => {
         expect(decimalAdjust(1e2)).toBe(100)
         expect(decimalAdjust(1.2e3)).toBe(1200)
         expect(decimalAdjust(1.0e4)).toBe(10000)
+        expect(decimalAdjust(1.0e24)).toBe(1e24)
+        expect(decimalAdjust(NaN)).toBe(NaN)
     })
 })

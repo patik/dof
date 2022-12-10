@@ -46,6 +46,8 @@ const preciseApertureMap: Record<string, number> = {
 }
 
 // It's possible that lenses might excede what we have listed in this map, so let's give the benefit of the doubt and accept those numbers as-is. To do this, we need to know the smallest and largest values in our map.
+// We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
+/* istanbul ignore next line */
 const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1 : -1))
 const smallestDocumentedAperture = sortedValues.slice(undefined, 1)[0]
 const largestDocumentedAperture = sortedValues.slice(-1)[0]
@@ -107,6 +109,8 @@ export function toActualAperture({
 
     if (!preciseAperture) {
         // The value is not in our map, but perhaps the user is looking for something larger or smaller than what we have documented
+        // We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
+        /* istanbul ignore next line */
         const inputAsNumber = typeof input === 'number' ? input : Number(input?.replace('f/', ''))
 
         if (
@@ -124,6 +128,8 @@ export function toActualAperture({
     }
 
     // Still did not find something. This is exceedingly unlikely (it's only possible if defaultOptionsAperture is invalid) so let's throw an exception
+    // We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
+    /* istanbul ignore next line */
     if (!preciseAperture) {
         /* istanbul ignore next */
         throw new Error(`Could not find a valid aperture for this string: ${apertureString}`)
