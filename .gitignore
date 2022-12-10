@@ -1,9 +1,5 @@
-.nyc_output/
-coverage/
 dist/
 node_modules/
 yarn-error.log
 *.sublime-*
 *.DS_Store
-.sass-cache
-sftp-config.json
