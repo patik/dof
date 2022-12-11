@@ -4,4 +4,4 @@ node_modules/
 yarn-error.log
 *.sublime-*
 *.DS_Store
-
+.vscode/

@@ -16,7 +16,7 @@
         "postversion": "git push && git push --tags",
         "test": "yarn workspaces run test"
     },
-    "devDependencies": {
+    "dependencies": {
         "typescript": "^4.9.4"
     },
     "repository": {
