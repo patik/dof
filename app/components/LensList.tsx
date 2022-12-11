@@ -1,5 +1,5 @@
-import DeleteIcon from '@mui/icons-material/Delete'
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
+import DeleteIcon from '@mui/icons-material/Delete'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -18,8 +18,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { visuallyHidden } from '@mui/utils'
-import React, { ChangeEvent, MouseEvent, useState } from 'react'
 import { Lens } from 'dof'
+import React, { ChangeEvent, MouseEvent, useState } from 'react'
 
 interface Data {
     name: string
@@ -211,6 +211,10 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     )
 }
 
+function rounded(num: number): number {
+    return Math.round((num + Number.EPSILON) * 100) / 100
+}
+
 export default function LensList({ units, distance }: { units: Units; distance: number }) {
     const [rows, setRows] = useState<Data[]>([
         createData('Lens 1', 35, 'f/2', 1, distance),
@@ -259,67 +263,65 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     const isSelected = (name: Data['name']) => selected.indexOf(name) !== -1
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar selected={selected} />
-                <TableContainer>
-                    <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
-                        <EnhancedTableHead
-                            units={units}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
-                        <TableBody>
-                            {rows.sort(getComparator(order, orderBy)).map((row, index) => {
-                                const isItemSelected = isSelected(row.name)
-                                const labelId = `enhanced-table-checkbox-${index}`
+        <Paper sx={{ width: '100%', mb: 2 }}>
+            <EnhancedTableToolbar selected={selected} />
+            <TableContainer>
+                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
+                    <EnhancedTableHead
+                        units={units}
+                        numSelected={selected.length}
+                        order={order}
+                        orderBy={orderBy}
+                        onSelectAllClick={handleSelectAllClick}
+                        onRequestSort={handleRequestSort}
+                        rowCount={rows.length}
+                    />
+                    <TableBody>
+                        {rows.sort(getComparator(order, orderBy)).map((row, index) => {
+                            const isItemSelected = isSelected(row.name)
+                            const labelId = `enhanced-table-checkbox-${index}`
 
-                                return (
-                                    <TableRow
-                                        hover
-                                        onClick={(event) => handleClick(event, row.name)}
-                                        role="checkbox"
-                                        aria-checked={isItemSelected}
-                                        tabIndex={-1}
-                                        key={row.name}
-                                        selected={isItemSelected}
-                                    >
-                                        <TableCell padding="checkbox">
-                                            <Checkbox
-                                                color="primary"
-                                                checked={isItemSelected}
-                                                inputProps={{
-                                                    'aria-labelledby': labelId,
-                                                }}
-                                            />
-                                        </TableCell>
-                                        <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.focalLength}</TableCell>
-                                        <TableCell align="right">{row.aperture}</TableCell>
-                                        <TableCell align="right">{row.sensor}</TableCell>
-                                        <TableCell align="right">{row.depthOfField}</TableCell>
-                                    </TableRow>
-                                )
-                            })}
-                            <TableRow
-                                style={{
-                                    height: 53,
-                                }}
-                            >
-                                <TableCell colSpan={6} align="center">
-                                    <Button onClick={() => addRow()}>Add Lens</Button>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
-        </Box>
+                            return (
+                                <TableRow
+                                    hover
+                                    onClick={(event) => handleClick(event, row.name)}
+                                    role="checkbox"
+                                    aria-checked={isItemSelected}
+                                    tabIndex={-1}
+                                    key={row.name}
+                                    selected={isItemSelected}
+                                >
+                                    <TableCell padding="checkbox">
+                                        <Checkbox
+                                            color="primary"
+                                            checked={isItemSelected}
+                                            inputProps={{
+                                                'aria-labelledby': labelId,
+                                            }}
+                                        />
+                                    </TableCell>
+                                    <TableCell component="th" id={labelId} scope="row" padding="none">
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell align="right">{row.focalLength}</TableCell>
+                                    <TableCell align="right">{row.aperture}</TableCell>
+                                    <TableCell align="right">{row.sensor}</TableCell>
+                                    <TableCell align="right">{rounded(row.depthOfField)}</TableCell>
+                                </TableRow>
+                            )
+                        })}
+                        <TableRow
+                            style={{
+                                height: 53,
+                            }}
+                        >
+                            <TableCell colSpan={6} align="center">
+                                <Button onClick={() => addRow()}>Add Lens</Button>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper>
     )
 }
