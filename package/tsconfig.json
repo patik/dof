@@ -6,8 +6,8 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "outDir": "dist",
-        "rootDir": "app/src",
+        "outDir": "./dist",
+        "rootDir": "./src",
         "strict": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -23,6 +23,6 @@
         "preserveConstEnums": true,
         "resolveJsonModule": true
     },
-    "include": ["app/src/**/*.ts"],
+    "include": ["src/**/*.ts"],
     "exclude": ["node_modules", "test", "types"]
 }
