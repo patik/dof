@@ -12,6 +12,7 @@
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
         "@fontsource/open-sans": "^4.5.13",
+        "@mui/icons-material": "^5.10.16",
         "@mui/material": "^5.10.17",
         "@mui/styled-engine-sc": "^5.10.16",
         "@types/node": "18.11.13",

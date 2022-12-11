@@ -1,3 +1,9 @@
+import LensList from './LensList'
+
 export default function Main() {
-    return <p>Main app</p>
+    return (
+        <>
+            <LensList />
+        </>
+    )
 }
