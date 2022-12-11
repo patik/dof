@@ -2,16 +2,19 @@
     "name": "@patik/dof",
     "private": true,
     "workspaces": [
-        "app"
+        "package"
     ],
     "scripts": {
-        "build": "yarn --cwd app lint && yarn --cwd app tsc",
+        "build": "yarn --cwd package lint && yarn --cwd package tsc",
         "clean": "git clean -fdx",
-        "cover": "yarn --cwd app test --collectCoverage",
+        "cover": "yarn --cwd package test --collectCoverage",
         "lint": "yarn workspaces run lint",
         "preversion": "yarn workspaces run preversion",
         "postversion": "git push && git push --tags",
         "test": "yarn workspaces run test"
+    },
+    "devDependencies": {
+        "typescript": "^4.9.3"
     },
     "repository": {
         "type": "git",

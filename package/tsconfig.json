@@ -7,7 +7,8 @@
         "declarationMap": true,
         "sourceMap": true,
         "outDir": "dist",
-        "rootDir": "app/src",
+        "rootDir": "src",
+        "baseUrl": ".",
         "strict": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -18,11 +19,11 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "moduleResolution": "node",
-        "typeRoots": ["node_modules/@types", "types"],
+        "typeRoots": ["../node_modules/@types", "types"],
         "forceConsistentCasingInFileNames": true,
         "preserveConstEnums": true,
         "resolveJsonModule": true
     },
-    "include": ["app/src/**/*.ts"],
-    "exclude": ["node_modules", "test", "types"]
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["../node_modules", "node_modules", "test", "types"]
 }
