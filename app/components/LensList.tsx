@@ -1,4 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete'
+import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -17,7 +18,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { visuallyHidden } from '@mui/utils'
-import React from 'react'
+import React, { ChangeEvent, MouseEvent, useState } from 'react'
 
 interface Data {
     name: string
@@ -27,7 +28,7 @@ interface Data {
     depthOfField: number
 }
 
-type ColumnName = keyof Data | 'actions'
+type ColumnName = keyof Data
 
 interface HeadCell {
     disablePadding: boolean
@@ -48,8 +49,6 @@ function createData(name: string, focalLength: number, aperture: string, sensor:
     }
 }
 
-const rows: Data[] = [createData('Lens 1', 35, 'f/2', 1, 4.3), createData('Lens 2', 55, 'f/1.4', 2, 16)]
-
 function descendingComparator(a: Data, b: Data, orderBy: keyof Data) {
     if (b[orderBy] < a[orderBy]) {
         return -1
@@ -61,10 +60,6 @@ function descendingComparator(a: Data, b: Data, orderBy: keyof Data) {
 }
 
 function getComparator<Key extends ColumnName>(order: Order, orderBy: Key): (a: Data, b: Data) => number {
-    if (orderBy === 'actions') {
-        return () => 0
-    }
-
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy)
@@ -101,15 +96,10 @@ const headCells: readonly HeadCell[] = [
         disablePadding: false,
         label: 'Depth of Field',
     },
-    {
-        id: 'actions',
-        numeric: true,
-        disablePadding: false,
-        label: 'Actions',
-    },
 ]
 
 interface EnhancedTableProps {
+    units: Units
     numSelected: number
     onRequestSort: (event: React.MouseEvent<unknown>, property: ColumnName) => void
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -119,7 +109,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, units } = props
     const createSortHandler = (property: ColumnName) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property)
     }
@@ -150,7 +140,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
                         >
-                            {headCell.label}
+                            {`${headCell.label}${
+                                headCell.id === 'depthOfField' ? ` (${units === 'imperial' ? 'feet' : 'meters'})` : ''
+                            }`}
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
                                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -165,37 +157,44 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 interface EnhancedTableToolbarProps {
-    numSelected: number
+    selected: readonly Data['name'][]
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-    const { numSelected } = props
+    const { selected } = props
 
     return (
         <Toolbar
             sx={{
                 pl: { sm: 2 },
                 pr: { xs: 1, sm: 1 },
-                ...(numSelected > 0 && {
+                ...(selected.length > 0 && {
                     bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
                 }),
             }}
         >
-            {numSelected > 0 ? (
+            {selected.length > 0 ? (
                 <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
+                    {selected.length} selected
                 </Typography>
             ) : (
                 <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-                    Nutrition
+                    Lenses
                 </Typography>
             )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton>
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
+            {selected.length > 0 ? (
+                <>
+                    <Tooltip title="Delete">
+                        <IconButton>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Duplicate">
+                        <IconButton>
+                            <ControlPointDuplicateIcon />
+                        </IconButton>
+                    </Tooltip>
+                </>
             ) : (
                 <Tooltip title="Filter list">
                     <IconButton>
@@ -207,18 +206,22 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     )
 }
 
-export default function LensList() {
-    const [order, setOrder] = React.useState<Order>('asc')
-    const [orderBy, setOrderBy] = React.useState<ColumnName>('depthOfField')
-    const [selected, setSelected] = React.useState<readonly string[]>([])
+export default function LensList({ units }: { units: Units }) {
+    const [rows, setRows] = useState<Data[]>([
+        createData('Lens 1', 35, 'f/2', 1, 4.3),
+        createData('Lens 2', 55, 'f/1.4', 2, 16),
+    ])
+    const [order, setOrder] = useState<Order>('asc')
+    const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
+    const [selected, setSelected] = useState<readonly Data['name'][]>([])
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: ColumnName) => {
+    const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
         const isAsc = orderBy === property && order === 'asc'
         setOrder(isAsc ? 'desc' : 'asc')
         setOrderBy(property)
     }
 
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             const newSelected = rows.map((n) => n.name)
             setSelected(newSelected)
@@ -227,9 +230,9 @@ export default function LensList() {
         setSelected([])
     }
 
-    const handleClick = (_event: React.MouseEvent<unknown>, name: string) => {
+    const handleClick = (_event: React.MouseEvent<unknown>, name: Data['name']) => {
         const selectedIndex = selected.indexOf(name)
-        let newSelected: readonly string[] = []
+        let newSelected: readonly Data['name'][] = []
 
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, name)
@@ -244,15 +247,20 @@ export default function LensList() {
         setSelected(newSelected)
     }
 
-    const isSelected = (name: string) => selected.indexOf(name) !== -1
+    const addRow = () => {
+        setRows([...rows, createData(`Lens ${rows.length + 1}`, 35, 'f/2', 1, 4)])
+    }
+
+    const isSelected = (name: Data['name']) => selected.indexOf(name) !== -1
 
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar selected={selected} />
                 <TableContainer>
                     <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
                         <EnhancedTableHead
+                            units={units}
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
@@ -261,8 +269,6 @@ export default function LensList() {
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-              rows.sort(getComparator(order, orderBy)).slice() */}
                             {rows.sort(getComparator(order, orderBy)).map((row, index) => {
                                 const isItemSelected = isSelected(row.name)
                                 const labelId = `enhanced-table-checkbox-${index}`
@@ -293,7 +299,6 @@ export default function LensList() {
                                         <TableCell align="right">{row.aperture}</TableCell>
                                         <TableCell align="right">{row.sensor}</TableCell>
                                         <TableCell align="right">{row.depthOfField}</TableCell>
-                                        <TableCell align="right">Actions</TableCell>
                                     </TableRow>
                                 )
                             })}
@@ -302,8 +307,8 @@ export default function LensList() {
                                     height: 53,
                                 }}
                             >
-                                <TableCell colSpan={7} align="center">
-                                    <Button>Add Lens</Button>
+                                <TableCell colSpan={6} align="center">
+                                    <Button onClick={() => addRow()}>Add Lens</Button>
                                 </TableCell>
                             </TableRow>
                         </TableBody>

@@ -4,7 +4,7 @@ import Main from '../components/Main'
 
 export default function Home() {
     return (
-        <Box>
+        <Box p={2}>
             <Head>
                 <title>Depth of Field Calculator &amp; Comparison Tool for Camera Lenses</title>
             </Head>
