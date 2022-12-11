@@ -38,7 +38,6 @@
         "cover": "yarn test --collectCoverage",
         "lint": "eslint --ext .ts --fix src/**/*.ts",
         "preversion": "yarn build && yarn cover",
-        "postversion": "git push && git push --tags",
         "test": "yarn jest"
     },
     "keywords": [

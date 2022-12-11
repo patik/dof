@@ -8,8 +8,8 @@
         "build": "yarn --cwd app lint && yarn --cwd app tsc",
         "clean": "git clean -fdx",
         "cover": "yarn --cwd app test --collectCoverage",
-        "lint": "yarn --cwd app eslint --ext .ts --fix src/**/*.ts",
-        "preversion": "yarn --cwd app build && yarn --cwd app cover:check",
+        "lint": "yarn workspaces run lint",
+        "preversion": "yarn workspaces run preversion",
         "postversion": "git push && git push --tags",
         "test": "yarn workspaces run test"
     },
