@@ -19,6 +19,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { visuallyHidden } from '@mui/utils'
 import React, { ChangeEvent, MouseEvent, useState } from 'react'
+import { Lens } from 'dof'
 
 interface Data {
     name: string
@@ -39,13 +40,15 @@ interface HeadCell {
 
 type Order = 'asc' | 'desc'
 
-function createData(name: string, focalLength: number, aperture: string, sensor: number, depthOfField: number): Data {
+function createData(name: string, focalLength: number, aperture: string, sensor: number, distance: number): Data {
+    const lens = new Lens({ focalLength, aperture, cropFactor: sensor })
+
     return {
         name,
         aperture,
         focalLength,
         sensor,
-        depthOfField,
+        depthOfField: lens.dof(distance).dof,
     }
 }
 
@@ -53,9 +56,11 @@ function descendingComparator(a: Data, b: Data, orderBy: keyof Data) {
     if (b[orderBy] < a[orderBy]) {
         return -1
     }
+
     if (b[orderBy] > a[orderBy]) {
         return 1
     }
+
     return 0
 }
 
@@ -206,10 +211,10 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     )
 }
 
-export default function LensList({ units }: { units: Units }) {
+export default function LensList({ units, distance }: { units: Units; distance: number }) {
     const [rows, setRows] = useState<Data[]>([
-        createData('Lens 1', 35, 'f/2', 1, 4.3),
-        createData('Lens 2', 55, 'f/1.4', 2, 16),
+        createData('Lens 1', 35, 'f/2', 1, distance),
+        createData('Lens 2', 55, 'f/1.4', 2, distance),
     ])
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
@@ -248,7 +253,7 @@ export default function LensList({ units }: { units: Units }) {
     }
 
     const addRow = () => {
-        setRows([...rows, createData(`Lens ${rows.length + 1}`, 35, 'f/2', 1, 4)])
+        setRows([...rows, createData(`Lens ${rows.length + 1}`, 35, 'f/2', 1, distance)])
     }
 
     const isSelected = (name: Data['name']) => selected.indexOf(name) !== -1

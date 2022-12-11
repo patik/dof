@@ -10,7 +10,7 @@ export default function Main() {
     return (
         <Box>
             <Distance units={units} setUnits={setUnits} distance={distance} setDistance={setDistance} />
-            <LensList units={units} />
+            <LensList units={units} distance={distance} />
         </Box>
     )
 }
