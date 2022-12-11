@@ -1,36 +1,20 @@
 {
-    "name": "dof",
-    "description": "Depth-of-field calculator for comparing camera lenses",
-    "version": "2.0.0",
+    "name": "@patik/dof",
     "private": true,
     "workspaces": [
         "app"
     ],
+    "scripts": {
+        "build": "yarn --cwd app lint && yarn --cwd app tsc",
+        "clean": "git clean -fdx",
+        "cover": "yarn --cwd app test --collectCoverage",
+        "lint": "yarn --cwd app eslint --ext .ts --fix src/**/*.ts",
+        "preversion": "yarn --cwd app build && yarn --cwd app cover:check",
+        "postversion": "git push && git push --tags",
+        "test": "yarn workspaces run test"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/patik/dof.git"
-    },
-    "bugs": {
-        "url": "https://github.com/patik/dof/issues"
-    },
-    "homepage": "https://github.com/patik/dof",
-    "main": "dist/index.js",
-    "keywords": [
-        "depth-of-field",
-        "lens",
-        "camera",
-        "sensor",
-        "calculator",
-        "focal-length",
-        "photography",
-        "bokeh",
-        "focus",
-        "blur"
-    ],
-    "author": {
-        "name": "Craig Patik",
-        "email": "craig@patik.com",
-        "url": "http://patik.com"
-    },
-    "license": "BSD-3-Clause"
+    }
 }
