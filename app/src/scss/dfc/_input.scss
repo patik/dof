@@ -1,0 +1,152 @@
+// Lens configuration containers
+.lens {
+    position: relative;
+    background: #fff;
+
+    @media #{$bp-table} {
+        margin-bottom: 0;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+        border: $lens-table-border;
+        border-bottom: none;
+
+        &:nth-child(odd) {
+            background: #f0f0f4;
+        }
+
+        &:last-child {
+            border-bottom: $lens-table-border;
+        }
+    }
+}
+
+// Half-width lens blocks for medium viewports (since the `medium` grid is larger than the `table` grid)
+@media (min-width: 40.063em) and (max-width: $bp-table-width-max) {
+    [role="main"] > .small-12 {
+        width: 48%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+
+// Trim some of the default padding
+.inputs {
+    .columns {
+        padding-left: $input-column-padding;
+        padding-right: $input-column-padding;
+    }
+
+    // Foundation overrides
+    input[type="text"],
+    input[type="number"] {
+        padding: 0.25rem 0.5rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+
+    select {
+        font-size: 1rem;
+        padding: 0.25rem;
+    }
+
+    @media #{$bp-table} {
+        .row .columns.table-no-padding-left { // `.row` and `.columns` needed for specificity to override Foundation
+            padding-left: 0;
+        }
+    }
+}
+
+// Action buttons
+.action-buttons {
+    position: absolute;
+    bottom: 0.25em;
+    left: 0.5em;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    a {
+        font-size: 1rem;
+        text-decoration: underline;
+        margin-right: 1rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+
+        &.delete {
+            color: darken(#bd240d, 10%);
+        }
+    }
+
+    @media #{$bp-table} {
+        position: static;
+        bottom: auto;
+        left: auto;
+
+        a {
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.add-lens {
+    border: 1rem dashed #ccc;
+    background: #ddd;
+    cursor: pointer;
+    cursor: copy;
+    @include transition(border-color 100ms ease-in, background 100ms ease-in);
+
+    @media #{$bp-table-max} {
+        border-radius: 0.375rem;
+    }
+
+    &:focus,
+    &:hover {
+        background: rgba(green, 0.1);
+        border-color: rgba(green, 0.2);
+
+        div {
+            color: green;
+        }
+    }
+
+    div {
+        font-size: 1.5rem;
+        color: #999;
+        text-align: center;
+        margin: 1rem auto;
+        @include transition(color 100ms ease-in);
+
+        @media (min-width: 40em) and #{$bp-table-max} {
+            font-size: 2rem;
+            margin: 6rem auto;
+        }
+
+        span {
+            display: block;
+        }
+    }
+
+    @media #{$bp-table} {
+        border-width: 0.2rem;
+
+        div {
+            margin: 0.25rem auto;
+
+            span {
+                display: inline;
+            }
+
+            span:first-child {
+                padding-right: 0.2rem;
+            }
+
+            span:last-child {
+                padding-left: 0.2rem;
+            }
+        }
+    }
+}

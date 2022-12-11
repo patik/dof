@@ -1,0 +1,6 @@
+*.DS_Store
+.sass-cache
+*.sublime-*
+sftp-config.json
+dist/
+node_modules

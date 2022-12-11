@@ -1,0 +1,9 @@
+.chart {
+    overflow: hidden;
+    width: 100%;
+    height: 20em;
+
+    @media (min-width: 40.063em) {
+        height: 30em;
+    }
+}
