@@ -36,7 +36,7 @@
         "build": "yarn lint && tsc",
         "clean": "git clean -fdx",
         "cover": "yarn test --collectCoverage",
-        "lint": "eslint --ext .ts --fix app/src/**/*.ts",
+        "lint": "eslint --ext .ts --fix ./src/**/*.ts",
         "preversion": "yarn build && yarn cover:check",
         "postversion": "git push && git push --tags",
         "test": "jest"

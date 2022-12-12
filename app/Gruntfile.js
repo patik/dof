@@ -1,29 +1,42 @@
 module.exports = function (grunt) {
+    var DoF = ''
+
+    // const fs = require('fs')
+
+    // fs.readFile('./src/js/dfc/dof.js', 'utf-8', (err, data) => {
+    //     if (err) {
+    //         throw err
+    //     }
+
+    //     DoF = data
+    // })
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        dof: {
-            js: ['dof.js'],
-        },
+        // dof: {
+        //     js: 'var DoF = <%= DoF %>',
+        // },
 
         gui: {
             js: [
-                'dof.js',
-                'src/gui/js/dfc/main.js',
-                'src/gui/js/dfc/lens.js',
-                'src/gui/js/dfc/aperture.js',
-                'src/gui/js/dfc/sensor.js',
+                'src/js/dfc/dof.js',
+                'src/js/dfc/main.js',
+                'src/js/dfc/lens.js',
+                'src/js/dfc/aperture.js',
+                'src/js/dfc/sensor.js',
             ],
-            scss: ['src/gui/scss/app.scss'],
+            scss: ['src/scss/app.scss'],
         },
 
         vendor: {
             js: [
-                'src/gui/js/vendor/jquery.js',
-                'src/gui/js/vendor/fastclick.js',
-                'src/gui/js/vendor/handlebars-v1.2.0.js',
-                'src/gui/js/vendor/highcharts.js',
-                'src/gui/js/vendor/ga.js',
+                'src/js/vendor/dof.js',
+                'src/js/vendor/jquery.js',
+                'src/js/vendor/fastclick.js',
+                'src/js/vendor/handlebars-v1.2.0.js',
+                'src/js/vendor/highcharts.js',
+                'src/js/vendor/ga.js',
             ],
         },
 
@@ -40,13 +53,9 @@ module.exports = function (grunt) {
 
         // https://github.com/sindresorhus/grunt-sass
         sass: {
-            options: {
-                outputStyle: 'nested',
-            },
-
             dist: {
                 files: {
-                    'dist/gui/css/app.css': '<%= gui.scss %>',
+                    'dist/css/app.css': '<%= gui.scss %>',
                 },
             },
 
@@ -55,7 +64,7 @@ module.exports = function (grunt) {
                     sourceMap: true,
                 },
                 files: {
-                    'dist/gui/css/app.css': '<%= gui.scss %>',
+                    'dist/css/app.css': '<%= gui.scss %>',
                 },
             },
         },
@@ -71,22 +80,28 @@ module.exports = function (grunt) {
                     sourceMap: true,
                 },
                 files: {
-                    'dist/gui/js/app.js': ['<%= gui.js %>'],
+                    'dist/js/app.js': ['<%= gui.js %>'],
                 },
             },
 
             dist: {
                 files: {
-                    'dist/gui/js/app.js': ['<%= gui.js %>'],
+                    'dist/js/app.js': ['<%= gui.js %>'],
                 },
             },
         },
 
         concat: {
             // Combine pre-minified vendor scripts
+            guiJS: {
+                // banner: '<%= dof.js %>',
+                src: ['<%= gui.js %>'],
+                dest: 'dist/js/app.js',
+            },
+            // Combine pre-minified vendor scripts
             vendorJS: {
                 src: ['<%= vendor.js %>'],
-                dest: 'dist/gui/js/vendor.js',
+                dest: 'dist/js/vendor.js',
             },
         },
 
@@ -94,21 +109,21 @@ module.exports = function (grunt) {
             html: {
                 expand: true,
                 cwd: 'src/',
-                src: ['gui/**/*.html'],
+                src: ['**/*.html'],
                 dest: 'dist/',
                 filter: 'isFile',
             },
             scripts: {
                 expand: true,
                 cwd: 'src/',
-                src: ['gui/js/vendor/modernizr.js'],
+                src: ['js/vendor/modernizr.js'],
                 dest: 'dist/',
                 filter: 'isFile',
             },
             images: {
                 expand: true,
                 cwd: 'src/',
-                src: ['gui/about/images/*.png'],
+                src: ['about/images/*.png'],
                 dest: 'dist/',
                 filter: 'isFile',
             },
@@ -144,6 +159,7 @@ module.exports = function (grunt) {
     })
 
     // Load all Grunt tasks
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('load-grunt-tasks')(grunt)
 
     ////////////
@@ -163,8 +179,8 @@ module.exports = function (grunt) {
     /////////
 
     // Distribution
-    grunt.registerTask('dist-gui', ['sass:dist', 'jshint', 'uglify:dist', 'concat:vendorJS', 'copy', 'clean'])
+    grunt.registerTask('dist-gui', ['sass:dist', 'concat:guiJS', 'concat:vendorJS', 'copy', 'clean'])
 
     // Development
-    grunt.registerTask('build-gui', ['sass:build', 'jshint', 'uglify:build', 'concat:vendorJS', 'copy', 'watch'])
+    grunt.registerTask('build-gui', ['sass:build', 'concat:guiJS', 'concat:vendorJS', 'copy', 'watch'])
 }
