@@ -1,6 +1,7 @@
-import { Lens } from './Lens'
+import { Lens as SrcLens } from './Lens'
+import { Lens as BuildLens } from 'dof'
 
-describe('Class basics', () => {
+describe.each([SrcLens, BuildLens])('Class basics [%#]', (Lens) => {
     test('constructor will create an object with the default settings', () => {
         const lens = new Lens()
 
@@ -49,7 +50,7 @@ describe('Class basics', () => {
     })
 })
 
-describe('Calculating the depth of field', () => {
+describe.each([SrcLens, BuildLens])('Calculating the depth of field [%#]', (Lens) => {
     describe('with the default distance', () => {
         test('metric units (5 meters)', () => {
             const lens = new Lens()

@@ -4,4 +4,7 @@ module.exports = {
     testEnvironment: 'node',
     rootDir: '.',
     testPathIgnorePatterns: ['.js'],
+    moduleNameMapper: {
+        '^dof$': '<rootDir>/dist/index.js',
+    },
 }
