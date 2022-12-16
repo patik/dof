@@ -1,47 +1,16 @@
-import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
-import DeleteIcon from '@mui/icons-material/Delete'
-import FilterListIcon from '@mui/icons-material/FilterList'
-import { Button } from '@mui/material'
-import Box from '@mui/material/Box'
+import { Button, useMediaQuery } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
-import { alpha } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import TableSortLabel from '@mui/material/TableSortLabel'
-import Toolbar from '@mui/material/Toolbar'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
-import { visuallyHidden } from '@mui/utils'
 import { Lens } from 'dof'
 import React, { ChangeEvent, MouseEvent, useState } from 'react'
-
-interface Inputs {
-    name: string
-    focalLength: number
-    aperture: string
-    sensor: number
-}
-
-interface LensProperties extends Inputs {
-    depthOfField: number
-}
-
-type ColumnName = keyof LensProperties
-
-interface HeadCell {
-    disablePadding: boolean
-    id: ColumnName
-    label: string
-    numeric: boolean
-}
-
-type Order = 'asc' | 'desc'
+import { Toolbar } from './Toolbar'
+import { Header } from './Header'
 
 function createRowData(name: string, focalLength: number, aperture: string, sensor: number): Inputs {
     return {
@@ -73,147 +42,6 @@ function getComparator<Key extends ColumnName>(
         : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-const headCells: readonly HeadCell[] = [
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: true,
-        label: 'Name',
-    },
-    {
-        id: 'aperture',
-        numeric: true,
-        disablePadding: false,
-        label: 'Aperture',
-    },
-    {
-        id: 'focalLength',
-        numeric: true,
-        disablePadding: false,
-        label: 'Focal Length',
-    },
-    {
-        id: 'sensor',
-        numeric: true,
-        disablePadding: false,
-        label: 'Sensor',
-    },
-    {
-        id: 'depthOfField',
-        numeric: true,
-        disablePadding: false,
-        label: 'Depth of Field',
-    },
-]
-
-interface EnhancedTableProps {
-    units: Units
-    numSelected: number
-    onRequestSort: (event: React.MouseEvent<unknown>, property: ColumnName) => void
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
-    order: Order
-    orderBy: string
-    rowCount: number
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, units } = props
-    const createSortHandler = (property: ColumnName) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property)
-    }
-
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        color="primary"
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            'aria-label': 'select all lenses',
-                        }}
-                    />
-                </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {`${headCell.label}${
-                                headCell.id === 'depthOfField' ? ` (${units === 'imperial' ? 'feet' : 'meters'})` : ''
-                            }`}
-                            {orderBy === headCell.id ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    )
-}
-
-interface EnhancedTableToolbarProps {
-    selected: readonly LensProperties['name'][]
-}
-
-function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-    const { selected } = props
-
-    return (
-        <Toolbar
-            sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-                ...(selected.length > 0 && {
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                }),
-            }}
-        >
-            {selected.length > 0 ? (
-                <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
-                    {selected.length} selected
-                </Typography>
-            ) : (
-                <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-                    Lenses
-                </Typography>
-            )}
-            {selected.length > 0 ? (
-                <>
-                    <Tooltip title="Delete">
-                        <IconButton>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Duplicate">
-                        <IconButton>
-                            <ControlPointDuplicateIcon />
-                        </IconButton>
-                    </Tooltip>
-                </>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton>
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
-        </Toolbar>
-    )
-}
-
 function rounded(num: number): number {
     return Math.round((num + Number.EPSILON) * 100) / 100
 }
@@ -226,9 +54,12 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
     const [selected, setSelected] = useState<readonly LensProperties['name'][]>([])
+    const theme = useTheme()
+    const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
     const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
         const isAsc = orderBy === property && order === 'asc'
+
         setOrder(isAsc ? 'desc' : 'asc')
         setOrderBy(property)
     }
@@ -236,7 +67,9 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             const newSelected = rowData.map((n) => n.name)
+
             setSelected(newSelected)
+
             return
         }
         setSelected([])
@@ -266,7 +99,6 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     const isSelected = (name: LensProperties['name']) => selected.indexOf(name) !== -1
 
     const rows: LensProperties[] = rowData.map((row) => {
-        // console.log('row ', { ...row })
         const { dof } = new Lens({ ...row, distance })
 
         return {
@@ -276,11 +108,11 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     })
 
     return (
-        <Paper sx={{ width: '100%', mb: 2 }}>
-            <EnhancedTableToolbar selected={selected} />
+        <Paper sx={{ width: '100%', maxWidth: isDesktop ? 960 : undefined, mb: 2 }}>
+            <Toolbar selected={selected} />
             <TableContainer>
-                <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
-                    <EnhancedTableHead
+                <Table aria-labelledby="tableTitle" size="medium">
+                    <Header
                         units={units}
                         numSelected={selected.length}
                         order={order}

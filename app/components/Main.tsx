@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { useState } from 'react'
 import Distance from './Distance'
-import LensList from './LensList'
+import LensList from './LensList/Table'
 import UnitsToggle from './UnitsToggle'
 
 export default function Main() {

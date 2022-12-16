@@ -6,7 +6,7 @@
         "app"
     ],
     "scripts": {
-        "dev": "yarn --cwd app next dev",
+        "dev": "yarn --cwd package tsc && yarn --cwd app next dev",
         "start": "yarn --cwd app next start",
         "build": "yarn --cwd package lint && yarn --cwd package tsc && yarn --cwd app next build",
         "clean": "git clean -fdx",
