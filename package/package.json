@@ -32,7 +32,7 @@
         "doc": "./docs"
     },
     "scripts": {
-        "build": "yarn lint && tsc",
+        "build": "rm -rf dist/*; yarn lint && tsc",
         "clean": "git clean -fdx",
         "cover": "yarn test --collectCoverage",
         "lint": "eslint --ext .ts --fix src/**/*.ts",
