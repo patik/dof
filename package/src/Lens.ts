@@ -40,7 +40,7 @@ export class Lens {
      * @param distance Distance to the subject, in meters
      * @param imperialUnits Whether to use imperial units (feet) instead of metric
      */
-    dof(distance?: number, imperialUnits = false) {
+    public dof = (distance?: number, imperialUnits = false) => {
         if (distance === undefined || isNaN(distance)) {
             distance = imperialUnits ? defaultDistanceImperial : defaultDistanceMetric
         }

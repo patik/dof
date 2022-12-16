@@ -21,11 +21,14 @@ import { visuallyHidden } from '@mui/utils'
 import { Lens } from 'dof'
 import React, { ChangeEvent, MouseEvent, useState } from 'react'
 
-interface Data {
+interface RowData {
     name: string
     focalLength: number
     aperture: string
     sensor: number
+}
+
+interface Data extends RowData {
     depthOfField: number
 }
 
@@ -40,19 +43,16 @@ interface HeadCell {
 
 type Order = 'asc' | 'desc'
 
-function createData(name: string, focalLength: number, aperture: string, sensor: number, distance: number): Data {
-    const lens = new Lens({ focalLength, aperture, cropFactor: sensor })
-
+function createRowData(name: string, focalLength: number, aperture: string, sensor: number): RowData {
     return {
         name,
         aperture,
         focalLength,
         sensor,
-        depthOfField: lens.dof(distance).dof,
     }
 }
 
-function descendingComparator(a: Data, b: Data, orderBy: keyof Data) {
+function descendingComparator(a: Data, b: Data, orderBy: ColumnName) {
     if (b[orderBy] < a[orderBy]) {
         return -1
     }
@@ -216,9 +216,9 @@ function rounded(num: number): number {
 }
 
 export default function LensList({ units, distance }: { units: Units; distance: number }) {
-    const [rows, setRows] = useState<Data[]>([
-        createData('Lens 1', 35, 'f/2', 1, distance),
-        createData('Lens 2', 55, 'f/1.4', 2, distance),
+    const [rowData, setRowData] = useState<RowData[]>([
+        createRowData('Lens 1', 35, 'f/2', 1),
+        createRowData('Lens 2', 55, 'f/1.4', 2),
     ])
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
@@ -232,7 +232,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.name)
+            const newSelected = rowData.map((n) => n.name)
             setSelected(newSelected)
             return
         }
@@ -257,10 +257,20 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     }
 
     const addRow = () => {
-        setRows([...rows, createData(`Lens ${rows.length + 1}`, 35, 'f/2', 1, distance)])
+        setRowData([...rowData, createRowData(`Lens ${rowData.length + 1}`, 35, 'f/2', 1)])
     }
 
     const isSelected = (name: Data['name']) => selected.indexOf(name) !== -1
+
+    const rows: Data[] = rowData.map((row) => {
+        console.log('row ', { ...row })
+        const { dof } = new Lens({ ...row, distance })
+
+        return {
+            ...row,
+            depthOfField: rounded(dof(distance).dof),
+        }
+    })
 
     return (
         <Paper sx={{ width: '100%', mb: 2 }}>
@@ -274,12 +284,12 @@ export default function LensList({ units, distance }: { units: Units; distance: 
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={rows.length}
+                        rowCount={rowData.length}
                     />
                     <TableBody>
-                        {rows.sort(getComparator(order, orderBy)).map((row, index) => {
+                        {rows.sort(getComparator(order, orderBy)).map((row) => {
                             const isItemSelected = isSelected(row.name)
-                            const labelId = `enhanced-table-checkbox-${index}`
+                            const labelId = `enhanced-table-checkbox-${row.name}`
 
                             return (
                                 <TableRow
@@ -306,7 +316,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
                                     <TableCell align="right">{row.focalLength}</TableCell>
                                     <TableCell align="right">{row.aperture}</TableCell>
                                     <TableCell align="right">{row.sensor}</TableCell>
-                                    <TableCell align="right">{rounded(row.depthOfField)}</TableCell>
+                                    <TableCell align="right">{row.depthOfField}</TableCell>
                                 </TableRow>
                             )
                         })}
