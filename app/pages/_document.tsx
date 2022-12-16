@@ -31,7 +31,6 @@ class MyDocument extends Document {
                             This tool requires <a href="http://enable-javascript.com/">JavaScript</a>
                         </p>
                     </noscript>
-
                     <Main />
                     <NextScript />
                 </body>

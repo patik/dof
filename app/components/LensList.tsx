@@ -21,18 +21,18 @@ import { visuallyHidden } from '@mui/utils'
 import { Lens } from 'dof'
 import React, { ChangeEvent, MouseEvent, useState } from 'react'
 
-interface RowData {
+interface Inputs {
     name: string
     focalLength: number
     aperture: string
     sensor: number
 }
 
-interface Data extends RowData {
+interface LensProperties extends Inputs {
     depthOfField: number
 }
 
-type ColumnName = keyof Data
+type ColumnName = keyof LensProperties
 
 interface HeadCell {
     disablePadding: boolean
@@ -43,7 +43,7 @@ interface HeadCell {
 
 type Order = 'asc' | 'desc'
 
-function createRowData(name: string, focalLength: number, aperture: string, sensor: number): RowData {
+function createRowData(name: string, focalLength: number, aperture: string, sensor: number): Inputs {
     return {
         name,
         aperture,
@@ -52,7 +52,7 @@ function createRowData(name: string, focalLength: number, aperture: string, sens
     }
 }
 
-function descendingComparator(a: Data, b: Data, orderBy: ColumnName) {
+function descendingComparator(a: LensProperties, b: LensProperties, orderBy: ColumnName) {
     if (b[orderBy] < a[orderBy]) {
         return -1
     }
@@ -64,7 +64,10 @@ function descendingComparator(a: Data, b: Data, orderBy: ColumnName) {
     return 0
 }
 
-function getComparator<Key extends ColumnName>(order: Order, orderBy: Key): (a: Data, b: Data) => number {
+function getComparator<Key extends ColumnName>(
+    order: Order,
+    orderBy: Key
+): (a: LensProperties, b: LensProperties) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy)
@@ -162,7 +165,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 interface EnhancedTableToolbarProps {
-    selected: readonly Data['name'][]
+    selected: readonly LensProperties['name'][]
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
@@ -216,13 +219,13 @@ function rounded(num: number): number {
 }
 
 export default function LensList({ units, distance }: { units: Units; distance: number }) {
-    const [rowData, setRowData] = useState<RowData[]>([
+    const [rowData, setRowData] = useState<Inputs[]>([
         createRowData('Lens 1', 35, 'f/2', 1),
         createRowData('Lens 2', 55, 'f/1.4', 2),
     ])
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
-    const [selected, setSelected] = useState<readonly Data['name'][]>([])
+    const [selected, setSelected] = useState<readonly LensProperties['name'][]>([])
 
     const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
         const isAsc = orderBy === property && order === 'asc'
@@ -239,9 +242,9 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setSelected([])
     }
 
-    const handleClick = (_event: React.MouseEvent<unknown>, name: Data['name']) => {
+    const handleClick = (_event: React.MouseEvent<unknown>, name: LensProperties['name']) => {
         const selectedIndex = selected.indexOf(name)
-        let newSelected: readonly Data['name'][] = []
+        let newSelected: readonly LensProperties['name'][] = []
 
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, name)
@@ -260,10 +263,10 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setRowData([...rowData, createRowData(`Lens ${rowData.length + 1}`, 35, 'f/2', 1)])
     }
 
-    const isSelected = (name: Data['name']) => selected.indexOf(name) !== -1
+    const isSelected = (name: LensProperties['name']) => selected.indexOf(name) !== -1
 
-    const rows: Data[] = rowData.map((row) => {
-        console.log('row ', { ...row })
+    const rows: LensProperties[] = rowData.map((row) => {
+        // console.log('row ', { ...row })
         const { dof } = new Lens({ ...row, distance })
 
         return {
