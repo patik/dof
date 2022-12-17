@@ -1,9 +1,11 @@
+type SensorKey = import('./sensorList').SensorKey
+
 interface Inputs {
     id: string
     name: string
     focalLength: number
     aperture: string
-    sensor: number
+    sensorKey: SensorKey
 }
 
 interface LensProperties extends Inputs {

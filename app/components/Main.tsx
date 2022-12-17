@@ -9,16 +9,16 @@ export default function Main() {
     const [distance, setDistance] = useState<number>(5)
 
     return (
-        <Box>
-            <Box p={2}>
+        <Box p={2}>
+            <Box mb={2}>
                 <Distance units={units} distance={distance} setDistance={setDistance} />
             </Box>
 
-            <Box sx={{ width: '100%' }}>
+            <Box mb={2}>
                 <LensList units={units} distance={distance} />
             </Box>
 
-            <Box p={2}>
+            <Box mb={2}>
                 <UnitsToggle units={units} setUnits={setUnits} />
             </Box>
         </Box>

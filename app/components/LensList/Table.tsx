@@ -12,14 +12,15 @@ import { Header } from './Header'
 import TableRow from './TableRow'
 import { Toolbar } from './Toolbar'
 import { v4 as uuid } from 'uuid'
+import { fullList } from './sensorList'
 
-function createRowData(name: string, focalLength: number, aperture: string, sensor: number): Inputs {
+function createRowData(name: string, focalLength: number, aperture: string, sensorKey: SensorKey): Inputs {
     return {
         id: uuid(),
         name,
         aperture,
         focalLength,
-        sensor,
+        sensorKey,
     }
 }
 
@@ -50,8 +51,8 @@ function rounded(num: number): number {
 
 export default function LensList({ units, distance }: { units: Units; distance: number }) {
     const [rowData, setRowData] = useState<Inputs[]>([
-        createRowData('Lens 1', 35, 'f/2', 1),
-        createRowData('Lens 2', 55, 'f/1.4', 2),
+        createRowData('Lens 1', 35, 'f/2', 'full'),
+        createRowData('Lens 2', 55, 'f/1.4', 'mft'),
     ])
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
@@ -95,7 +96,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     }
 
     const addRow = () => {
-        setRowData([...rowData, createRowData(`Lens ${rowData.length + 1}`, 35, 'f/2', 1)])
+        setRowData([...rowData, createRowData(`Lens ${rowData.length + 1}`, 35, 'f/2', 'full')])
     }
 
     const updateRow = (row: Inputs) => {
@@ -110,7 +111,12 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     const isSelected = (name: LensProperties['name']) => selected.indexOf(name) !== -1
 
     const rows: LensProperties[] = rowData.map((row) => {
-        const { dof } = new Lens({ ...row, distance })
+        const { dof } = new Lens({
+            focalLength: row.focalLength,
+            aperture: row.aperture,
+            cropFactor: fullList[row.sensorKey].value,
+            id: row.id,
+        })
 
         return {
             ...row,

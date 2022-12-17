@@ -4,6 +4,7 @@ import MuiTableRow from '@mui/material/TableRow'
 import { MouseEventHandler } from 'react'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
+import SensorCell from './SensorCell'
 
 export default function TableRow({
     row,
@@ -22,6 +23,9 @@ export default function TableRow({
     }
     const setFocalLength = (focalLength: LensProperties['focalLength']) => {
         updateRow({ ...row, focalLength })
+    }
+    const setSensorKey = (sensorKey: LensProperties['sensorKey']) => {
+        updateRow({ ...row, sensorKey })
     }
 
     return (
@@ -48,7 +52,9 @@ export default function TableRow({
             </TableCell>
             <FocalLengthCell focalLength={row.focalLength} setFocalLength={setFocalLength} />
             <ApertureCell aperture={row.aperture} setAperture={setAperture} />
-            <TableCell align="right">{row.sensor}</TableCell>
+            <TableCell align="right">
+                <SensorCell sensorKey={row.sensorKey} setSensorKey={setSensorKey} />
+            </TableCell>
             <TableCell align="right">{row.depthOfField}</TableCell>
         </MuiTableRow>
     )
