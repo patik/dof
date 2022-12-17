@@ -9,7 +9,6 @@ export default function FocalLengthCell({
     setFocalLength: (f: LensProperties['focalLength']) => void
 }) {
     const onChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log('on focalLength change ', event, event.target.value)
         setFocalLength(parseFloat(event.target.value))
     }
 

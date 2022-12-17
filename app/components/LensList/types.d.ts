@@ -22,3 +22,5 @@ interface HeadCell {
 }
 
 type Order = 'asc' | 'desc'
+
+type SelectedItem = LensProperties['id']

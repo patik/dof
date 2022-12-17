@@ -9,7 +9,6 @@ export default function ApertureCell({
     setAperture: (a: LensProperties['aperture']) => void
 }) {
     const onChange = (event: SelectChangeEvent<string>) => {
-        console.log('on aperture change ', event, event.target.value)
         setAperture(event.target.value.trim())
     }
 

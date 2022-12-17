@@ -27,11 +27,22 @@ function createRowData(id: string, name: string, focalLength: number, aperture: 
 }
 
 function descendingComparator(a: LensProperties, b: LensProperties, orderBy: ColumnName) {
-    if (b[orderBy] < a[orderBy]) {
+    let valueA = a[orderBy]
+    let valueB = b[orderBy]
+
+    if (typeof valueA === 'string') {
+        valueA = parseFloat(valueA)
+    }
+
+    if (typeof valueB === 'string') {
+        valueB = parseFloat(valueB)
+    }
+
+    if (valueB < valueA) {
         return -1
     }
 
-    if (b[orderBy] > a[orderBy]) {
+    if (valueB > valueA) {
         return 1
     }
 
@@ -56,9 +67,13 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         createRowData(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full'),
         createRowData(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft'),
     ])
+    console.log(
+        'row IDs ',
+        rowData.map((r) => r.id)
+    )
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('id')
-    const [selected, setSelected] = useState<readonly LensProperties['id'][]>([])
+    const [selected, setSelected] = useState<readonly SelectedItem[]>([])
     const theme = useTheme()
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -80,9 +95,9 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setSelected([])
     }
 
-    const onRowClick = (id: LensProperties['id']) => {
+    const onRowClick = (id: SelectedItem) => {
         const selectedIndex = selected.indexOf(id)
-        let newSelected: readonly LensProperties['name'][] = []
+        let newSelected: readonly SelectedItem[] = []
 
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, id)
@@ -110,7 +125,45 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setRowData(newRows)
     }
 
-    const isSelected = (id: LensProperties['id']) => selected.indexOf(id) !== -1
+    const deleteLenses = (rowsToDelete: readonly SelectedItem[]) => {
+        if (rowsToDelete.length === 0) {
+            return
+        }
+
+        const remainingRows: Inputs[] = [...rowData].filter((row) => !rowsToDelete.includes(row.id))
+
+        setRowData(remainingRows)
+    }
+    const duplicateLenses = (rowsToDuplicate: readonly SelectedItem[]) => {
+        const newItems: Inputs[] = []
+
+        rowsToDuplicate.forEach((id) => {
+            const existingRow = rowData.find((row) => row.id === id)
+
+            if (!existingRow) {
+                console.error('Could not find row to be duplicated ', id)
+                return
+            }
+
+            newItems.push(
+                createRowData(
+                    idGenerator.getNext(),
+                    `${existingRow.name} copy`,
+                    existingRow.focalLength,
+                    existingRow.aperture,
+                    existingRow.sensorKey
+                )
+            )
+        })
+
+        if (newItems.length === 0) {
+            return
+        }
+
+        setRowData([...rowData, ...newItems])
+    }
+
+    const isSelected = (id: SelectedItem) => selected.indexOf(id) !== -1
 
     const rows: LensProperties[] = rowData.map((row) => {
         const { dof } = new Lens({
@@ -128,7 +181,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
 
     return (
         <Paper sx={{ width: '100%', maxWidth: isDesktop ? 960 : undefined, mb: 2 }}>
-            <Toolbar selected={selected} />
+            <Toolbar selected={selected} deleteLenses={deleteLenses} duplicateLenses={duplicateLenses} />
             <TableContainer>
                 <Table aria-labelledby="tableTitle" size="medium">
                     <Header

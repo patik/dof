@@ -9,12 +9,12 @@ import Typography from '@mui/material/Typography'
 import React from 'react'
 
 interface EnhancedTableToolbarProps {
-    selected: readonly LensProperties['name'][]
+    selected: readonly SelectedItem[]
+    deleteLenses: (selectedIds: readonly SelectedItem[]) => void
+    duplicateLenses: (selectedIds: readonly SelectedItem[]) => void
 }
 
-export function Toolbar(props: EnhancedTableToolbarProps) {
-    const { selected } = props
-
+export function Toolbar({ selected, deleteLenses, duplicateLenses }: EnhancedTableToolbarProps) {
     return (
         <MuiToolbar
             sx={{
@@ -37,12 +37,12 @@ export function Toolbar(props: EnhancedTableToolbarProps) {
             {selected.length > 0 ? (
                 <>
                     <Tooltip title="Delete">
-                        <IconButton>
+                        <IconButton onClick={() => deleteLenses(selected)}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Duplicate">
-                        <IconButton>
+                        <IconButton onClick={() => duplicateLenses(selected)}>
                             <ControlPointDuplicateIcon />
                         </IconButton>
                     </Tooltip>
