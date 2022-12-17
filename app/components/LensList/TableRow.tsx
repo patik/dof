@@ -52,9 +52,7 @@ export default function TableRow({
             </TableCell>
             <FocalLengthCell focalLength={row.focalLength} setFocalLength={setFocalLength} />
             <ApertureCell aperture={row.aperture} setAperture={setAperture} />
-            <TableCell align="right">
-                <SensorCell sensorKey={row.sensorKey} setSensorKey={setSensorKey} />
-            </TableCell>
+            <SensorCell sensorKey={row.sensorKey} setSensorKey={setSensorKey} />
             <TableCell align="right">{row.depthOfField}</TableCell>
         </MuiTableRow>
     )
