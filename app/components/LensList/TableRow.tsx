@@ -1,7 +1,6 @@
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
-import { MouseEventHandler } from 'react'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
 import SensorCell from './SensorCell'
@@ -14,7 +13,7 @@ export default function TableRow({
 }: {
     row: LensProperties
     isSelected: boolean
-    onRowClick: MouseEventHandler<HTMLTableRowElement>
+    onRowClick: (id: LensProperties['id']) => void
     updateRow: (row: Inputs) => void
 }) {
     const labelId = `enhanced-table-checkbox-${row.name}`
@@ -29,17 +28,10 @@ export default function TableRow({
     }
 
     return (
-        <MuiTableRow
-            hover
-            onClick={onRowClick}
-            role="checkbox"
-            aria-checked={isSelected}
-            tabIndex={-1}
-            key={row.name}
-            selected={isSelected}
-        >
+        <MuiTableRow hover role="checkbox" aria-checked={isSelected} tabIndex={-1} key={row.name} selected={isSelected}>
             <TableCell padding="checkbox">
                 <Checkbox
+                    onChange={() => onRowClick(row.id)}
                     color="primary"
                     checked={isSelected}
                     inputProps={{

@@ -7,16 +7,29 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import MuiTableRow from '@mui/material/TableRow'
 import { Lens } from 'dof'
-import React, { ChangeEvent, MouseEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { Header } from './Header'
+import { fullList } from './sensorList'
 import TableRow from './TableRow'
 import { Toolbar } from './Toolbar'
-import { v4 as uuid } from 'uuid'
-import { fullList } from './sensorList'
 
-function createRowData(name: string, focalLength: number, aperture: string, sensorKey: SensorKey): Inputs {
+class IDGenerator {
+    private id = 0
+
+    public getNext = () => {
+        const nextId = this.id + 1
+
+        this.id = nextId
+
+        return String(nextId)
+    }
+}
+
+const idGenerator = new IDGenerator()
+
+function createRowData(id: string, name: string, focalLength: number, aperture: string, sensorKey: SensorKey): Inputs {
     return {
-        id: uuid(),
+        id,
         name,
         aperture,
         focalLength,
@@ -51,12 +64,12 @@ function rounded(num: number): number {
 
 export default function LensList({ units, distance }: { units: Units; distance: number }) {
     const [rowData, setRowData] = useState<Inputs[]>([
-        createRowData('Lens 1', 35, 'f/2', 'full'),
-        createRowData('Lens 2', 55, 'f/1.4', 'mft'),
+        createRowData(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full'),
+        createRowData(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft'),
     ])
     const [order, setOrder] = useState<Order>('asc')
-    const [orderBy, setOrderBy] = useState<ColumnName>('depthOfField')
-    const [selected, setSelected] = useState<readonly LensProperties['name'][]>([])
+    const [orderBy, setOrderBy] = useState<ColumnName>('id')
+    const [selected, setSelected] = useState<readonly LensProperties['id'][]>([])
     const theme = useTheme()
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -69,7 +82,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = rowData.map((n) => n.name)
+            const newSelected = rowData.map((n) => n.id)
 
             setSelected(newSelected)
 
@@ -78,12 +91,12 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setSelected([])
     }
 
-    const onRowClick = (_event: React.MouseEvent<unknown>, name: LensProperties['name']) => {
-        const selectedIndex = selected.indexOf(name)
+    const onRowClick = (id: LensProperties['id']) => {
+        const selectedIndex = selected.indexOf(id)
         let newSelected: readonly LensProperties['name'][] = []
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name)
+            newSelected = newSelected.concat(selected, id)
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1))
         } else if (selectedIndex === selected.length - 1) {
@@ -96,7 +109,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
     }
 
     const addRow = () => {
-        setRowData([...rowData, createRowData(`Lens ${rowData.length + 1}`, 35, 'f/2', 'full')])
+        setRowData([...rowData, createRowData(idGenerator.getNext(), `Lens ${rowData.length + 1}`, 35, 'f/2', 'full')])
     }
 
     const updateRow = (row: Inputs) => {
@@ -108,7 +121,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setRowData(newRows)
     }
 
-    const isSelected = (name: LensProperties['name']) => selected.indexOf(name) !== -1
+    const isSelected = (id: LensProperties['id']) => selected.indexOf(id) !== -1
 
     const rows: LensProperties[] = rowData.map((row) => {
         const { dof } = new Lens({
@@ -144,8 +157,8 @@ export default function LensList({ units, distance }: { units: Units; distance: 
                                 <TableRow
                                     key={row.name}
                                     row={row}
-                                    isSelected={isSelected(row.name)}
-                                    onRowClick={(event) => onRowClick(event, row.name)}
+                                    isSelected={isSelected(row.id)}
+                                    onRowClick={onRowClick}
                                     updateRow={updateRow}
                                 />
                             )
