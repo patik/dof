@@ -11,9 +11,11 @@ import React, { ChangeEvent, MouseEvent, useState } from 'react'
 import { Header } from './Header'
 import TableRow from './TableRow'
 import { Toolbar } from './Toolbar'
+import { v4 as uuid } from 'uuid'
 
 function createRowData(name: string, focalLength: number, aperture: string, sensor: number): Inputs {
     return {
+        id: uuid(),
         name,
         aperture,
         focalLength,
@@ -96,6 +98,15 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setRowData([...rowData, createRowData(`Lens ${rowData.length + 1}`, 35, 'f/2', 1)])
     }
 
+    const updateRow = (row: Inputs) => {
+        const rowIndex = rowData.findIndex((r) => r.id === row.id)
+        const newRows = [...rowData]
+
+        newRows[rowIndex] = row
+
+        setRowData(newRows)
+    }
+
     const isSelected = (name: LensProperties['name']) => selected.indexOf(name) !== -1
 
     const rows: LensProperties[] = rowData.map((row) => {
@@ -129,6 +140,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
                                     row={row}
                                     isSelected={isSelected(row.name)}
                                     onRowClick={(event) => onRowClick(event, row.name)}
+                                    updateRow={updateRow}
                                 />
                             )
                         })}

@@ -9,12 +9,20 @@ export default function TableRow({
     row,
     isSelected,
     onRowClick,
+    updateRow,
 }: {
     row: LensProperties
     isSelected: boolean
     onRowClick: MouseEventHandler<HTMLTableRowElement>
+    updateRow: (row: Inputs) => void
 }) {
     const labelId = `enhanced-table-checkbox-${row.name}`
+    const setAperture = (aperture: LensProperties['aperture']) => {
+        updateRow({ ...row, aperture })
+    }
+    const setFocalLength = (focalLength: LensProperties['focalLength']) => {
+        updateRow({ ...row, focalLength })
+    }
 
     return (
         <MuiTableRow
@@ -38,8 +46,8 @@ export default function TableRow({
             <TableCell component="th" id={labelId} scope="row" padding="none">
                 {row.name}
             </TableCell>
-            <FocalLengthCell focalLength={row.focalLength} setFocalLength={() => undefined} />
-            <ApertureCell aperture={row.aperture} setAperture={() => undefined} />
+            <FocalLengthCell focalLength={row.focalLength} setFocalLength={setFocalLength} />
+            <ApertureCell aperture={row.aperture} setAperture={setAperture} />
             <TableCell align="right">{row.sensor}</TableCell>
             <TableCell align="right">{row.depthOfField}</TableCell>
         </MuiTableRow>

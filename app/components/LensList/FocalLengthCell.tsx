@@ -1,12 +1,12 @@
 import { InputAdornment, TableCell, TextField } from '@mui/material'
-import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction } from 'react'
+import { ChangeEvent, ChangeEventHandler } from 'react'
 
 export default function FocalLengthCell({
     focalLength,
     setFocalLength,
 }: {
     focalLength: LensProperties['focalLength']
-    setFocalLength: Dispatch<SetStateAction<LensProperties['focalLength']>>
+    setFocalLength: (f: LensProperties['focalLength']) => void
 }) {
     const onChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
         console.log('on focalLength change ', event, event.target.value)

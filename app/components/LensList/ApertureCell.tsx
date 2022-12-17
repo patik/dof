@@ -1,13 +1,12 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
 import { apertureMap } from 'dof'
-import { Dispatch, SetStateAction } from 'react'
 
 export default function ApertureCell({
     aperture,
     setAperture,
 }: {
-    aperture: string
-    setAperture: Dispatch<SetStateAction<string>>
+    aperture: LensProperties['aperture']
+    setAperture: (a: LensProperties['aperture']) => void
 }) {
     const onChange = (event: SelectChangeEvent<string>) => {
         console.log('on aperture change ', event, event.target.value)

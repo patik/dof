@@ -1,4 +1,5 @@
 interface Inputs {
+    id: string
     name: string
     focalLength: number
     aperture: string
