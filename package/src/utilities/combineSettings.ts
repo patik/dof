@@ -1,6 +1,6 @@
 import { toActualAperture } from './aperture'
 import { builtInDefaults } from '../Lens'
-import { defaults } from 'lodash-es'
+import { defaults } from 'lodash'
 
 /**
  * Guarantees that all settings have a defined value

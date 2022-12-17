@@ -27,7 +27,7 @@ const headCells: readonly HeadCell[] = [
         label: 'Focal Length',
     },
     {
-        id: 'sensor',
+        id: 'sensorKey',
         numeric: true,
         disablePadding: false,
         label: 'Sensor',

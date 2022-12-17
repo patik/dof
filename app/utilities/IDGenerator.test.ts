@@ -13,4 +13,12 @@ describe('IDGenerator', () => {
 
         expect(results).toStrictEqual(['1', '2', '3'])
     })
+
+    test('IDs are in order', () => {
+        const gen = new IDGenerator()
+        const results = [gen.getNext(), gen.getNext(), gen.getNext()]
+        const sorted = [...results].sort()
+
+        expect(results).toStrictEqual(sorted)
+    })
 })
