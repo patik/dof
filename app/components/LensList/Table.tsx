@@ -9,21 +9,10 @@ import MuiTableRow from '@mui/material/TableRow'
 import { Lens } from 'dof'
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import { Header } from './Header'
+import { IDGenerator } from '../../utilities/IDGenerator'
 import { fullList } from './sensorList'
 import TableRow from './TableRow'
 import { Toolbar } from './Toolbar'
-
-class IDGenerator {
-    private id = 0
-
-    public getNext = () => {
-        const nextId = this.id + 1
-
-        this.id = nextId
-
-        return String(nextId)
-    }
-}
 
 const idGenerator = new IDGenerator()
 
