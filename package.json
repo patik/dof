@@ -19,6 +19,18 @@
     "dependencies": {
         "typescript": "^4.9.4"
     },
+    "devDependencies": {
+        "@jest/globals": "^29.3.1",
+        "@types/jest": "^29.2.3",
+        "@types/lodash": "^4.14.190",
+        "@types/node": "18.11.13",
+        "@types/react": "18.0.26",
+        "@types/react-dom": "18.0.9",
+        "@typescript-eslint/eslint-plugin": "^5.44.0",
+        "@typescript-eslint/parser": "^5.44.0",
+        "eslint": "8.29.0",
+        "eslint-config-next": "13.0.6"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/patik/dof.git"
