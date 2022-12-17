@@ -7,10 +7,11 @@
         "url": "https://github.com/patik/dof.git"
     },
     "devDependencies": {
+        "@types/lodash-es": "^4.17.6",
         "source-map-support": "^0.5.21"
     },
     "dependencies": {
-        "lodash": "^4.17.21"
+        "lodash-es": "^4.17.21"
     },
     "bugs": {
         "url": "https://github.com/patik/dof/issues"
