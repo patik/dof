@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import Head from 'next/head'
+import Link from 'next/link'
 import Main from '../components/Main'
 
 export default function Home() {
@@ -19,12 +20,12 @@ export default function Home() {
                 <Main />
             </Box>
 
-            <Box role="footer" display="flex">
+            <Box component="footer" display="flex">
                 <Box>
                     <p>
-                        <a href="#" className="comparison-link">
+                        <Link href="/" className="comparison-link">
                             Link to this comparison
-                        </a>
+                        </Link>
                     </p>
                 </Box>
                 <Box>

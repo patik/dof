@@ -21,7 +21,6 @@ export default function Distance({
             label="Distance"
             onChange={handleDistanceChange}
             value={distance}
-            autoFocus
             type="number"
             InputProps={{
                 type: 'number',
