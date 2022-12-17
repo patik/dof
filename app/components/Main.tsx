@@ -13,12 +13,13 @@ export default function Main() {
             <Box p={2}>
                 <Distance units={units} distance={distance} setDistance={setDistance} />
             </Box>
-            <Box p={2}>
-                <UnitsToggle units={units} setUnits={setUnits} />
-            </Box>
 
             <Box sx={{ width: '100%' }}>
                 <LensList units={units} distance={distance} />
+            </Box>
+
+            <Box p={2}>
+                <UnitsToggle units={units} setUnits={setUnits} />
             </Box>
         </Box>
     )

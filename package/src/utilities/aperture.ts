@@ -1,7 +1,7 @@
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 
 // Map of human-friendly values to their precise numeric values
-const preciseApertureMap: Record<string, number> = {
+export const preciseApertureMap: Record<string, number> = {
     'f/1': 1,
     'f/1.2': 1.189207,
     'f/1.4': 1.414214,

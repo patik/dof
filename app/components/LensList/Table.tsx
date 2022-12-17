@@ -1,16 +1,16 @@
 import { Button, useMediaQuery } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
 import { useTheme } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
+import MuiTableRow from '@mui/material/TableRow'
 import { Lens } from 'dof'
 import React, { ChangeEvent, MouseEvent, useState } from 'react'
-import { Toolbar } from './Toolbar'
 import { Header } from './Header'
+import TableRow from './TableRow'
+import { Toolbar } from './Toolbar'
 
 function createRowData(name: string, focalLength: number, aperture: string, sensor: number): Inputs {
     return {
@@ -75,7 +75,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
         setSelected([])
     }
 
-    const handleClick = (_event: React.MouseEvent<unknown>, name: LensProperties['name']) => {
+    const onRowClick = (_event: React.MouseEvent<unknown>, name: LensProperties['name']) => {
         const selectedIndex = selected.indexOf(name)
         let newSelected: readonly LensProperties['name'][] = []
 
@@ -123,39 +123,16 @@ export default function LensList({ units, distance }: { units: Units; distance: 
                     />
                     <TableBody>
                         {rows.sort(getComparator(order, orderBy)).map((row) => {
-                            const isItemSelected = isSelected(row.name)
-                            const labelId = `enhanced-table-checkbox-${row.name}`
-
                             return (
                                 <TableRow
-                                    hover
-                                    onClick={(event) => handleClick(event, row.name)}
-                                    role="checkbox"
-                                    aria-checked={isItemSelected}
-                                    tabIndex={-1}
                                     key={row.name}
-                                    selected={isItemSelected}
-                                >
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            color="primary"
-                                            checked={isItemSelected}
-                                            inputProps={{
-                                                'aria-labelledby': labelId,
-                                            }}
-                                        />
-                                    </TableCell>
-                                    <TableCell component="th" id={labelId} scope="row" padding="none">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">{row.focalLength}</TableCell>
-                                    <TableCell align="right">{row.aperture}</TableCell>
-                                    <TableCell align="right">{row.sensor}</TableCell>
-                                    <TableCell align="right">{row.depthOfField}</TableCell>
-                                </TableRow>
+                                    row={row}
+                                    isSelected={isSelected(row.name)}
+                                    onRowClick={(event) => onRowClick(event, row.name)}
+                                />
                             )
                         })}
-                        <TableRow
+                        <MuiTableRow
                             style={{
                                 height: 53,
                             }}
@@ -163,7 +140,7 @@ export default function LensList({ units, distance }: { units: Units; distance: 
                             <TableCell colSpan={6} align="center">
                                 <Button onClick={() => addRow()}>Add Lens</Button>
                             </TableCell>
-                        </TableRow>
+                        </MuiTableRow>
                     </TableBody>
                 </Table>
             </TableContainer>

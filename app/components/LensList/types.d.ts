@@ -4,6 +4,7 @@ interface Inputs {
     aperture: string
     sensor: number
 }
+
 interface LensProperties extends Inputs {
     depthOfField: number
 }
