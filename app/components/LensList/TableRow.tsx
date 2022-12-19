@@ -9,22 +9,22 @@ export default function TableRow({
     row,
     isSelected,
     onRowClick,
-    updateRow,
+    updateLens,
 }: {
-    row: LensProperties
+    row: LensDefinition
     isSelected: boolean
-    onRowClick: (id: LensProperties['id']) => void
-    updateRow: (row: Inputs) => void
+    onRowClick: (id: LensDefinition['id']) => void
+    updateLens: (lens: LensDefinition) => void
 }) {
     const labelId = `enhanced-table-checkbox-${row.name}`
-    const setAperture = (aperture: LensProperties['aperture']) => {
-        updateRow({ ...row, aperture })
+    const setAperture = (aperture: LensDefinition['aperture']) => {
+        updateLens({ ...row, aperture })
     }
-    const setFocalLength = (focalLength: LensProperties['focalLength']) => {
-        updateRow({ ...row, focalLength })
+    const setFocalLength = (focalLength: LensDefinition['focalLength']) => {
+        updateLens({ ...row, focalLength })
     }
-    const setSensorKey = (sensorKey: LensProperties['sensorKey']) => {
-        updateRow({ ...row, sensorKey })
+    const setSensorKey = (sensorKey: LensDefinition['sensorKey']) => {
+        updateLens({ ...row, sensorKey })
     }
 
     return (

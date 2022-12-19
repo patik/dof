@@ -1,4 +1,4 @@
-type SensorKey = import('./sensorList').SensorKey
+type SensorKey = import('./LensList/sensorList').SensorKey
 
 interface Inputs {
     id: string
@@ -8,11 +8,11 @@ interface Inputs {
     sensorKey: SensorKey
 }
 
-interface LensProperties extends Inputs {
+interface LensDefinition extends Inputs {
     depthOfField: number
 }
 
-type ColumnName = keyof LensProperties
+type ColumnName = keyof LensDefinition
 
 interface HeadCell {
     disablePadding: boolean
@@ -23,4 +23,9 @@ interface HeadCell {
 
 type Order = 'asc' | 'desc'
 
-type SelectedItem = LensProperties['id']
+type SelectedItem = LensDefinition['id']
+
+type LensResult = {
+    distance: number
+    dofLength: number
+}
