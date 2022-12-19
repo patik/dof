@@ -6,15 +6,10 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import MuiTableRow from '@mui/material/TableRow'
-import { Lens } from 'dof'
-import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { Header } from './Header'
-import { IDGenerator } from '../../utilities/IDGenerator'
-import { fullList } from './sensorList'
 import TableRow from './TableRow'
 import { Toolbar } from './Toolbar'
-
-const idGenerator = new IDGenerator()
 
 function descendingComparator(a: LensDefinition, b: LensDefinition, orderBy: ColumnName) {
     let valueA = a[orderBy]

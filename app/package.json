@@ -21,7 +21,10 @@
         "react": "18.2.0",
         "react-charts": "^3.0.0-beta.51",
         "react-dom": "18.2.0",
+        "react-resizable": "^3.0.4",
         "styled-components": "^5.3.6"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@types/react-resizable": "^3.0.3"
+    }
 }

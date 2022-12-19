@@ -6,6 +6,7 @@ import Distance from './Distance'
 import { Graph } from './Graph'
 import LensList from './LensList/LensList'
 import { fullList } from './LensList/sensorList'
+import ResizableBox from './ResizableBox'
 import UnitsToggle from './UnitsToggle'
 
 const idGenerator = new IDGenerator()
@@ -14,7 +15,7 @@ function rounded(num: number): number {
     return Math.round((num + Number.EPSILON) * 100) / 100
 }
 
-function createLensResult(
+function createLensDefinition(
     id: string,
     name: string,
     focalLength: number,
@@ -22,7 +23,7 @@ function createLensResult(
     sensorKey: SensorKey,
     distance: number
 ): LensDefinition {
-    const row = {
+    const result = {
         id,
         name,
         aperture,
@@ -31,15 +32,15 @@ function createLensResult(
     }
 
     const { dof } = new Lens({
-        focalLength: row.focalLength,
-        aperture: row.aperture,
-        cropFactor: fullList[row.sensorKey].value,
-        id: row.id,
-    })
+        focalLength: result.focalLength,
+        aperture: result.aperture,
+        cropFactor: fullList[result.sensorKey].value,
+        id: result.id,
+    }).dof(distance)
 
     return {
-        ...row,
-        depthOfField: rounded(dof(distance).dof),
+        ...result,
+        depthOfField: rounded(dof),
     }
 }
 
@@ -47,14 +48,14 @@ export default function Main() {
     const [units, setUnits] = useState<Units>('metric')
     const [distance, setDistance] = useState<number>(5)
     const [lenses, setLenses] = useState<LensDefinition[]>([
-        createLensResult(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full', distance),
-        createLensResult(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft', distance),
+        createLensDefinition(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full', distance),
+        createLensDefinition(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft', distance),
     ])
 
     const addLens = () => {
         setLenses([
             ...lenses,
-            createLensResult(idGenerator.getNext(), `Lens ${lenses.length + 1}`, 35, 'f/2', 'full', distance),
+            createLensDefinition(idGenerator.getNext(), `Lens ${lenses.length + 1}`, 35, 'f/2', 'full', distance),
         ])
     }
 
@@ -89,7 +90,7 @@ export default function Main() {
             }
 
             newLenses.push(
-                createLensResult(
+                createLensDefinition(
                     idGenerator.getNext(),
                     `${existingRow.name} copy`,
                     existingRow.focalLength,
@@ -129,8 +130,10 @@ export default function Main() {
                 <UnitsToggle units={units} setUnits={setUnits} />
             </Box>
 
-            <Box mb={2} height={300} width="100%">
-                <Graph lenses={lenses} />
+            <Box mb={2}>
+                <ResizableBox>
+                    <Graph lenses={lenses} />
+                </ResizableBox>
             </Box>
         </Box>
     )
