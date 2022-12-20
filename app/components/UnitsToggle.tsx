@@ -1,5 +1,4 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
-import { Dispatch, SetStateAction } from 'react'
 
 function UnitsToggleButton({
     units,
@@ -16,10 +15,16 @@ function UnitsToggleButton({
     )
 }
 
-export default function UnitsToggle({ units, setUnits }: { units: Units; setUnits: Dispatch<SetStateAction<Units>> }) {
+export default function UnitsToggle({
+    units,
+    onUnitsChange,
+}: {
+    units: Units
+    onUnitsChange: (newValue: Units) => void
+}) {
     const handleUnitsChange = (_event: React.MouseEvent<HTMLElement>, newUnits: Units | null) => {
         if (newUnits !== null) {
-            setUnits(newUnits)
+            onUnitsChange(newUnits)
         }
     }
 

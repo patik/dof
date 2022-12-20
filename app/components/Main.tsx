@@ -21,7 +21,8 @@ function createLensDefinition(
     focalLength: number,
     aperture: string,
     sensorKey: SensorKey,
-    distance: number
+    distance: number,
+    units: Units
 ): LensDefinition {
     const result = {
         id,
@@ -36,7 +37,7 @@ function createLensDefinition(
         aperture: result.aperture,
         cropFactor: fullList[result.sensorKey].value,
         id: result.id,
-    }).dof(distance)
+    }).dof(distance, units === 'imperial')
 
     return {
         ...result,
@@ -48,18 +49,26 @@ export default function Main() {
     const [units, setUnits] = useState<Units>('metric')
     const [distance, setDistance] = useState<Distance>(5)
     const [lenses, setLenses] = useState<LensDefinition[]>([
-        createLensDefinition(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full', distance),
-        createLensDefinition(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft', distance),
+        createLensDefinition(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full', distance, units),
+        createLensDefinition(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft', distance, units),
     ])
 
     const addLens = useMemo(
         () => () => {
             setLenses([
                 ...lenses,
-                createLensDefinition(idGenerator.getNext(), `Lens ${lenses.length + 1}`, 35, 'f/2', 'full', distance),
+                createLensDefinition(
+                    idGenerator.getNext(),
+                    `Lens ${lenses.length + 1}`,
+                    35,
+                    'f/2',
+                    'full',
+                    distance,
+                    units
+                ),
             ])
         },
-        [distance, lenses]
+        [distance, lenses, units]
     )
 
     const updateLens = useMemo(
@@ -104,7 +113,8 @@ export default function Main() {
                         existingRow.focalLength,
                         existingRow.aperture,
                         existingRow.sensorKey,
-                        distance
+                        distance,
+                        units
                     )
                 })
             )
@@ -115,7 +125,7 @@ export default function Main() {
 
             setLenses([...lenses, ...newLenses])
         },
-        [distance, lenses]
+        [distance, lenses, units]
     )
 
     const onDistanceChange = (newValue: Distance) => {
@@ -124,7 +134,34 @@ export default function Main() {
         // Update all stored lenses by recalculating their depths of field
         setLenses(
             lenses.map((lens) =>
-                createLensDefinition(lens.id, lens.name, lens.focalLength, lens.aperture, lens.sensorKey, newValue)
+                createLensDefinition(
+                    lens.id,
+                    lens.name,
+                    lens.focalLength,
+                    lens.aperture,
+                    lens.sensorKey,
+                    newValue,
+                    units
+                )
+            )
+        )
+    }
+
+    const onUnitsChange = (newValue: Units) => {
+        setUnits(newValue)
+
+        // Update all stored lenses by recalculating their depths of field
+        setLenses(
+            lenses.map((lens) =>
+                createLensDefinition(
+                    lens.id,
+                    lens.name,
+                    lens.focalLength,
+                    lens.aperture,
+                    lens.sensorKey,
+                    distance,
+                    newValue
+                )
             )
         )
     }
@@ -147,7 +184,7 @@ export default function Main() {
             </Box>
 
             <Box mb={2}>
-                <UnitsToggle units={units} setUnits={setUnits} />
+                <UnitsToggle units={units} onUnitsChange={onUnitsChange} />
             </Box>
 
             <Box mb={2} height={400} width="100%">
