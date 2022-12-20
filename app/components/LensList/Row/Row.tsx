@@ -4,6 +4,7 @@ import MuiTableRow from '@mui/material/TableRow'
 import { metersToFeet } from '../../../utilities/conversion'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
+import NameCell from './NameCell'
 import SensorCell from './SensorCell'
 
 export default function Row({
@@ -29,6 +30,9 @@ export default function Row({
     const setSensorKey = (sensorKey: LensDefinition['sensorKey']) => {
         updateLens({ ...row, sensorKey })
     }
+    const setName = (name: LensDefinition['name']) => {
+        updateLens({ ...row, name })
+    }
 
     const dof = units === 'imperial' ? metersToFeet(row.depthOfField) : row.depthOfField
 
@@ -44,9 +48,7 @@ export default function Row({
                     }}
                 />
             </TableCell>
-            <TableCell component="th" id={labelId} scope="row" padding="none">
-                {row.name}
-            </TableCell>
+            <NameCell name={row.name} setName={setName} labelId={labelId} />
             <FocalLengthCell focalLength={row.focalLength} setFocalLength={setFocalLength} />
             <ApertureCell aperture={row.aperture} setAperture={setAperture} />
             <SensorCell sensorKey={row.sensorKey} setSensorKey={setSensorKey} />
