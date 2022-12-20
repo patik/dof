@@ -1,4 +1,6 @@
-type SensorKey = import('./LensList/sensorList').SensorKey
+type SensorKey = import('./sensorList').SensorKey
+
+type Distance = number
 
 interface LensInputs {
     id: string

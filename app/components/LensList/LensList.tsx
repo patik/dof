@@ -5,10 +5,10 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import MuiTableRow from '@mui/material/TableRow'
+import TableRow from '@mui/material/TableRow'
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import { Header } from './Header'
-import TableRow from './TableRow'
+import Row from './Row/Row'
 import { Toolbar } from './Toolbar'
 
 function descendingComparator(a: LensDefinition, b: LensDefinition, orderBy: ColumnName) {
@@ -52,7 +52,6 @@ export default function LensList({
     duplicateLenses,
 }: {
     units: Units
-    distance: number
     lenses: LensDefinition[]
     addLens: () => void
     updateLens: (lens: LensDefinition) => void
@@ -117,18 +116,16 @@ export default function LensList({
                         rowCount={lenses.length}
                     />
                     <TableBody>
-                        {lenses.sort(getComparator(order, orderBy)).map((row) => {
-                            return (
-                                <TableRow
-                                    key={row.name}
-                                    row={row}
-                                    isSelected={isSelected(row.id)}
-                                    onRowClick={onRowClick}
-                                    updateLens={updateLens}
-                                />
-                            )
-                        })}
-                        <MuiTableRow
+                        {lenses.sort(getComparator(order, orderBy)).map((row) => (
+                            <Row
+                                key={row.name}
+                                row={row}
+                                isSelected={isSelected(row.id)}
+                                onRowClick={onRowClick}
+                                updateLens={updateLens}
+                            />
+                        ))}
+                        <TableRow
                             style={{
                                 height: 53,
                             }}
@@ -136,7 +133,7 @@ export default function LensList({
                             <TableCell colSpan={6} align="center">
                                 <Button onClick={() => addLens()}>Add Lens</Button>
                             </TableCell>
-                        </MuiTableRow>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>

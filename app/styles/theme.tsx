@@ -24,11 +24,19 @@ export function ThemeProvider({ children }: PropsWithChildren) {
                         h2: {
                             fontSize: '1.75rem',
                         },
-                        subtitle1: {
-                            // fontSize: 12,
+                        h3: {
+                            fontSize: '1.5rem',
                         },
-                        button: {
-                            // fontStyle: 'italic',
+                        h4: {
+                            fontSize: '1.25rem',
+                            fontWeight: 600,
+                        },
+                        h5: {
+                            fontSize: '1.25rem',
+                        },
+                        h6: {
+                            fontSize: '1rem',
+                            fontWeight: 600,
                         },
                     },
                 })

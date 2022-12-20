@@ -1,13 +1,13 @@
 import { Box } from '@mui/material'
 import { Lens } from 'dof'
-import { useState } from 'react'
+import { compact } from 'lodash'
+import { useMemo, useState } from 'react'
 import { IDGenerator } from '../utilities/IDGenerator'
 import Distance from './Distance'
 import { Graph } from './Graph'
 import LensList from './LensList/LensList'
-import { fullList } from './LensList/sensorList'
+import { fullList } from './sensorList'
 import UnitsToggle from './UnitsToggle'
-import { compact } from 'lodash'
 
 const idGenerator = new IDGenerator()
 
@@ -46,76 +46,98 @@ function createLensDefinition(
 
 export default function Main() {
     const [units, setUnits] = useState<Units>('metric')
-    const [distance, setDistance] = useState<number>(5)
+    const [distance, setDistance] = useState<Distance>(5)
     const [lenses, setLenses] = useState<LensDefinition[]>([
         createLensDefinition(idGenerator.getNext(), 'Lens 1', 35, 'f/2', 'full', distance),
         createLensDefinition(idGenerator.getNext(), 'Lens 2', 55, 'f/1.4', 'mft', distance),
     ])
 
-    const addLens = () => {
-        setLenses([
-            ...lenses,
-            createLensDefinition(idGenerator.getNext(), `Lens ${lenses.length + 1}`, 35, 'f/2', 'full', distance),
-        ])
-    }
+    const addLens = useMemo(
+        () => () => {
+            setLenses([
+                ...lenses,
+                createLensDefinition(idGenerator.getNext(), `Lens ${lenses.length + 1}`, 35, 'f/2', 'full', distance),
+            ])
+        },
+        [distance, lenses]
+    )
 
-    const updateLens = (lens: LensDefinition) => {
-        const lensIndex = lenses.findIndex((r) => r.id === lens.id)
-        const newLenses = [...lenses]
+    const updateLens = useMemo(
+        () => (lens: LensDefinition) => {
+            const lensIndex = lenses.findIndex((r) => r.id === lens.id)
+            const newLenses = [...lenses]
 
-        newLenses[lensIndex] = lens
+            newLenses[lensIndex] = lens
 
-        setLenses(newLenses)
-    }
+            setLenses(newLenses)
+        },
+        [lenses]
+    )
 
-    const deleteLenses = (lensesToDelete: readonly SelectedItem[]) => {
-        if (lensesToDelete.length === 0) {
-            return
-        }
+    const deleteLenses = useMemo(
+        () => (lensesToDelete: readonly SelectedItem[]) => {
+            if (lensesToDelete.length === 0) {
+                return
+            }
 
-        const remainingRows: LensDefinition[] = [...lenses].filter((row) => !lensesToDelete.includes(row.id))
+            const remainingRows: LensDefinition[] = [...lenses].filter((row) => !lensesToDelete.includes(row.id))
 
-        setLenses(remainingRows)
-    }
+            setLenses(remainingRows)
+        },
+        [lenses]
+    )
 
-    const duplicateLenses = (lensesToDuplicate: readonly SelectedItem[]) => {
-        const newLenses: LensDefinition[] = compact(
-            lensesToDuplicate.map((id) => {
-                const existingRow = lenses.find((row) => row.id === id)
+    const duplicateLenses = useMemo(
+        () => (lensesToDuplicate: readonly SelectedItem[]) => {
+            const newLenses: LensDefinition[] = compact(
+                lensesToDuplicate.map((id) => {
+                    const existingRow = lenses.find((row) => row.id === id)
 
-                if (!existingRow) {
-                    console.error('Could not find row to be duplicated ', id)
-                    return undefined
-                }
+                    if (!existingRow) {
+                        console.error('Could not find row to be duplicated ', id)
+                        return undefined
+                    }
 
-                return createLensDefinition(
-                    idGenerator.getNext(),
-                    `${existingRow.name} copy`,
-                    existingRow.focalLength,
-                    existingRow.aperture,
-                    existingRow.sensorKey,
-                    distance
-                )
-            })
+                    return createLensDefinition(
+                        idGenerator.getNext(),
+                        `${existingRow.name} copy`,
+                        existingRow.focalLength,
+                        existingRow.aperture,
+                        existingRow.sensorKey,
+                        distance
+                    )
+                })
+            )
+
+            if (newLenses.length === 0) {
+                return
+            }
+
+            setLenses([...lenses, ...newLenses])
+        },
+        [distance, lenses]
+    )
+
+    const onDistanceChange = (newValue: Distance) => {
+        setDistance(newValue)
+
+        // Update all stored lenses by recalculating their depths of field
+        setLenses(
+            lenses.map((lens) =>
+                createLensDefinition(lens.id, lens.name, lens.focalLength, lens.aperture, lens.sensorKey, newValue)
+            )
         )
-
-        if (newLenses.length === 0) {
-            return
-        }
-
-        setLenses([...lenses, ...newLenses])
     }
 
     return (
         <Box p={2}>
-            <Box mb={2}>
-                <Distance units={units} distance={distance} setDistance={setDistance} />
+            <Box mb={2} textAlign="right">
+                <Distance units={units} distance={distance} onDistanceChange={onDistanceChange} />
             </Box>
 
             <Box mb={2}>
                 <LensList
                     units={units}
-                    distance={distance}
                     lenses={lenses}
                     addLens={addLens}
                     updateLens={updateLens}

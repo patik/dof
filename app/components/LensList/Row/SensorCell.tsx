@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
-import { fullList } from './sensorList'
+import { fullList } from '../../sensorList'
 
 /**
  * Exposes type annotations to an Object.keys array

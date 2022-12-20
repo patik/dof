@@ -1,18 +1,18 @@
 import { InputAdornment, TextField } from '@mui/material'
-import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction } from 'react'
+import { ChangeEvent, ChangeEventHandler } from 'react'
 
 export default function Distance({
     units,
     distance,
-    setDistance,
+    onDistanceChange,
 }: {
     units: Units
-    distance: number
-    setDistance: Dispatch<SetStateAction<number>>
+    distance: Distance
+    onDistanceChange: (newValue: Distance) => void
 }) {
     const handleDistanceChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
         if (parseFloat(event.target.value)) {
-            setDistance(parseFloat(event.target.value))
+            onDistanceChange(parseFloat(event.target.value))
         }
     }
 

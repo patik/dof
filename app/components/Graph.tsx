@@ -2,7 +2,7 @@ import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
-import { fullList } from './LensList/sensorList'
+import { fullList } from './sensorList'
 
 export function Graph({ lenses }: { lenses: LensInputs[] }) {
     const distances = useMemo(() => Array.from(Array(25).keys()), [])
@@ -15,7 +15,7 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
                     id: lens.name,
                     data: compact(
                         distances.map((distance) => {
-                            console.log('distance ', distance)
+                            // console.log('distance ', distance)
                             const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
 
                             // The graph doesn't handle infinite values well
@@ -23,10 +23,10 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
                                 return
                             }
 
-                            console.log('Adding datum: ', {
-                                x: distance,
-                                y: dofLength,
-                            })
+                            // console.log('Adding datum: ', {
+                            //     x: distance,
+                            //     y: dofLength,
+                            // })
                             return {
                                 x: distance,
                                 y: dofLength,
@@ -40,12 +40,12 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
         [distances, lenses]
     )
 
-    console.log('data ', data)
+    // console.log('data ', data)
 
     return (
         <ResponsiveLine
-            colors={{ scheme: 'nivo' }}
             data={data}
+            colors={{ scheme: 'nivo' }}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
             xScale={{ type: 'point' }}
             yScale={{
@@ -75,11 +75,37 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
                 legendPosition: 'middle',
             }}
             pointSize={10}
-            pointColor={{ theme: 'background' }}
+            pointColor={{ theme: 'labels.text.fill' }}
             pointBorderWidth={2}
             pointBorderColor={{ from: 'serieColor' }}
             pointLabelYOffset={-12}
             useMesh={true}
+            theme={{
+                legends: {
+                    title: {
+                        text: {
+                            fill: '#ffffff',
+                        },
+                    },
+                },
+                axis: {
+                    legend: {
+                        text: {
+                            fill: '#ffffff',
+                        },
+                    },
+                    ticks: {
+                        text: {
+                            fill: '#ffffff',
+                        },
+                    },
+                },
+                tooltip: {
+                    container: {
+                        background: '#000',
+                    },
+                },
+            }}
             legends={[
                 {
                     anchor: 'bottom-right',

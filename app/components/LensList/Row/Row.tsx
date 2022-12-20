@@ -5,7 +5,7 @@ import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
 import SensorCell from './SensorCell'
 
-export default function TableRow({
+export default function Row({
     row,
     isSelected,
     onRowClick,
