@@ -1,82 +1,111 @@
-import Box from '@mui/material/Box'
+import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
-import dynamic from 'next/dynamic'
+import { compact } from 'lodash'
 import { useMemo } from 'react'
-import { AxisOptions, Chart as ChartType } from 'react-charts'
 import { fullList } from './LensList/sensorList'
 
-// Gets around issue with importing D3 via CJS in Next
-// https://github.com/TanStack/react-charts/issues/324#issuecomment-1330610744
-const Chart = dynamic(() => import('react-charts').then((mod) => mod.Chart), {
-    ssr: false,
-}) as typeof ChartType
-
-type LensDatum = {
-    distance: number
-    dofLength: number
-}
-
-type Series = {
-    label: string
-    data: LensDatum[]
-}
-
 export function Graph({ lenses }: { lenses: LensInputs[] }) {
-    const primaryAxis = useMemo(
-        (): AxisOptions<LensDatum> => ({
-            getValue: (datum) => datum.distance,
-        }),
-        []
-    )
-
-    const secondaryAxes = useMemo(
-        (): AxisOptions<LensDatum>[] => [
-            {
-                getValue: (datum) => datum.dofLength,
-            },
-        ],
-        []
-    )
-
     const distances = useMemo(() => Array.from(Array(25).keys()), [])
-    const data: Series[] = useMemo(() => {
-        return lenses.map((lens) => {
-            const { focalLength, aperture, sensorKey, id } = lens
-            const cropFactor: number = fullList[sensorKey].value
-            const datum: Series = {
-                label: lens.name,
-                data: [],
-            }
+    const data: Serie[] = useMemo(
+        () =>
+            lenses.map((lens) => {
+                const { focalLength, aperture, sensorKey, id } = lens
+                const cropFactor: number = fullList[sensorKey].value
+                const datum: Serie = {
+                    id: lens.name,
+                    data: compact(
+                        distances.map((distance) => {
+                            console.log('distance ', distance)
+                            const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
 
-            distances.forEach((distance) => {
-                console.log('distance ', distance)
-                const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
+                            // The graph doesn't handle infinite values well
+                            if (dofLength === Infinity) {
+                                return
+                            }
 
-                if (dofLength !== Infinity) {
-                    console.log('Adding datum: ', {
-                        distance,
-                        dofLength,
-                    })
-                    datum.data.push({
-                        distance,
-                        dofLength,
-                    })
+                            console.log('Adding datum: ', {
+                                x: distance,
+                                y: dofLength,
+                            })
+                            return {
+                                x: distance,
+                                y: dofLength,
+                            }
+                        })
+                    ),
                 }
-            })
 
-            return datum
-        })
-    }, [distances, lenses])
+                return datum
+            }),
+        [distances, lenses]
+    )
 
     console.log('data ', data)
 
     return (
-        <Chart
-            options={{
-                data,
-                primaryAxis,
-                secondaryAxes,
+        <ResponsiveLine
+            colors={{ scheme: 'nivo' }}
+            data={data}
+            margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+            xScale={{ type: 'point' }}
+            yScale={{
+                type: 'linear',
+                min: 'auto',
+                max: 'auto',
+                stacked: true,
+                reverse: false,
             }}
+            yFormat=" >-.2f"
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'Distance',
+                legendOffset: 36,
+                legendPosition: 'middle',
+            }}
+            axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'Depth of field length (m)',
+                legendOffset: -40,
+                legendPosition: 'middle',
+            }}
+            pointSize={10}
+            pointColor={{ theme: 'background' }}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: 'serieColor' }}
+            pointLabelYOffset={-12}
+            useMesh={true}
+            legends={[
+                {
+                    anchor: 'bottom-right',
+                    direction: 'column',
+                    justify: false,
+                    translateX: 100,
+                    translateY: 0,
+                    itemsSpacing: 0,
+                    itemDirection: 'left-to-right',
+                    itemWidth: 80,
+                    itemHeight: 20,
+                    itemOpacity: 1,
+                    symbolSize: 16,
+                    symbolShape: 'circle',
+                    symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                    effects: [
+                        {
+                            on: 'hover',
+                            style: {
+                                itemBackground: 'rgba(0, 0, 0, .5)',
+                                itemOpacity: 1,
+                            },
+                        },
+                    ],
+                },
+            ]}
         />
     )
 }

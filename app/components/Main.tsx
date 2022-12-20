@@ -6,8 +6,8 @@ import Distance from './Distance'
 import { Graph } from './Graph'
 import LensList from './LensList/LensList'
 import { fullList } from './LensList/sensorList'
-import ResizableBox from './ResizableBox'
 import UnitsToggle from './UnitsToggle'
+import { compact } from 'lodash'
 
 const idGenerator = new IDGenerator()
 
@@ -79,18 +79,16 @@ export default function Main() {
     }
 
     const duplicateLenses = (lensesToDuplicate: readonly SelectedItem[]) => {
-        const newLenses: LensDefinition[] = []
+        const newLenses: LensDefinition[] = compact(
+            lensesToDuplicate.map((id) => {
+                const existingRow = lenses.find((row) => row.id === id)
 
-        lensesToDuplicate.forEach((id) => {
-            const existingRow = lenses.find((row) => row.id === id)
+                if (!existingRow) {
+                    console.error('Could not find row to be duplicated ', id)
+                    return undefined
+                }
 
-            if (!existingRow) {
-                console.error('Could not find row to be duplicated ', id)
-                return
-            }
-
-            newLenses.push(
-                createLensDefinition(
+                return createLensDefinition(
                     idGenerator.getNext(),
                     `${existingRow.name} copy`,
                     existingRow.focalLength,
@@ -98,8 +96,8 @@ export default function Main() {
                     existingRow.sensorKey,
                     distance
                 )
-            )
-        })
+            })
+        )
 
         if (newLenses.length === 0) {
             return
@@ -130,10 +128,8 @@ export default function Main() {
                 <UnitsToggle units={units} setUnits={setUnits} />
             </Box>
 
-            <Box mb={2}>
-                <ResizableBox>
-                    <Graph lenses={lenses} />
-                </ResizableBox>
+            <Box mb={2} height={400} width="100%">
+                <Graph lenses={lenses} />
             </Box>
         </Box>
     )

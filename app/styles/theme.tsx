@@ -21,6 +21,9 @@ export function ThemeProvider({ children }: PropsWithChildren) {
                         h1: {
                             fontSize: '2rem',
                         },
+                        h2: {
+                            fontSize: '1.75rem',
+                        },
                         subtitle1: {
                             // fontSize: 12,
                         },
