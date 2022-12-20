@@ -67,6 +67,4 @@ export const fullList = {
     },
 }
 
-export type SensorKey = keyof typeof fullList
-
 export const shortList: SensorKey[] = ['iPhone5S', 'mft', 'APSC', 'full']

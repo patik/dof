@@ -15,7 +15,6 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
                     id: lens.name,
                     data: compact(
                         distances.map((distance) => {
-                            // console.log('distance ', distance)
                             const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
 
                             // The graph doesn't handle infinite values well
@@ -23,10 +22,6 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
                                 return
                             }
 
-                            // console.log('Adding datum: ', {
-                            //     x: distance,
-                            //     y: dofLength,
-                            // })
                             return {
                                 x: distance,
                                 y: dofLength,
@@ -39,8 +34,6 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
             }),
         [distances, lenses]
     )
-
-    // console.log('data ', data)
 
     return (
         <ResponsiveLine

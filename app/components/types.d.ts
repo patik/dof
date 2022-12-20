@@ -1,4 +1,4 @@
-type SensorKey = import('./sensorList').SensorKey
+type SensorKey = keyof typeof import('./sensorList').fullList
 
 type Distance = number
 
