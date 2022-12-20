@@ -1,12 +1,13 @@
-import { useMediaQuery } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import { Theme } from '@mui/material/styles'
 import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
+import { feetAndInchesString, feetString } from '../utilities/conversion'
 import { fullList } from './sensorList'
 
-function getDistanceArray(units: Units, isMobile: boolean): Distance[] {
+function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
     if (units === 'imperial') {
         const allValues = Array.from(Array(101).keys())
 
@@ -28,7 +29,7 @@ function getDistanceArray(units: Units, isMobile: boolean): Distance[] {
 
 export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units }) {
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
-    const distances = useMemo(() => getDistanceArray(units, isMobile), [units, isMobile])
+    const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
     const data: Serie[] = useMemo(
         () =>
             lenses.map((lens) => {
@@ -148,6 +149,20 @@ export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units })
                     ],
                 },
             ]}
+            tooltip={(props) => {
+                const name = props.point.serieId
+                const dof = Number(props.point.data.yFormatted)
+                const dofText = units === 'imperial' ? `${feetAndInchesString(dof)}` : `${dof} meters`
+                const dist = props.point.data.xFormatted
+                const distText = units === 'imperial' ? `${feetString(Number(dist))} away` : `${dist} meters away`
+
+                return (
+                    <Box sx={{ bgcolor: props.point.borderColor }}>
+                        <Typography>{name}</Typography>
+                        <Typography>{`DoF is ${dofText} for a subject that is ${distText}`}</Typography>
+                    </Box>
+                )
+            }}
         />
     )
 }

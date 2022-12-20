@@ -2501,6 +2501,11 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
+footinch@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/footinch/-/footinch-1.0.2.tgz#3cc6862cdc173839922a6d52fcc06f5e94a9b232"
+  integrity sha512-lTPoJ0aXiIMCirw/J6VyO69SFjVTyzWGts6L1fxpPMAaVGbdrClgeIh+S1QSyfNYkycn27fkZUP7ddhq6Z31Pg==
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"

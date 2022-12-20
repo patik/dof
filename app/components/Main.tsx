@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo, useState } from 'react'
+import { rounded } from '../utilities/conversion'
 import { IDGenerator } from '../utilities/IDGenerator'
 import Distance from './Distance'
 import { Graph } from './Graph'
@@ -10,10 +11,6 @@ import { fullList } from './sensorList'
 import UnitsToggle from './UnitsToggle'
 
 const idGenerator = new IDGenerator()
-
-function rounded(num: number): number {
-    return Math.round((num + Number.EPSILON) * 100) / 100
-}
 
 function createLensDefinition(
     id: string,

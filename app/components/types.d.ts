@@ -1,3 +1,6 @@
+// https://github.com/dobriai/footinch
+declare module 'footinch'
+
 type SensorKey = keyof typeof import('./sensorList').fullList
 
 type Distance = number

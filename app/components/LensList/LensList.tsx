@@ -122,6 +122,7 @@ export default function LensList({
                                 isSelected={isSelected(row.id)}
                                 onRowClick={onRowClick}
                                 updateLens={updateLens}
+                                units={units}
                             />
                         ))}
                         <TableRow

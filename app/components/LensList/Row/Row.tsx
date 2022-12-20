@@ -1,6 +1,7 @@
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
+import { metersToFeet } from '../../../utilities/conversion'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
 import SensorCell from './SensorCell'
@@ -10,11 +11,13 @@ export default function Row({
     isSelected,
     onRowClick,
     updateLens,
+    units,
 }: {
     row: LensDefinition
     isSelected: boolean
     onRowClick: (id: LensDefinition['id']) => void
     updateLens: (lens: LensDefinition) => void
+    units: Units
 }) {
     const labelId = `enhanced-table-checkbox-${row.name}`
     const setAperture = (aperture: LensDefinition['aperture']) => {
@@ -26,6 +29,8 @@ export default function Row({
     const setSensorKey = (sensorKey: LensDefinition['sensorKey']) => {
         updateLens({ ...row, sensorKey })
     }
+
+    const dof = units === 'imperial' ? metersToFeet(row.depthOfField) : row.depthOfField
 
     return (
         <MuiTableRow hover role="checkbox" aria-checked={isSelected} tabIndex={-1} key={row.name} selected={isSelected}>
@@ -45,7 +50,7 @@ export default function Row({
             <FocalLengthCell focalLength={row.focalLength} setFocalLength={setFocalLength} />
             <ApertureCell aperture={row.aperture} setAperture={setAperture} />
             <SensorCell sensorKey={row.sensorKey} setSensorKey={setSensorKey} />
-            <TableCell align="right">{row.depthOfField}</TableCell>
+            <TableCell align="right">{dof}</TableCell>
         </MuiTableRow>
     )
 }
