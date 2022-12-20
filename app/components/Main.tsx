@@ -188,7 +188,7 @@ export default function Main() {
             </Box>
 
             <Box mb={2} height={400} width="100%">
-                <Graph lenses={lenses} />
+                <Graph lenses={lenses} units={units} />
             </Box>
         </Box>
     )

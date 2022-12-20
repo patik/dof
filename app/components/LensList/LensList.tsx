@@ -1,6 +1,6 @@
 import { Button, useMediaQuery } from '@mui/material'
 import Paper from '@mui/material/Paper'
-import { useTheme } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -61,8 +61,7 @@ export default function LensList({
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('id')
     const [selected, setSelected] = useState<readonly SelectedItem[]>([])
-    const theme = useTheme()
-    const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'))
 
     const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
         const isAsc = orderBy === property && order === 'asc'

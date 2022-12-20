@@ -1,11 +1,34 @@
+import { useMediaQuery } from '@mui/material'
+import { Theme } from '@mui/material/styles'
 import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
 import { fullList } from './sensorList'
 
-export function Graph({ lenses }: { lenses: LensInputs[] }) {
-    const distances = useMemo(() => Array.from(Array(25).keys()), [])
+function getDistanceArray(units: Units, isMobile: boolean): Distance[] {
+    if (units === 'imperial') {
+        const allValues = Array.from(Array(101).keys())
+
+        if (isMobile) {
+            return allValues.filter((v) => v % 10 === 0)
+        }
+
+        return allValues.filter((v) => v % 5 === 0)
+    }
+
+    const allValues = Array.from(Array(26).keys())
+
+    if (isMobile) {
+        return allValues.filter((v) => v % 2 === 0)
+    }
+
+    return allValues
+}
+
+export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units }) {
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
+    const distances = useMemo(() => getDistanceArray(units, isMobile), [units, isMobile])
     const data: Serie[] = useMemo(
         () =>
             lenses.map((lens) => {
@@ -55,16 +78,16 @@ export function Graph({ lenses }: { lenses: LensInputs[] }) {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Distance',
-                legendOffset: 36,
+                legend: `Distance (${units === 'imperial' ? 'ft' : 'm'})`,
+                legendOffset: 42,
                 legendPosition: 'middle',
             }}
             axisLeft={{
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Depth of field length (m)',
-                legendOffset: -40,
+                legend: `Depth of field length (${units === 'imperial' ? 'ft' : 'm'})`,
+                legendOffset: -56,
                 legendPosition: 'middle',
             }}
             pointSize={10}
