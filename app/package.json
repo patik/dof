@@ -6,7 +6,9 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
+        "typecheck": "tsc --noEmit",
+        "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
+        "lint": "next lint && yarn typecheck && yarn code-lint",
         "test": "yarn jest"
     },
     "dependencies": {

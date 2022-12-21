@@ -29,7 +29,9 @@
         "build": "rm -rf dist/*; yarn tsc",
         "clean": "git clean -fdx",
         "cover": "yarn test --collectCoverage",
-        "lint": "eslint --ext .ts --fix ./src/**/*.ts",
+        "typecheck": "tsc --noEmit",
+        "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
+        "lint": "yarn typecheck && yarn code-lint",
         "preversion": "yarn build && yarn cover",
         "test": "yarn jest"
     },

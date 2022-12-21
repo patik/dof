@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import Head from 'next/head'
 import { PropsWithChildren, ReactElement } from 'react'
 import { Typography } from '@mui/material'
+import Link from 'next/link'
 
 function FallbackComponent() {
     return <></>
@@ -26,7 +27,7 @@ export function Layout({ title, isHomePage, children }: Props): ReactElement {
             <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
                 <Box mb={3}>
                     <Typography variant="h1" gutterBottom>
-                        <a href="/">Depth of Field Calculator &amp; Comparison Tool</a>
+                        <Link href="/">Depth of Field Calculator &amp; Comparison Tool</Link>
                     </Typography>
                     <Typography>Compare multiple camera lenses side-by-side</Typography>
                 </Box>
