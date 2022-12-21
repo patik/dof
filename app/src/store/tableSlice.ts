@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand'
-import { LensDataState } from './lensData'
+import { LensDataState } from './lensSlice'
 
 export interface TableState {
     order: Order

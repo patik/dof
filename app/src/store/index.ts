@@ -1,9 +1,9 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { createLensDataSlice, LensDataState } from './lensData'
-import { createTableSlice, TableState } from './table'
+import { createLensDataSlice, LensDataState } from './lensSlice'
+import { createTableSlice, TableState } from './tableSlice'
 
-const useLensStore = create<TableState & LensDataState>()(
+const useDoFStore = create<TableState & LensDataState>()(
     devtools(
         persist(
             (...a) => ({
@@ -17,4 +17,4 @@ const useLensStore = create<TableState & LensDataState>()(
     )
 )
 
-export default useLensStore
+export default useDoFStore

@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
-import useLensStore from '../../../store'
+import useDoFStore from '../../../store'
 import sensorList from '../../../utilities/sensorList'
 
 /**
@@ -16,7 +16,7 @@ function isSensorKey(str: string): str is SensorKey {
 }
 
 export default function SensorCell({ lens }: { lens: LensDefinition }) {
-    const { updateLens } = useLensStore()
+    const { updateLens } = useDoFStore()
     const onChange = (event: SelectChangeEvent<SensorKey>) => {
         if (isSensorKey(event.target.value)) {
             updateLens({ ...lens, sensorKey: event.target.value })
@@ -26,7 +26,7 @@ export default function SensorCell({ lens }: { lens: LensDefinition }) {
     return (
         <TableCell align="right">
             <FormControl fullWidth>
-                <Select value={lens.sensorKey} onChange={onChange}>
+                <Select value={lens.sensorKey} onChange={onChange} size="small">
                     {objectKeysArray(sensorList).map((key) => {
                         const { name } = sensorList[key]
 

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import Distance from './Distance'
 import { Graph } from './Graph'
-import LensTable from './LensTable/LensList'
+import LensTable from './LensTable/LensTable'
 import UnitsToggle from './UnitsToggle'
 
 export default function Main() {

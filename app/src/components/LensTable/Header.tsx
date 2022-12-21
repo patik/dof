@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 import { ChangeEvent, useMemo } from 'react'
-import useLensStore from '../../store'
+import useDoFStore from '../../store'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -16,16 +16,16 @@ const headCells: readonly HeadCell[] = [
         label: 'Name',
     },
     {
-        id: 'aperture',
-        numeric: true,
-        disablePadding: false,
-        label: 'Aperture',
-    },
-    {
         id: 'focalLength',
         numeric: true,
         disablePadding: false,
         label: 'Focal Length',
+    },
+    {
+        id: 'aperture',
+        numeric: true,
+        disablePadding: false,
+        label: 'Aperture',
     },
     {
         id: 'sensorKey',
@@ -42,7 +42,7 @@ const headCells: readonly HeadCell[] = [
 ]
 
 export function Header() {
-    const { units, lenses, order, orderBy, selected, setSelected, setSorting } = useLensStore()
+    const { units, lenses, order, orderBy, selected, setSelected, setSorting } = useDoFStore()
     const numSelected = selected.length
     const rowCount = lenses.length
     const handleSelectAllClick = useMemo(
@@ -59,8 +59,8 @@ export function Header() {
         },
         [lenses, setSelected]
     )
-    const createSortHandler = (property: ColumnName) => () => {
-        setSorting(property)
+    const createSortHandler = (col: ColumnName) => () => {
+        setSorting(col)
     }
 
     return (
@@ -79,6 +79,7 @@ export function Header() {
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
+                        size="small"
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
