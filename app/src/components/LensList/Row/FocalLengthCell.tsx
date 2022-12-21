@@ -1,15 +1,17 @@
 import { InputAdornment, TableCell, TextField } from '@mui/material'
-import { ChangeEvent, ChangeEventHandler } from 'react'
+import { ChangeEvent } from 'react'
+import useStore from '../../../store/store'
 
-export default function FocalLengthCell({
-    focalLength,
-    setFocalLength,
-}: {
-    focalLength: LensDefinition['focalLength']
-    setFocalLength: (f: LensDefinition['focalLength']) => void
-}) {
-    const onChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
-        setFocalLength(parseFloat(event.target.value))
+export default function FocalLengthCell({ id }: { id: LensDefinition['id'] }) {
+    const { lenses, updateLens } = useStore()
+    const lens = lenses.find((l) => l.id === id)
+
+    if (!lens) {
+        return
+    }
+
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        updateLens({ ...lens, focalLength: parseFloat(event.target.value) })
     }
 
     return (
@@ -17,7 +19,7 @@ export default function FocalLengthCell({
             <TextField
                 label="Focal length"
                 onChange={onChange}
-                value={focalLength}
+                value={lens.focalLength}
                 type="number"
                 InputProps={{
                     type: 'number',

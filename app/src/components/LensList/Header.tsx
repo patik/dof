@@ -6,6 +6,7 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 import React from 'react'
+import useStore from '../../store/store'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -41,7 +42,6 @@ const headCells: readonly HeadCell[] = [
 ]
 
 interface EnhancedTableProps {
-    units: Units
     numSelected: number
     onRequestSort: (event: React.MouseEvent<unknown>, property: ColumnName) => void
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -51,7 +51,8 @@ interface EnhancedTableProps {
 }
 
 export function Header(props: EnhancedTableProps) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, units } = props
+    const { units } = useStore()
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props
     const createSortHandler = (property: ColumnName) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property)
     }

@@ -49,7 +49,7 @@ export default function LensList() {
     const [orderBy, setOrderBy] = useState<ColumnName>('id')
     const [selected, setSelected] = useState<readonly SelectedItem[]>([])
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'))
-    const { lenses, units, addLens, deleteLenses, duplicateLenses } = useStore()
+    const { lenses, addLens, deleteLenses, duplicateLenses } = useStore()
 
     const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
         const isAsc = orderBy === property && order === 'asc'
@@ -94,7 +94,6 @@ export default function LensList() {
             <TableContainer>
                 <Table aria-labelledby="tableTitle" size="medium">
                     <Header
-                        units={units}
                         numSelected={selected.length}
                         order={order}
                         orderBy={orderBy}
