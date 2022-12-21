@@ -44,7 +44,7 @@ function createLensDefinition({
 
 const initialUnits: Units = 'metric'
 const initialDistance: Distance = 5
-const initialLensState = [
+const initialLensState: LensDefinition[] = [
     createLensDefinition({
         id: idGenerator.getNext(),
         name: 'Lens 1',
@@ -69,14 +69,12 @@ interface State {
     units: Units
     distance: Distance
     lenses: LensDefinition[]
-    actions: {
-        addLens: () => void
-        updateLens: (lens: LensDefinition) => void
-        deleteLenses: (lensesToDelete: readonly SelectedItem[]) => void
-        duplicateLenses: (lensesToDuplicate: readonly SelectedItem[]) => void
-        setDistance: (newValue: Distance) => void
-        setUnits: (newValue: Units) => void
-    }
+    addLens: () => void
+    updateLens: (lens: LensDefinition) => void
+    deleteLenses: (lensesToDelete: readonly SelectedItem[]) => void
+    duplicateLenses: (lensesToDuplicate: readonly SelectedItem[]) => void
+    setDistance: (newValue: Distance) => void
+    setUnits: (newValue: Units) => void
 }
 
 const useStore = create<State>()(
@@ -86,118 +84,116 @@ const useStore = create<State>()(
                 units: initialUnits,
                 distance: initialDistance,
                 lenses: initialLensState,
-                actions: {
-                    addLens() {
-                        set((state) => ({
-                            ...state,
-                            lenses: [
-                                ...state.lenses,
-                                createLensDefinition({
-                                    id: idGenerator.getNext(),
-                                    name: `Lens ${state.lenses.length + 1}`,
-                                    focalLength: 35,
-                                    aperture: 'f/2',
-                                    sensorKey: 'full',
-                                    distance: state.distance,
-                                    units: state.units,
-                                }),
-                            ],
-                        }))
-                    },
-                    updateLens(lens: LensDefinition) {
-                        set((state) => {
-                            const lensIndex = state.lenses.findIndex((r) => r.id === lens.id)
-                            const newLenses = [...state.lenses]
-
-                            newLenses[lensIndex] = createLensDefinition({
-                                ...lens,
+                addLens() {
+                    set((state) => ({
+                        ...state,
+                        lenses: [
+                            ...state.lenses,
+                            createLensDefinition({
+                                id: idGenerator.getNext(),
+                                name: `Lens ${state.lenses.length + 1}`,
+                                focalLength: 35,
+                                aperture: 'f/2',
+                                sensorKey: 'full',
                                 distance: state.distance,
                                 units: state.units,
-                            })
+                            }),
+                        ],
+                    }))
+                },
+                updateLens(lens: LensDefinition) {
+                    set((state) => {
+                        const lensIndex = state.lenses.findIndex((r) => r.id === lens.id)
+                        const newLenses = [...state.lenses]
 
-                            return {
-                                ...state,
-                                lenses: newLenses,
-                            }
+                        newLenses[lensIndex] = createLensDefinition({
+                            ...lens,
+                            distance: state.distance,
+                            units: state.units,
                         })
-                    },
-                    deleteLenses(lensesToDelete: readonly SelectedItem[]) {
-                        set((state) => {
-                            if (lensesToDelete.length === 0) {
-                                return state
-                            }
 
-                            const remainingRows: LensDefinition[] = [...state.lenses].filter(
-                                (row) => !lensesToDelete.includes(row.id)
-                            )
-
-                            return {
-                                ...state,
-                                lenses: remainingRows,
-                            }
-                        })
-                    },
-                    duplicateLenses(lensesToDuplicate: readonly SelectedItem[]) {
-                        set((state) => {
-                            const newLenses: LensDefinition[] = compact(
-                                lensesToDuplicate.map((id) => {
-                                    const existingRow = state.lenses.find((row) => row.id === id)
-
-                                    if (!existingRow) {
-                                        console.error('Could not find row to be duplicated ', id)
-                                        return undefined
-                                    }
-
-                                    return createLensDefinition({
-                                        ...existingRow,
-                                        id: idGenerator.getNext(),
-                                        name: `${existingRow.name} copy`,
-                                        distance: state.distance,
-                                        units: state.units,
-                                    })
-                                })
-                            )
-
-                            if (newLenses.length === 0) {
-                                return state
-                            }
-
-                            return {
-                                ...state,
-                                lenses: [...state.lenses, ...newLenses],
-                            }
-                        })
-                    },
-                    setDistance(newValue: Distance) {
-                        set((state) => ({
+                        return {
                             ...state,
-                            distance: newValue,
+                            lenses: newLenses,
+                        }
+                    })
+                },
+                deleteLenses(lensesToDelete: readonly SelectedItem[]) {
+                    set((state) => {
+                        if (lensesToDelete.length === 0) {
+                            return state
+                        }
 
-                            // Update all stored lenses by recalculating their depths of field
-                            lenses: state.lenses.map((lens) =>
-                                createLensDefinition({
-                                    ...lens,
-                                    distance: newValue,
+                        const remainingRows: LensDefinition[] = [...state.lenses].filter(
+                            (row) => !lensesToDelete.includes(row.id)
+                        )
+
+                        return {
+                            ...state,
+                            lenses: remainingRows,
+                        }
+                    })
+                },
+                duplicateLenses(lensesToDuplicate: readonly SelectedItem[]) {
+                    set((state) => {
+                        const newLenses: LensDefinition[] = compact(
+                            lensesToDuplicate.map((id) => {
+                                const existingRow = state.lenses.find((row) => row.id === id)
+
+                                if (!existingRow) {
+                                    console.error('Could not find row to be duplicated ', id)
+                                    return undefined
+                                }
+
+                                return createLensDefinition({
+                                    ...existingRow,
+                                    id: idGenerator.getNext(),
+                                    name: `${existingRow.name} copy`,
+                                    distance: state.distance,
                                     units: state.units,
                                 })
-                            ),
-                        }))
-                    },
-                    setUnits(newValue: Units) {
-                        set((state) => ({
-                            ...state,
-                            units: newValue,
-                            // Update all stored lenses by recalculating their depths of field
+                            })
+                        )
 
-                            lenses: state.lenses.map((lens) =>
-                                createLensDefinition({
-                                    ...lens,
-                                    distance: state.distance,
-                                    units: newValue,
-                                })
-                            ),
-                        }))
-                    },
+                        if (newLenses.length === 0) {
+                            return state
+                        }
+
+                        return {
+                            ...state,
+                            lenses: [...state.lenses, ...newLenses],
+                        }
+                    })
+                },
+                setDistance(newValue: Distance) {
+                    set((state) => ({
+                        ...state,
+                        distance: newValue,
+
+                        // Update all stored lenses by recalculating their depths of field
+                        lenses: state.lenses.map((lens) =>
+                            createLensDefinition({
+                                ...lens,
+                                distance: newValue,
+                                units: state.units,
+                            })
+                        ),
+                    }))
+                },
+                setUnits(newValue: Units) {
+                    set((state) => ({
+                        ...state,
+                        units: newValue,
+                        // Update all stored lenses by recalculating their depths of field
+
+                        lenses: state.lenses.map((lens) =>
+                            createLensDefinition({
+                                ...lens,
+                                distance: state.distance,
+                                units: newValue,
+                            })
+                        ),
+                    }))
                 },
             }),
             {

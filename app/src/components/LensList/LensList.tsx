@@ -7,6 +7,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { ChangeEvent, MouseEvent, useState } from 'react'
+import useStore from '../../store/store'
 import { Header } from './Header'
 import Row from './Row/Row'
 import { Toolbar } from './Toolbar'
@@ -43,25 +44,12 @@ function getComparator<Key extends ColumnName>(
         : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-export default function LensList({
-    units,
-    lenses,
-    addLens,
-    updateLens,
-    deleteLenses,
-    duplicateLenses,
-}: {
-    units: Units
-    lenses: LensDefinition[]
-    addLens: () => void
-    updateLens: (lens: LensDefinition) => void
-    duplicateLenses: (lensesToDuplicate: readonly SelectedItem[]) => void
-    deleteLenses: (lensesToDelete: readonly SelectedItem[]) => void
-}) {
+export default function LensList() {
     const [order, setOrder] = useState<Order>('asc')
     const [orderBy, setOrderBy] = useState<ColumnName>('id')
     const [selected, setSelected] = useState<readonly SelectedItem[]>([])
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'))
+    const { lenses, units, addLens, deleteLenses, duplicateLenses } = useStore()
 
     const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
         const isAsc = orderBy === property && order === 'asc'
@@ -116,14 +104,7 @@ export default function LensList({
                     />
                     <TableBody>
                         {lenses.sort(getComparator(order, orderBy)).map((row) => (
-                            <Row
-                                key={row.name}
-                                row={row}
-                                isSelected={isSelected(row.id)}
-                                onRowClick={onRowClick}
-                                updateLens={updateLens}
-                                units={units}
-                            />
+                            <Row key={row.name} row={row} isSelected={isSelected(row.id)} onRowClick={onRowClick} />
                         ))}
                         <TableRow
                             style={{

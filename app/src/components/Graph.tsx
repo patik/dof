@@ -4,6 +4,7 @@ import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
+import useStore from '../store/store'
 import { feetAndInchesString, feetString } from '../utilities/conversion'
 import { fullList } from './sensorList'
 
@@ -27,7 +28,8 @@ function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
     return allValues
 }
 
-export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units }) {
+export function Graph() {
+    const { lenses, units } = useStore()
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])

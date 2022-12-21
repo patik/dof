@@ -1,18 +1,13 @@
 import { InputAdornment, TextField } from '@mui/material'
 import { ChangeEvent, ChangeEventHandler } from 'react'
+import useStore from '../store/store'
 
-export default function Distance({
-    units,
-    distance,
-    onDistanceChange,
-}: {
-    units: Units
-    distance: Distance
-    onDistanceChange: (newValue: Distance) => void
-}) {
+export default function Distance() {
+    const { units, distance, setDistance } = useStore()
+
     const handleDistanceChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
         if (parseFloat(event.target.value)) {
-            onDistanceChange(parseFloat(event.target.value))
+            setDistance(parseFloat(event.target.value))
         }
     }
 

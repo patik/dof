@@ -1,6 +1,7 @@
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
+import useStore from '../../../store/store'
 import { metersToFeet } from '../../../utilities/conversion'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
@@ -11,15 +12,12 @@ export default function Row({
     row,
     isSelected,
     onRowClick,
-    updateLens,
-    units,
 }: {
     row: LensDefinition
     isSelected: boolean
     onRowClick: (id: LensDefinition['id']) => void
-    updateLens: (lens: LensDefinition) => void
-    units: Units
 }) {
+    const { units, updateLens } = useStore()
     const labelId = `enhanced-table-checkbox-${row.name}`
     const setAperture = (aperture: LensDefinition['aperture']) => {
         updateLens({ ...row, aperture })

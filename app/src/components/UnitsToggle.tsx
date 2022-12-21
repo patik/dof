@@ -1,12 +1,13 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
+import useStore from '../store/store'
 
 function UnitsToggleButton({
-    units,
     onChange,
 }: {
-    units: Units
     onChange: (_event: React.MouseEvent<HTMLElement>, newAlignment: Units | null) => void
 }) {
+    const { units } = useStore()
+
     return (
         <ToggleButtonGroup exclusive color="primary" value={units} onChange={onChange} aria-label="Units">
             <ToggleButton value="metric">Metric (meters)</ToggleButton>
@@ -15,18 +16,14 @@ function UnitsToggleButton({
     )
 }
 
-export default function UnitsToggle({
-    units,
-    onUnitsChange,
-}: {
-    units: Units
-    onUnitsChange: (newValue: Units) => void
-}) {
+export default function UnitsToggle() {
+    const { setUnits } = useStore()
+
     const handleUnitsChange = (_event: React.MouseEvent<HTMLElement>, newUnits: Units | null) => {
         if (newUnits !== null) {
-            onUnitsChange(newUnits)
+            setUnits(newUnits)
         }
     }
 
-    return <UnitsToggleButton units={units} onChange={handleUnitsChange} />
+    return <UnitsToggleButton onChange={handleUnitsChange} />
 }

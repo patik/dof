@@ -22,7 +22,6 @@ export default function SensorCell({
     setSensorKey: (a: SensorKey) => void
 }) {
     const onChange = (event: SelectChangeEvent<SensorKey>) => {
-        console.log('on sensor change ', event, event.target.value)
         if (isSensorKey(event.target.value)) {
             setSensorKey(event.target.value)
         }
