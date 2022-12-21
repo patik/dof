@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery } from '@mui/material'
-import { Theme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
@@ -28,7 +28,8 @@ function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
 }
 
 export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units }) {
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
     const data: Serie[] = useMemo(
         () =>
@@ -101,19 +102,19 @@ export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units })
                 legends: {
                     title: {
                         text: {
-                            fill: '#ffffff',
+                            fill: theme.palette.text.primary,
                         },
                     },
                 },
                 axis: {
                     legend: {
                         text: {
-                            fill: '#ffffff',
+                            fill: theme.palette.text.primary,
                         },
                     },
                     ticks: {
                         text: {
-                            fill: '#ffffff',
+                            fill: theme.palette.text.primary,
                         },
                     },
                 },
@@ -133,16 +134,17 @@ export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units })
                     itemsSpacing: 0,
                     itemDirection: 'left-to-right',
                     itemWidth: 80,
-                    itemHeight: 20,
+                    itemHeight: 24,
                     itemOpacity: 1,
+                    itemTextColor: theme.palette.text.primary,
                     symbolSize: 16,
                     symbolShape: 'circle',
-                    symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                    symbolBorderColor: 'rgba(0, 0, 0, 0.5)',
                     effects: [
                         {
                             on: 'hover',
                             style: {
-                                itemBackground: 'rgba(0, 0, 0, .5)',
+                                itemBackground: 'rgba(0, 0, 0, 0.5)',
                                 itemOpacity: 1,
                             },
                         },
@@ -157,9 +159,25 @@ export function Graph({ lenses, units }: { lenses: LensInputs[]; units: Units })
                 const distText = units === 'imperial' ? `${feetString(Number(dist))} away` : `${dist} meters away`
 
                 return (
-                    <Box sx={{ bgcolor: props.point.borderColor }}>
-                        <Typography>{name}</Typography>
-                        <Typography>{`DoF is ${dofText} for a subject that is ${distText}`}</Typography>
+                    <Box
+                        sx={{
+                            bgcolor: props.point.borderColor,
+                            p: 2,
+                            borderRadius: (theme) => theme.shape.borderRadius,
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                color: (theme) => theme.palette.getContrastText(props.point.borderColor),
+                            }}
+                        >
+                            {name}
+                        </Typography>
+                        <Typography
+                            sx={{
+                                color: (theme) => theme.palette.getContrastText(props.point.borderColor),
+                            }}
+                        >{`DoF is ${dofText} for a subject that is ${distText}`}</Typography>
                     </Box>
                 )
             }}
