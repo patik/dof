@@ -44,7 +44,7 @@ function getComparator<Key extends ColumnName>(
         : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-export default function LensList() {
+export default function LensTable() {
     const { order, orderBy } = useTableStore()
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'))
     const { lenses, addLens } = useLensDataStore()
@@ -53,7 +53,7 @@ export default function LensList() {
         <Paper sx={{ width: '100%', maxWidth: isDesktop ? 960 : undefined, mb: 2 }}>
             <Toolbar />
             <TableContainer>
-                <Table aria-labelledby="tableTitle" size="medium">
+                <Table aria-labelledby="tableTitle" size="small">
                     <Header />
                     <TableBody>
                         {lenses.sort(getComparator(order, orderBy)).map((row) => (

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import Distance from './Distance'
 import { Graph } from './Graph'
-import LensList from './LensList/LensList'
+import LensTable from './LensTable/LensList'
 import UnitsToggle from './UnitsToggle'
 
 export default function Main() {
@@ -12,7 +12,7 @@ export default function Main() {
             </Box>
 
             <Box mb={2}>
-                <LensList />
+                <LensTable />
             </Box>
 
             <Box mb={2} textAlign="right">
