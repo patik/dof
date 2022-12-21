@@ -6,8 +6,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import useLensDataStore from '../../store/lensData'
-import useTableStore from '../../store/table'
+import useLensStore from '../../store'
 import { Header } from './Header'
 import Row from './Row/Row'
 import { Toolbar } from './Toolbar'
@@ -45,9 +44,8 @@ function getComparator<Key extends ColumnName>(
 }
 
 export default function LensTable() {
-    const { order, orderBy } = useTableStore()
+    const { lenses, addLens, order, orderBy } = useLensStore()
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'))
-    const { lenses, addLens } = useLensDataStore()
 
     return (
         <Paper sx={{ width: '100%', maxWidth: isDesktop ? 960 : undefined, mb: 2 }}>

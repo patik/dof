@@ -1,8 +1,7 @@
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
-import useLensDataStore from '../../../store/lensData'
-import useTableStore from '../../../store/table'
+import useLensStore from '../../../store'
 import { metersToFeet } from '../../../utilities/conversion'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
@@ -10,8 +9,7 @@ import NameCell from './NameCell'
 import SensorCell from './SensorCell'
 
 export default function Row({ lens }: { lens: LensDefinition }) {
-    const { units } = useLensDataStore()
-    const { selected, setSelected, isSelected, getRowLabelId } = useTableStore()
+    const { units, selected, setSelected, isSelected, getRowLabelId } = useLensStore()
     const displayDof = units === 'imperial' ? metersToFeet(lens.depthOfField) : lens.depthOfField
     const isRowSelected = isSelected(lens.id)
 

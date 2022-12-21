@@ -7,12 +7,10 @@ import MuiToolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import React from 'react'
-import useLensDataStore from '../../store/lensData'
-import useTableStore from '../../store/table'
+import useLensStore from '../../store'
 
 export function Toolbar() {
-    const { deleteLenses, duplicateLenses } = useLensDataStore()
-    const { selected } = useTableStore()
+    const { deleteLenses, duplicateLenses, selected } = useLensStore()
 
     return (
         <MuiToolbar

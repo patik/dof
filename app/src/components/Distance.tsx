@@ -1,9 +1,9 @@
 import { InputAdornment, TextField } from '@mui/material'
 import { ChangeEvent, ChangeEventHandler } from 'react'
-import useLensDataStore from '../store/lensData'
+import useLensStore from '../store'
 
 export default function Distance() {
-    const { units, distance, setDistance } = useLensDataStore()
+    const { units, distance, setDistance } = useLensStore()
 
     const handleDistanceChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
         if (parseFloat(event.target.value)) {

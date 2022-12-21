@@ -1,11 +1,9 @@
 import { TableCell, TextField } from '@mui/material'
 import { ChangeEvent } from 'react'
-import useLensDataStore from '../../../store/lensData'
-import useTableStore from '../../../store/table'
+import useLensStore from '../../../store'
 
 export default function NameCell({ lens }: { lens: LensDefinition }) {
-    const { updateLens } = useLensDataStore()
-    const { getRowLabelId } = useTableStore()
+    const { updateLens, getRowLabelId } = useLensStore()
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         updateLens({ ...lens, name: event.target.value })
     }

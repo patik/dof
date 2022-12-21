@@ -5,9 +5,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import React, { ChangeEvent, useMemo } from 'react'
-import useLensDataStore from '../../store/lensData'
-import useTableStore from '../../store/table'
+import { ChangeEvent, useMemo } from 'react'
+import useLensStore from '../../store'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -43,8 +42,7 @@ const headCells: readonly HeadCell[] = [
 ]
 
 export function Header() {
-    const { units, lenses } = useLensDataStore()
-    const { order, orderBy, selected, setSelected, setSorting } = useTableStore()
+    const { units, lenses, order, orderBy, selected, setSelected, setSorting } = useLensStore()
     const numSelected = selected.length
     const rowCount = lenses.length
     const handleSelectAllClick = useMemo(

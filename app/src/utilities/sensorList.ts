@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Image_sensor_format
 // http://www.dpreview.com/previews/panasonic-lumix-dmc-gm1/images/Sensors.png
-export const fullList = {
+const fullList = {
     iPhone5: {
         name: 'iPhone 5',
         value: 7.61,
@@ -67,4 +67,6 @@ export const fullList = {
     },
 }
 
-export const shortList: SensorKey[] = ['iPhone5S', 'mft', 'APSC', 'full']
+export type SensorKey = keyof typeof fullList
+
+export default fullList

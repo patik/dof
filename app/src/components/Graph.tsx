@@ -4,9 +4,9 @@ import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
-import useLensDataStore from '../store/lensData'
+import useLensStore from '../store'
 import { feetAndInchesString, feetString } from '../utilities/conversion'
-import { fullList } from './sensorList'
+import sensorList from '../utilities/sensorList'
 
 function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
     if (units === 'imperial') {
@@ -29,7 +29,7 @@ function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
 }
 
 export function Graph() {
-    const { lenses, units } = useLensDataStore()
+    const { lenses, units } = useLensStore()
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
@@ -37,7 +37,7 @@ export function Graph() {
         () =>
             lenses.map((lens) => {
                 const { focalLength, aperture, sensorKey, id } = lens
-                const cropFactor: number = fullList[sensorKey].value
+                const cropFactor: number = sensorList[sensorKey].value
                 const datum: Serie = {
                     id: lens.name,
                     data: compact(

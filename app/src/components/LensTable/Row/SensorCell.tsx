@@ -1,6 +1,6 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
-import useLensDataStore from '../../../store/lensData'
-import { fullList } from '../../sensorList'
+import useLensStore from '../../../store'
+import sensorList from '../../../utilities/sensorList'
 
 /**
  * Exposes type annotations to an Object.keys array
@@ -12,11 +12,11 @@ function objectKeysArray<T extends Record<string | number, unknown>>(
 }
 
 function isSensorKey(str: string): str is SensorKey {
-    return Boolean(str in fullList)
+    return Boolean(str in sensorList)
 }
 
 export default function SensorCell({ lens }: { lens: LensDefinition }) {
-    const { updateLens } = useLensDataStore()
+    const { updateLens } = useLensStore()
     const onChange = (event: SelectChangeEvent<SensorKey>) => {
         if (isSensorKey(event.target.value)) {
             updateLens({ ...lens, sensorKey: event.target.value })
@@ -27,8 +27,8 @@ export default function SensorCell({ lens }: { lens: LensDefinition }) {
         <TableCell align="right">
             <FormControl fullWidth>
                 <Select value={lens.sensorKey} onChange={onChange}>
-                    {objectKeysArray(fullList).map((key) => {
-                        const { name } = fullList[key]
+                    {objectKeysArray(sensorList).map((key) => {
+                        const { name } = sensorList[key]
 
                         return (
                             <MenuItem value={key} key={key}>

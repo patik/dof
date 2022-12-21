@@ -1,9 +1,9 @@
 import { InputAdornment, TableCell, TextField } from '@mui/material'
 import { ChangeEvent } from 'react'
-import useLensDataStore from '../../../store/lensData'
+import useLensStore from '../../../store'
 
 export default function FocalLengthCell({ lens }: { lens: LensDefinition }) {
-    const { updateLens } = useLensDataStore()
+    const { updateLens } = useLensStore()
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         updateLens({ ...lens, focalLength: parseFloat(event.target.value) })
     }
