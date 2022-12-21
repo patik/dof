@@ -5,8 +5,9 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import React from 'react'
+import React, { ChangeEvent, useMemo } from 'react'
 import useLensDataStore from '../../store/lensData'
+import useTableStore from '../../store/table'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -41,20 +42,27 @@ const headCells: readonly HeadCell[] = [
     },
 ]
 
-interface EnhancedTableProps {
-    numSelected: number
-    onRequestSort: (event: React.MouseEvent<unknown>, property: ColumnName) => void
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
-    order: Order
-    orderBy: string
-    rowCount: number
-}
+export function Header() {
+    const { units, lenses } = useLensDataStore()
+    const { order, orderBy, selected, setSelected, setSorting } = useTableStore()
+    const numSelected = selected.length
+    const rowCount = lenses.length
+    const handleSelectAllClick = useMemo(
+        () => (event: ChangeEvent<HTMLInputElement>) => {
+            if (event.target.checked) {
+                const newSelected = lenses.map((n) => n.id)
 
-export function Header(props: EnhancedTableProps) {
-    const { units } = useLensDataStore()
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props
-    const createSortHandler = (property: ColumnName) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property)
+                setSelected(newSelected)
+
+                return
+            }
+
+            setSelected([])
+        },
+        [lenses, setSelected]
+    )
+    const createSortHandler = (property: ColumnName) => () => {
+        setSorting(property)
     }
 
     return (
@@ -65,7 +73,7 @@ export function Header(props: EnhancedTableProps) {
                         color="primary"
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
+                        onChange={handleSelectAllClick}
                         inputProps={{
                             'aria-label': 'Select all lenses',
                         }}

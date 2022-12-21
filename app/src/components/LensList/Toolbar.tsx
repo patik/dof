@@ -7,14 +7,13 @@ import MuiToolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import React from 'react'
+import useLensDataStore from '../../store/lensData'
+import useTableStore from '../../store/table'
 
-interface EnhancedTableToolbarProps {
-    selected: readonly SelectedItem[]
-    deleteLenses: (selectedIds: readonly SelectedItem[]) => void
-    duplicateLenses: (selectedIds: readonly SelectedItem[]) => void
-}
+export function Toolbar() {
+    const { deleteLenses, duplicateLenses } = useLensDataStore()
+    const { selected } = useTableStore()
 
-export function Toolbar({ selected, deleteLenses, duplicateLenses }: EnhancedTableToolbarProps) {
     return (
         <MuiToolbar
             sx={{

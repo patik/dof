@@ -9,17 +9,28 @@ import FocalLengthCell from './FocalLengthCell'
 import NameCell from './NameCell'
 import SensorCell from './SensorCell'
 
-export default function Row({
-    lens,
-    onRowClick,
-}: {
-    lens: LensDefinition
-    onRowClick: (id: LensDefinition['id']) => void
-}) {
+export default function Row({ lens }: { lens: LensDefinition }) {
     const { units } = useLensDataStore()
-    const { isSelected, getRowLabelId } = useTableStore()
+    const { selected, setSelected, isSelected, getRowLabelId } = useTableStore()
     const displayDof = units === 'imperial' ? metersToFeet(lens.depthOfField) : lens.depthOfField
     const isRowSelected = isSelected(lens.id)
+
+    const onRowClick = (id: SelectedItem) => {
+        const selectedIndex = selected.indexOf(id)
+        let newSelected: readonly SelectedItem[] = []
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, id)
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1))
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1))
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1))
+        }
+
+        setSelected(newSelected)
+    }
 
     return (
         <MuiTableRow
