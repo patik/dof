@@ -1,15 +1,9 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
 import { apertureMap } from 'dof'
-import useStore from '../../../store/store'
+import useLensDataStore from '../../../store/lensData'
 
-export default function ApertureCell({ id }: { id: LensDefinition['id'] }) {
-    const { lenses, updateLens } = useStore()
-    const lens = lenses.find((l) => l.id === id)
-
-    if (!lens) {
-        return null
-    }
-
+export default function ApertureCell({ lens }: { lens: LensDefinition }) {
+    const { updateLens } = useLensDataStore()
     const onChange = (event: SelectChangeEvent<string>) => {
         updateLens({ ...lens, aperture: event.target.value })
     }

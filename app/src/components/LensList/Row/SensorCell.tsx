@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
-import useStore from '../../../store/store'
+import useLensDataStore from '../../../store/lensData'
 import { fullList } from '../../sensorList'
 
 /**
@@ -15,14 +15,8 @@ function isSensorKey(str: string): str is SensorKey {
     return Boolean(str in fullList)
 }
 
-export default function SensorCell({ id }: { id: LensDefinition['id'] }) {
-    const { lenses, updateLens } = useStore()
-    const lens = lenses.find((l) => l.id === id)
-
-    if (!lens) {
-        return null
-    }
-
+export default function SensorCell({ lens }: { lens: LensDefinition }) {
+    const { updateLens } = useLensDataStore()
     const onChange = (event: SelectChangeEvent<SensorKey>) => {
         if (isSensorKey(event.target.value)) {
             updateLens({ ...lens, sensorKey: event.target.value })

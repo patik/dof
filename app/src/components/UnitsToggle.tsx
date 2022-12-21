@@ -1,12 +1,12 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
-import useStore from '../store/store'
+import useLensDataStore from '../store/lensData'
 
 function UnitsToggleButton({
     onChange,
 }: {
     onChange: (_event: React.MouseEvent<HTMLElement>, newAlignment: Units | null) => void
 }) {
-    const { units } = useStore()
+    const { units } = useLensDataStore()
 
     return (
         <ToggleButtonGroup exclusive color="primary" value={units} onChange={onChange} aria-label="Units">
@@ -17,7 +17,7 @@ function UnitsToggleButton({
 }
 
 export default function UnitsToggle() {
-    const { setUnits } = useStore()
+    const { setUnits } = useLensDataStore()
 
     const handleUnitsChange = (_event: React.MouseEvent<HTMLElement>, newUnits: Units | null) => {
         if (newUnits !== null) {

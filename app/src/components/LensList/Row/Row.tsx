@@ -1,7 +1,8 @@
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
-import useStore from '../../../store/store'
+import useLensDataStore from '../../../store/lensData'
+import useTableStore from '../../../store/table'
 import { metersToFeet } from '../../../utilities/conversion'
 import ApertureCell from './ApertureCell'
 import FocalLengthCell from './FocalLengthCell'
@@ -9,36 +10,41 @@ import NameCell from './NameCell'
 import SensorCell from './SensorCell'
 
 export default function Row({
-    row,
-    isSelected,
+    lens,
     onRowClick,
 }: {
-    row: LensDefinition
-    isSelected: boolean
+    lens: LensDefinition
     onRowClick: (id: LensDefinition['id']) => void
 }) {
-    const { units } = useStore()
-    const labelId = `enhanced-table-checkbox-${row.name}`
-
-    const dof = units === 'imperial' ? metersToFeet(row.depthOfField) : row.depthOfField
+    const { units } = useLensDataStore()
+    const { isSelected, getRowLabelId } = useTableStore()
+    const displayDof = units === 'imperial' ? metersToFeet(lens.depthOfField) : lens.depthOfField
+    const isRowSelected = isSelected(lens.id)
 
     return (
-        <MuiTableRow hover role="checkbox" aria-checked={isSelected} tabIndex={-1} key={row.name} selected={isSelected}>
+        <MuiTableRow
+            hover
+            role="checkbox"
+            aria-checked={isRowSelected}
+            tabIndex={-1}
+            key={lens.name}
+            selected={isRowSelected}
+        >
             <TableCell padding="checkbox">
                 <Checkbox
-                    onChange={() => onRowClick(row.id)}
+                    onChange={() => onRowClick(lens.id)}
                     color="primary"
-                    checked={isSelected}
+                    checked={isRowSelected}
                     inputProps={{
-                        'aria-labelledby': labelId,
+                        'aria-labelledby': getRowLabelId(lens),
                     }}
                 />
             </TableCell>
-            <NameCell id={row.id} labelId={labelId} />
-            <FocalLengthCell id={row.id} />
-            <ApertureCell id={row.id} />
-            <SensorCell id={row.id} />
-            <TableCell align="right">{dof}</TableCell>
+            <NameCell lens={lens} />
+            <FocalLengthCell lens={lens} />
+            <ApertureCell lens={lens} />
+            <SensorCell lens={lens} />
+            <TableCell align="right">{displayDof}</TableCell>
         </MuiTableRow>
     )
 }

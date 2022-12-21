@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 import React from 'react'
-import useStore from '../../store/store'
+import useLensDataStore from '../../store/lensData'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -51,7 +51,7 @@ interface EnhancedTableProps {
 }
 
 export function Header(props: EnhancedTableProps) {
-    const { units } = useStore()
+    const { units } = useLensDataStore()
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props
     const createSortHandler = (property: ColumnName) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property)
@@ -67,7 +67,7 @@ export function Header(props: EnhancedTableProps) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            'aria-label': 'select all lenses',
+                            'aria-label': 'Select all lenses',
                         }}
                     />
                 </TableCell>

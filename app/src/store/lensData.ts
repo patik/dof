@@ -65,7 +65,7 @@ const initialLensState: LensDefinition[] = [
     }),
 ]
 
-interface State {
+interface LensDataState {
     units: Units
     distance: Distance
     lenses: LensDefinition[]
@@ -77,7 +77,7 @@ interface State {
     setUnits: (newValue: Units) => void
 }
 
-const useStore = create<State>()(
+const useLensDataStore = create<LensDataState>()(
     devtools(
         persist(
             (set) => ({
@@ -197,10 +197,10 @@ const useStore = create<State>()(
                 },
             }),
             {
-                name: 'dof-storage',
+                name: 'dof-lens-storage',
             }
         )
     )
 )
 
-export default useStore
+export default useLensDataStore

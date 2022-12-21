@@ -6,8 +6,9 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import { ChangeEvent, MouseEvent, useState } from 'react'
-import useStore from '../../store/store'
+import { ChangeEvent, MouseEvent } from 'react'
+import useLensDataStore from '../../store/lensData'
+import useTableStore from '../../store/table'
 import { Header } from './Header'
 import Row from './Row/Row'
 import { Toolbar } from './Toolbar'
@@ -45,17 +46,15 @@ function getComparator<Key extends ColumnName>(
 }
 
 export default function LensList() {
-    const [order, setOrder] = useState<Order>('asc')
-    const [orderBy, setOrderBy] = useState<ColumnName>('id')
-    const [selected, setSelected] = useState<readonly SelectedItem[]>([])
+    const { order, orderBy, selected, setSorting, setSelected } = useTableStore()
+    // const [_order, setOrder] = useState<Order>('asc')
+    // const [_orderBy, setOrderBy] = useState<ColumnName>('id')
+    // const [_selected, setSelected] = useState<readonly SelectedItem[]>([])
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'))
-    const { lenses, addLens, deleteLenses, duplicateLenses } = useStore()
+    const { lenses, addLens, deleteLenses, duplicateLenses } = useLensDataStore()
 
     const handleRequestSort = (_event: MouseEvent<unknown>, property: ColumnName) => {
-        const isAsc = orderBy === property && order === 'asc'
-
-        setOrder(isAsc ? 'desc' : 'asc')
-        setOrderBy(property)
+        setSorting(property)
     }
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +65,7 @@ export default function LensList() {
 
             return
         }
+
         setSelected([])
     }
 
@@ -86,8 +86,6 @@ export default function LensList() {
         setSelected(newSelected)
     }
 
-    const isSelected = (id: SelectedItem) => selected.indexOf(id) !== -1
-
     return (
         <Paper sx={{ width: '100%', maxWidth: isDesktop ? 960 : undefined, mb: 2 }}>
             <Toolbar selected={selected} deleteLenses={deleteLenses} duplicateLenses={duplicateLenses} />
@@ -103,7 +101,7 @@ export default function LensList() {
                     />
                     <TableBody>
                         {lenses.sort(getComparator(order, orderBy)).map((row) => (
-                            <Row key={row.name} row={row} isSelected={isSelected(row.id)} onRowClick={onRowClick} />
+                            <Row key={row.name} lens={row} onRowClick={onRowClick} />
                         ))}
                         <TableRow
                             style={{
