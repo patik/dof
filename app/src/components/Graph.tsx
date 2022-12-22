@@ -61,7 +61,6 @@ export function Graph() {
                 const { focalLength, aperture, sensorKey, id } = lens
                 const cropFactor: number = sensorList[sensorKey].value
                 const datum: Serie = {
-                    // TODO: De-dupe the IDs
                     id: uniqueNames[lens.id],
                     data: compact(
                         distances.map((distance) => {

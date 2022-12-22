@@ -118,7 +118,7 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                 return {
                     ...state,
                     lenses: remainingRows,
-                    // Clear table row selection
+                    // Clear table row selection (i.e. to reset the Select All box, and to hide the toolbar)
                     selected: [],
                 }
             })

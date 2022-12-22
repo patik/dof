@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import React from 'react'
 import useDoFStore from '../../store'
 
-export function Toolbar() {
+export function TopToolbar() {
     const { deleteLenses, duplicateLenses, selected } = useDoFStore()
 
     return (

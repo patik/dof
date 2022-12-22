@@ -1,14 +1,12 @@
-import { Button } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
 import useDoFStore from '../../store'
+import { BottomToolbar } from './BottomToolbar'
 import { Header } from './Header'
 import Row from './Row/Row'
-import { Toolbar } from './Toolbar'
+import { TopToolbar } from './TopToolbar'
 
 function removeAperturePrefix(value: LensDefinition['aperture']) {
     return value.replace(/^f\//, '')
@@ -47,11 +45,11 @@ function getComparator<Key extends ColumnName>(
 }
 
 export default function LensTable() {
-    const { lenses, addLens, order, orderBy } = useDoFStore()
+    const { lenses, order, orderBy } = useDoFStore()
 
     return (
         <Paper sx={{ width: '100%', maxWidth: '960px', mb: 2 }}>
-            <Toolbar />
+            <TopToolbar />
             <TableContainer>
                 <Table aria-labelledby="tableTitle" size="small">
                     <Header />
@@ -59,14 +57,10 @@ export default function LensTable() {
                         {lenses.sort(getComparator(order, orderBy)).map((row) => (
                             <Row key={row.id} lens={row} />
                         ))}
-                        <TableRow>
-                            <TableCell colSpan={6} align="center">
-                                <Button onClick={() => addLens()}>Add Lens</Button>
-                            </TableCell>
-                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
+            <BottomToolbar />
         </Paper>
     )
 }

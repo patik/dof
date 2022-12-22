@@ -1,8 +1,7 @@
-import { del, get, set } from 'idb-keyval' // can use anything: IndexedDB, Ionic Storage, etc.
+import { del, get, set } from 'idb-keyval'
 
 const STORAGE_KEY = 'dof-storage'
 
-// Custom storage object
 const storage = {
     getItem: async (): Promise<string | null> => {
         return (await get(STORAGE_KEY)) || null
