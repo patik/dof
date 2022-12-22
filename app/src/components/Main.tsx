@@ -1,10 +1,15 @@
 import { Box } from '@mui/material'
+import { useReadFromStorage } from '../utilities/useReadFromStorage'
+import { useWriteToFromStorage } from '../utilities/useWriteToFromStorage'
 import Distance from './Distance'
 import { Graph } from './Graph'
 import LensTable from './LensTable/LensTable'
 import UnitsToggle from './UnitsToggle'
 
 export default function Main() {
+    useReadFromStorage()
+    useWriteToFromStorage()
+
     return (
         <Box p={2}>
             <Box mb={2} textAlign="right">

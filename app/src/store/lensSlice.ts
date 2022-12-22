@@ -4,6 +4,7 @@ import { StateCreator } from 'zustand'
 import { rounded } from '../utilities/conversion'
 import { IDGenerator } from '../utilities/IDGenerator'
 import sensorList from '../utilities/sensorList'
+import { StorageState } from './storageSlice'
 import { TableState } from './tableSlice'
 
 const idGenerator = new IDGenerator()
@@ -63,7 +64,10 @@ const defaultLensData: (numLenses: number) => DefaultLensData = (numLenses = 0) 
     sensorKey: 'full',
 })
 
-export const createLensDataSlice: StateCreator<TableState & LensDataState, [], [], LensDataState> = (set, get) => {
+export const createLensDataSlice: StateCreator<TableState & LensDataState & StorageState, [], [], LensDataState> = (
+    set,
+    get
+) => {
     return {
         units: 'metric',
         distance: 5,

@@ -89,11 +89,7 @@ export default function LensTable() {
                         {lenses.sort(getComparator(order, orderBy)).map((row) => (
                             <Row key={row.id} lens={row} />
                         ))}
-                        <TableRow
-                            style={{
-                                height: 53,
-                            }}
-                        >
+                        <TableRow>
                             <TableCell colSpan={6} align="center">
                                 <Button onClick={() => addLens()}>Add Lens</Button>
                             </TableCell>

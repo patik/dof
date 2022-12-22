@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand'
 import { LensDataState } from './lensSlice'
+import { StorageState } from './storageSlice'
 
 export interface TableState {
     order: Order
@@ -11,7 +12,10 @@ export interface TableState {
     getRowLabelId: (lens: LensDefinition) => string
 }
 
-export const createTableSlice: StateCreator<TableState & LensDataState, [], [], TableState> = (set, get) => ({
+export const createTableSlice: StateCreator<TableState & LensDataState & StorageState, [], [], TableState> = (
+    set,
+    get
+) => ({
     order: 'asc',
     orderBy: 'id',
     selected: [],
