@@ -1,6 +1,6 @@
 import { InputAdornment, TextField } from '@mui/material'
 import { ChangeEvent, ChangeEventHandler } from 'react'
-import useDoFStore from '../store'
+import useDoFStore from '../../store'
 
 export default function Distance() {
     const { units, distance, setDistance } = useDoFStore()

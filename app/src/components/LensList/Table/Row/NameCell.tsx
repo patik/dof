@@ -1,6 +1,6 @@
 import { TableCell, TextField } from '@mui/material'
 import { ChangeEvent } from 'react'
-import useDoFStore from '../../../store'
+import useDoFStore from '../../../../store'
 
 export default function NameCell({ lens }: { lens: LensDefinition }) {
     const { updateLens, getRowLabelId } = useDoFStore()

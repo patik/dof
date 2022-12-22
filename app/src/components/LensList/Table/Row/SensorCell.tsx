@@ -1,6 +1,6 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
-import useDoFStore from '../../../store'
-import sensorList from '../../../utilities/sensorList'
+import useDoFStore from '../../../../store'
+import sensorList from '../../../../utilities/sensorList'
 
 /**
  * Exposes type annotations to an Object.keys array

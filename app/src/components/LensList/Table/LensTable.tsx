@@ -2,11 +2,10 @@ import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
-import useDoFStore from '../../store'
-import { BottomToolbar } from './BottomToolbar'
+import useDoFStore from '../../../store'
+import { BottomToolbar } from '../BottomToolbar'
 import { Header } from './Header'
 import Row from './Row/Row'
-import { TopToolbar } from './TopToolbar'
 
 function removeAperturePrefix(value: LensDefinition['aperture']) {
     return value.replace(/^f\//, '')
@@ -49,7 +48,6 @@ export default function LensTable() {
 
     return (
         <Paper sx={{ width: '100%', maxWidth: '960px', mb: 2 }}>
-            <TopToolbar />
             <TableContainer>
                 <Table aria-labelledby="tableTitle" size="small">
                     <Header />

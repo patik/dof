@@ -4,9 +4,9 @@ import { ResponsiveLine, Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
-import useDoFStore from '../store'
-import { feetAndInchesString, feetString } from '../utilities/conversion'
-import sensorList from '../utilities/sensorList'
+import useDoFStore from '../../store'
+import { feetAndInchesString, feetString } from '../../utilities/conversion'
+import sensorList from '../../utilities/sensorList'
 
 function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
     if (units === 'imperial') {

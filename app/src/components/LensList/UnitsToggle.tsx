@@ -1,5 +1,5 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
-import useDoFStore from '../store'
+import useDoFStore from '../../store'
 
 function UnitsToggleButton({
     onChange,
@@ -10,8 +10,13 @@ function UnitsToggleButton({
 
     return (
         <ToggleButtonGroup exclusive color="primary" value={units} onChange={onChange} aria-label="Units" size="small">
-            <ToggleButton value="metric">Metric (meters)</ToggleButton>
-            <ToggleButton value="imperial">Imperial (feet)</ToggleButton>
+            <ToggleButton value="metric" title="Meters">
+                Metric
+            </ToggleButton>
+
+            <ToggleButton value="imperial" title="Feet">
+                Imperial
+            </ToggleButton>
         </ToggleButtonGroup>
     )
 }

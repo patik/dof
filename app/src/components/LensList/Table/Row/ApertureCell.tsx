@@ -1,6 +1,6 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent, TableCell } from '@mui/material'
 import { apertureMap } from 'dof'
-import useDoFStore from '../../../store'
+import useDoFStore from '../../../../store'
 
 export default function ApertureCell({ lens }: { lens: LensDefinition }) {
     const { updateLens } = useDoFStore()

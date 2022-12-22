@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 import { ChangeEvent, useMemo } from 'react'
-import useDoFStore from '../../store'
+import useDoFStore from '../../../store'
 
 const headCells: readonly HeadCell[] = [
     {
