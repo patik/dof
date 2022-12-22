@@ -1,14 +1,14 @@
 import { Box } from '@mui/material'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
-import { useWriteToFromStorage } from '../utilities/useWriteToFromStorage'
+import { useWriteToStorage } from '../utilities/useWriteToFromStorage'
 import Distance from './Distance'
 import { Graph } from './Graph'
 import LensTable from './LensTable/LensTable'
 import UnitsToggle from './UnitsToggle'
 
 export default function Main() {
-    useReadFromStorage()
-    useWriteToFromStorage()
+    const hasReadFromStorage = useReadFromStorage()
+    useWriteToStorage(hasReadFromStorage)
 
     return (
         <Box p={2}>

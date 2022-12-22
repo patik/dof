@@ -5,7 +5,6 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import { useEffect } from 'react'
 import useDoFStore from '../../store'
 import { Header } from './Header'
 import Row from './Row/Row'
@@ -49,35 +48,6 @@ function getComparator<Key extends ColumnName>(
 
 export default function LensTable() {
     const { lenses, addLens, order, orderBy } = useDoFStore()
-
-    useEffect(
-        () => {
-            if (lenses.length > 0) {
-                return
-            }
-
-            // Populate an empty table with some data
-            addLens({
-                focalLength: 35,
-                aperture: 'f/2',
-                sensorKey: 'full',
-            })
-
-            // This useEffect will run twice on dev, creating four lenses, so shortcircuit it to prevent tht
-            if (process.env.NODE_ENV !== 'development') {
-                return
-            }
-
-            addLens({
-                focalLength: 55,
-                aperture: 'f/1.4',
-                sensorKey: 'mft',
-            })
-        },
-        // Only run on first mount
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        []
-    )
 
     return (
         <Paper sx={{ width: '100%', maxWidth: '960px', mb: 2 }}>

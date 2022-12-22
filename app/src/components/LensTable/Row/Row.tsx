@@ -36,7 +36,7 @@ export default function Row({ lens }: { lens: LensDefinition }) {
             role="checkbox"
             aria-checked={isRowSelected}
             tabIndex={-1}
-            key={lens.name}
+            key={lens.id}
             selected={isRowSelected}
         >
             <TableCell padding="checkbox">

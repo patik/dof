@@ -4,7 +4,7 @@ import { TableState } from './tableSlice'
 import { pick } from 'lodash'
 
 export type LocalStorageData = {
-    state: Pick<TableState & LensDataState, 'lenses' | 'selected' | 'units' | 'distance' | 'order' | 'orderBy'>
+    state: Pick<TableState & LensDataState, 'lenses' | 'units' | 'distance' | 'order' | 'orderBy'>
     version: number
 }
 
@@ -14,21 +14,21 @@ export interface StorageState {
 }
 
 export const createStorageSlice: StateCreator<TableState & LensDataState & StorageState, [], [], StorageState> = (
-    set,
+    _set,
     get
 ) => ({
     extractForLocalStorage() {
         return {
-            state: pick(get(), ['lenses', 'selected', 'units', 'distance', 'order', 'orderBy']),
+            state: pick(get(), ['lenses', 'units', 'distance', 'order', 'orderBy']),
             version: 1,
         }
     },
     applyFromLocalStorage(partialState: LocalStorageData) {
-        const { selected, distance, lenses, orderBy, units } = partialState.state
+        const { distance, lenses, order, orderBy, units } = partialState.state
 
-        get().setSelected(selected)
+        console.log('[applyFromLocalStorage] A ', { distance, lenses, order, orderBy, units })
         get().setUnits(units)
-        get().setSorting(orderBy)
+        get().setSorting(orderBy, order)
         get().setDistance(distance)
 
         lenses.forEach(get().addLens)
