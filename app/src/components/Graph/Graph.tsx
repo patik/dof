@@ -1,88 +1,14 @@
-import { Box, Typography, useMediaQuery } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ResponsiveLine, Serie } from '@nivo/line'
-import { Lens } from 'dof'
-import { compact } from 'lodash'
-import { useMemo } from 'react'
 import useDoFStore from '../../store'
 import { feetAndInchesString, feetString } from '../../utilities/conversion'
-import sensorList from '../../utilities/sensorList'
-
-function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
-    if (units === 'imperial') {
-        const allValues = Array.from(Array(101).keys())
-
-        if (isMobile) {
-            return allValues.filter((v) => v % 10 === 0)
-        }
-
-        return allValues.filter((v) => v % 5 === 0)
-    }
-
-    const allValues = Array.from(Array(26).keys())
-
-    if (isMobile) {
-        return allValues.filter((v) => v % 2 === 0)
-    }
-
-    return allValues
-}
-
-type LensName = LensDefinition['name']
-
-// The Nivo chart needs a unique name for each lens because it uses that name as a React `key`. Also, it could be confusing for the user until they change one of the names.
-function getUniqueLensNames(lenses: LensDefinition[]): Record<LensDefinition['id'], LensDefinition['name']> {
-    const uniqueNameMap: Record<LensDefinition['id'], LensDefinition['name']> = {}
-
-    const getUniqueName = (name: LensName): LensName => {
-        if (Object.values(uniqueNameMap).includes(name)) {
-            return getUniqueName(`${name} (2)`)
-        }
-
-        return name
-    }
-
-    lenses.forEach((lens) => {
-        uniqueNameMap[lens.id] = getUniqueName(lens.name)
-    })
-
-    return uniqueNameMap
-}
+import { useData } from './useData'
 
 export function Graph() {
-    const { lenses, units } = useDoFStore()
+    const { units } = useDoFStore()
     const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-    const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
-    const uniqueNames = getUniqueLensNames(lenses)
-    const data: Serie[] = useMemo(
-        () =>
-            lenses.map((lens) => {
-                const { focalLength, aperture, sensorKey, id } = lens
-                const cropFactor: number = sensorList[sensorKey].value
-                const datum: Serie = {
-                    id: uniqueNames[lens.id],
-                    data: compact(
-                        distances.map((distance) => {
-                            const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
-
-                            // The graph doesn't handle infinite values well
-                            if (dofLength === Infinity) {
-                                return
-                            }
-
-                            return {
-                                x: distance,
-                                y: dofLength,
-                            }
-                        })
-                    ),
-                }
-
-                return datum
-            }),
-        [distances, lenses, uniqueNames]
-    )
+    const data: Serie[] = useData()
 
     return (
         <ResponsiveLine
