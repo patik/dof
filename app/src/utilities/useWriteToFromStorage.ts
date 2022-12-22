@@ -1,23 +1,20 @@
-import { cloneDeep } from 'lodash'
 import { useEffect } from 'react'
 import useDoFStore from '../store'
 import storage from './storage'
 
+/**
+ * Writes the state to local storage whenever it changes
+ */
 export function useWriteToStorage(hasReadFromStorage: boolean) {
-    // const [hasWritten, setHasWritten] = useState(false)
     const { extractForLocalStorage } = useDoFStore()
     const state = extractForLocalStorage()
 
     useEffect(() => {
-        if (!hasReadFromStorage /* || hasWritten */ || typeof window === 'undefined') {
-            console.log('skipping writing to storage ', { hasReadFromStorage })
+        if (!hasReadFromStorage || typeof window === 'undefined') {
             return
         }
 
         async function fetchData() {
-            // Don't read more than once
-            // setHasWritten(true)
-            console.log('writing to storage ', cloneDeep(state))
             await storage.setItem(
                 JSON.stringify({
                     state,

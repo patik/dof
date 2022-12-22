@@ -3,6 +3,9 @@ import useDoFStore from '../store'
 import { LocalStorageData } from '../store/storageSlice'
 import storage from './storage'
 
+/**
+ * Reads the state from local storage
+ */
 export function useReadFromStorage() {
     const [hasStartedReading, setHasStartedReading] = useState(false)
     const [hasFinishedReading, setHasFinishedReading] = useState(false)
@@ -10,8 +13,9 @@ export function useReadFromStorage() {
     const [hasFoundNoLensesInStorage, setHasFoundNoLensesInStorage] = useState(false)
 
     // Read from localStorage
+    // Note that on Next.js dev server this hook will run twice, causing duplicate lenses to be added to state
     useEffect(() => {
-        if (hasStartedReading || typeof window === 'undefined') {
+        if (hasStartedReading || hasFinishedReading || typeof window === 'undefined') {
             return
         }
 
@@ -20,20 +24,18 @@ export function useReadFromStorage() {
             setHasStartedReading(true)
 
             const stored = await storage.getItem()
-            console.log('reading from storage...')
+
             const stateFromLocalStorage: LocalStorageData | null = stored ? JSON.parse(stored)?.state : null
-            console.log('storage value: ', stateFromLocalStorage)
 
             if (!stateFromLocalStorage) {
-                console.log('nothing to read from store')
                 setHasFoundNoLensesInStorage(true)
-                // Let the other useEffect (for placeholders) know we're done reading
+
+                // Let the other `useEffect` below (the one for placeholders) know we're done reading
                 setHasFinishedReading(true)
 
                 return
             }
 
-            console.log('pulled from localStorage: ', stateFromLocalStorage.state)
             applyFromLocalStorage(stateFromLocalStorage)
             setHasFoundNoLensesInStorage(stateFromLocalStorage.state.lenses.length === 0)
 
@@ -42,7 +44,7 @@ export function useReadFromStorage() {
         }
 
         fetchData()
-    }, [applyFromLocalStorage, hasStartedReading])
+    }, [applyFromLocalStorage, hasFinishedReading, hasStartedReading])
 
     // Fallback to inserting placeholder examples if nothing was found in storage
     useEffect(() => {
@@ -55,14 +57,8 @@ export function useReadFromStorage() {
             // or, if we haven't read from storage yet (which means we don't know if the table will eventually have data or not)
             !hasFinishedReading
         ) {
-            console.log('no need to create placeholder lenses', {
-                length: lenses.length,
-                hasRead: hasFinishedReading,
-                hasFoundNoLensesInStorage,
-            })
             return
         }
-        console.log('creating placeholder lenses', { length: lenses.length, hasRead: hasFinishedReading })
 
         // Populate an empty table with some data
         addLens({
@@ -71,7 +67,7 @@ export function useReadFromStorage() {
             sensorKey: 'full',
         })
 
-        // This useEffect will run twice on dev, creating four lenses, so shortcircuit it to prevent tht
+        // This useEffect will run twice on dev, which creates four lenses in total, so we shortcircuit it here to prevent that
         if (process.env.NODE_ENV === 'development') {
             return
         }
