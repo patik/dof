@@ -1,7 +1,7 @@
+import { pick } from 'lodash'
 import { StateCreator } from 'zustand'
 import { LensDataState } from './lensSlice'
 import { TableState } from './tableSlice'
-import { pick } from 'lodash'
 
 export type LocalStorageData = {
     state: Pick<TableState & LensDataState, 'lenses' | 'units' | 'distance' | 'order' | 'orderBy'>

@@ -28,11 +28,33 @@ function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
     return allValues
 }
 
+type LensName = LensDefinition['name']
+
+// The Nivo chart needs a unique name for each lens because it uses that name as a React `key`. Also, it could be confusing for the user until they change one of the names.
+function getUniqueLensNames(lenses: LensDefinition[]): Record<LensDefinition['id'], LensDefinition['name']> {
+    const uniqueNameMap: Record<LensDefinition['id'], LensDefinition['name']> = {}
+
+    const getUniqueName = (name: LensName): LensName => {
+        if (Object.values(uniqueNameMap).includes(name)) {
+            return getUniqueName(`${name} (2)`)
+        }
+
+        return name
+    }
+
+    lenses.forEach((lens) => {
+        uniqueNameMap[lens.id] = getUniqueName(lens.name)
+    })
+
+    return uniqueNameMap
+}
+
 export function Graph() {
     const { lenses, units } = useDoFStore()
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
+    const uniqueNames = getUniqueLensNames(lenses)
     const data: Serie[] = useMemo(
         () =>
             lenses.map((lens) => {
@@ -40,7 +62,7 @@ export function Graph() {
                 const cropFactor: number = sensorList[sensorKey].value
                 const datum: Serie = {
                     // TODO: De-dupe the IDs
-                    id: lens.name,
+                    id: uniqueNames[lens.id],
                     data: compact(
                         distances.map((distance) => {
                             const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
@@ -60,7 +82,7 @@ export function Graph() {
 
                 return datum
             }),
-        [distances, lenses]
+        [distances, lenses, uniqueNames]
     )
 
     return (
