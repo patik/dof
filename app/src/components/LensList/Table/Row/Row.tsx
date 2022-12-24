@@ -38,7 +38,9 @@ export default function Row({ lens }: { lens: LensDefinition }) {
             <TableCell align="right">
                 <Sensor lens={lens} />
             </TableCell>
-            <TableCell align="right">{displayDof}</TableCell>
+            <TableCell align="right" data-testid={`dof-${lens.id}`}>
+                {displayDof}
+            </TableCell>
         </MuiTableRow>
     )
 }
