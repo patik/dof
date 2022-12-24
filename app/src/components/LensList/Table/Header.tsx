@@ -75,6 +75,7 @@ export default function Header() {
                         inputProps={{
                             'aria-label': 'Select all lenses',
                         }}
+                        data-testid="select-all"
                     />
                 </TableCell>
                 {headCells.map((headCell) => (

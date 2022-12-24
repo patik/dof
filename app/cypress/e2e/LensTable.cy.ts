@@ -1,4 +1,17 @@
 describe('LensTable', () => {
+    it('Removes all existing lenses', () => {
+        cy.visit('http://localhost:3000')
+
+        // Make sure there are some lenses
+        cy.get('[data-testid^="name"]').should('have.length.above', 0)
+
+        cy.get('[data-testid="select-all"]').click()
+
+        cy.get('button[aria-label="Delete"]').click()
+
+        cy.get('[data-testid^="name"]').should('have.length', 0)
+    })
+
     it('Updates the depth of field calculation when the inputs are changed', () => {
         cy.visit('http://localhost:3000')
 
@@ -35,3 +48,5 @@ describe('LensTable', () => {
             })
     })
 })
+
+export {}
