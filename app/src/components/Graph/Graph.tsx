@@ -3,9 +3,9 @@ import { useTheme } from '@mui/material/styles'
 import { ResponsiveLine, Serie } from '@nivo/line'
 import useDoFStore from '../../store'
 import { feetAndInchesString, feetString } from '../../utilities/conversion'
-import { useData } from './useData'
+import useData from './useData'
 
-export function Graph() {
+export default function Graph() {
     const { units } = useDoFStore()
     const theme = useTheme()
     const data: Serie[] = useData()

@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import Distance from './Distance'
 import UnitsToggle from './UnitsToggle'
 
-export function TopToolbar() {
+export default function TopToolbar() {
     return (
         <Box display="flex">
             <Box flexGrow={1}>

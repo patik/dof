@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
 import { useWriteToStorage } from '../utilities/useWriteToFromStorage'
-import { Graph } from './Graph/Graph'
+import Graph from './Graph/Graph'
 import LensTable from './LensList/Table/LensTable'
-import { TopToolbar } from './LensList/TopToolbar'
+import TopToolbar from './LensList/TopToolbar'
 
 export default function Main() {
     const hasReadFromStorage = useReadFromStorage()

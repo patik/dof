@@ -4,7 +4,7 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import MuiToolbar from '@mui/material/Toolbar'
 import useDoFStore from '../../store'
 
-export function BottomToolbar() {
+export default function BottomToolbar() {
     const { addLens, deleteLenses, duplicateLenses, selected } = useDoFStore()
 
     return (

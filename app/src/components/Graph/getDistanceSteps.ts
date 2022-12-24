@@ -1,4 +1,4 @@
-export function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
+export default function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
     if (units === 'imperial') {
         const allValues = Array.from(Array(101).keys())
 

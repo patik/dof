@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary'
-import { Footer } from './Footer'
+import Footer from './Footer'
 import Box from '@mui/material/Box'
 import Head from 'next/head'
 import { PropsWithChildren, ReactElement } from 'react'
@@ -15,7 +15,7 @@ type Props = PropsWithChildren<{
     isHomePage?: boolean
 }>
 
-export function Layout({ title, isHomePage, children }: Props): ReactElement {
+export default function Layout({ title, isHomePage, children }: Props): ReactElement {
     return (
         <Box display="flex" flexDirection="column" minHeight="100%">
             <Head>

@@ -1,4 +1,4 @@
-import { IDGenerator } from './IDGenerator'
+import IDGenerator from './IDGenerator'
 
 describe('IDGenerator', () => {
     test('First ID is 1', () => {

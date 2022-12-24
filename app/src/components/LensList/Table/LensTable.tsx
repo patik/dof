@@ -3,8 +3,8 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import useDoFStore from '../../../store'
-import { BottomToolbar } from '../BottomToolbar'
-import { Header } from './Header'
+import BottomToolbar from '../BottomToolbar'
+import Header from './Header'
 import Row from './Row/Row'
 
 function removeAperturePrefix(value: LensDefinition['aperture']) {

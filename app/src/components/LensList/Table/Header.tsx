@@ -41,7 +41,7 @@ const headCells: readonly HeadCell[] = [
     },
 ]
 
-export function Header() {
+export default function Header() {
     const { units, lenses, order, orderBy, selected, setSelected, setSorting } = useDoFStore()
     const numSelected = selected.length
     const rowCount = lenses.length

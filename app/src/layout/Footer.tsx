@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 import Link from 'next/link'
 
-export function Footer({ isHomePage }: { isHomePage?: boolean }) {
+export default function Footer({ isHomePage }: { isHomePage?: boolean }) {
     return (
         <Grid container component="footer" mb={3} textAlign="center">
             <Grid item xs={4}>

@@ -5,10 +5,10 @@ import { compact } from 'lodash'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
-import { getDistanceSteps } from './getDistanceSteps'
-import { getUniqueLensNames } from './getUniqueLensNames'
+import getDistanceSteps from './getDistanceSteps'
+import getUniqueLensNames from './getUniqueLensNames'
 
-export function useData() {
+export default function useData() {
     const { lenses, units } = useDoFStore()
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))

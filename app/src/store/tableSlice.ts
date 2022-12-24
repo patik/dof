@@ -9,7 +9,6 @@ export interface TableState {
     setSorting: (col: ColumnName, order?: Order) => void
     setSelected: (newSelected: readonly SelectedItem[]) => void
     isSelected: (id: LensDefinition['id']) => boolean
-    getRowLabelId: (lens: LensDefinition) => string
 }
 
 export const createTableSlice: StateCreator<TableState & LensDataState & StorageState, [], [], TableState> = (
@@ -50,8 +49,5 @@ export const createTableSlice: StateCreator<TableState & LensDataState & Storage
     },
     isSelected(id: SelectedItem) {
         return get().selected.indexOf(id) !== -1
-    },
-    getRowLabelId(lens: LensDefinition) {
-        return `enhanced-table-checkbox-${lens.name}`
     },
 })

@@ -1,4 +1,4 @@
-export class IDGenerator {
+export default class IDGenerator {
     private id = 0
 
     public getNext = () => {
