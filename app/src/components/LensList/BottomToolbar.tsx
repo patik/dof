@@ -19,7 +19,13 @@ export default function BottomToolbar() {
                 {selected.length > 0 ? (
                     <>
                         <Box mr={1}>
-                            <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
+                            <Typography
+                                sx={{ flex: '1 1 100%' }}
+                                color="inherit"
+                                variant="subtitle1"
+                                component="div"
+                                data-testid="selected-count"
+                            >
                                 {selected.length} selected
                             </Typography>
                         </Box>

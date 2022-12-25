@@ -1,6 +1,16 @@
 import { format } from 'footinch'
 
-export const metersToFeet = (meters: number | string): string => format.M.to.FT.IN.FRAC(4)(meters)
+export const metersToFeet = (meters: number | string): string => {
+    if (typeof meters === 'number' && isNaN(meters)) {
+        return String(meters)
+    }
+
+    if (String(meters).length === 0) {
+        return String(meters)
+    }
+
+    return format.M.to.FT.IN.FRAC(4)(meters)
+}
 
 export const feetAndInchesString = (feetInches: number | string): string => format.FT.to.FT.IN.FRAC(4)(feetInches)
 

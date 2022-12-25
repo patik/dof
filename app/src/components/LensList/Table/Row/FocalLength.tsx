@@ -17,6 +17,13 @@ export default function FocalLength({ lens }: { lens: LensDefinition }) {
             InputProps={{
                 type: 'number',
                 endAdornment: <InputAdornment position="end">mm</InputAdornment>,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                min: 0,
+                step: 1,
+            }}
+            InputLabelProps={{
+                shrink: true,
             }}
             data-testid={`focal-length-${lens.id}`}
             autoComplete="off"
