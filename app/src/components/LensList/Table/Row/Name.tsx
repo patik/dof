@@ -15,7 +15,7 @@ export default function Name({ lens }: { lens: LensDefinition }) {
             value={lens.name}
             autoComplete="off"
             size="small"
-            data-testid={`name-${lens.id}`}
+            data-testid={`lens-name-${lens.id}`}
         />
     )
 }
