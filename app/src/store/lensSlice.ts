@@ -111,13 +111,13 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                     return state
                 }
 
-                const remainingRows: LensDefinition[] = [...state.lenses].filter(
-                    (row) => !lensesToDelete.includes(row.id)
-                )
+                const remainingLenses: LensDefinition[] = [...state.lenses].filter((lens) => {
+                    return !lensesToDelete.includes(lens.id)
+                })
 
                 return {
                     ...state,
-                    lenses: remainingRows,
+                    lenses: [...remainingLenses],
                     // Clear table row selection (i.e. to reset the Select All box, and to hide the toolbar)
                     selected: [],
                 }
@@ -127,17 +127,16 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
             set((state) => {
                 const newLenses: LensDefinition[] = compact(
                     lensesToDuplicate.map((id) => {
-                        const existingRow = state.lenses.find((row) => row.id === id)
+                        const existingLens = state.lenses.find((lens) => lens.id === id)
 
-                        if (!existingRow) {
-                            console.error('Could not find row to be duplicated ', id)
+                        if (!existingLens) {
                             return undefined
                         }
 
                         return createLensDefinition({
-                            ...existingRow,
+                            ...existingLens,
                             id: idGenerator.getNext(),
-                            name: `${existingRow.name} copy`,
+                            name: `${existingLens.name} copy`,
                             distance: state.distance,
                             units: state.units,
                         })

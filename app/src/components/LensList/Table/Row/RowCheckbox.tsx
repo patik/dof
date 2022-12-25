@@ -30,7 +30,7 @@ export default function RowCheckbox({ lens }: { lens: LensDefinition }) {
             inputProps={{
                 'aria-labelledby': getRowLabelId(lens),
             }}
-            data-testid={`checkbox-${lens.id}`}
+            data-testid={`lens-checkbox-${lens.id}`}
         />
     )
 }

@@ -14,7 +14,7 @@ export function useWriteToStorage(hasReadFromStorage: boolean) {
             return
         }
 
-        async function fetchData() {
+        async function writeData() {
             await storage.setItem(
                 JSON.stringify({
                     state,
@@ -23,6 +23,6 @@ export function useWriteToStorage(hasReadFromStorage: boolean) {
             )
         }
 
-        fetchData()
+        writeData()
     }, [hasReadFromStorage, state])
 }

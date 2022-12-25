@@ -47,17 +47,14 @@ export default function Header() {
     const rowCount = lenses.length
     const handleSelectAllClick = useMemo(
         () => (event: ChangeEvent<HTMLInputElement>) => {
-            console.log('select All clicked ', event.target.checked, event.target)
             if (event.target.checked) {
                 const newSelected = lenses.map((n) => n.id)
 
                 setSelected(newSelected)
 
-                console.log('select All clicked A', newSelected.length)
                 return
             }
 
-            console.log('select All clicked B')
             setSelected([])
         },
         [lenses, setSelected]

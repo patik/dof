@@ -22,6 +22,8 @@ export default function Row({ lens }: { lens: LensDefinition }) {
             tabIndex={-1}
             key={lens.id}
             selected={isRowSelected}
+            className={`lens-table-row`}
+            data-testid={`lens-table-row-${lens.id}`}
         >
             <TableCell padding="checkbox">
                 <RowCheckbox lens={lens} />
