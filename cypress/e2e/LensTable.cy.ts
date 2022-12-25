@@ -1,17 +1,52 @@
+import { del } from 'idb-keyval'
+import useDofStore from '../../app/src/store/index'
+
 describe('LensTable', () => {
+    before(async () => {
+        try {
+            cy.log('Deleting local storage...')
+            await del('dof-storage')
+            cy.log('Deleting local storage finished.')
+        } catch (e) {
+            cy.log('Deleting local storage failed: ', e)
+        }
+    })
+
     it('Removes all existing lenses', () => {
         cy.visit('http://localhost:3000')
+
+        const state = useDofStore.getState().lenses
+
+        cy.log(`State has ${state.length} lenses before selecting`)
+        console.log(`State has ${state.length} lenses before selecting`)
 
         // Make sure there are some lenses
         cy.get('button').contains('Add Lens').click()
         cy.get('[data-testid^="lens-name-"]').should('have.length.above', 0)
         cy.get('.lens-table-row').should('have.length.above', 0)
 
+        cy.get('.lens-table-row').then(($elems) => {
+            cy.log(`Table has ${$elems.length} rows before selecting`)
+            console.log(`Table has ${$elems.length} rows before selecting`)
+        })
+
         // Select All checkbox -> Delete button
         cy.get('[data-testid="select-all"]').click()
         cy.get('[data-testid="selected-count"]').contains(/\d+ selected/)
+        cy.get('[data-testid="selected-count"]').then(($elems) => {
+            cy.log(`Selected count: ${$elems.length}`)
+            console.log(`Selected count: ${$elems.length}`)
+        })
+        // cy.log(`Selected count: ${cy.get('[data-testid="selected-count"]').invoke('length')}`)
         // cy.get('[data-testid="bottom-toolbar"] > div > div').should('have.length', 2)
         cy.get('button[aria-label="Delete"]').click()
+        // cy.get('.lens-table-row').then(($elems) => {
+        //     cy.log(`Table has ${$elems.length} rows before selecting`)
+        //     console.log(`Table has ${$elems.length} rows after deleting`)
+        // })
+
+        cy.log(`State has ${state.length} lenses after deleting`)
+        console.log(`State has ${state.length} lenses after deleting`)
 
         // cy.get('.lens-table-row').should('have.length', 0)
         cy.get('[data-testid^="lens-name-"]').should('have.length', 0)

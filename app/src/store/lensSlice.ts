@@ -115,6 +115,13 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                     return !lensesToDelete.includes(lens.id)
                 })
 
+                console.log(
+                    `Deleting ${lensesToDelete.length} lenses: “${lensesToDelete
+                        .map((id) => state.lenses.find((l) => l.id === id)?.name)
+                        .join(', ')}”. After this, there should be ${
+                        remainingLenses.length
+                    } lenses remaining: “${remainingLenses.map((l) => l.name).join(', ')}”`
+                )
                 return {
                     ...state,
                     lenses: [...remainingLenses],
