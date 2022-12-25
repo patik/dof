@@ -3,7 +3,7 @@ describe('LensTable', () => {
         cy.visit('http://localhost:3000')
 
         // Make sure there are some lenses
-        cy.get('[data-testid^="name"]').should('have.length.above', 0)
+        cy.get('[data-testid^="name-"]').should('have.length.above', 0)
         // Make sure nothing is selected yet, so that below we can indirectly test whether selection works
         // cy.get('[data-testid="bottom-toolbar"] > div > div').should('not.contain', '')
 
@@ -13,7 +13,7 @@ describe('LensTable', () => {
         // cy.get('[data-testid="bottom-toolbar"] > div > div').should('have.length', 2)
         cy.get('button[aria-label="Delete"]').click()
 
-        cy.get('[data-testid^="name"]').should('have.length', 0)
+        cy.get('[data-testid^="name-"]').should('have.length', 0)
     })
 
     describe('Updates the depth of field calculation when the inputs are changed', () => {
@@ -62,7 +62,7 @@ describe('LensTable', () => {
         cy.visit('http://localhost:3000')
 
         // Before adding the new lnes, get the ID if the latest existing lens, so we know what the next ID should be
-        cy.get('[data-testid^="name"]')
+        cy.get('[data-testid^="name-"]')
             .last()
             .invoke('get')
             .then((lastLens) => {
@@ -83,7 +83,7 @@ describe('LensTable', () => {
     //     cy.visit('http://localhost:3000')
 
     //     // Before adding the new lnes, get the ID if the latest existing lens, so we know what the next ID should be
-    //     cy.get('[data-testid^="name"]')
+    //     cy.get('[data-testid^="name-"]')
     //         .last()
     //         .invoke('get')
     //         .then((lastLens) => {
