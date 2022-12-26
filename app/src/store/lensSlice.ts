@@ -8,6 +8,7 @@ import { StorageState } from './storageSlice'
 import { TableState } from './tableSlice'
 
 export const DEFAULT_DISTANCE: Distance = 5
+export const DEFAULT_UNITS: Units = 'metric'
 
 const idGenerator = new IDGenerator()
 
@@ -71,7 +72,7 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
     get
 ) => {
     return {
-        units: 'metric',
+        units: DEFAULT_UNITS,
         distance: DEFAULT_DISTANCE,
         lenses: [],
         addLens(config, skipIfDuplicate = false) {

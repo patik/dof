@@ -2,21 +2,35 @@ import { isApertureString } from 'dof'
 import { compact } from 'lodash'
 import { useEffect, useState } from 'react'
 import useDoFStore from '../store'
-import { createLensDefinition, DEFAULT_DISTANCE } from '../store/lensSlice'
+import { createLensDefinition, DEFAULT_DISTANCE, DEFAULT_UNITS } from '../store/lensSlice'
 import { isSensorKey } from './isSensorKey'
 
-function parseDistance(value: string): Distance {
+function parseDistanceAndUnits(piece: string): { distance: Distance; units: Units } {
     let distance: Distance = 5
+    let units: Units = DEFAULT_UNITS
 
-    distance = parseInt(value, 10)
+    const parts = (piece ?? '').split(',')
+
+    if (parts.length === 0) {
+        return { distance, units }
+    }
+
+    distance = parseInt(parts[0], 10)
 
     if (isNaN(distance)) {
-        console.error(`distance could not be parsed from “${value}”`)
+        console.error(`distance could not be parsed from “${parts[0]}”`)
         // Use default value
         distance = DEFAULT_DISTANCE
     }
 
-    return distance
+    if (parts.length === 1 && !isNaN(parseInt(parts[0], 10))) {
+        // Pre-2023, the units were not in the URL, and only imperial units were supported, so assume that this is an old URL from those times
+        units = 'imperial'
+    } else {
+        units = parts[1] === 'i' ? 'imperial' : 'metric'
+    }
+
+    return { distance, units }
 }
 
 type ParsedLens = Omit<LensInputs, 'id'>
@@ -58,24 +72,24 @@ function parseLenses(pieces: string[]): ParsedLens[] {
  *
  * @example http://patik.com/dof/#20;Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC
  */
-export function parseHash(hash: string): { distance: Distance; lenses: LensDefinition[] } {
+export function parseHash(hash: string): { distance: Distance; lenses: LensDefinition[]; units: Units } {
     const pieces = hash.split(';')
 
     if (pieces.length === 0) {
         console.log('hash did not contain any pieces')
     }
 
-    const distance = parseDistance(pieces[0])
+    const { distance, units } = parseDistanceAndUnits(pieces[0])
     const lenses = parseLenses(pieces.slice(1)).map((lens) => {
         return createLensDefinition({ distance, units: 'metric', ...lens })
     })
 
-    return { distance, lenses }
+    return { distance, lenses, units }
 }
 
 export default function useReadFromHash(): boolean {
     const [hasRead, setHasRead] = useState(false)
-    const { addLens, setDistance } = useDoFStore()
+    const { addLens, setDistance, setUnits } = useDoFStore()
 
     // Read from localStorage
     // Note that on Next.js dev server this hook will run twice, causing duplicate lenses to be added to state
@@ -93,11 +107,12 @@ export default function useReadFromHash(): boolean {
             return
         }
 
-        const { lenses, distance } = parseHash(hash)
+        const { lenses, distance, units } = parseHash(hash)
 
         setDistance(distance)
+        setUnits(units)
         lenses.forEach((lens) => addLens(lens, true))
-    }, [addLens, hasRead, setDistance])
+    }, [addLens, hasRead, setDistance, setUnits])
 
     return hasRead
 }
