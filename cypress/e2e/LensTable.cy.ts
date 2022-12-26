@@ -104,9 +104,11 @@ describe('LensTable', () => {
             .then((lastLens) => {
                 // Find the most recent lens ID
                 const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
+                cy.log(`Last lens has ID: ${lastId}`)
 
                 // Determine what the next lens ID should be
                 const nextId = `${Number(lastId) + 1}`
+                cy.log(`Next lens should have ID: ${nextId}`)
 
                 cy.get('button').contains('Add Lens').click()
 
@@ -138,11 +140,11 @@ describe('LensTable', () => {
             .then((lastLens) => {
                 // Find the most recent lens ID
                 const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
-                console.log('lastId ', lastId)
+                cy.log(`Last lens has ID: ${lastId}`)
 
                 // Determine what the next lens ID should be
                 const nextId = `${Number(lastId) + 1}`
-                console.log('nextId ', nextId)
+                cy.log(`Next lens should have ID: ${nextId}`)
 
                 // Duplicate the lens
                 cy.get(`[data-testid="lens-checkbox-${lastId}"]`).click()
