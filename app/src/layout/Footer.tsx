@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material'
 import Link from 'next/link'
-import Permalink from '../components/Permalink'
+import Permalink from './Permalink'
 
 export default function Footer({ isHomePage }: { isHomePage?: boolean }) {
     return (
