@@ -115,52 +115,52 @@ describe('LensTable', () => {
             })
     })
 
-    // it('The Duplicate Lens button adds another lens to the table with the same values as the first lens', () => {
-    //     cy.visit('http://localhost:3000')
-    //     // Ensure there is exactly one lens in the table
-    //     cy.get('button').contains('Add Lens').click()
-    //     cy.get('[data-testid="select-all"]').click()
-    //     cy.get('button[aria-label="Delete"]').click()
-    //     cy.get('button').contains('Add Lens').click()
-    //     cy.get('button[title="Meters"]').click()
+    it('The Duplicate Lens button adds another lens to the table with the same values as the first lens', () => {
+        cy.visit('http://localhost:3000')
+        // Ensure there is exactly one lens in the table
+        cy.get('button').contains('Add Lens').click()
+        cy.get('[data-testid="select-all"]').click()
+        cy.get('button[aria-label="Delete"]').click()
+        cy.get('button').contains('Add Lens').click()
+        cy.get('button[title="Meters"]').click()
 
-    //     // Add custom values to the existing lens
-    //     cy.get('[data-testid^="lens-name-"] input').last().focus().type('{selectall}').type('Sieben-Eins')
-    //     cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('20')
-    //     cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/1.4"]').click()
-    //     cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="16mm"]').click()
-    //     cy.get('[data-testid^="dof-"]').last().should('have.text', '1.63')
+        // Add custom values to the existing lens
+        cy.get('[data-testid^="lens-name-"] input').last().focus().type('{selectall}').type('Sieben-Eins')
+        cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('20')
+        cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/1.4"]').click()
+        cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="16mm"]').click()
+        cy.get('[data-testid^="dof-"]').last().should('have.text', '1.63')
 
-    //     // Before adding the new lens, get the ID if the latest existing lens, so we know what the next ID should be
-    //     cy.get('[data-testid^="lens-name-"]')
-    //         .last()
-    //         .invoke('get')
-    //         .then((lastLens) => {
-    //             // Find the most recent lens ID
-    //             const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
-    //             console.log('lastId ', lastId)
+        // Before adding the new lens, get the ID if the latest existing lens, so we know what the next ID should be
+        cy.get('[data-testid^="lens-name-"]')
+            .last()
+            .invoke('get')
+            .then((lastLens) => {
+                // Find the most recent lens ID
+                const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
+                console.log('lastId ', lastId)
 
-    //             // Determine what the next lens ID should be
-    //             const nextId = `${Number(lastId) + 1}`
-    //             console.log('nextId ', nextId)
+                // Determine what the next lens ID should be
+                const nextId = `${Number(lastId) + 1}`
+                console.log('nextId ', nextId)
 
-    //             // Duplicate the lens
-    //             cy.get(`[data-testid="lens-checkbox-${lastId}"]`).click()
-    //             cy.get('button[aria-label="Duplicate"]').click()
+                // Duplicate the lens
+                cy.get(`[data-testid="lens-checkbox-${lastId}"]`).click()
+                cy.get('button[aria-label="Duplicate"]').click()
 
-    //             // New lens should now be visible
-    //             cy.get(`[data-testid="lens-name-${nextId}"]`).should('be.visible')
+                // New lens should now be visible
+                cy.get(`[data-testid="lens-name-${nextId}"]`).should('be.visible')
 
-    //             // Should have the same values as the first lens
-    //             cy.get('[data-testid^="lens-name-"] input').last().should('have.value', 'Sieben-Eins copy')
-    //             cy.get('[data-testid^="focal-length-"] input').last().should('have.value', '20')
-    //             cy.get('[data-testid^="aperture-"]').last().should('have.text', 'f/1.4')
-    //             cy.get('[data-testid^="sensor-"]').last().should('have.value', 'Standard 16mm film')
-    //             cy.get('[data-testid^="dof-"]').last().should('have.text', '1.63')
+                // Should have the same values as the first lens
+                cy.get('[data-testid^="lens-name-"] input').last().should('have.value', 'Sieben-Eins copy')
+                cy.get('[data-testid^="focal-length-"] input').last().should('have.value', '20')
+                cy.get('[data-testid^="aperture-"]').last().contains('f/1.4')
+                cy.get('[data-testid^="sensor-"]').last().contains('Standard 16mm film')
+                cy.get('[data-testid^="dof-"]').last().contains('1.63')
 
-    //             cy.get('[data-testid^="lens-name-"] input').first().should('have.value', 'Sieben-Eins')
-    //         })
-    // })
+                cy.get('[data-testid^="lens-name-"] input').first().should('have.value', 'Sieben-Eins')
+            })
+    })
 })
 
 export {}
