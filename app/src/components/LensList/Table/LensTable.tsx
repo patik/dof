@@ -6,7 +6,6 @@ import useDoFStore from '../../../store'
 import BottomToolbar from '../BottomToolbar'
 import Header from './Header'
 import Row from './Row/Row'
-import { cloneDeep } from 'lodash'
 
 function removeAperturePrefix(value: LensDefinition['aperture']) {
     return value.replace(/^f\//, '')
@@ -46,7 +45,6 @@ function getComparator<Key extends ColumnName>(
 
 export default function LensTable() {
     const { lenses, order, orderBy } = useDoFStore()
-    console.log('current lenses: ', cloneDeep(lenses))
 
     return (
         <Paper sx={{ width: '100%', maxWidth: '960px', mb: 2 }}>

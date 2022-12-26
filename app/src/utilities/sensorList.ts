@@ -1,7 +1,6 @@
 // https://en.wikipedia.org/wiki/Image_sensor_format
-// http://www.dpreview.com/previews/panasonic-lumix-dmc-gm1/images/Sensors.png
-// 35mm diagonal ÷ your sensor’s diagonal = crop factor.
-// your sensor’s diagonal = sqrt(h^2 + w^2)
+// 35mm diagonal / the sensor’s diagonal = crop factor
+// cropFactor = 35 / (sqrt (w^2 + h^2))
 const fullList = {
     iPhone5: {
         name: 'iPhone 5',
@@ -12,11 +11,15 @@ const fullList = {
         value: 7.28,
     },
     iPhone5S: {
-        name: 'iPhone 5S, 1/3" CCD',
+        name: 'iPhone 5S, 6, 7, 8; and 1/3" CCD',
         value: 7.21,
     },
+    TwoThirds: {
+        name: '2/3″ (Nokia Lumia 1020, Fujifilm X-S1, X20, XF1)',
+        value: 3.9,
+    },
     iPhone13: {
-        name: 'iPhone 13 (2021) and earlier',
+        name: 'iPhone 13 (2021)',
         value: 3.71, // 42.75mm2, or 5.7x7.5mm
     },
     '16mm': {
@@ -51,7 +54,7 @@ const fullList = {
         isCommon: true,
     },
     '35mm': {
-        name: 'Standard 35mm film',
+        name: 'Standard 35mm film (movie)',
         value: 1.59,
         isCommon: true,
     },
@@ -83,8 +86,12 @@ const fullList = {
         value: 0.8,
     },
     Medium: {
-        name: 'Medium format',
+        name: 'Medium-format (Hasselblad H5D-60c, Hasselblad H6D-100c)',
         value: 0.65,
+    },
+    IMAX: {
+        name: 'IMAX Film Frame',
+        value: 0.49,
     },
 }
 
