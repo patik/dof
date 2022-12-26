@@ -11,7 +11,7 @@ function parseDistance(value: string): Distance {
     distance = parseInt(value, 10)
 
     if (isNaN(distance)) {
-        console.log(`distance could not be parsed from “${value}”`)
+        console.error(`distance could not be parsed from “${value}”`)
         // Use default value
         distance = DEFAULT_DISTANCE
     }
@@ -28,21 +28,18 @@ type ParsedLens = Omit<LensInputs, 'id'>
 function parseLenses(pieces: string[]): ParsedLens[] {
     return compact(
         pieces.map((piece): ParsedLens | undefined => {
-            // console.log('piece: ', piece)
             const lensParts = piece.split(',')
-            // console.log('lensParts: ', lensParts)
 
             if (lensParts.length !== 4) {
-                // console.log(`lens had wrong number of parts: “${piece}”`)
+                console.error(`lens had wrong number of parts: “${piece}”`)
+                return
             }
 
             const name = decodeURIComponent(lensParts[0])
             const focalLength: ParsedLens['focalLength'] = parseInt(lensParts[1], 10)
-            // console.log('lensParts[2]: ', lensParts[2])
-            const aperture = lensParts[2].replace('-', '/')
+            const aperture = (lensParts[2] ?? '').replace('-', '/')
 
             if (!isApertureString(aperture)) {
-                // console.log(`invalid aperture: “${lensParts[2]}”`)
                 return
             }
 
@@ -70,7 +67,6 @@ export function parseHash(hash: string): { distance: Distance; lenses: LensDefin
 
     const distance = parseDistance(pieces[0])
     const lenses = parseLenses(pieces.slice(1)).map((lens) => {
-        // console.log('creating lens from: ', { distance, units: 'metric', ...lens })
         return createLensDefinition({ distance, units: 'metric', ...lens })
     })
 
@@ -78,31 +74,30 @@ export function parseHash(hash: string): { distance: Distance; lenses: LensDefin
 }
 
 export default function useReadFromHash(): boolean {
-    const [hasStartedReading, setHasStartedReading] = useState(false)
-    const [hasFinishedReading, setHasFinishedReading] = useState(false)
-    const { addLens, applyFromLocalStorage } = useDoFStore()
+    const [hasRead, setHasRead] = useState(false)
+    const { addLens, setDistance } = useDoFStore()
 
     // Read from localStorage
     // Note that on Next.js dev server this hook will run twice, causing duplicate lenses to be added to state
     useEffect(() => {
-        if (hasStartedReading || hasFinishedReading || typeof window === 'undefined') {
+        if (hasRead || typeof window === 'undefined') {
             return
         }
 
         // Don't try to read more than once
-        setHasStartedReading(true)
+        setHasRead(true)
 
         const hash = window.location.hash.replace(/^#/, '')
-        console.log('[read] raw hash: ', hash)
-        console.log('[read] decoded hash: ', decodeURIComponent(hash))
 
         if (hash.length === 0) {
-            setHasFinishedReading(true)
             return
         }
 
-        setHasFinishedReading(true)
-    }, [addLens, applyFromLocalStorage, hasFinishedReading, hasStartedReading])
+        const { lenses, distance } = parseHash(hash)
 
-    return hasFinishedReading
+        setDistance(distance)
+        lenses.forEach((lens) => addLens(lens, true))
+    }, [addLens, hasRead, setDistance])
+
+    return hasRead
 }

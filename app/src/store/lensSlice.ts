@@ -1,5 +1,5 @@
 import { Lens } from 'dof'
-import { compact, defaults } from 'lodash'
+import { compact, defaults, cloneDeep } from 'lodash'
 import { StateCreator } from 'zustand'
 import { rounded } from '../utilities/conversion'
 import IDGenerator from '../utilities/IDGenerator'
@@ -51,7 +51,7 @@ export interface LensDataState {
     units: Units
     distance: Distance
     lenses: LensDefinition[]
-    addLens: (opts?: Partial<DefaultLensData>) => void
+    addLens: (opts?: Partial<DefaultLensData>, skipIfDuplicate?: boolean) => void
     updateLens: (lens: LensDefinition) => void
     deleteLenses: (lensesToDelete: readonly SelectedItem[]) => void
     duplicateLenses: (lensesToDuplicate: readonly SelectedItem[]) => void
@@ -74,20 +74,34 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
         units: 'metric',
         distance: DEFAULT_DISTANCE,
         lenses: [],
-        addLens(options) {
-            const settings = defaults({}, options, defaultLensData(get().lenses.length))
+        addLens(config, skipIfDuplicate = false) {
+            const { lenses, distance, units } = get()
+            const settings = defaults({}, config, defaultLensData(lenses.length))
+            const lens = createLensDefinition({
+                ...settings,
+                id: idGenerator.getNext(),
+                distance,
+                units,
+            })
+
+            if (
+                skipIfDuplicate &&
+                lenses.find((l) => {
+                    if (!(l.name === lens.name && l.depthOfField === lens.depthOfField)) {
+                        // console.log('not a duplicate: ', lens.name, lens.depthOfField, l.name, l.depthOfField)
+                    }
+                    return l.name === lens.name && l.depthOfField === lens.depthOfField
+                })
+            ) {
+                console.log('is a duplicate: ', lens.name, lens.depthOfField)
+                return
+            } else if (skipIfDuplicate) {
+                console.log('not a duplicate: ', lens.name, lens.depthOfField, cloneDeep(lenses))
+            }
 
             set((state) => ({
                 ...state,
-                lenses: [
-                    ...state.lenses,
-                    createLensDefinition({
-                        ...settings,
-                        id: idGenerator.getNext(),
-                        distance: state.distance,
-                        units: state.units,
-                    }),
-                ],
+                lenses: [...lenses, lens],
             }))
         },
         updateLens(lens: LensDefinition) {

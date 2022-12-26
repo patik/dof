@@ -5,23 +5,26 @@ import { LocalStorageData } from '../store/storageSlice'
 import storage from './storage'
 
 function addPlaceholderLenses(addLens: LensDataState['addLens']) {
-    // Populate an empty table with some data
-    addLens({
-        focalLength: 35,
-        aperture: 'f/2',
-        sensorKey: 'full',
-    })
+    // Populate the empty table with some data
+    addLens(
+        {
+            name: 'Lens 1',
+            focalLength: 35,
+            aperture: 'f/2',
+            sensorKey: 'full',
+        },
+        true
+    )
 
-    // This useEffect will run twice on dev, which creates four lenses in total, so we shortcircuit it here to prevent that
-    if (process.env.NODE_ENV === 'development') {
-        return
-    }
-
-    addLens({
-        focalLength: 55,
-        aperture: 'f/1.4',
-        sensorKey: 'mft',
-    })
+    addLens(
+        {
+            name: 'Lens 2',
+            focalLength: 55,
+            aperture: 'f/1.4',
+            sensorKey: 'mft',
+        },
+        true
+    )
 }
 
 /**

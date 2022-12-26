@@ -10,8 +10,6 @@ export function createHash(distance: Distance, lenses: LensDefinition[]): string
                 }`
         )
         .join(';')}`
-    console.log('hash: ', hash)
-    console.log('encoded hash: ', encodeURIComponent(hash))
 
     return hash
 }
@@ -21,7 +19,6 @@ export default function useWriteToHash(hasReadFromHash = false) {
 
     useEffect(() => {
         if (!hasReadFromHash) {
-            console.log('has not read yet')
             return
         }
 

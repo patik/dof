@@ -25,11 +25,12 @@ export const createStorageSlice: StateCreator<TableState & LensDataState & Stora
     },
     applyFromLocalStorage(partialState: LocalStorageData) {
         const { distance, lenses, order, orderBy, units } = partialState.state
+        const { setUnits, setSorting, setDistance, addLens } = get()
 
-        get().setUnits(units)
-        get().setSorting(orderBy, order)
-        get().setDistance(distance)
+        setUnits(units)
+        setSorting(orderBy, order)
+        setDistance(distance)
 
-        lenses.forEach(get().addLens)
+        lenses.forEach((lens) => addLens(lens, true))
     },
 })
