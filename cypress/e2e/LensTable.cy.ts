@@ -68,7 +68,7 @@ describe('LensTable', () => {
 
             cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('72')
             cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/3.4"]').click()
-            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="35mm"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="NikonD3k"]').click()
 
             cy.get('[data-testid^="dof-"]').last().should('have.text', '0.61')
         })
@@ -84,13 +84,13 @@ describe('LensTable', () => {
             cy.get('button[title="Feet"]').click()
 
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
-            cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 5"`)
+            cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 2 1/4"`)
 
             cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('90')
             cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/4"]').click()
-            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="APSCCanon"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="iPhone13"]').click()
 
-            cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 5"`)
+            cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 2 1/4"`)
         })
     })
 
