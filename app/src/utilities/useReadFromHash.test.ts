@@ -12,7 +12,7 @@ describe('parseHash', () => {
 
             expect(result).toStrictEqual({
                 distance: 20,
-                units: 'foo',
+                units,
                 lenses: [
                     {
                         name: 'Alpha Bravo',
