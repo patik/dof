@@ -2,7 +2,7 @@ import { del } from 'idb-keyval'
 import useDofStore from '../../app/src/store/index'
 
 describe('LensTable', () => {
-    before(async () => {
+    beforeEach(async () => {
         try {
             cy.log('Deleting local storage...')
             await del('dof-storage')
@@ -55,7 +55,7 @@ describe('LensTable', () => {
     describe('Updates the depth of field calculation when the inputs are changed', () => {
         it('metric', () => {
             cy.visit('http://localhost:3000')
-            // Ensure there is exactly one lens in the table
+            // Ensure that there is exactly one lens in the table
             cy.get('button').contains('Add Lens').click()
             cy.get('[data-testid="select-all"]').click()
             cy.get('button[aria-label="Delete"]').click()
@@ -73,9 +73,9 @@ describe('LensTable', () => {
             cy.get('[data-testid^="dof-"]').last().should('have.text', '0.61')
         })
 
-        // it('imperial', () => {
+        // it.only('imperial', () => {
         //     cy.visit('http://localhost:3000')
-        //     // Ensure there is exactly one lens in the table
+        //     // Ensure that there is exactly one lens in the table
         //     cy.get('button').contains('Add Lens').click()
         //     cy.get('[data-testid="select-all"]').click()
         //     cy.get('button[aria-label="Delete"]').click()
@@ -88,7 +88,15 @@ describe('LensTable', () => {
 
         //     cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/4"]').click()
         //     cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="APSCCanon"]').click()
-        //     cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('90')
+        //     cy.get('[data-testid^="focal-length-"] input')
+        //         .last()
+        //         .focus()
+        //         .type('{leftArrow}', { log: true })
+        //         .type('{backspace}', { log: true })
+        //         .type('9', { log: true })
+        //         .type('{rightArrow}', { log: true })
+        //         .type('{backspace}', { log: true })
+        //         .type('0', { log: true })
 
         //     cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 5"`)
         // })
@@ -117,7 +125,7 @@ describe('LensTable', () => {
 
     it('The Duplicate Lens button adds another lens to the table with the same values as the first lens', () => {
         cy.visit('http://localhost:3000')
-        // Ensure there is exactly one lens in the table
+        // Ensure that there is exactly one lens in the table
         cy.get('button').contains('Add Lens').click()
         cy.get('[data-testid="select-all"]').click()
         cy.get('button[aria-label="Delete"]').click()
