@@ -1,15 +1,8 @@
 import { FormControl, ListSubheader, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import useDoFStore from '../../../../store'
 import sensorList from '../../../../utilities/sensorList'
-
-/**
- * Exposes type annotations to an Object.keys array
- */
-function objectKeysArray<T extends Record<string | number, unknown>>(
-    record: T
-): ((keyof T & string) | `${keyof T & number}`)[] {
-    return Object.keys(record)
-}
+import { objectKeysArray } from '../../../../utilities/objectKeysArray'
+import { isSensorKey } from '../../../../utilities/isSensorKey'
 
 const allSensorKeys = objectKeysArray(sensorList)
 const commonSensorKeys: SensorKey[] = []
@@ -21,10 +14,6 @@ objectKeysArray(sensorList).forEach((sensorKey) => {
         commonSensorKeys.push(sensorKey)
     }
 })
-
-function isSensorKey(str: string): str is SensorKey {
-    return Boolean(str in sensorList)
-}
 
 export default function Sensor({ lens }: { lens: LensDefinition }) {
     const { updateLens } = useDoFStore()

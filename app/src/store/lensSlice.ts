@@ -7,9 +7,11 @@ import sensorList from '../utilities/sensorList'
 import { StorageState } from './storageSlice'
 import { TableState } from './tableSlice'
 
+export const DEFAULT_DISTANCE: Distance = 5
+
 const idGenerator = new IDGenerator()
 
-function createLensDefinition({
+export function createLensDefinition({
     id,
     name,
     focalLength,
@@ -18,7 +20,7 @@ function createLensDefinition({
     distance,
     units,
 }: {
-    id: string
+    id?: string
     name: string
     focalLength: number
     aperture: string
@@ -34,7 +36,7 @@ function createLensDefinition({
     }).dof(distance, units === 'imperial')
 
     return {
-        id,
+        id: id ?? idGenerator.getNext(),
         name,
         aperture,
         focalLength,
@@ -70,7 +72,7 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
 ) => {
     return {
         units: 'metric',
-        distance: 5,
+        distance: DEFAULT_DISTANCE,
         lenses: [],
         addLens(options) {
             const settings = defaults({}, options, defaultLensData(get().lenses.length))

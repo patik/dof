@@ -1,3 +1,5 @@
+import { objectKeysArray } from './objectKeysArray'
+
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 
 // Map of human-friendly values to their precise numeric values
@@ -52,7 +54,11 @@ const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1
 const smallestDocumentedAperture = sortedValues.slice(undefined, 1)[0]
 const largestDocumentedAperture = sortedValues.slice(-1)[0]
 
-function getPreciseAperture(humanValue: string): number | undefined {
+/**
+ * Takes a human-friendly string and returns a precise numeric value that is equivalent
+ * @example 'f/5' => 5.039684
+ */
+export function getPreciseAperture(humanValue: string): number | undefined {
     if (
         humanValue in preciseApertureMap &&
         Object.prototype.hasOwnProperty.call(preciseApertureMap, humanValue) &&
@@ -65,7 +71,17 @@ function getPreciseAperture(humanValue: string): number | undefined {
     return
 }
 
-function isApertureString(value?: string): value is ApertureString {
+/**
+ * Takes a numeric value and returns a human-friendly string that is equivalent
+ * @example 5.039684 => 'f/5'
+ */
+export function getApertureName(value: number): keyof typeof preciseApertureMap | undefined {
+    return objectKeysArray(preciseApertureMap).find((key) => {
+        return preciseApertureMap[key] === value
+    })
+}
+
+export function isApertureString(value?: string): value is ApertureString {
     return typeof value === 'string' && apertureRegex.test(value)
 }
 
