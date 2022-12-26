@@ -26,7 +26,7 @@ export default function useData() {
                             const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
 
                             // The graph doesn't handle infinite values well
-                            if (dofLength === Infinity) {
+                            if (!Number.isFinite(dofLength)) {
                                 return
                             }
 

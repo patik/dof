@@ -115,7 +115,7 @@ export function toActualAperture({
 
         if (
             inputAsNumber > 0 &&
-            inputAsNumber < Infinity &&
+            Number.isFinite(inputAsNumber) &&
             (inputAsNumber < smallestDocumentedAperture || inputAsNumber > largestDocumentedAperture)
         ) {
             return inputAsNumber

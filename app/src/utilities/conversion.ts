@@ -1,7 +1,7 @@
 import { format } from 'footinch'
 
 export const metersToFeet = (meters: number | string): string => {
-    if (typeof meters === 'number' && isNaN(meters)) {
+    if (typeof meters === 'number' && (isNaN(meters) || !Number.isFinite(meters))) {
         return String(meters)
     }
 

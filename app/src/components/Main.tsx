@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
-import { useWriteToStorage } from '../utilities/useWriteToFromStorage'
+import { useWriteToStorage } from '../utilities/useWriteToStorage'
 import Graph from './Graph/Graph'
 import LensTable from './LensList/Table/LensTable'
 import TopToolbar from './LensList/TopToolbar'

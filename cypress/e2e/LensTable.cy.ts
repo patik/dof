@@ -37,7 +37,7 @@ describe('LensTable', () => {
             cy.log(`Selected count: ${$elems.length}`)
             console.log(`Selected count: ${$elems.length}`)
         })
-        // cy.log(`Selected count: ${cy.get('[data-testid="selected-count"]').invoke('length')}`)
+
         // cy.get('[data-testid="bottom-toolbar"] > div > div').should('have.length', 2)
         cy.get('button[aria-label="Delete"]').click()
         // cy.get('.lens-table-row').then(($elems) => {
@@ -73,33 +73,25 @@ describe('LensTable', () => {
             cy.get('[data-testid^="dof-"]').last().should('have.text', '0.61')
         })
 
-        // it.only('imperial', () => {
-        //     cy.visit('http://localhost:3000')
-        //     // Ensure that there is exactly one lens in the table
-        //     cy.get('button').contains('Add Lens').click()
-        //     cy.get('[data-testid="select-all"]').click()
-        //     cy.get('button[aria-label="Delete"]').click()
-        //     cy.get('button').contains('Add Lens').click()
+        it('imperial', () => {
+            cy.visit('http://localhost:3000')
+            // Ensure that there is exactly one lens in the table
+            cy.get('button').contains('Add Lens').click()
+            cy.get('[data-testid="select-all"]').click()
+            cy.get('button[aria-label="Delete"]').click()
+            cy.get('button').contains('Add Lens').click()
 
-        //     cy.get('button[title="Feet"]').click()
+            cy.get('button[title="Feet"]').click()
 
-        //     // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
-        //     cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 5"`)
+            // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
+            cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 5"`)
 
-        //     cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/4"]').click()
-        //     cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="APSCCanon"]').click()
-        //     cy.get('[data-testid^="focal-length-"] input')
-        //         .last()
-        //         .focus()
-        //         .type('{leftArrow}', { log: true })
-        //         .type('{backspace}', { log: true })
-        //         .type('9', { log: true })
-        //         .type('{rightArrow}', { log: true })
-        //         .type('{backspace}', { log: true })
-        //         .type('0', { log: true })
+            cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('90')
+            cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/4"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="APSCCanon"]').click()
 
-        //     cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 5"`)
-        // })
+            cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 5"`)
+        })
     })
 
     it('The Add Lens button adds another lens to the table', () => {
