@@ -1,9 +1,11 @@
 import { InputAdornment, TextField } from '@mui/material'
 import { ChangeEvent, ChangeEventHandler } from 'react'
 import useDoFStore from '../../../store'
+import useIsMobile from '../../../utilities/useIsMobile'
 
 export default function Distance() {
     const { units, distance, setDistance } = useDoFStore()
+    const isMobile = useIsMobile()
     const handleDistanceChange: ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
         if (parseFloat(event.target.value)) {
             setDistance(parseFloat(event.target.value))
@@ -22,10 +24,15 @@ export default function Distance() {
             }}
             autoComplete="off"
             size="small"
-            sx={{
-                maxWidth: 160,
-            }}
+            sx={
+                isMobile
+                    ? undefined
+                    : {
+                          maxWidth: 160,
+                      }
+            }
             data-testid={`distance`}
+            fullWidth={isMobile}
         />
     )
 }

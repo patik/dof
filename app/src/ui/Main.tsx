@@ -4,8 +4,8 @@ import { useReadFromStorage } from '../utilities/useReadFromStorage'
 import useWriteToHash from '../utilities/useWriteToHash'
 import { useWriteToStorage } from '../utilities/useWriteToStorage'
 import Graph from './Graph/Graph'
-import LensTable from './LensList/Table/LensTable'
-import TopToolbar from './LensList/TopToolbar/TopToolbar'
+import LensTable from './LensTable/Table/LensTable'
+import TopToolbar from './LensTable/TopToolbar/TopToolbar'
 
 export default function Main() {
     const hasReadFromHash = useReadFromHash()

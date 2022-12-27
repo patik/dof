@@ -1,5 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import useDoFStore from '../../../store'
+import useIsMobile from '../../../utilities/useIsMobile'
+import { SPACE_BETWEEN_FIELDS } from './TopToolbar'
 
 function UnitsToggleButton({
     onChange,
@@ -7,9 +9,26 @@ function UnitsToggleButton({
     onChange: (_event: React.MouseEvent<HTMLElement>, newAlignment: Units | null) => void
 }) {
     const { units } = useDoFStore()
+    const isMobile = useIsMobile()
 
     return (
-        <ToggleButtonGroup exclusive color="primary" value={units} onChange={onChange} aria-label="Units" size="small">
+        <ToggleButtonGroup
+            exclusive
+            color="primary"
+            value={units}
+            onChange={onChange}
+            aria-label="Units"
+            size="small"
+            sx={
+                isMobile
+                    ? {
+                          // Remove space for the `mr` on the Distance input
+                          maxWidth: `calc(50% - ${SPACE_BETWEEN_FIELDS})`,
+                      }
+                    : undefined
+            }
+            fullWidth={isMobile}
+        >
             <ToggleButton value="metric" title="Meters">
                 Metric
             </ToggleButton>

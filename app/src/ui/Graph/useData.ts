@@ -1,17 +1,16 @@
-import { useMediaQuery, useTheme } from '@mui/material'
 import { Serie } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
+import useIsMobile from '../../utilities/useIsMobile'
 import getDistanceSteps from './getDistanceSteps'
 import getUniqueLensNames from './getUniqueLensNames'
 
 export default function useData() {
     const { lenses, units } = useDoFStore()
-    const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+    const isMobile = useIsMobile()
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
     const uniqueNames = getUniqueLensNames(lenses)
     const data: Serie[] = useMemo(
