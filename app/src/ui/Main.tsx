@@ -15,8 +15,8 @@ export default function Main() {
     useWriteToHash(hasReadFromHash)
 
     return (
-        <Box p={2}>
-            <Box mb={2}>
+        <Box>
+            <Box my={3}>
                 <TopToolbar />
             </Box>
 

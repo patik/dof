@@ -2,6 +2,8 @@ import { CssBaseline, useMediaQuery } from '@mui/material'
 import { createTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import { PropsWithChildren, useMemo } from 'react'
 
+export const THEME_SPACING = 8
+
 export function ThemeProvider({ children }: PropsWithChildren) {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
@@ -9,6 +11,7 @@ export function ThemeProvider({ children }: PropsWithChildren) {
         () =>
             responsiveFontSizes(
                 createTheme({
+                    spacing: THEME_SPACING,
                     palette: {
                         mode: prefersDarkMode ? 'dark' : 'light',
                     },

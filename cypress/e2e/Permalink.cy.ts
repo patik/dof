@@ -36,6 +36,7 @@ describe('LensTable', () => {
 
         cy.url().should('not.include', '#')
 
+        cy.wait(500)
         cy.get('button').contains('Add Lens').click()
 
         cy.url().should('include', '#5,m;Lens%203,35,f-2,full')

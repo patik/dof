@@ -1,10 +1,12 @@
 import { Typography } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
+import { Box } from '@mui/system'
 import useDoFStore from '../../../../store'
 import { metersToFeet } from '../../../../utilities/conversion'
 import { getRowLabelId } from '../../../../utilities/getRowLabelId'
 import useIsMobile from '../../../../utilities/useIsMobile'
+import DeleteButton from '../DeleteButton'
 import Aperture from './Aperture'
 import FocalLength from './FocalLength'
 import Name from './Name'
@@ -112,11 +114,17 @@ export default function Row({ lens }: { lens: LensDefinition }) {
                         ? {
                               marginBottom: 2,
                               border: 'none',
+                              width: '100%',
                           }
                         : undefined
                 }
             >
-                <Typography>{`${isMobile ? 'Depth of field: ' : ''}${displayDof}`}</Typography>
+                <Box sx={isMobile ? { display: 'flex', alignItems: 'center' } : undefined}>
+                    <Typography sx={isMobile ? { flexGrow: 1 } : undefined}>{`${
+                        isMobile ? 'Depth of field: ' : ''
+                    }${displayDof}`}</Typography>
+                    {isMobile ? <DeleteButton lenses={[lens.id]} /> : null}
+                </Box>
             </TableCell>
         </MuiTableRow>
     )

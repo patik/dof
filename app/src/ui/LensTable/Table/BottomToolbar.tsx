@@ -1,12 +1,12 @@
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
-import DeleteIcon from '@mui/icons-material/Delete'
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import MuiToolbar from '@mui/material/Toolbar'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
+import DeleteButton from './DeleteButton'
 
 export default function BottomToolbar() {
-    const { addLens, deleteLenses, duplicateLenses, selected } = useDoFStore()
+    const { addLens, duplicateLenses, selected } = useDoFStore()
     const isMobile = useIsMobile()
 
     return (
@@ -33,11 +33,7 @@ export default function BottomToolbar() {
                                 </Typography>
                             </Box>
                             <Box>
-                                <Tooltip title="Delete">
-                                    <IconButton onClick={() => deleteLenses(selected)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </Tooltip>
+                                <DeleteButton lenses={selected} />
                                 <Tooltip title="Duplicate">
                                     <IconButton onClick={() => duplicateLenses(selected)}>
                                         <ControlPointDuplicateIcon />
@@ -48,7 +44,7 @@ export default function BottomToolbar() {
                     ) : null}
                 </Box>
             )}
-            <Box textAlign={isMobile ? 'center' : undefined} flexGrow={isMobile ? 1 : 0}>
+            <Box sx={isMobile ? { textAlign: 'center', flexGrow: 1 } : undefined}>
                 <Button onClick={() => addLens()}>Add Lens</Button>
             </Box>
         </MuiToolbar>

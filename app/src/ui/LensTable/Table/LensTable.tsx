@@ -47,7 +47,7 @@ export default function LensTable() {
     const { lenses, order, orderBy } = useDoFStore()
 
     return (
-        <Paper sx={{ width: '100%', maxWidth: '960px', mb: 2 }}>
+        <Paper sx={{ width: '100%', mb: 2 }}>
             <TableContainer>
                 <Table aria-labelledby="tableTitle" size="small">
                     <Header />

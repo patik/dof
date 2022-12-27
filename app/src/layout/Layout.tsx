@@ -27,7 +27,7 @@ export default function Layout({ title, isHomePage, children }: Props): ReactEle
             <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
                 <Box mb={3}>
                     <Typography variant="h1" gutterBottom>
-                        <Link href="/">Depth of Field Calculator &amp; Comparison Tool</Link>
+                        <Link href="/">Depth of Field Calculator &amp; Lens Comparison Tool</Link>
                     </Typography>
                     <Typography>Compare multiple camera lenses side-by-side</Typography>
                 </Box>
