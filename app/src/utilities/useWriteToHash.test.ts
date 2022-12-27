@@ -3,7 +3,7 @@ import { createHash } from './useWriteToHash'
 describe('createHash', () => {
     test('simple example with one lens', () => {
         expect(
-            createHash(5, [
+            createHash(5, 'metric', [
                 {
                     name: 'Alpha bravo',
                     aperture: 'f/3.4',
@@ -18,7 +18,7 @@ describe('createHash', () => {
 
     test('with two lenses', () => {
         expect(
-            createHash(15, [
+            createHash(15, 'metric', [
                 {
                     name: 'Alpha bravo',
                     aperture: 'f/3.4',
