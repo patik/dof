@@ -5,7 +5,7 @@ import useWriteToHash from '../utilities/useWriteToHash'
 import { useWriteToStorage } from '../utilities/useWriteToStorage'
 import Graph from './Graph/Graph'
 import LensTable from './LensList/Table/LensTable'
-import TopToolbar from './LensList/TopToolbar'
+import TopToolbar from './LensList/TopToolbar/TopToolbar'
 
 export default function Main() {
     const hasReadFromHash = useReadFromHash()

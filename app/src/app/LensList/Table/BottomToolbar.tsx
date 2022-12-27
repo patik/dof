@@ -2,7 +2,7 @@ import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import MuiToolbar from '@mui/material/Toolbar'
-import useDoFStore from '../../store'
+import useDoFStore from '../../../store'
 
 export default function BottomToolbar() {
     const { addLens, deleteLenses, duplicateLenses, selected } = useDoFStore()

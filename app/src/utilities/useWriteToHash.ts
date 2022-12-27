@@ -4,8 +4,8 @@ import { createLensDefinition } from '../store/lensSlice'
 import areDuplicateLenses from './areDuplicateLenses'
 import placeholderLenses from './placeholderLenses'
 
-export function createHash(distance: Distance, lenses: LensDefinition[]): string {
-    const hash = `${distance};${lenses
+export function createHash(distance: Distance, units: Units, lenses: LensDefinition[]): string {
+    const hash = `${distance},${units.charAt(0)};${lenses
         .map(
             (lens) =>
                 `${encodeURIComponent(lens.name.trim())},${lens.focalLength},${lens.aperture.replace('/', '-')},${
@@ -18,7 +18,7 @@ export function createHash(distance: Distance, lenses: LensDefinition[]): string
 }
 
 export default function useWriteToHash(hasReadFromHash = false) {
-    const { distance, lenses } = useDoFStore()
+    const { distance, units, lenses } = useDoFStore()
 
     useEffect(() => {
         if (!hasReadFromHash) {
@@ -38,6 +38,6 @@ export default function useWriteToHash(hasReadFromHash = false) {
             return
         }
 
-        window.location.hash = createHash(distance, lensesToIncludeInHash)
-    }, [distance, hasReadFromHash, lenses])
+        window.location.hash = createHash(distance, units, lensesToIncludeInHash)
+    }, [distance, hasReadFromHash, lenses, units])
 }

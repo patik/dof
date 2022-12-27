@@ -52,7 +52,7 @@ describe('LensTable', () => {
         cy.get('[data-testid^="lens-name-"]').should('have.length', 0)
     })
 
-    describe('Updates the depth of field calculation when the inputs are changed', () => {
+    describe('Updates the depth of field calculation when the lens inputs are changed', () => {
         it('metric', () => {
             cy.visit('http://localhost:3000')
             // Ensure that there is exactly one lens in the table
@@ -94,75 +94,118 @@ describe('LensTable', () => {
         })
     })
 
-    it('The Add Lens button adds another lens to the table', () => {
-        cy.visit('http://localhost:3000')
+    describe('Updates the depth of field calculation when the distance is changed', () => {
+        it('metric', () => {
+            cy.visit('http://localhost:3000')
+            // Ensure that there is exactly one lens in the table
+            cy.get('button').contains('Add Lens').click()
+            cy.get('[data-testid="select-all"]').click()
+            cy.get('button[aria-label="Delete"]').click()
+            cy.get('button').contains('Add Lens').click()
 
-        // Before adding the new lens, get the ID if the latest existing lens, so we know what the next ID should be
-        cy.get('[data-testid^="lens-name-"]')
-            .last()
-            .invoke('get')
-            .then((lastLens) => {
-                // Find the most recent lens ID
-                const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
-                cy.log(`Last lens has ID: ${lastId}`)
+            cy.get('button[title="Meters"]').click()
 
-                // Determine what the next lens ID should be
-                const nextId = `${Number(lastId) + 1}`
-                cy.log(`Next lens should have ID: ${nextId}`)
+            // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
+            cy.get('[data-testid^="dof-"]').last().should('not.have.text', '0.61')
+
+            // Change the distance
+            cy.get('[data-testid="distance"] input').last().focus().type('{selectall}').type('10')
+
+            // DoF should have a new value
+            cy.get('[data-testid^="dof-"]').last().should('have.text', '12.81')
+        })
+
+        it('imperial', () => {
+            cy.visit('http://localhost:3000')
+            // Ensure that there is exactly one lens in the table
+            cy.get('button').contains('Add Lens').click()
+            cy.get('[data-testid="select-all"]').click()
+            cy.get('button[aria-label="Delete"]').click()
+            cy.get('button').contains('Add Lens').click()
+
+            cy.get('button[title="Feet"]').click()
+
+            // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
+            cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 2 1/4"`)
+
+            // Change the distance
+            cy.get('[data-testid="distance"] input').last().focus().type('{selectall}').type('10')
+
+            // DoF should have a new value
+            cy.get('[data-testid^="dof-"]').last().should('have.text', `9' 11"`)
+        })
+    })
+
+    describe('Adding more lenses', () => {
+        it('The Add Lens button adds another lens to the table', () => {
+            cy.visit('http://localhost:3000')
+
+            // Count how many lenses there are before adding the new lens
+            cy.get('[data-testid^="lens-name-"]').then(($originalLensSet) => {
+                const originalCount = $originalLensSet.length
+                cy.log(`originalCount is: ${originalCount}`)
 
                 cy.get('button').contains('Add Lens').click()
 
-                // New lens should now be visible
-                cy.get(`[data-testid="lens-name-${nextId}"]`).should('be.visible')
+                // Now there should be one more
+                cy.get(`[data-testid^="lens-name-"]`).then(($finalLensSet) => {
+                    const finalCount = $finalLensSet.length
+                    cy.log(`finalCount is: ${finalCount}`)
+
+                    expect(finalCount).equal(originalCount + 1)
+                })
             })
-    })
+        })
 
-    it('The Duplicate Lens button adds another lens to the table with the same values as the first lens', () => {
-        cy.visit('http://localhost:3000')
-        // Ensure that there is exactly one lens in the table
-        cy.get('button').contains('Add Lens').click()
-        cy.get('[data-testid="select-all"]').click()
-        cy.get('button[aria-label="Delete"]').click()
-        cy.get('button').contains('Add Lens').click()
-        cy.get('button[title="Meters"]').click()
+        it('The Duplicate Lens button adds another lens to the table with the same values as the first lens', () => {
+            cy.visit('http://localhost:3000')
+            // Ensure that there is exactly one lens in the table
+            cy.get('button').contains('Add Lens').click()
+            cy.get('[data-testid="select-all"]').click()
+            cy.get('button[aria-label="Delete"]').click()
+            cy.get('button').contains('Add Lens').click()
+            cy.get('button[title="Meters"]').click()
 
-        // Add custom values to the existing lens
-        cy.get('[data-testid^="lens-name-"] input').last().focus().type('{selectall}').type('Sieben-Eins')
-        cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('20')
-        cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/1.4"]').click()
-        cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="16mm"]').click()
-        cy.get('[data-testid^="dof-"]').last().should('have.text', '1.63')
+            // Add custom values to the existing lens
+            cy.get('[data-testid^="lens-name-"] input').last().focus().type('{selectall}').type('Sieben-Eins')
+            cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('20')
+            cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/1.4"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="16mm"]').click()
+            cy.get('[data-testid^="dof-"]').last().should('have.text', '1.63')
 
-        // Before adding the new lens, get the ID if the latest existing lens, so we know what the next ID should be
-        cy.get('[data-testid^="lens-name-"]')
-            .last()
-            .invoke('get')
-            .then((lastLens) => {
-                // Find the most recent lens ID
-                const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
-                cy.log(`Last lens has ID: ${lastId}`)
+            // Before adding the new lens, get the ID if the latest existing lens, so we know what the next ID should be
+            cy.get('[data-testid^="lens-name-"]')
+                .last()
+                .invoke('get')
+                .then((lastLens) => {
+                    // Find the most recent lens ID
+                    const lastId = lastLens[0].dataset.testid.replace(/^lens-name-/, '')
+                    cy.log(`Original lens has ID: ${lastId}. Dataset was: ${JSON.stringify(lastLens[0].dataset)}`)
 
-                // Determine what the next lens ID should be
-                const nextId = `${Number(lastId) + 1}`
-                cy.log(`Next lens should have ID: ${nextId}`)
+                    // Duplicate the lens
+                    cy.get(`[data-testid="lens-checkbox-${lastId}"]`).click()
+                    cy.get('button[aria-label="Duplicate"]').click()
 
-                // Duplicate the lens
-                cy.get(`[data-testid="lens-checkbox-${lastId}"]`).click()
-                cy.get('button[aria-label="Duplicate"]').click()
+                    // Find the newly added lens
+                    cy.get('[data-testid^="lens-name-"]')
+                        .last()
+                        .invoke('get')
+                        .then((parentDiv) => {
+                            const nextId = parentDiv[0].dataset.testid.replace(/^lens-name-/, '')
 
-                // New lens should now be visible
-                cy.get(`[data-testid="lens-name-${nextId}"]`).should('be.visible')
+                            cy.log(`Duplicate lens has ID: “${nextId}”`)
 
-                // Should have the same values as the first lens
-                cy.get('[data-testid^="lens-name-"] input').last().should('have.value', 'Sieben-Eins copy')
-                cy.get('[data-testid^="focal-length-"] input').last().should('have.value', '20')
-                cy.get('[data-testid^="aperture-"]').last().contains('f/1.4')
-                cy.get('[data-testid^="sensor-"]').last().contains('Standard 16mm film')
-                cy.get('[data-testid^="dof-"]').last().contains('1.63')
+                            // Should have the same values as the first lens
+                            cy.get(`[data-testid="lens-name-${nextId}"] input`).should('have.value', 'Sieben-Eins copy')
+                            cy.get(`[data-testid="focal-length-${nextId}"] input`).should('have.value', '20')
+                            cy.get(`[data-testid="aperture-${nextId}"]`).contains('f/1.4')
+                            cy.get(`[data-testid="sensor-${nextId}"]`).contains('Standard 16mm film')
+                            cy.get(`[data-testid="dof-${nextId}"]`).contains('1.63')
+                        })
 
-                cy.get('[data-testid^="lens-name-"] input').first().should('have.value', 'Sieben-Eins')
-            })
+                    // And make sure the first one is still there
+                    cy.get('[data-testid^="lens-name-"] input').first().should('have.value', 'Sieben-Eins')
+                })
+        })
     })
 })
-
-export {}
