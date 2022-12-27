@@ -3,28 +3,11 @@ import useDoFStore from '../store'
 import { LensDataState } from '../store/lensSlice'
 import { LocalStorageData } from '../store/storageSlice'
 import storage from './storage'
+import placeholderLenses from './placeholderLenses'
 
 function addPlaceholderLenses(addLens: LensDataState['addLens']) {
     // Populate the empty table with some data
-    addLens(
-        {
-            name: 'Lens 1',
-            focalLength: 35,
-            aperture: 'f/2',
-            sensorKey: 'full',
-        },
-        true
-    )
-
-    addLens(
-        {
-            name: 'Lens 2',
-            focalLength: 55,
-            aperture: 'f/1.4',
-            sensorKey: 'mft',
-        },
-        true
-    )
+    placeholderLenses.forEach((l) => addLens(l, true))
 }
 
 /**

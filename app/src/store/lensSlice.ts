@@ -1,6 +1,7 @@
 import { Lens } from 'dof'
-import { compact, defaults, cloneDeep } from 'lodash'
+import { compact, defaults } from 'lodash'
 import { StateCreator } from 'zustand'
+import areDuplicateLenses from '../utilities/areDuplicateLenses'
 import { rounded } from '../utilities/conversion'
 import IDGenerator from '../utilities/IDGenerator'
 import sensorList from '../utilities/sensorList'
@@ -18,16 +19,16 @@ export function createLensDefinition({
     focalLength,
     aperture,
     sensorKey,
-    distance,
-    units,
+    distance = DEFAULT_DISTANCE,
+    units = DEFAULT_UNITS,
 }: {
     id?: string
     name: string
     focalLength: number
     aperture: string
     sensorKey: SensorKey
-    distance: number
-    units: Units
+    distance?: number
+    units?: Units
 }): LensDefinition {
     const { dof } = new Lens({
         focalLength,
@@ -48,11 +49,13 @@ export function createLensDefinition({
 
 type DefaultLensData = Pick<LensDefinition, 'name' | 'focalLength' | 'aperture' | 'sensorKey'>
 
+type AddLensConfig = Partial<DefaultLensData>
+
 export interface LensDataState {
     units: Units
     distance: Distance
     lenses: LensDefinition[]
-    addLens: (opts?: Partial<DefaultLensData>, skipIfDuplicate?: boolean) => void
+    addLens: (config?: AddLensConfig, skipIfDuplicate?: boolean) => void
     updateLens: (lens: LensDefinition) => void
     deleteLenses: (lensesToDelete: readonly SelectedItem[]) => void
     duplicateLenses: (lensesToDuplicate: readonly SelectedItem[]) => void
@@ -85,19 +88,8 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                 units,
             })
 
-            if (
-                skipIfDuplicate &&
-                lenses.find((l) => {
-                    if (!(l.name === lens.name && l.depthOfField === lens.depthOfField)) {
-                        // console.log('not a duplicate: ', lens.name, lens.depthOfField, l.name, l.depthOfField)
-                    }
-                    return l.name === lens.name && l.depthOfField === lens.depthOfField
-                })
-            ) {
-                console.log('is a duplicate: ', lens.name, lens.depthOfField)
+            if (skipIfDuplicate && lenses.find((l) => areDuplicateLenses(l, lens))) {
                 return
-            } else if (skipIfDuplicate) {
-                console.log('not a duplicate: ', lens.name, lens.depthOfField, cloneDeep(lenses))
             }
 
             set((state) => ({
@@ -132,13 +124,6 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                     return !lensesToDelete.includes(lens.id)
                 })
 
-                console.log(
-                    `Deleting ${lensesToDelete.length} lenses: “${lensesToDelete
-                        .map((id) => state.lenses.find((l) => l.id === id)?.name)
-                        .join(', ')}”. After this, there should be ${
-                        remainingLenses.length
-                    } lenses remaining: “${remainingLenses.map((l) => l.name).join(', ')}”`
-                )
                 return {
                     ...state,
                     lenses: [...remainingLenses],
