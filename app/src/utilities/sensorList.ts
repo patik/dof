@@ -95,6 +95,8 @@ const fullList = {
     },
 }
 
+// Imported by types.d.ts so it can be used globally without importing
+// ts-prune-ignore-next
 export type SensorKey = keyof typeof fullList
 
 export default fullList

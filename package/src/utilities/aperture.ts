@@ -58,7 +58,7 @@ const largestDocumentedAperture = sortedValues.slice(-1)[0]
  * Takes a human-friendly string and returns a precise numeric value that is equivalent
  * @example 'f/5' => 5.039684
  */
-export function getPreciseAperture(humanValue: string): number | undefined {
+function getPreciseAperture(humanValue: string): number | undefined {
     if (
         humanValue in preciseApertureMap &&
         Object.prototype.hasOwnProperty.call(preciseApertureMap, humanValue) &&

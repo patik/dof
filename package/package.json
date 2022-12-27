@@ -31,9 +31,10 @@
         "cover": "yarn test --collectCoverage",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "yarn typecheck && yarn code-lint",
+        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
         "preversion": "yarn build && yarn cover",
-        "test": "yarn jest"
+        "test": "yarn jest",
+        "unused-exports": "ts-prune -p ./tsconfig.json"
     },
     "keywords": [
         "depth-of-field",

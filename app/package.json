@@ -8,8 +8,9 @@
         "start": "next start",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "next lint && yarn typecheck && yarn code-lint",
-        "test": "yarn jest"
+        "lint": "next lint && yarn typecheck && yarn code-lint && yarn unused-exports",
+        "test": "yarn jest",
+        "unused-exports": "ts-prune -p ./tsconfig.json"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",
