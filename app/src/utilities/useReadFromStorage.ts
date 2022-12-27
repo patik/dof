@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import useDoFStore from '../store'
-import { LensDataState } from '../store/lensSlice'
-import { LocalStorageData } from '../store/storageSlice'
-import storage from './storage'
 import placeholderLenses from './placeholderLenses'
+import storage from './storage'
 
 function addPlaceholderLenses(addLens: LensDataState['addLens']) {
     // Populate the empty table with some data

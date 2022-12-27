@@ -1,8 +1,8 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
-import { createLensDataSlice, LensDataState } from './lensSlice'
-import { createStorageSlice, StorageState } from './storageSlice'
-import { createTableSlice, TableState } from './tableSlice'
+import { createLensDataSlice } from './lensSlice'
+import { createStorageSlice } from './storageSlice'
+import { createTableSlice } from './tableSlice'
 
 const useDoFStore = create<TableState & LensDataState & StorageState>()(
     devtools((set, get, state) => ({

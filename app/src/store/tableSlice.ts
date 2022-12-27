@@ -1,15 +1,4 @@
 import { StateCreator } from 'zustand'
-import { LensDataState } from './lensSlice'
-import { StorageState } from './storageSlice'
-
-export interface TableState {
-    order: Order
-    orderBy: ColumnName
-    selected: readonly SelectedItem[]
-    setSorting: (col: ColumnName, order?: Order) => void
-    setSelected: (newSelected: readonly SelectedItem[]) => void
-    isSelected: (id: LensDefinition['id']) => boolean
-}
 
 export const createTableSlice: StateCreator<TableState & LensDataState & StorageState, [], [], TableState> = (
     set,

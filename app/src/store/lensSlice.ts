@@ -5,8 +5,6 @@ import areDuplicateLenses from '../utilities/areDuplicateLenses'
 import { rounded } from '../utilities/conversion'
 import IDGenerator from '../utilities/IDGenerator'
 import sensorList from '../utilities/sensorList'
-import { StorageState } from './storageSlice'
-import { TableState } from './tableSlice'
 
 export const DEFAULT_DISTANCE: Distance = 5
 export const DEFAULT_UNITS: Units = 'metric'
@@ -45,22 +43,6 @@ export function createLensDefinition({
         sensorKey,
         depthOfField: rounded(dof),
     }
-}
-
-type DefaultLensData = Pick<LensDefinition, 'name' | 'focalLength' | 'aperture' | 'sensorKey'>
-
-type AddLensConfig = Partial<DefaultLensData>
-
-export interface LensDataState {
-    units: Units
-    distance: Distance
-    lenses: LensDefinition[]
-    addLens: (config?: AddLensConfig, skipIfDuplicate?: boolean) => void
-    updateLens: (lens: LensDefinition) => void
-    deleteLenses: (lensesToDelete: readonly SelectedItem[]) => void
-    duplicateLenses: (lensesToDuplicate: readonly SelectedItem[]) => void
-    setDistance: (newValue: Distance) => void
-    setUnits: (newValue: Units) => void
 }
 
 const defaultLensData: (numLenses: number) => DefaultLensData = (numLenses = 0) => ({
