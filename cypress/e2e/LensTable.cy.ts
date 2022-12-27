@@ -7,8 +7,28 @@ describe('LensTable', () => {
             cy.log('Deleting local storage...')
             await del('dof-storage')
             cy.log('Deleting local storage finished.')
+            window.location.hash = ''
         } catch (e) {
             cy.log('Deleting local storage failed: ', e)
+        }
+    })
+
+    afterEach(async () => {
+        try {
+            window.location.hash = ''
+        } catch (e) {
+            cy.log('[afterEach] Clearing hash failed: ', e)
+        }
+    })
+
+    after(async () => {
+        try {
+            cy.log('[after] Deleting local storage...')
+            await del('dof-storage')
+            cy.log('[after] Deleting local storage finished.')
+            window.location.hash = ''
+        } catch (e) {
+            cy.log('[after] Deleting local storage failed: ', e)
         }
     })
 
@@ -61,7 +81,7 @@ describe('LensTable', () => {
             cy.get('button[aria-label="Delete"]').click()
             cy.get('button').contains('Add Lens').click()
 
-            cy.get('button[title="Meters"]').click()
+            cy.get('button[value="metric"]').click()
 
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', '0.61')
@@ -81,7 +101,7 @@ describe('LensTable', () => {
             cy.get('button[aria-label="Delete"]').click()
             cy.get('button').contains('Add Lens').click()
 
-            cy.get('button[title="Feet"]').click()
+            cy.get('button[value="imperial"]').click()
 
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 2 1/4"`)
@@ -103,7 +123,7 @@ describe('LensTable', () => {
             cy.get('button[aria-label="Delete"]').click()
             cy.get('button').contains('Add Lens').click()
 
-            cy.get('button[title="Meters"]').click()
+            cy.get('button[value="metric"]').click()
 
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', '0.61')
@@ -123,7 +143,7 @@ describe('LensTable', () => {
             cy.get('button[aria-label="Delete"]').click()
             cy.get('button').contains('Add Lens').click()
 
-            cy.get('button[title="Feet"]').click()
+            cy.get('button[value="imperial"]').click()
 
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 2 1/4"`)
@@ -164,7 +184,7 @@ describe('LensTable', () => {
             cy.get('[data-testid="select-all"]').click()
             cy.get('button[aria-label="Delete"]').click()
             cy.get('button').contains('Add Lens').click()
-            cy.get('button[title="Meters"]').click()
+            cy.get('button[value="metric"]').click()
 
             // Add custom values to the existing lens
             cy.get('[data-testid^="lens-name-"] input').last().focus().type('{selectall}').type('Sieben-Eins')
