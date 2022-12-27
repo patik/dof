@@ -13,7 +13,7 @@ describe('createHash', () => {
                     id: '7',
                 },
             ])
-        ).toBe('5;Alpha%20bravo,55,f-3.4,APSC')
+        ).toBe('5,m;Alpha%20bravo,55,f-3.4,APSC')
     })
 
     test('with two lenses', () => {
@@ -36,6 +36,6 @@ describe('createHash', () => {
                     id: '7',
                 },
             ])
-        ).toBe('15;Alpha%20bravo,55,f-3.4,APSC;Charlie-%3EDelta,200,f-2,full')
+        ).toBe('15,m;Alpha%20bravo,55,f-3.4,APSC;Charlie-%3EDelta,200,f-2,full')
     })
 })
