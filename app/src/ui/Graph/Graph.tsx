@@ -16,20 +16,10 @@ export default function Graph() {
             colors={{ scheme: 'nivo' }}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
             xScale={{ type: 'point' }}
-            yScale={{
-                type: 'linear',
-                min: 'auto',
-                max: 'auto',
-                stacked: true,
-                reverse: false,
-            }}
-            yFormat=" >-.2f"
-            axisTop={null}
-            axisRight={null}
+            yScale={{ type: 'linear' }}
             axisBottom={{
                 tickSize: 5,
                 tickPadding: 5,
-                tickRotation: 0,
                 legend: `Distance (${units === 'imperial' ? 'ft' : 'm'})`,
                 legendOffset: 42,
                 legendPosition: 'middle',
