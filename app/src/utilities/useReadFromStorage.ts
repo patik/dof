@@ -41,7 +41,8 @@ export function useReadFromStorage() {
 
             applyFromLocalStorage(stateFromLocalStorage)
 
-            if (stateFromLocalStorage.state.lenses.length === 0) {
+            // The call above may or may not have added anything to the state (based on duplicates, validation, etc) so check the count again
+            if (useDoFStore.getState().lenses.length === 0) {
                 addPlaceholderLenses(addLens)
             }
 
