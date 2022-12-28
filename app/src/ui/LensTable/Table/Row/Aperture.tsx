@@ -13,7 +13,7 @@ export default function Aperture({ lens }: { lens: LensDefinition }) {
 
     return (
         <FormControl fullWidth>
-            <InputLabel id="aperture-input">Sensor size</InputLabel>
+            <InputLabel id="aperture-input">Aperture</InputLabel>
             <Select
                 value={lens.aperture}
                 onChange={onChange}

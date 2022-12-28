@@ -12,7 +12,9 @@ export default function TopToolbar() {
     return (
         <Box display="flex" sx={isMobile ? { flexWrap: 'wrap' } : null}>
             <Box flexGrow={1} sx={isMobile ? { minWidth: '100%', pb: 2 } : null}>
-                <Typography variant="h2">Lenses</Typography>
+                <Typography variant="h5" component="h2">
+                    Lenses
+                </Typography>
             </Box>
             <Box mr={SPACE_BETWEEN_FIELDS} sx={isMobile ? { width: '50%' } : null}>
                 <Distance />
