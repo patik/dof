@@ -8,14 +8,14 @@ export default function DepthOfFieldDetails({ lens, open }: { lens: LensDefiniti
     const { units } = useDoFStore()
 
     return (
-        <MuiTableRow>
+        <MuiTableRow className="dof-detail-row">
             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <Box sx={{ margin: 1 }}>
                         <Typography variant="h6" gutterBottom component="div">
                             Depth of field details
                         </Typography>
-                        <Table size="small" aria-label="purchases">
+                        <Table size="small" aria-label="depth of field details">
                             <TableHead>
                                 <MuiTableRow>
                                     <TableCell>Description</TableCell>
@@ -27,7 +27,9 @@ export default function DepthOfFieldDetails({ lens, open }: { lens: LensDefiniti
                                     <TableCell component="th" scope="row">
                                         {`Total length of the depth of field (${units === 'metric' ? 'm' : 'ft'})`}
                                     </TableCell>
-                                    <TableCell align="right">{lens.depthOfField.dof}</TableCell>
+                                    <TableCell align="right" data-testid="dof-precise">
+                                        {lens.depthOfField.dof}
+                                    </TableCell>
                                 </TableRow>
                                 <TableRow key="eighthDof">
                                     <TableCell component="th" scope="row">

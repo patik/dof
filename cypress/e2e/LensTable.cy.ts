@@ -58,17 +58,11 @@ describe('LensTable', () => {
             console.log(`Selected count: ${$elems.length}`)
         })
 
-        // cy.get('[data-testid="bottom-toolbar"] > div > div').should('have.length', 2)
         cy.get('button[aria-label="Delete"]').click()
-        // cy.get('.lens-table-row').then(($elems) => {
-        //     cy.log(`Table has ${$elems.length} rows before selecting`)
-        //     console.log(`Table has ${$elems.length} rows after deleting`)
-        // })
 
         cy.log(`State has ${state.length} lenses after deleting`)
         console.log(`State has ${state.length} lenses after deleting`)
 
-        // cy.get('.lens-table-row').should('have.length', 0)
         cy.get('[data-testid^="lens-name-"]').should('have.length', 0)
     })
 
@@ -91,6 +85,11 @@ describe('LensTable', () => {
             cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="NikonD3k"]').click()
 
             cy.get('[data-testid^="dof-"]').last().should('have.text', '0.61')
+
+            // Check DoF details
+            cy.get('[aria-label="expand row"]').last().click()
+            cy.get('[aria-label="depth of field details"]').should('be.visible')
+            cy.get('[data-testid="dof-precise"]').last().should('have.text', '0.6097723318293538')
         })
 
         it('imperial', () => {
@@ -111,6 +110,11 @@ describe('LensTable', () => {
             cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="iPhone13"]').click()
 
             cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 2 1/4"`)
+
+            // Check DoF details
+            cy.get('[aria-label="expand row"]').last().click()
+            cy.get('[aria-label="depth of field details"]').should('be.visible')
+            cy.get('[data-testid="dof-precise"]').last().should('have.text', `0.05665367011304934`)
         })
     })
 
@@ -133,6 +137,11 @@ describe('LensTable', () => {
 
             // DoF should have a new value
             cy.get('[data-testid^="dof-"]').last().should('have.text', '12.81')
+
+            // Check DoF details
+            cy.get('[aria-label="expand row"]').last().click()
+            cy.get('[aria-label="depth of field details"]').should('be.visible')
+            cy.get('[data-testid="dof-precise"]').last().should('have.text', '12.81430309460011')
         })
 
         it('imperial', () => {
@@ -152,7 +161,12 @@ describe('LensTable', () => {
             cy.get('[data-testid="distance"] input').last().focus().type('{selectall}').type('10')
 
             // DoF should have a new value
-            cy.get('[data-testid^="dof-"]').last().should('have.text', `9' 11"`)
+            cy.get('[data-testid^="dof-"]').last().should('have.text', `9' 10 3/4"`)
+
+            // Check DoF details
+            cy.get('[aria-label="expand row"]').last().click()
+            cy.get('[aria-label="depth of field details"]').should('be.visible')
+            cy.get('[data-testid="dof-precise"]').last().should('have.text', '3.0172208423706834')
         })
     })
 
