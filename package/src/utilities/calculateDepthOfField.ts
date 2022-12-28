@@ -1,17 +1,6 @@
 import { decimalAdjust } from './decimalAdjust'
 import { formatFeet } from './formatFeet'
 
-type Result = {
-    dof: number // The length of the depth of field
-    focalLengthEquiv: number // The focal length in 35mm-equivalency
-    eighthDof: number // One-eighth of the depth of field
-    hf: number // Hyperfocal distance
-    near: number // DoF near limit
-    far: number // DoF far limit
-    coc: number // Circle of confusion
-    toString: () => string
-}
-
 /**
  * Returns the depth of field characteristics for a given lens' attributes
  *
@@ -27,8 +16,8 @@ export function calculateDepthOfField(
     cropFactor: number,
     distance: number,
     imperialUnits: boolean
-): Result {
-    const result: Result = {
+): DoFResult {
+    const result: DoFResult = {
         dof: 0,
         focalLengthEquiv: 0,
         eighthDof: 0,

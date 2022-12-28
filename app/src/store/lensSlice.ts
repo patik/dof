@@ -2,7 +2,6 @@ import { Lens } from 'dof'
 import { compact, defaults } from 'lodash'
 import { StateCreator } from 'zustand'
 import areDuplicateLenses from '../utilities/areDuplicateLenses'
-import { rounded } from '../utilities/conversion'
 import IDGenerator from '../utilities/IDGenerator'
 import sensorList from '../utilities/sensorList'
 
@@ -28,7 +27,7 @@ export function createLensDefinition({
     distance?: number
     units?: Units
 }): LensDefinition {
-    const { dof } = new Lens({
+    const depthOfField = new Lens({
         focalLength,
         aperture,
         cropFactor: sensorList[sensorKey].value,
@@ -41,7 +40,7 @@ export function createLensDefinition({
         aperture,
         focalLength,
         sensorKey,
-        depthOfField: rounded(dof),
+        depthOfField,
     }
 }
 
