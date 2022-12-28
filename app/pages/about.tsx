@@ -5,7 +5,7 @@ import { PropsWithChildren } from 'react'
 import Layout from '../src/layout/Layout'
 import comparisonImg from '../public/images/comparison.png'
 import detailsImg from '../public/images/details.png'
-import lensNameImg from '../public/images/lens-name.png'
+// import lensNameImg from '../public/images/lens-name.png'
 import screenshotImg from '../public/images/screenshot-v0.0.3.png'
 import sharingImg from '../public/images/sharing.png'
 import singleLensImg from '../public/images/single-lens.png'
@@ -39,7 +39,7 @@ export default function About() {
                 </Typography>
                 <Typography>Feel free to give each lens a meaningful name to keep track of them.</Typography>
                 <Figure narrow style={{ position: 'relative' }}>
-                    <Image src={lensNameImg} height={250} alt="Renaming a lens" />
+                    {/* <Image src={lensNameImg} height={250} alt="Renaming a lens" /> */}
                 </Figure>
                 <Typography>The depth of field calculation can be expanded to view more related statistics:</Typography>
                 <figure className="narrow" style={{ position: 'relative' }}>

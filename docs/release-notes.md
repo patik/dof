@@ -1,9 +1,14 @@
 # Release Notes
 
+## 2.1.0
+
+- Completely rebuilt GUI web app
+- More type and function exports from the `dof` module
+
 ## 2.0.0
 
 - Consumable NPM module for use in any app
-- Metric measurements by default
+- Metric measurements by default, with continued support for imperial units
 - Project is modernized for more reliability and easier maintenance
 
 ## 1.0.0
