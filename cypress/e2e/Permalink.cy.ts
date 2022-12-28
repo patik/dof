@@ -39,7 +39,9 @@ describe('LensTable', () => {
         cy.wait(500)
         cy.get('button').contains('Add Lens').click()
 
-        cy.url().should('include', '#5,m;Lens%203,35,f-2,full')
+        // Check for the pieces separately in case some placeholder lenses are inserted between them
+        cy.url().should('include', '#5,m;')
+        cy.url().should('include', ';Lens%203,35,f-2,full')
     })
 
     describe('Reads the distance and units from the initial hash and applies them to the input', () => {
