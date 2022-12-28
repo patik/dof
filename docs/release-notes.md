@@ -3,6 +3,8 @@
 ## 2.1.0
 
 - Completely rebuilt GUI web app
+- Supports permalinks from the old version of the GUI
+- Also uses local storage to persist state
 - More type and function exports from the `dof` module
 
 ## 2.0.0

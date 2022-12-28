@@ -12,10 +12,11 @@ function FallbackComponent() {
 
 type Props = PropsWithChildren<{
     title?: string
-    isHomePage?: boolean
+    hasPermalink?: boolean
+    noMainHeading?: boolean
 }>
 
-export default function Layout({ title, isHomePage, children }: Props): ReactElement {
+export default function Layout({ title, hasPermalink, noMainHeading, children }: Props): ReactElement {
     return (
         <Box display="flex" flexDirection="column" minHeight="100%">
             <Head>
@@ -25,18 +26,21 @@ export default function Layout({ title, isHomePage, children }: Props): ReactEle
             </Head>
 
             <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
-                <Box mb={3}>
-                    <Typography variant="h4" component="h1" gutterBottom>
-                        <Link href="/">Depth of Field Calculator &amp; Lens Comparison Tool</Link>
-                    </Typography>
-                    <Typography>Compare multiple camera lenses side-by-side</Typography>
-                </Box>
+                {noMainHeading ? null : (
+                    <Box mb={3}>
+                        <Typography variant="h4" component="h1" gutterBottom>
+                            <Link href="/">Depth of Field Calculator &amp; Lens Comparison Tool</Link>
+                        </Typography>
+                        <Typography>Compare multiple camera lenses side-by-side</Typography>
+                    </Box>
+                )}
+
                 <ErrorBoundary FallbackComponent={FallbackComponent}>{children}</ErrorBoundary>
 
                 <Divider sx={{ my: 2 }} />
 
                 <ErrorBoundary FallbackComponent={FallbackComponent}>
-                    <Footer isHomePage={isHomePage} />
+                    <Footer hasPermalink={hasPermalink} />
                 </ErrorBoundary>
             </Box>
         </Box>

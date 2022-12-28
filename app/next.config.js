@@ -1,7 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const mdx = require('@next/mdx')
+
+const withMDX = mdx({
+    extension: /\.mdx?$/,
+})
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = withMDX({
     reactStrictMode: true,
     swcMinify: true,
-}
-
-module.exports = nextConfig
+    // Append the default value with md extensions
+    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+})

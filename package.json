@@ -6,10 +6,10 @@
         "app"
     ],
     "scripts": {
-        "dev": "yarn --cwd package tsc && yarn --cwd app next dev",
+        "dev": "yarn --cwd package tsc && yarn --cwd app dev",
         "start": "yarn --cwd app next start",
         "start:ci": "yarn build && yarn --cwd app next start",
-        "build": "yarn --cwd package lint && yarn --cwd package tsc && yarn --cwd app next build",
+        "build": "yarn --cwd package lint && yarn --cwd package tsc && yarn --cwd app build",
         "clean": "git clean -fdx",
         "cover": "yarn --cwd package test --collectCoverage",
         "lint": "yarn workspaces run lint",
