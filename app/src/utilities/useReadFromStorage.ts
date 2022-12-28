@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react'
 import useDoFStore from '../store'
-import placeholderLenses from './placeholderLenses'
 import storage from './storage'
-
-/**
- * Populate the empty table with some data
- */
-function addPlaceholderLenses(addLens: LensDataState['addLens']) {
-    placeholderLenses.forEach((l) => addLens(l, true))
-}
 
 /**
  * Reads the state from local storage
@@ -34,7 +26,6 @@ export function useReadFromStorage() {
 
             if (!stateFromLocalStorage) {
                 setHasFinishedReading(true)
-                addPlaceholderLenses(addLens)
 
                 return
             }

@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import useDoFStore from '../store'
 import placeholderLenses from './placeholderLenses'
 
+/**
+ * Populate the empty table with some data
+ */
 function addPlaceholderLenses(addLens: LensDataState['addLens']) {
-    // Populate the empty table with some data
     placeholderLenses.forEach((l) => addLens(l, true))
 }
 

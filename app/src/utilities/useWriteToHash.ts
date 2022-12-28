@@ -43,6 +43,7 @@ export default function useWriteToHash(hasReadFromHash = false) {
             console.log('no non-placeholder lenses left for the hash')
             return
         }
+        console.log('writing to hash ', { lenses, lensesToIncludeInHash })
 
         window.location.hash = createHash(distance, units, lensesToIncludeInHash)
     }, [distance, hasReadFromHash, lenses, units])
