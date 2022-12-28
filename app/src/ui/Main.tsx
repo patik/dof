@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import { useAddPlaceholderLenses } from '../utilities/useAddPlaceholderLenses'
 import useReadFromHash from '../utilities/useReadFromHash'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
 import useWriteToHash from '../utilities/useWriteToHash'
@@ -13,6 +14,7 @@ export default function Main() {
 
     useWriteToStorage(hasReadFromStorage)
     useWriteToHash(hasReadFromHash)
+    useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
 
     return (
         <Box>

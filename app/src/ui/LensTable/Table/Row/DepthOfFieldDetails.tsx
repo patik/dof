@@ -13,7 +13,7 @@ export default function DepthOfFieldDetails({ lens, open }: { lens: LensDefiniti
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <Box sx={{ margin: 1 }}>
                         <Typography variant="h6" gutterBottom component="div">
-                            Depth of field details
+                            Depth of field (DoF) details
                         </Typography>
                         <Table size="small" aria-label="depth of field details">
                             <TableHead>

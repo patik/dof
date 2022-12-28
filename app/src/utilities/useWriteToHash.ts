@@ -17,6 +17,18 @@ export function createHash(distance: Distance, units: Units, lenses: LensDefinit
     return hash
 }
 
+/**
+ * Filters out the placeholder lenses
+ */
+export function getNonPlaceholderLenses(lenses: LensDefinition[]) {
+    return lenses.filter(
+        (stateLens) =>
+            !placeholderLenses.some((placeholderLens) =>
+                areDuplicateLenses(stateLens, createLensDefinition(placeholderLens))
+            )
+    )
+}
+
 export default function useWriteToHash(hasReadFromHash = false) {
     const { distance, units, lenses } = useDoFStore()
 
@@ -25,13 +37,7 @@ export default function useWriteToHash(hasReadFromHash = false) {
             return
         }
 
-        // Filter out the placeholder lenses
-        const lensesToIncludeInHash = lenses.filter(
-            (stateLens) =>
-                !placeholderLenses.some((placeholderLens) =>
-                    areDuplicateLenses(stateLens, createLensDefinition(placeholderLens))
-                )
-        )
+        const lensesToIncludeInHash = getNonPlaceholderLenses(lenses)
 
         if (lensesToIncludeInHash.length === 0) {
             console.log('no non-placeholder lenses left for the hash')

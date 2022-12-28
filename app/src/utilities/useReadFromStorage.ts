@@ -3,8 +3,10 @@ import useDoFStore from '../store'
 import placeholderLenses from './placeholderLenses'
 import storage from './storage'
 
+/**
+ * Populate the empty table with some data
+ */
 function addPlaceholderLenses(addLens: LensDataState['addLens']) {
-    // Populate the empty table with some data
     placeholderLenses.forEach((l) => addLens(l, true))
 }
 
@@ -17,7 +19,7 @@ export function useReadFromStorage() {
     const { addLens, applyFromLocalStorage } = useDoFStore()
 
     // Read from localStorage
-    // Note that on Next.js dev server this hook will run twice, causing duplicate lenses to be added to state
+    // Note that on Next.js dev server this hook will run twice which could cause duplicate lenses to be added to state
     useEffect(() => {
         if (hasStartedReading || hasFinishedReading || typeof window === 'undefined') {
             return
@@ -38,12 +40,6 @@ export function useReadFromStorage() {
             }
 
             applyFromLocalStorage(stateFromLocalStorage)
-
-            // The call above may or may not have added anything to the state (based on duplicates, validation, etc) so check the count again
-            if (useDoFStore.getState().lenses.length === 0) {
-                addPlaceholderLenses(addLens)
-            }
-
             setHasFinishedReading(true)
         }
 

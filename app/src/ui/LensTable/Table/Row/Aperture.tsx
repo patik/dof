@@ -1,20 +1,32 @@
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { apertureMap } from 'dof'
 import useDoFStore from '../../../../store'
+import useIsMobile from '../../../../utilities/useIsMobile'
 
 export default function Aperture({ lens }: { lens: LensDefinition }) {
     const { updateLens } = useDoFStore()
+    const isMobile = useIsMobile()
+    const ItemComponent = isMobile ? 'option' : MenuItem
     const onChange = (event: SelectChangeEvent<string>) => {
         updateLens({ ...lens, aperture: event.target.value })
     }
 
     return (
         <FormControl fullWidth>
-            <Select value={lens.aperture} onChange={onChange} size="small" data-testid={`aperture-${lens.id}`}>
+            <InputLabel id="aperture-input">Sensor size</InputLabel>
+            <Select
+                value={lens.aperture}
+                onChange={onChange}
+                size="small"
+                data-testid={`aperture-${lens.id}`}
+                label="Aperture"
+                labelId="aperture-input"
+                native={isMobile}
+            >
                 {Object.keys(apertureMap).map((key) => (
-                    <MenuItem value={key} key={key}>
+                    <ItemComponent value={key} key={key}>
                         {key}
-                    </MenuItem>
+                    </ItemComponent>
                 ))}
             </Select>
         </FormControl>
