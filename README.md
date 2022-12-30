@@ -6,10 +6,22 @@ A JavaScript tool for calculating the depth of field of camera lenses
 
 The general idea is to create a **lens object**, with specified aperture, focal length, and crop factor values; and then retrieving the object's **depth of field object** for a given **distance** to the subject.
 
+### Install
+
+```sh
+yarn add dof
+
+# or
+
+npm install dof
+```
+
 ### Create a lens object
 
 ```js
-const lens = new Lens();
+import { Lens } from 'dof'
+
+const lens = new Lens()
 ```
 
 That will give us a lens object with default values:
@@ -50,7 +62,7 @@ cropFactor: 1    // Floating point number; sensor's crop factor compared to full
 Lenses can be assigned arbitrary IDs to make it easier to keep track of them:
 
 ```js
-const lens = new Lens(35, 'f/2.5', 1.62, 'my-lens-ID'); // Optional; string
+const lens = new Lens(35, 'f/2.5', 1.62, 'my-lens-ID');// Optional; string
 
 console.log(lens.id) // 'my-lens-ID'
 ```
@@ -61,8 +73,8 @@ To perform a calculation you must specify the distance between the camera and th
 
 ```js
 // Specify distance directly
-const result1 = lens.dof(5);   // 5 mmeters, the default value
-const result2 = lens.dof(22.6); // 22 meters 60 centimeters
+const result1 = lens.dof(5)    // 5 mmeters, the default value
+const result2 = lens.dof(22.6) // 22 meters and 60 centimeters
 
 // Imperial units
 const result2 = lens.dof(15, true) // 15 feet, the default value
@@ -84,7 +96,7 @@ Note that the value of those properties may be `Infinity`. This is especially co
 You can use the `.toString()` method to get the depth of field value as a string. For example, `20' 5.2"` is 20 feet, 5.2 inches.
 
 ```js
-const str = result.toString();
+const str = result.toString()
 ```
 
 All properties have an equivalent string representation, accessible through the `.toString` property:
@@ -100,15 +112,15 @@ result.toString.far
 A shorthand way to quickly acquire the depth of field value:
 
 ```js
-const num = lens.dof().dof;        // float
-const str = lens.dof().toString(); // string
+const num = lens.dof().dof        // float
+const str = lens.dof().toString() // string
 ```
 
 Or with a specific distance value:
 
 ```js
-const num = lens.dof(15).dof;        // float
-const str = lens.dof(15).toString(); // string
+const num = lens.dof(15).dof        // float
+const str = lens.dof(15).toString() // string
 ```
 
 ### TypeScript support
@@ -123,4 +135,4 @@ Calculate the depth of field for multiple lenses and compare them side-by-side
 
 [Documentation](http://patik.com/dof/about/)
 
-[![Screenshot of two lens configurations](/dof/about/images/with-graph.png "Lens comparison")](http://patik.com/dof/#30;Panasonic%2025mm,25,f-1.4,mft;Olympus%2025mm,25,f-1.8,mft)
+[![Screenshot of two lens configurations](/dof/about/images/with-graph.png "Lens comparison")](http://patik.com/dof/#5m;Panasonic%2025mm,25,f-1.4,mft;Olympus%2025mm,25,f-1.8,mft)
