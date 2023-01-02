@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { PropsWithChildren } from 'react'
 import addOrDuplicate from '../../public/images/add-duplicate.png'
 import detailsImg from '../../public/images/details.png'
-import DOFShallowDepthofField from '../../public/images/DOF-ShallowDepthofField.jpg'
+import PrintedTextShallowDoF from '../../public/images/printed-text-shallow-dof.jpg'
 import sharingImg from '../../public/images/sharing.png'
 import singleLensImg from '../../public/images/single-lens.png'
 import Tree_bud_at_f22 from '../../public/images/Tree_bud_at_f22.jpg'
@@ -43,7 +43,7 @@ export default function About() {
                 </Typography>
                 <Figure textAlign="center">
                     <Image
-                        src={DOFShallowDepthofField}
+                        src={PrintedTextShallowDoF}
                         width={997}
                         height={717}
                         sizes="100vw"

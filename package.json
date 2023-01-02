@@ -17,7 +17,7 @@
         "preversion": "yarn workspaces run preversion",
         "postversion": "git push && git push --tags",
         "test": "yarn workspaces run test",
-        "cypress:open": "cypress open"
+        "cypress:open": "cypress open --project ./app"
     },
     "dependencies": {
         "typescript": "^4.9.4"

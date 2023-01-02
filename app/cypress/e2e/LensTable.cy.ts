@@ -1,6 +1,6 @@
 import { del } from 'idb-keyval'
-import useDofStore from '../../app/src/store/index'
-import { config } from '../../app/package.json'
+import useDofStore from '../../src/store/index'
+import { config } from '../../package.json'
 
 const baseUrl = `http://localhost:3000${config.basePath}`
 

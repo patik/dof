@@ -5,5 +5,5 @@
         "types": ["cypress", "node"],
         "resolveJsonModule": true
     },
-    "include": ["**/*.ts"]
+    "include": ["./**/*.ts*"]
 }

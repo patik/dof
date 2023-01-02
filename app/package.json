@@ -40,6 +40,6 @@
         "@types/react-copy-to-clipboard": "^5.0.4"
     },
     "config": {
-        "basePath": "/dof3"
+        "basePath": "/dof"
     }
 }

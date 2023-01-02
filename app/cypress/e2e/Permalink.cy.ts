@@ -1,5 +1,5 @@
 import { del } from 'idb-keyval'
-import { config } from '../../app/package.json'
+import { config } from '../../package.json'
 
 const baseUrl = `http://localhost:3000${config.basePath}`
 
@@ -20,6 +20,7 @@ describe('LensTable', () => {
 
         cy.url().should('not.include', '#')
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(500)
         cy.get('button').contains('Add Lens').click()
 
