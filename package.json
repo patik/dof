@@ -1,65 +1,47 @@
 {
-    "name": "dof",
-    "description": "Depth-of-field calculator for comparing camera lenses",
-    "version": "2.0.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/patik/dof.git"
+    "name": "@patik/dof",
+    "version": "2.1.0",
+    "private": true,
+    "workspaces": [
+        "package",
+        "app"
+    ],
+    "scripts": {
+        "dev": "yarn --cwd package tsc && yarn --cwd app dev",
+        "start": "yarn --cwd app start",
+        "start:ci": "yarn build && yarn --cwd app start",
+        "build": "yarn --cwd package lint && yarn --cwd package tsc && yarn --cwd app build",
+        "clean": "git clean -fdx",
+        "cover": "yarn --cwd package test --collectCoverage",
+        "lint": "yarn workspaces run lint",
+        "preversion": "yarn workspaces run preversion",
+        "postversion": "git push && git push --tags",
+        "test": "yarn workspaces run test",
+        "cypress:open": "cypress open --project ./app"
+    },
+    "dependencies": {
+        "typescript": "^4.9.4"
     },
     "devDependencies": {
         "@jest/globals": "^29.3.1",
-        "@types/jest": "^29.2.3",
-        "@types/lodash": "^4.14.190",
-        "@types/node": "^18.11.9",
-        "@typescript-eslint/eslint-plugin": "^5.44.0",
-        "@typescript-eslint/parser": "^5.44.0",
-        "eslint": "^8.28.0",
+        "@types/jest": "^29.2.5",
+        "@types/node": "18.11.18",
+        "@types/react": "18.0.26",
+        "@types/react-dom": "18.0.10",
+        "@typescript-eslint/eslint-plugin": "^5.47.1",
+        "@typescript-eslint/parser": "^5.47.1",
+        "cypress": "^12.2.0",
+        "eslint": "8.31.0",
+        "eslint-config-next": "13.1.1",
+        "eslint-plugin-cypress": "^2.12.1",
+        "eslint-plugin-jsx-a11y": "^6.6.1",
         "jest": "^29.3.1",
-        "source-map-support": "^0.5.21",
         "ts-jest": "^29.0.3",
         "ts-node": "^10.9.1",
-        "typescript": "^4.9.3"
+        "ts-prune": "^0.10.3"
     },
-    "bugs": {
-        "url": "https://github.com/patik/dof/issues"
-    },
-    "homepage": "https://github.com/patik/dof",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "files": [
-        "dist/"
-    ],
-    "directories": {
-        "doc": "docs"
-    },
-    "scripts": {
-        "build": "yarn lint && tsc",
-        "clean": "git clean -fdx",
-        "cover": "yarn test --collectCoverage",
-        "lint": "eslint --ext .ts --fix app/src/**/*.ts",
-        "preversion": "yarn build && yarn cover:check",
-        "postversion": "git push && git push --tags",
-        "test": "jest"
-    },
-    "keywords": [
-        "depth-of-field",
-        "lens",
-        "camera",
-        "sensor",
-        "calculator",
-        "focal-length",
-        "photography",
-        "bokeh",
-        "focus",
-        "blur"
-    ],
-    "author": {
-        "name": "Craig Patik",
-        "email": "craig@patik.com",
-        "url": "http://patik.com"
-    },
-    "license": "BSD-3-Clause",
-    "dependencies": {
-        "lodash": "^4.17.21"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/patik/dof.git"
     }
 }

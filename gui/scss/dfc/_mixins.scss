@@ -1,6 +1,0 @@
-// Transition; accepts one or more declarations, comma-separated just like CSS
-// e.g. `all 1s ease` or `color 1s ease, width 2s linear`
-@mixin transition($val...) {
-    -webkit-transition: $val;
-            transition: $val;
-}
