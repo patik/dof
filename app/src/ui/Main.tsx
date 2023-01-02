@@ -17,7 +17,7 @@ export default function Main() {
     useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
 
     return (
-        <Box>
+        <>
             <Box my={3}>
                 <TopToolbar />
             </Box>
@@ -29,6 +29,6 @@ export default function Main() {
             <Box mb={2} height={400} width="100%">
                 <Graph />
             </Box>
-        </Box>
+        </>
     )
 }

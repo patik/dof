@@ -18,19 +18,19 @@ const headCells: readonly HeadCell[] = [
     },
     {
         id: 'focalLength',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Focal Length',
     },
     {
         id: 'aperture',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Aperture',
     },
     {
         id: 'sensorKey',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Sensor',
     },
