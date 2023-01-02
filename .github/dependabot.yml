@@ -4,14 +4,14 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: app
-  directory: "/"
+  open-pull-requests-limit: 5
+- package-ecosystem: npm
+  directory: "/app"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: package
-  directory: "/"
+  open-pull-requests-limit: 5
+- package-ecosystem: npm
+  directory: "/package"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 5
