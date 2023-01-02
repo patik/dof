@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "next build && next export",
         "start": "next start",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
@@ -38,5 +38,8 @@
     },
     "devDependencies": {
         "@types/react-copy-to-clipboard": "^5.0.4"
+    },
+    "config": {
+        "basePath": "/dof3"
     }
 }

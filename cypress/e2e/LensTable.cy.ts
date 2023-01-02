@@ -1,5 +1,8 @@
 import { del } from 'idb-keyval'
 import useDofStore from '../../app/src/store/index'
+import { config } from '../../app/package.json'
+
+const baseUrl = `http://localhost:3000${config.basePath}`
 
 describe('LensTable', () => {
     beforeEach(async () => {
@@ -13,27 +16,8 @@ describe('LensTable', () => {
         }
     })
 
-    afterEach(async () => {
-        try {
-            window.location.hash = ''
-        } catch (e) {
-            cy.log('[afterEach] Clearing hash failed: ', e)
-        }
-    })
-
-    after(async () => {
-        try {
-            cy.log('[after] Deleting local storage...')
-            await del('dof-storage')
-            cy.log('[after] Deleting local storage finished.')
-            window.location.hash = ''
-        } catch (e) {
-            cy.log('[after] Deleting local storage failed: ', e)
-        }
-    })
-
     it('Removes all existing lenses', () => {
-        cy.visit('http://localhost:3000')
+        cy.visit(baseUrl)
 
         const state = useDofStore.getState().lenses
 
@@ -68,7 +52,7 @@ describe('LensTable', () => {
 
     describe('Updates the depth of field calculation when the lens inputs are changed', () => {
         it('metric', () => {
-            cy.visit('http://localhost:3000')
+            cy.visit(baseUrl)
             // Ensure that there is exactly one lens in the table
             cy.get('button').contains('Add Lens').click()
             cy.get('[data-testid="select-all"]').click()
@@ -93,7 +77,7 @@ describe('LensTable', () => {
         })
 
         it('imperial', () => {
-            cy.visit('http://localhost:3000')
+            cy.visit(baseUrl)
             // Ensure that there is exactly one lens in the table
             cy.get('button').contains('Add Lens').click()
             cy.get('[data-testid="select-all"]').click()
@@ -120,7 +104,7 @@ describe('LensTable', () => {
 
     describe('Updates the depth of field calculation when the distance is changed', () => {
         it('metric', () => {
-            cy.visit('http://localhost:3000')
+            cy.visit(baseUrl)
             // Ensure that there is exactly one lens in the table
             cy.get('button').contains('Add Lens').click()
             cy.get('[data-testid="select-all"]').click()
@@ -145,7 +129,7 @@ describe('LensTable', () => {
         })
 
         it('imperial', () => {
-            cy.visit('http://localhost:3000')
+            cy.visit(baseUrl)
             // Ensure that there is exactly one lens in the table
             cy.get('button').contains('Add Lens').click()
             cy.get('[data-testid="select-all"]').click()
@@ -172,7 +156,7 @@ describe('LensTable', () => {
 
     describe('Adding more lenses', () => {
         it('The Add Lens button adds another lens to the table', () => {
-            cy.visit('http://localhost:3000')
+            cy.visit(baseUrl)
 
             // Count how many lenses there are before adding the new lens
             cy.get('[data-testid^="lens-name-"]').then(($originalLensSet) => {
@@ -192,7 +176,7 @@ describe('LensTable', () => {
         })
 
         it('The Duplicate Lens button adds another lens to the table with the same values as the first lens', () => {
-            cy.visit('http://localhost:3000')
+            cy.visit(baseUrl)
             // Ensure that there is exactly one lens in the table
             cy.get('button').contains('Add Lens').click()
             cy.get('[data-testid="select-all"]').click()

@@ -12,7 +12,7 @@ export default function Footer({ hasPermalink }: { hasPermalink?: boolean }) {
             </Grid>
             <Grid item xs={3}>
                 <Typography variant="body2">
-                    <Link href="about/">How to use</Link>
+                    <Link href="/about/">How to use</Link>
                 </Typography>
             </Grid>
             <Grid item xs={3}>
@@ -22,7 +22,7 @@ export default function Footer({ hasPermalink }: { hasPermalink?: boolean }) {
             </Grid>
             <Grid item xs={3}>
                 <Typography variant="body2">
-                    <a href="software">Tech & software details</a>
+                    <Link href="/software">Tech & software details</Link>
                 </Typography>
             </Grid>
         </Grid>

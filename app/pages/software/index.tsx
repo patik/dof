@@ -1,7 +1,6 @@
-import Layout from '../src/layout/Layout'
-import Readme from '../../README.md'
-import React from 'react'
 import { Typography } from '@mui/material'
+import Readme from '../../../README.md'
+import Layout from '../../src/layout/Layout'
 
 export default function Software() {
     return (
