@@ -1,7 +1,7 @@
 {
     "name": "dof",
     "description": "Depth-of-field calculator for comparing camera lenses",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/patik/dof.git"
@@ -26,7 +26,7 @@
         "doc": "./docs"
     },
     "scripts": {
-        "build": "rm -rf dist/*; yarn tsc",
+        "build": "rm -rf dist/*; yarn tsc && cp ../README.md ./README.md",
         "clean": "git clean -fdx",
         "cover": "yarn test --collectCoverage",
         "typecheck": "tsc --noEmit",
