@@ -70,7 +70,7 @@ function parseLenses(pieces: string[]): ParsedLens[] {
 
 /**
  *
- * @example http://patik.com/dof/#20;Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC
+ * @example https://patik.com/dof/#20;Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC
  */
 export function parseHash(hash: string): { distance: Distance; lenses: LensDefinition[]; units: Units } {
     const pieces = hash.split(';')

@@ -1,7 +1,7 @@
 import { parseHash } from './useReadFromHash'
 
 /**
- * @example http://patik.com/dof/#20,m;Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC
+ * @example https://patik.com/dof/#20,m;Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC
  */
 describe('parseHash', () => {
     describe.each(['metric', 'imperial'])('URLs with units', (units) => {

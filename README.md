@@ -1,4 +1,4 @@
-# [Depth of Field Calculator](http://patik.com/dof/)
+# [Depth of Field Calculator](https://patik.com/dof/)
 
 A JavaScript tool for calculating the depth of field of camera lenses
 
@@ -131,8 +131,8 @@ const str = lens.dof(15).toString() // string
 
 Calculate the depth of field for multiple lenses and compare them side-by-side
 
-**[Try it at patik.com/dof](http://patik.com/dof/)**
+**[Try it at patik.com/dof](https://patik.com/dof/)**
 
-[Documentation](http://patik.com/dof/about/)
+[Documentation](https://patik.com/dof/about/)
 
-[![Screenshot of two lens configurations](./app/public/images/with-graph.png "Lens comparison")](http://patik.com/dof/#5m;Panasonic%2025mm,25,f-1.4,mft;Olympus%2025mm,25,f-1.8,mft)
+[![Screenshot of two lens configurations](./app/public/images/with-graph.png "Lens comparison")](https://patik.com/dof/#5m;Panasonic%2025mm,25,f-1.4,mft;Olympus%2025mm,25,f-1.8,mft)

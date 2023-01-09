@@ -19,7 +19,7 @@ class MyDocument extends Document {
                         content="depth of field, camera, lens, photography, calculator, compare, comparison"
                     />
                     <meta name="author" content="Craig Patik" />
-                    <link rel="canonical" href="http://patik.com/dof/" />
+                    <link rel="canonical" href="https://patik.com/dof/" />
                     <meta name="HandheldFriendly" content="True" />
                     <meta name="MobileOptimized" content="320" />
                     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -28,7 +28,7 @@ class MyDocument extends Document {
                 <body>
                     <noscript>
                         <p>
-                            This tool requires <a href="http://enable-javascript.com/">JavaScript</a>
+                            This tool requires <a href="https://enable-javascript.com/">JavaScript</a>
                         </p>
                     </noscript>
                     <Main />
