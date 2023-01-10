@@ -28,9 +28,9 @@ export default function FocalLength({ lens }: { lens: LensDefinition }) {
                 shrink: true,
             }}
             data-testid={`focal-length-${lens.id}`}
-            autoComplete="off"
             size="small"
             fullWidth={isMobile}
+            autoComplete="off"
         />
     )
 }
