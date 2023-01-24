@@ -18,7 +18,10 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
     distance = parseInt(parts[0], 10)
 
     if (isNaN(distance)) {
-        console.error(`distance could not be parsed from “${parts[0]}”`)
+        if (process.env.NODE_ENV !== 'test') {
+            console.error(`distance could not be parsed from “${parts[0]}”`)
+        }
+
         // Use default value
         distance = DEFAULT_DISTANCE
     }
