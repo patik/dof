@@ -1,4 +1,4 @@
-import { decimalAdjust } from './decimalAdjust'
+import { decimalAdjust } from '../utilities/decimalAdjust'
 
 /**
  * Returns the focal length for a given lens' attributes and depth of field

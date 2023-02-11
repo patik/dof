@@ -1,5 +1,5 @@
+import { calculateDepthOfField } from './calculators/calculateDepthOfField'
 import { combineSettings } from './utilities/combineSettings'
-import { calculateDepthOfField } from './utilities/calculateDepthOfField'
 
 export const builtInDefaults: DefaultOptions = Object.freeze({
     focalLength: 35,

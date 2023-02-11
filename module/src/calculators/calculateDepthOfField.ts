@@ -1,5 +1,5 @@
-import { decimalAdjust } from './decimalAdjust'
-import { formatFeet } from './formatFeet'
+import { decimalAdjust } from '../utilities/decimalAdjust'
+import { formatFeet } from '../utilities/formatFeet'
 
 /**
  * Returns the depth of field characteristics for a given lens' attributes
@@ -30,9 +30,9 @@ export function calculateDepthOfField(
     const mmFar = (mmDist * (mmHF - focalLength)) / (mmHF - mmDist)
 
     // Undo conversion to millimeters
-
     const near = mmNear / 1000.0 / unitMultiplier
     const trueFar = mmFar / 1000.0 / unitMultiplier
+
     const isInfinite = trueFar <= 0
     const dof = isInfinite ? Infinity : trueFar - near
     const far = isInfinite ? Infinity : trueFar

@@ -1,4 +1,4 @@
-import { getApertureName } from './aperture'
+import { getApertureName } from '../utilities/aperture'
 
 /**
  * Returns the aperture for a given lens' attributes and depth of field
@@ -25,6 +25,7 @@ export function calculateAperture({
     const mmDist = distance * 1000 * unitMultiplier
     const mmDof = dof * 1000 * unitMultiplier
     const mmNear = nearLimit * 1000 * unitMultiplier
+
     const mmFar = mmNear + mmDof
     const mmHF = (-1 * mmDist * focalLength + mmDist * mmFar) / (-1 * mmDist + mmFar)
     const cropMultiplier = 1 / cropFactor
