@@ -3,7 +3,13 @@ import { calculateDepthOfField } from './calculateDepthOfField'
 describe('Calculating the depth of field with calculateDepthOfField()', () => {
     describe('metric units (meters)', () => {
         test('35mm, f/2, crop factor of 1, 5 meters', () => {
-            const result = calculateDepthOfField(35, 2, 1, 5, false)
+            const result = calculateDepthOfField({
+                focalLength: 35,
+                aperture: 2,
+                cropFactor: 1,
+                distance: 5,
+                imperialUnits: false,
+            })
 
             expect(result.dof).toBe(2.584690961719362)
             expect(result.dof.toString()).toBe('2.584690961719362')
@@ -26,7 +32,13 @@ describe('Calculating the depth of field with calculateDepthOfField()', () => {
         })
 
         test('50mm, f/1.4, crop factor of 2, 25 meters', () => {
-            const result = calculateDepthOfField(50, 1.414214, 2, 25, false)
+            const result = calculateDepthOfField({
+                focalLength: 50,
+                aperture: 1.414214,
+                cropFactor: 2,
+                distance: 25,
+                imperialUnits: false,
+            })
 
             expect(result.dof).toBe(11.082093523926748)
             expect(result.dof.toString()).toBe('11.082093523926748')
@@ -50,7 +62,13 @@ describe('Calculating the depth of field with calculateDepthOfField()', () => {
 
         test('28mm, f/5, crop factor of 3.02, 7 meters', () => {
             // Blackmagic Cine Cam sensor
-            const result = calculateDepthOfField(28, 5.039684, 3.02, 7, false)
+            const result = calculateDepthOfField({
+                focalLength: 28,
+                aperture: 5.039684,
+                cropFactor: 3.02,
+                distance: 7,
+                imperialUnits: false,
+            })
 
             expect(result.dof).toBe(7.851429380291624)
             expect(result.dof.toString()).toBe('7.851429380291624')
@@ -73,7 +91,13 @@ describe('Calculating the depth of field with calculateDepthOfField()', () => {
         })
 
         test('such that the far end of the range is infinity', () => {
-            const result = calculateDepthOfField(24, 16, 1, 5, false)
+            const result = calculateDepthOfField({
+                focalLength: 24,
+                aperture: 16,
+                cropFactor: 1,
+                distance: 5,
+                imperialUnits: false,
+            })
 
             expect(result.dof).toBe(Infinity)
             expect(result.dof.toString()).toBe('Infinity')
@@ -98,7 +122,13 @@ describe('Calculating the depth of field with calculateDepthOfField()', () => {
 
     describe('imperial units (feet)', () => {
         test('35mm, f/2, crop factor of 1, 15 feet', () => {
-            const result = calculateDepthOfField(35, 2, 1, 15, true)
+            const result = calculateDepthOfField({
+                focalLength: 35,
+                aperture: 2,
+                cropFactor: 1,
+                distance: 15,
+                imperialUnits: true,
+            })
 
             expect(result.dof).toBe(7.012923816256398)
             expect(result.dof.toString()).toBe(`7.012923816256398`)
@@ -121,7 +151,13 @@ describe('Calculating the depth of field with calculateDepthOfField()', () => {
         })
 
         test('55mm, f/3.2, crop factor of 2.7, 42 feet', () => {
-            const result = calculateDepthOfField(55, 3.174802, 2.7, 42, true)
+            const result = calculateDepthOfField({
+                focalLength: 55,
+                aperture: 3.174802,
+                cropFactor: 2.7,
+                distance: 42,
+                imperialUnits: true,
+            })
 
             expect(result.dof).toBe(12.634717336600715)
             expect(result.dof.toString()).toBe('12.634717336600715')

@@ -10,13 +10,19 @@ import { formatFeet } from '../utilities/formatFeet'
  * @param distance
  * @param imperialUnits
  */
-export function calculateDepthOfField(
-    focalLength: number,
-    aperture: number,
-    cropFactor: number,
-    distance: number,
+export function calculateDepthOfField({
+    focalLength,
+    aperture,
+    cropFactor,
+    distance,
+    imperialUnits,
+}: {
+    focalLength: number
+    aperture: number
+    cropFactor: number
+    distance: number
     imperialUnits: boolean
-): DoFResult {
+}): DoFResult {
     // e.g. 1 foot is 30.48% of 1 meter
     const unitMultiplier = imperialUnits ? 0.3048 : 1
 
