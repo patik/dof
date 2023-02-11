@@ -1,4 +1,5 @@
 import { decimalAdjust } from '../utilities/decimalAdjust'
+import { toMillimeters } from '../utilities/units'
 
 /**
  * Returns the focal length for a given lens' attributes and depth of field
@@ -16,12 +17,9 @@ export function calculateFocalLength({
     distance: number
     imperialUnits: boolean
 }): FocalLengthResult {
-    // e.g. 1 foot is 30.48% of 1 meter
-    const unitMultiplier = imperialUnits ? 0.3048 : 1
-
     // Convert to millimeters
-    const mmDist = distance * 1000 * unitMultiplier
-    const mmNear = nearLimit * 1000 * unitMultiplier
+    const mmDist = toMillimeters(distance, imperialUnits)
+    const mmNear = toMillimeters(nearLimit, imperialUnits)
 
     const cropMultiplier = 1 / cropFactor
     const coc = Math.round(0.03 * cropMultiplier * 1000) / 1000

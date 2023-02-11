@@ -1,4 +1,5 @@
 import { getApertureName } from '../utilities/aperture'
+import { toMillimeters } from '../utilities/units'
 
 /**
  * Returns the aperture for a given lens' attributes and depth of field
@@ -18,13 +19,9 @@ export function calculateAperture({
     nearLimit: number
     imperialUnits?: boolean
 }): ApertureResult {
-    // e.g. 1 foot is 30.48% of 1 meter
-    const unitMultiplier = imperialUnits ? 0.3048 : 1
-
-    // Convert to millimeters
-    const mmDist = distance * 1000 * unitMultiplier
-    const mmDof = dof * 1000 * unitMultiplier
-    const mmNear = nearLimit * 1000 * unitMultiplier
+    const mmDist = toMillimeters(distance, imperialUnits)
+    const mmDof = toMillimeters(dof, imperialUnits)
+    const mmNear = toMillimeters(nearLimit, imperialUnits)
 
     const mmFar = mmNear + mmDof
     const mmHF = (-1 * mmDist * focalLength + mmDist * mmFar) / (-1 * mmDist + mmFar)

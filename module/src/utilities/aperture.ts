@@ -72,12 +72,24 @@ function getPreciseAperture(humanValue: string): number | undefined {
 }
 
 /**
+ * Finds the nearest known aperture to a given number
+ * @example nearestValue(1.99) // 2.0
+ *
+ * @param {number} targetAperture the ideal value for which the nearest or equal should be found
+ */
+const nearestValue = (targetAperture: number) =>
+    sortedValues.reduce((p, n) => (Math.abs(p) > Math.abs(n - targetAperture) ? n - targetAperture : p), Infinity) +
+    targetAperture
+
+/**
  * Takes a numeric value and returns a human-friendly string that is equivalent
  * @example 5.039684 => 'f/5'
  */
 export function getApertureName(value: number): keyof typeof preciseApertureMap | undefined {
+    const asKnownAperture = nearestValue(value)
+
     return objectKeysArray(preciseApertureMap).find((key) => {
-        return preciseApertureMap[key] === value
+        return preciseApertureMap[key] === asKnownAperture
     })
 }
 

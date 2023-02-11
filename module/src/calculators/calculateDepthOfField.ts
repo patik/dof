@@ -1,5 +1,6 @@
 import { decimalAdjust } from '../utilities/decimalAdjust'
 import { formatFeet } from '../utilities/formatFeet'
+import { fromMillimeters, toMillimeters } from '../utilities/units'
 
 /**
  * Returns the depth of field characteristics for a given lens' attributes
@@ -23,11 +24,8 @@ export function calculateDepthOfField({
     distance: number
     imperialUnits: boolean
 }): DoFResult {
-    // e.g. 1 foot is 30.48% of 1 meter
-    const unitMultiplier = imperialUnits ? 0.3048 : 1
-
     // Convert to millimeters
-    const mmDist = distance * 1000 * unitMultiplier
+    const mmDist = toMillimeters(distance, imperialUnits)
 
     const cropMultiplier = 1 / cropFactor
     const coc = Math.round(0.03 * cropMultiplier * 1000) / 1000
@@ -36,8 +34,8 @@ export function calculateDepthOfField({
     const mmFar = (mmDist * (mmHF - focalLength)) / (mmHF - mmDist)
 
     // Undo conversion to millimeters
-    const near = mmNear / 1000.0 / unitMultiplier
-    const trueFar = mmFar / 1000.0 / unitMultiplier
+    const near = fromMillimeters(mmNear, imperialUnits)
+    const trueFar = fromMillimeters(mmFar, imperialUnits)
 
     const isInfinite = trueFar <= 0
     const dof = isInfinite ? Infinity : trueFar - near
@@ -47,7 +45,7 @@ export function calculateDepthOfField({
         dof,
         focalLengthEquiv: decimalAdjust(cropFactor * focalLength),
         eighthDof: dof / 8,
-        hf: mmHF / 1000.0 / unitMultiplier,
+        hf: fromMillimeters(mmHF, imperialUnits),
         near,
         far,
         coc,
