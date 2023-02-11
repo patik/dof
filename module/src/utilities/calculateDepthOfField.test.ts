@@ -48,6 +48,30 @@ describe('Calculating the depth of field with calculateDepthOfField', () => {
             expect(result.coc.toString()).toBe('0.015')
         })
 
+        test('28mm, f/5, crop factor of 3.02, 7 meters', () => {
+            // Blackmagic Cine Cam sensor
+            const result = calculateDepthOfField(28, 5.039684, 3.02, 7, false)
+
+            expect(result.dof).toBe(7.851429380291624)
+            expect(result.dof.toString()).toBe('7.851429380291624')
+            expect(result.toString()).toBe(`7.851429380291624`)
+
+            expect(result.eighthDof).toBe(0.981428672536453)
+            expect(result.eighthDof.toString()).toBe('0.981428672536453')
+
+            expect(result.hf).toBe(15.584530925351668)
+            expect(result.hf.toString()).toBe('15.584530925351668')
+
+            expect(result.near).toBe(4.833680315786585)
+            expect(result.near.toString()).toBe('4.833680315786585')
+
+            expect(result.far).toBe(12.685109696078209)
+            expect(result.far.toString()).toBe('12.685109696078209')
+
+            expect(result.coc).toBe(0.01)
+            expect(result.coc.toString()).toBe('0.01')
+        })
+
         test('such that the far end of the range is infinity', () => {
             const result = calculateDepthOfField(24, 16, 1, 5, false)
 

@@ -30,9 +30,11 @@ const fullList = {
         name: '1" CCD, Nikon CX, Sony RX100',
         value: 2.72,
     },
-    iPhone14: {
-        name: 'iPhone 14 (2022)',
-        value: 2.86, // 9.8x7.3mm, or 71.54mm^2
+    iPhone14Pro: {
+        name: 'iPhone 14 Pro (2022)',
+        // https://www.dpreview.com/articles/6110937480
+        // 48MP Type 1/1.28 (9.8x7.3mm, or 71.54mm^2)
+        value: 2.86,
         isCommon: true,
     },
     BlackmagicCC: {

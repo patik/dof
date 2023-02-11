@@ -26,32 +26,28 @@ export function calculateDepthOfField(
     // Get 35mm-equivalent focal length
     const focalLengthEquiv = decimalAdjust(cropFactor * focalLength)
 
-    // Convert sensor crop factor to a multiplier
-    const sensorMultiplier = 1 / cropFactor
-
-    const CoC = Math.round(0.03 * sensorMultiplier * 1000) / 1000
-
-    const HF = Math.pow(focalLength, 2) / (aperture * CoC) + focalLength * 1.0
-    const Near = (mmDist * (HF - focalLength)) / (HF + mmDist - 2 * focalLength)
-    const Far = (mmDist * (HF - focalLength)) / (HF - mmDist)
+    const cropMultiplier = 1 / cropFactor
+    const coc = Math.round(0.03 * cropMultiplier * 1000) / 1000
+    const mmHF = Math.pow(focalLength, 2) / (aperture * coc) + focalLength * 1.0
+    const mmNear = (mmDist * (mmHF - focalLength)) / (mmHF + mmDist - 2 * focalLength)
+    const mmFar = (mmDist * (mmHF - focalLength)) / (mmHF - mmDist)
 
     // Undo conversion to millimeters
 
-    const unconvertedNear = Near / 1000.0 / unitMultiplier
-    const unconvertedFar = Far / 1000.0 / unitMultiplier
-
-    const isInfinite = unconvertedFar <= 0
-
-    const dof = isInfinite ? Infinity : unconvertedFar - unconvertedNear
+    const near = mmNear / 1000.0 / unitMultiplier
+    const trueFar = mmFar / 1000.0 / unitMultiplier
+    const isInfinite = trueFar <= 0
+    const dof = isInfinite ? Infinity : trueFar - near
+    const far = isInfinite ? Infinity : trueFar
 
     const result: DoFResult = {
         dof,
         focalLengthEquiv,
         eighthDof: dof / 8,
-        hf: HF / 1000.0 / unitMultiplier,
-        near: unconvertedNear,
-        far: isInfinite ? Infinity : unconvertedFar,
-        coc: CoC,
+        hf: mmHF / 1000.0 / unitMultiplier,
+        near,
+        far,
+        coc,
     }
 
     if (imperialUnits) {
