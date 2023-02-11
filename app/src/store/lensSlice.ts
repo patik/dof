@@ -1,4 +1,4 @@
-import { Lens } from 'dof'
+import { Lens } from '../../../module/dist'
 import { compact, defaults } from 'lodash'
 import { StateCreator } from 'zustand'
 import areDuplicateLenses from '../utilities/areDuplicateLenses'

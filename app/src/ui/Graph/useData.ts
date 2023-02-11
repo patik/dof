@@ -1,5 +1,5 @@
 import { Serie } from '@nivo/line'
-import { Lens } from 'dof'
+import { Lens } from '../../../../module/dist'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
