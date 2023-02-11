@@ -23,9 +23,6 @@ export function calculateDepthOfField(
     // Convert to millimeters
     const mmDist = distance * 1000 * unitMultiplier
 
-    // Get 35mm-equivalent focal length
-    const focalLengthEquiv = decimalAdjust(cropFactor * focalLength)
-
     const cropMultiplier = 1 / cropFactor
     const coc = Math.round(0.03 * cropMultiplier * 1000) / 1000
     const mmHF = Math.pow(focalLength, 2) / (aperture * coc) + focalLength * 1.0
@@ -42,7 +39,7 @@ export function calculateDepthOfField(
 
     const result: DoFResult = {
         dof,
-        focalLengthEquiv,
+        focalLengthEquiv: decimalAdjust(cropFactor * focalLength),
         eighthDof: dof / 8,
         hf: mmHF / 1000.0 / unitMultiplier,
         near,

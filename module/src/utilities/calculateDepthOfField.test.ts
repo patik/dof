@@ -1,6 +1,6 @@
 import { calculateDepthOfField } from './calculateDepthOfField'
 
-describe('Calculating the depth of field with calculateDepthOfField', () => {
+describe('Calculating the depth of field with calculateDepthOfField()', () => {
     describe('metric units (meters)', () => {
         test('35mm, f/2, crop factor of 1, 5 meters', () => {
             const result = calculateDepthOfField(35, 2, 1, 5, false)

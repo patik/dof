@@ -34,6 +34,11 @@ type DoFResult = {
     toString: () => string
 }
 
+type FocalLengthResult = {
+    focalLength: number
+    focalLengthEquiv: number // The focal length in 35mm-equivalency
+}
+
 type ApertureResult = {
     aperture: number
     fStop: undefined | keyof typeof import('./utilities/aperture').preciseApertureMap
