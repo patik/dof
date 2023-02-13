@@ -9,19 +9,19 @@ export function calculateAperture({
     cropFactor,
     distance,
     dof,
-    nearLimit,
+    near,
     imperialUnits,
 }: {
     focalLength: number
     cropFactor: number
     distance: number
     dof: number
-    nearLimit: number
+    near: number
     imperialUnits?: boolean
 }): ApertureResult {
     const mmDist = toMillimeters(distance, imperialUnits)
     const mmDof = toMillimeters(dof, imperialUnits)
-    const mmNear = toMillimeters(nearLimit, imperialUnits)
+    const mmNear = toMillimeters(near, imperialUnits)
 
     const mmFar = mmNear + mmDof
     const mmHF = (-1 * mmDist * focalLength + mmDist * mmFar) / (-1 * mmDist + mmFar)

@@ -8,7 +8,7 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 cropFactor: 1,
                 distance: 5,
                 dof: 2.584690961719362,
-                nearLimit: 4.021931840567339,
+                near: 4.021931840567339,
                 imperialUnits: false,
             })
 
@@ -21,7 +21,7 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 cropFactor: 2,
                 distance: 25,
                 dof: 11.082093523926748,
-                nearLimit: 20.63203625607849,
+                near: 20.63203625607849,
                 imperialUnits: false,
             })
 
@@ -35,7 +35,7 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 cropFactor: 3.02,
                 distance: 7,
                 dof: 7.851429380291624,
-                nearLimit: 4.833680315786585,
+                near: 4.833680315786585,
                 imperialUnits: false,
             })
 
@@ -48,7 +48,7 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 cropFactor: 1,
                 distance: 5,
                 dof: Infinity,
-                nearLimit: 0.9715025906735751,
+                near: 0.9715025906735751,
                 imperialUnits: false,
             })
 
@@ -63,7 +63,7 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 cropFactor: 1,
                 distance: 15,
                 dof: 7.012923816256398,
-                nearLimit: 12.27274548830499,
+                near: 12.27274548830499,
                 imperialUnits: true,
             })
 
@@ -76,7 +76,7 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 cropFactor: 2.7,
                 distance: 42,
                 dof: 12.634717336600715,
-                nearLimit: 36.61227928000945,
+                near: 36.61227928000945,
                 imperialUnits: true,
             })
 

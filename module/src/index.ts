@@ -7,3 +7,4 @@ export type { DepthOfFieldDetails }
 export { calculateDepthOfField } from './calculators/calculateDepthOfField'
 export { calculateAperture } from './calculators/calculateAperture'
 export { calculateFocalLength } from './calculators/calculateFocalLength'
+export { calculateCropFactor } from './calculators/calculateCropFactor'

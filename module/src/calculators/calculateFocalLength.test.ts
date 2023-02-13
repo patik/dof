@@ -4,7 +4,7 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
     describe('metric units (meters)', () => {
         test('35mm, f/2, crop factor of 1, 5 meters', () => {
             const result = calculateFocalLength({
-                nearLimit: 4.021931840567339,
+                near: 4.021931840567339,
                 aperture: 2,
                 cropFactor: 1,
                 distance: 5,
@@ -16,7 +16,7 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
 
         test('50mm, f/1.4, crop factor of 2, 25 meters', () => {
             const result = calculateFocalLength({
-                nearLimit: 20.63203625607849,
+                near: 20.63203625607849,
                 aperture: 1.414214,
                 cropFactor: 2,
                 distance: 25,
@@ -29,7 +29,7 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
         test('28mm, f/5, crop factor of 3.02, 7 meters', () => {
             // Blackmagic Cine Cam sensor
             const result = calculateFocalLength({
-                nearLimit: 4.833680315786585,
+                near: 4.833680315786585,
                 aperture: 5.039684,
                 cropFactor: 3.02,
                 distance: 7,
@@ -41,7 +41,7 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
 
         test('such that the far end of the range is infinity', () => {
             const result = calculateFocalLength({
-                nearLimit: 0.9715025906735751,
+                near: 0.9715025906735751,
                 aperture: 16,
                 cropFactor: 1,
                 distance: 5,
@@ -55,7 +55,7 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
     describe('imperial units (feet)', () => {
         test('35mm, f/2, crop factor of 1, 15 feet', () => {
             const result = calculateFocalLength({
-                nearLimit: 12.27274548830499,
+                near: 12.27274548830499,
                 aperture: 2,
                 cropFactor: 1,
                 distance: 15,
@@ -67,7 +67,7 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
 
         test('55mm, f/3.2, crop factor of 2.7, 42 feet', () => {
             const result = calculateFocalLength({
-                nearLimit: 36.61227928000945,
+                near: 36.61227928000945,
                 aperture: 3.174802,
                 cropFactor: 2.7,
                 distance: 42,

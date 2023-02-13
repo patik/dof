@@ -2,22 +2,16 @@ import { toMillimeters } from '../utilities/units'
 
 /**
  * Returns the depth of field characteristics for a given lens' attributes
- *
- * @param focalLength
- * @param aperture
- * @param cropFactor
- * @param distance
- * @param imperialUnits
  */
 export function calculateCropFactor({
-    nearLimit,
+    near,
     dof,
     focalLength,
     aperture,
     distance,
     imperialUnits,
 }: {
-    nearLimit: number
+    near: number
     dof: number
     focalLength: number
     aperture: number
@@ -26,7 +20,7 @@ export function calculateCropFactor({
 }): CropFactorResult {
     const mmDist = toMillimeters(distance, imperialUnits)
     const mmDof = toMillimeters(dof, imperialUnits)
-    const mmNear = toMillimeters(nearLimit, imperialUnits)
+    const mmNear = toMillimeters(near, imperialUnits)
 
     const mmFar = mmNear + mmDof
     const mmHF = (-1 * mmDist * focalLength + mmDist * mmFar) / (-1 * mmDist + mmFar)

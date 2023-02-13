@@ -5,13 +5,13 @@ import { toMillimeters } from '../utilities/units'
  * Returns the focal length for a given lens' attributes and depth of field
  */
 export function calculateFocalLength({
-    nearLimit,
+    near,
     aperture,
     cropFactor,
     distance,
     imperialUnits,
 }: {
-    nearLimit: number
+    near: number
     aperture: number
     cropFactor: number
     distance: number
@@ -19,7 +19,7 @@ export function calculateFocalLength({
 }): FocalLengthResult {
     // Convert to millimeters
     const mmDist = toMillimeters(distance, imperialUnits)
-    const mmNear = toMillimeters(nearLimit, imperialUnits)
+    const mmNear = toMillimeters(near, imperialUnits)
 
     const cropMultiplier = 1 / cropFactor
     const coc = Math.round(0.03 * cropMultiplier * 1000) / 1000

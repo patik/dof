@@ -5,7 +5,7 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
         test('35mm, f/2, crop factor of 1, 5 meters', () => {
             const result = calculateCropFactor({
                 dof: 2.584690961719362,
-                nearLimit: 4.021931840567339,
+                near: 4.021931840567339,
                 focalLength: 35,
                 aperture: 2,
                 distance: 5,
@@ -18,7 +18,7 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
         test('50mm, f/1.4, crop factor of 2, 25 meters', () => {
             const result = calculateCropFactor({
                 dof: 11.082093523926748,
-                nearLimit: 20.63203625607849,
+                near: 20.63203625607849,
                 focalLength: 50,
                 aperture: 1.414214,
                 distance: 25,
@@ -34,7 +34,7 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
                 focalLength: 28,
                 aperture: 5.039684,
                 dof: 7.851429380291624,
-                nearLimit: 4.833680315786585,
+                near: 4.833680315786585,
                 distance: 7,
                 imperialUnits: false,
             })
@@ -48,7 +48,7 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
             const result = calculateCropFactor({
                 focalLength: 35,
                 aperture: 2,
-                nearLimit: 12.27274548830499,
+                near: 12.27274548830499,
                 dof: 7.012923816256398,
                 distance: 15,
                 imperialUnits: true,
@@ -62,7 +62,7 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
                 focalLength: 55,
                 aperture: 3.174802,
                 dof: 12.634717336600715,
-                nearLimit: 36.61227928000945,
+                near: 36.61227928000945,
                 distance: 42,
                 imperialUnits: true,
             })
