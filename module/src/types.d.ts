@@ -43,3 +43,7 @@ type ApertureResult = {
     aperture: number
     fStop: undefined | keyof typeof import('./utilities/aperture').preciseApertureMap
 }
+
+type CropFactorResult = {
+    cropFactor: number
+}
