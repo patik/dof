@@ -41,7 +41,7 @@ type FocalLengthResult = {
 
 type ApertureResult = {
     aperture: number
-    fStop: undefined | keyof typeof import('./utilities/aperture').preciseApertureMap
+    fStop: undefined | keyof typeof import('./data/preciseApertureMap').preciseApertureMap
 }
 
 type CropFactorResult = {
