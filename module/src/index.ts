@@ -1,6 +1,7 @@
 export { Lens } from './Lens'
 export { createLensMaker } from './createLensMaker'
-export { preciseApertureMap as apertureMap, getApertureName, isApertureString } from './utilities/aperture'
+export { getApertureName, isApertureString } from './utilities/aperture'
+export { preciseApertureMap as apertureMap } from './data/preciseApertureMap'
 type DepthOfFieldDetails = DoFResult
 export type { DepthOfFieldDetails }
 

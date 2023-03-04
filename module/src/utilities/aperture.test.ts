@@ -1,5 +1,6 @@
 import { builtInDefaults } from '../Lens'
-import { getApertureName, preciseApertureMap, toActualAperture } from './aperture'
+import { getApertureName, toActualAperture } from './aperture'
+import { preciseApertureMap } from '../data/preciseApertureMap'
 import { objectKeysArray } from './objectKeysArray'
 
 const defaultOptionsAperture = builtInDefaults.aperture
