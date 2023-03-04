@@ -21,20 +21,20 @@
         "@mui/icons-material": "^5.10.16",
         "@mui/material": "^5.11.6",
         "@mui/styled-engine-sc": "^5.10.16",
-        "@next/mdx": "^13.1.5",
+        "@next/mdx": "^13.1.6",
         "@nivo/core": "^0.80.0",
         "@nivo/line": "^0.80.0",
         "@types/mdx": "^2.0.3",
         "dof": "^2.0.0",
         "footinch": "^1.0.2",
         "idb-keyval": "^6.2.0",
-        "next": "13.1.6",
+        "next": "13.2.3",
         "react": "18.2.0",
         "react-copy-to-clipboard": "^5.1.0",
         "react-dom": "18.2.0",
         "react-error-boundary": "^3.1.4",
         "styled-components": "^5.3.6",
-        "zustand": "^4.3.2"
+        "zustand": "^4.3.5"
     },
     "devDependencies": {
         "@types/react-copy-to-clipboard": "^5.0.4"
