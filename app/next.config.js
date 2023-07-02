@@ -18,4 +18,12 @@ module.exports = withMDX({
     images: {
         unoptimized: true,
     },
+
+    // Needed for @nivo@0.83.0
+    transpilePackages: ['@nivo'],
+
+    experimental: {
+        // Needed for @nivo@0.83.0
+        esmExternals: 'loose',
+    },
 })
