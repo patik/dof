@@ -18,5 +18,8 @@
             "version": "detect"
         }
     },
-    "rules": {}
+    "rules": {},
+    "parserOptions": {
+        "warnOnUnsupportedTypeScriptVersion": false
+    }
 }
