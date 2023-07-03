@@ -33,7 +33,7 @@
         "react-copy-to-clipboard": "^5.1.0",
         "react-dom": "18.2.0",
         "react-error-boundary": "^4.0.10",
-        "styled-components": "^6.0.1",
+        "styled-components": "^6.0.2",
         "zustand": "^4.3.8"
     },
     "devDependencies": {
