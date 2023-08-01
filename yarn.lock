@@ -1813,10 +1813,10 @@
   dependencies:
     glob "7.1.7"
 
-"@next/mdx@^13.4.7":
-  version "13.4.7"
-  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.4.7.tgz#d139b43deb4361be890ee631d7d6bd6cd11d95a1"
-  integrity sha512-btb4ym4Gz72ACQjSlK+AsJRx5IYcS9O0FgUWK4/+9AJxLQtr5XNOAfpy1ioLqXG7REVvwWAea4z6Hp0agwc+Vg==
+"@next/mdx@^13.4.12":
+  version "13.4.12"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.4.12.tgz#f81a32f693fb32ed7950969e17b406c6bb385982"
+  integrity sha512-5/MHP/aVBD+wfTRAsZuxWI9h0JOn9n/ygCSy6SBZtaWHT3QZg+r1G4iYj5152uYVMHCD1rk9CfJAvA24LeyT1w==
   dependencies:
     source-map "^0.7.0"
 
