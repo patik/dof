@@ -1813,10 +1813,10 @@
   dependencies:
     glob "7.1.7"
 
-"@next/mdx@^13.4.7":
-  version "13.4.7"
-  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.4.7.tgz#d139b43deb4361be890ee631d7d6bd6cd11d95a1"
-  integrity sha512-btb4ym4Gz72ACQjSlK+AsJRx5IYcS9O0FgUWK4/+9AJxLQtr5XNOAfpy1ioLqXG7REVvwWAea4z6Hp0agwc+Vg==
+"@next/mdx@^13.5.1":
+  version "13.5.1"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.5.1.tgz#a2882edc0c3abf129f97bd3baa07407cea465510"
+  integrity sha512-k1ODbsWVyFpX4ymDGtxxEq3bjA6awYXmgP27iyeqNuAdxdnR9QzwqxSIudyGyhMtQ7o39iGCfVQTEHouGxnxng==
   dependencies:
     source-map "^0.7.0"
 
@@ -2404,9 +2404,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@18.2.14", "@types/react@>=16", "@types/react@^18":
-  version "18.2.20"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.20.tgz#1605557a83df5c8a2cc4eeb743b3dfc0eb6aaeb2"
-  integrity sha512-WKNtmsLWJM/3D5mG4U84cysVY31ivmyw85dE84fOCk5Hx78wezB/XEjVPWl2JTZ5FkEeaTJf+VgUAUn3PE7Isw==
+  version "18.2.22"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.22.tgz#abe778a1c95a07fa70df40a52d7300a40b949ccb"
+  integrity sha512-60fLTOLqzarLED2O3UQImc/lsNRgG0jE/a1mPW9KjMemY0LMITWEsbS4VvZ4p6rorEHd5YKxxmMKSDK505GHpA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
