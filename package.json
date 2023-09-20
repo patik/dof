@@ -20,7 +20,7 @@
         "cypress:open": "cypress open --project ./app"
     },
     "devDependencies": {
-        "@jest/globals": "^29.6.1",
+        "@jest/globals": "^29.7.0",
         "@types/jest": "^29.5.3",
         "@types/node": "20.5.0",
         "@types/react": "18.2.14",
