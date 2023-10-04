@@ -1372,10 +1372,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.44.0.tgz#961a5903c74139390478bdc808bcde3fc45ab7af"
   integrity sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==
 
-"@fontsource/open-sans@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-5.0.3.tgz#1a5d1528b507a5ba43f8b231d1e4cc0775efdf8c"
-  integrity sha512-L86qrEfW7IWSGojCtiPpw2/M6qKjxDG+EV4k1xMVFCkhh6Z6gyZwevqCt0yOvd1BmjrtUAIAfSzFTjBn3DeZJw==
+"@fontsource/open-sans@^5.0.14":
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-5.0.14.tgz#257252e1a7c953176d42bf314b3aba79c5a4f9c1"
+  integrity sha512-r9dEDCrZsBfjd2WREzffY1j7Y5gbyfOU1ybChTXjKdOCRAtTVpxO1ZJ5UyVkotXGSIWNt2hedlfyshWSQ6p5kQ==
 
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
@@ -2399,9 +2399,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@18.2.14", "@types/react@>=16", "@types/react@^18":
-  version "18.2.22"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.22.tgz#abe778a1c95a07fa70df40a52d7300a40b949ccb"
-  integrity sha512-60fLTOLqzarLED2O3UQImc/lsNRgG0jE/a1mPW9KjMemY0LMITWEsbS4VvZ4p6rorEHd5YKxxmMKSDK505GHpA==
+  version "18.2.24"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.24.tgz#3c7d68c02e0205a472f04abe4a0c1df35d995c05"
+  integrity sha512-Ee0Jt4sbJxMu1iDcetZEIKQr99J1Zfb6D4F3qfUWoR1JpInkY1Wdg4WwCyBjL257D0+jGqSl1twBjV8iCaC0Aw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
