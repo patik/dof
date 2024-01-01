@@ -4,8 +4,8 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build && next export",
-        "start": "next start",
+        "build": "next build",
+        "start": "serve out",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
         "lint": "next lint && yarn typecheck && yarn code-lint && yarn unused-exports",
@@ -23,12 +23,12 @@
         "@mui/styled-engine-sc": "^5.12.0",
         "@next/mdx": "^13.5.1",
         "@nivo/core": "^0.84.0",
-        "@nivo/line": "^0.83.0",
+        "@nivo/line": "^0.84.0",
         "@types/mdx": "^2.0.5",
         "dof": "^2.0.0",
         "footinch": "^1.0.2",
         "idb-keyval": "^6.2.1",
-        "next": "13.5.1",
+        "next": "14.0.4",
         "react": "18.2.0",
         "react-copy-to-clipboard": "^5.1.0",
         "react-dom": "18.2.0",
@@ -37,7 +37,8 @@
         "zustand": "^4.4.0"
     },
     "devDependencies": {
-        "@types/react-copy-to-clipboard": "^5.0.7"
+        "@types/react-copy-to-clipboard": "^5.0.7",
+        "serve": "^14.2.1"
     },
     "config": {
         "basePath": "/dof"
