@@ -8,7 +8,6 @@ const withMDX = mdx({
 
 const { basePath } = config
 
-console.log('xyz basePath: ', process.env.IS_DEPLOYMENT ? basePath : undefined)
 /** @type {import('next').NextConfig} */
 module.exports = withMDX({
     reactStrictMode: true,
