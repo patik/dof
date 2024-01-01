@@ -17,7 +17,8 @@
         "preversion": "yarn workspaces run preversion",
         "postversion": "git push && git push --tags",
         "test": "yarn workspaces run test",
-        "cypress:open": "cypress open --project ./app"
+        "cypress:open": "cypress open --project ./app",
+        "postinstall": "patch-package"
     },
     "devDependencies": {
         "@jest/globals": "^29.7.0",
