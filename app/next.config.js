@@ -8,11 +8,12 @@ const withMDX = mdx({
 
 const { basePath } = config
 
+console.log('xyz basePath: ', process.env.IS_DEPLOYMENT ? basePath : undefined)
 /** @type {import('next').NextConfig} */
 module.exports = withMDX({
     reactStrictMode: true,
     swcMinify: true,
-    basePath: process.env.IS_CI ? undefined : basePath,
+    basePath: process.env.IS_DEPLOYMENT ? basePath : undefined,
     output: 'export',
     // Add markdown extensions
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
