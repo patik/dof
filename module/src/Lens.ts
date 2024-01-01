@@ -1,5 +1,5 @@
+import { calculateDepthOfField } from './calculators/calculateDepthOfField'
 import { combineSettings } from './utilities/combineSettings'
-import { calculateDepthOfField } from './utilities/calculateDepthOfField'
 
 export const builtInDefaults: DefaultOptions = Object.freeze({
     focalLength: 35,
@@ -45,6 +45,12 @@ export class Lens {
             distance = imperialUnits ? defaultDistanceImperial : defaultDistanceMetric
         }
 
-        return calculateDepthOfField(this.focalLength, this.aperture, this.cropFactor, distance, imperialUnits)
+        return calculateDepthOfField({
+            focalLength: this.focalLength,
+            aperture: this.aperture,
+            cropFactor: this.cropFactor,
+            distance,
+            imperialUnits,
+        })
     }
 }

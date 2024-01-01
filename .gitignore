@@ -1,4 +1,4 @@
-package/coverage/
+module/coverage/
 dist/
 node_modules/
 yarn-error.log

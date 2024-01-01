@@ -33,3 +33,17 @@ type DoFResult = {
     coc: number // Circle of confusion
     toString: () => string
 }
+
+type FocalLengthResult = {
+    focalLength: number
+    focalLengthEquiv: number // The focal length in 35mm-equivalency
+}
+
+type ApertureResult = {
+    aperture: number
+    fStop: undefined | keyof typeof import('./data/preciseApertureMap').preciseApertureMap
+}
+
+type CropFactorResult = {
+    cropFactor: number
+}
