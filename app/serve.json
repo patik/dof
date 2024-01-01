@@ -1,0 +1,3 @@
+{
+    "rewrites": [{ "source": "dof/**", "destination": "out/index.html" }]
+}
