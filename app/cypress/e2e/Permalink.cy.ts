@@ -1,7 +1,6 @@
 import { del } from 'idb-keyval'
-import { config } from '../../package.json'
 
-const baseUrl = `http://localhost:3000${config.basePath}`
+const baseUrl = `http://localhost:3000`
 
 describe('LensTable', () => {
     beforeEach(async () => {

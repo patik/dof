@@ -1,8 +1,7 @@
 import { del } from 'idb-keyval'
 import useDofStore from '../../src/store/index'
-import { config } from '../../package.json'
 
-const baseUrl = `http://localhost:3000${config.basePath}`
+const baseUrl = `http://localhost:3000`
 
 describe('LensTable', () => {
     beforeEach(async () => {
@@ -64,9 +63,13 @@ describe('LensTable', () => {
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', '0.61')
 
-            cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('72')
-            cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/3.4"]').click()
-            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="NikonD3k"]').click()
+            cy.get('[data-testid^="focal-length-"] input').last().focus()
+            cy.get('[data-testid^="focal-length-"] input').last().type('{selectall}')
+            cy.get('[data-testid^="focal-length-"] input').last().type('72')
+            cy.get('[data-testid^="aperture-"]').last().parent().click()
+            cy.get('[data-testid^="aperture-"]').last().parent().get('ul > li[data-value="f/3.4"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click()
+            cy.get('[data-testid^="sensor-"]').last().parent().get('ul > li[data-value="NikonD3k"]').click()
 
             cy.get('[data-testid^="dof-"]').last().should('have.text', '0.61')
 
@@ -89,9 +92,13 @@ describe('LensTable', () => {
             // Make sure the initial value isn't the same one we'll be testing for in the end so thst we know for sure it's updated
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 2 1/4"`)
 
-            cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('90')
-            cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/4"]').click()
-            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="iPhone13"]').click()
+            cy.get('[data-testid^="focal-length-"] input').last().focus()
+            cy.get('[data-testid^="focal-length-"] input').last().type('{selectall}')
+            cy.get('[data-testid^="focal-length-"] input').last().type('90')
+            cy.get('[data-testid^="aperture-"]').last().parent().click()
+            cy.get('[data-testid^="aperture-"]').last().parent().get('ul > li[data-value="f/4"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click()
+            cy.get('[data-testid^="sensor-"]').last().parent().get('ul > li[data-value="iPhone13"]').click()
 
             cy.get('[data-testid^="dof-"]').last().should('have.text', `0' 2 1/4"`)
 
@@ -117,7 +124,9 @@ describe('LensTable', () => {
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', '0.61')
 
             // Change the distance
-            cy.get('[data-testid="distance"] input').last().focus().type('{selectall}').type('10')
+            cy.get('[data-testid="distance"] input').last().focus()
+            cy.get('[data-testid="distance"] input').last().type('{selectall}')
+            cy.get('[data-testid="distance"] input').last().type('10')
 
             // DoF should have a new value
             cy.get('[data-testid^="dof-"]').last().should('have.text', '12.81')
@@ -142,7 +151,9 @@ describe('LensTable', () => {
             cy.get('[data-testid^="dof-"]').last().should('not.have.text', `0' 2 1/4"`)
 
             // Change the distance
-            cy.get('[data-testid="distance"] input').last().focus().type('{selectall}').type('10')
+            cy.get('[data-testid="distance"] input').last().focus()
+            cy.get('[data-testid="distance"] input').last().type('{selectall}')
+            cy.get('[data-testid="distance"] input').last().type('10')
 
             // DoF should have a new value
             cy.get('[data-testid^="dof-"]').last().should('have.text', `9' 10 3/4"`)
@@ -185,10 +196,16 @@ describe('LensTable', () => {
             cy.get('button[value="metric"]').click()
 
             // Add custom values to the existing lens
-            cy.get('[data-testid^="lens-name-"] input').last().focus().type('{selectall}').type('Sieben-Eins')
-            cy.get('[data-testid^="focal-length-"] input').last().focus().type('{selectall}').type('20')
-            cy.get('[data-testid^="aperture-"]').last().parent().click().get('ul > li[data-value="f/1.4"]').click()
-            cy.get('[data-testid^="sensor-"]').last().parent().click().get('ul > li[data-value="16mm"]').click()
+            cy.get('[data-testid^="lens-name-"] input').last().focus()
+            cy.get('[data-testid^="lens-name-"] input').last().type('{selectall}')
+            cy.get('[data-testid^="lens-name-"] input').last().type('Sieben-Eins')
+            cy.get('[data-testid^="focal-length-"] input').last().focus()
+            cy.get('[data-testid^="focal-length-"] input').last().type('{selectall}')
+            cy.get('[data-testid^="focal-length-"] input').last().type('20')
+            cy.get('[data-testid^="aperture-"]').last().parent().click()
+            cy.get('[data-testid^="aperture-"]').last().parent().get('ul > li[data-value="f/1.4"]').click()
+            cy.get('[data-testid^="sensor-"]').last().parent().click()
+            cy.get('[data-testid^="sensor-"]').last().parent().get('ul > li[data-value="16mm"]').click()
             cy.get('[data-testid^="dof-"]').last().should('have.text', '1.63')
 
             // Before adding the new lens, get the ID if the latest existing lens, so we know what the next ID should be
