@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next build && npx serve@latest out",
+        "start": "next build && serve out",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
         "lint": "next lint && yarn typecheck && yarn code-lint && yarn unused-exports",
@@ -37,7 +37,8 @@
         "zustand": "^4.4.0"
     },
     "devDependencies": {
-        "@types/react-copy-to-clipboard": "^5.0.7"
+        "@types/react-copy-to-clipboard": "^5.0.7",
+        "serve": "^14.2.1"
     },
     "config": {
         "basePath": "/dof"
