@@ -17,7 +17,7 @@
         "@emotion/styled": "^11.11.0",
         "@fontsource/open-sans": "^5.0.20",
         "@mdx-js/loader": "^3.0.0",
-        "@mdx-js/react": "^2.3.0",
+        "@mdx-js/react": "^3.0.0",
         "@mui/icons-material": "^5.14.3",
         "@mui/material": "^5.14.0",
         "@mui/styled-engine-sc": "^5.12.0",
