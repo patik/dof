@@ -13,6 +13,7 @@ module.exports = withMDX({
     reactStrictMode: true,
     swcMinify: true,
     basePath,
+    output: 'export',
     // Add markdown extensions
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     images: {
