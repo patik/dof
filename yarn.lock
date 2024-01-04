@@ -892,10 +892,10 @@
     "@mui/utils" "^5.15.2"
     prop-types "^15.8.1"
 
-"@mui/styled-engine-sc@^6.0.0-alpha.10":
-  version "6.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@mui/styled-engine-sc/-/styled-engine-sc-6.0.0-alpha.10.tgz#e55340d7ebe8cc76305bf5b5c9b3727fe70bf500"
-  integrity sha512-Iz6pbEOCQfDi3nUdXMYuGYE1lPz7C5JHAZa62dRb4WLJZt9ZX1qx4ocTBHqDFbjUHEQub9eNGlyulWEyEekxsA==
+"@mui/styled-engine-sc@^6.0.0-alpha.11":
+  version "6.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@mui/styled-engine-sc/-/styled-engine-sc-6.0.0-alpha.11.tgz#e1921f1b111d50d7026a3990bd1697eb762c590d"
+  integrity sha512-lIb2olqCtltv9XtjbDr4ZkAcSh/d72edWLD/TN6+FpTGy0gOAhWdYaAx9+0l5cyb+XYP13tvAAk3tdTl5g1N6w==
   dependencies:
     "@babel/runtime" "^7.23.6"
     csstype "^3.1.2"
