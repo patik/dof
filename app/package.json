@@ -18,7 +18,7 @@
         "@fontsource/open-sans": "^5.0.20",
         "@mdx-js/loader": "^3.0.0",
         "@mdx-js/react": "^3.0.0",
-        "@mui/icons-material": "^5.15.2",
+        "@mui/icons-material": "^5.15.8",
         "@mui/material": "^5.15.2",
         "@mui/styled-engine-sc": "^6.0.0-alpha.10",
         "@next/mdx": "^14.0.4",
