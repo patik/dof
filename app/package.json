@@ -19,7 +19,7 @@
         "@mdx-js/loader": "^3.0.0",
         "@mdx-js/react": "^3.0.0",
         "@mui/icons-material": "^5.15.2",
-        "@mui/material": "^5.15.2",
+        "@mui/material": "^5.15.12",
         "@mui/styled-engine-sc": "^6.0.0-alpha.10",
         "@next/mdx": "^14.0.4",
         "@nivo/core": "^0.85.0",
