@@ -22,7 +22,7 @@
         "@mui/material": "^5.15.2",
         "@mui/styled-engine-sc": "^6.0.0-alpha.10",
         "@next/mdx": "^14.0.4",
-        "@nivo/core": "^0.85.0",
+        "@nivo/core": "^0.86.0",
         "@nivo/line": "^0.85.1",
         "@types/mdx": "^2.0.10",
         "dof": "^2.0.0",
