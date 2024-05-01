@@ -440,12 +440,7 @@
     "@emotion/use-insertion-effect-with-fallbacks" "^1.0.1"
     "@emotion/utils" "^1.2.1"
 
-"@emotion/unitless@0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.8.0.tgz#a4a36e9cbdc6903737cd20d38033241e1b8833db"
-  integrity sha512-VINS5vEYAscRl2ZUDiT3uMPlrFQupiKgHz5AA4bCH1miKBg4qtwkim1qPmJj/4WG6TreYMY111rEFsjupcOKHw==
-
-"@emotion/unitless@^0.8.1":
+"@emotion/unitless@0.8.1", "@emotion/unitless@^0.8.1":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.8.1.tgz#182b5a4704ef8ad91bde93f7a860a88fd92c79a3"
   integrity sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==
@@ -1048,13 +1043,32 @@
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
-"@nivo/core@0.85.1", "@nivo/core@^0.85.0":
+"@nivo/core@0.85.1":
   version "0.85.1"
   resolved "https://registry.yarnpkg.com/@nivo/core/-/core-0.85.1.tgz#74ffa0adffec875045c90b8d33a806057a265971"
   integrity sha512-366bc4hBicsitcinQyKGfUPpifk5W60RAjwZ4sQkY8R6OzwPMgY+eu/sfPZTNcY7rsleGg8whX0A2dBg2czWMA==
   dependencies:
     "@nivo/recompose" "0.85.0"
     "@nivo/tooltip" "0.85.1"
+    "@react-spring/web" "9.4.5 || ^9.7.2"
+    "@types/d3-shape" "^2.0.0"
+    d3-color "^3.1.0"
+    d3-format "^1.4.4"
+    d3-interpolate "^3.0.1"
+    d3-scale "^4.0.2"
+    d3-scale-chromatic "^3.0.0"
+    d3-shape "^1.3.5"
+    d3-time-format "^3.0.0"
+    lodash "^4.17.21"
+    prop-types "^15.7.2"
+
+"@nivo/core@0.86.0", "@nivo/core@^0.86.0":
+  version "0.86.0"
+  resolved "https://registry.yarnpkg.com/@nivo/core/-/core-0.86.0.tgz#aeb05891037fab75815766a7436730614baa7963"
+  integrity sha512-0laA4BYXbDO85wOnWmzM7iv78wCjTF9tt2kEkRIXfHS3sHWCvasL2p+BJSO9/BJNHSgaHoseTdLX78Kg+ofl0Q==
+  dependencies:
+    "@nivo/recompose" "0.86.0"
+    "@nivo/tooltip" "0.86.0"
     "@react-spring/web" "9.4.5 || ^9.7.2"
     "@types/d3-shape" "^2.0.0"
     d3-color "^3.1.0"
@@ -1106,6 +1120,16 @@
     prop-types "^15.7.2"
     react-lifecycles-compat "^3.0.4"
 
+"@nivo/recompose@0.86.0":
+  version "0.86.0"
+  resolved "https://registry.yarnpkg.com/@nivo/recompose/-/recompose-0.86.0.tgz#b622e6f56d929bbb120d1671c2b7e089d3c44004"
+  integrity sha512-fS0FKcsAK6auMc1oFszSpPw+uaXSQcuc1bDOjcXtb2FwidnG3hzQkLdnK42ksi/bUZyScpHu8+c0Df+CmDNXrw==
+  dependencies:
+    "@types/prop-types" "^15.7.2"
+    "@types/react-lifecycles-compat" "^3.0.1"
+    prop-types "^15.7.2"
+    react-lifecycles-compat "^3.0.4"
+
 "@nivo/scales@0.85.1":
   version "0.85.1"
   resolved "https://registry.yarnpkg.com/@nivo/scales/-/scales-0.85.1.tgz#50ebf007305993188dc54216c10329d4b9e619c3"
@@ -1125,6 +1149,14 @@
   integrity sha512-lX0/MuDI9HvGzYxAtE3mnriYEgFHBWf7d5BMqUifJZIyg82XkI9g3z6vwAwPKRJ52rON9Yhik42+gwFMFj3BrA==
   dependencies:
     "@nivo/core" "0.85.1"
+    "@react-spring/web" "9.4.5 || ^9.7.2"
+
+"@nivo/tooltip@0.86.0":
+  version "0.86.0"
+  resolved "https://registry.yarnpkg.com/@nivo/tooltip/-/tooltip-0.86.0.tgz#66124d935a10bc931dce1ababc24360d4646dcc5"
+  integrity sha512-esaON+SltO+8jhyvhiInTrhswms9zCO9e5xIycHmhPbgijV+WdFp4WDtT9l6Lb6kSS00AYzHq7P0p6lyMg4v9g==
+  dependencies:
+    "@nivo/core" "0.86.0"
     "@react-spring/web" "9.4.5 || ^9.7.2"
 
 "@nivo/voronoi@0.85.1":
@@ -6552,13 +6584,13 @@ style-to-object@^1.0.0:
   dependencies:
     inline-style-parser "0.2.2"
 
-styled-components@^6.1.6:
-  version "6.1.6"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.1.6.tgz#c75c4f994136545b3bcc11608db5363710b78c0e"
-  integrity sha512-DgTLULSC29xpabJ24bbn1+hulU6vvGFQf4RPwBOJrm8WJFnN42yXpo5voBt3jDSJBa5tBd1L6PqswJjQ0wRKdg==
+styled-components@^6.1.9:
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.1.9.tgz#cf2ac444979a925a3553d0bac3ba7688891e4625"
+  integrity sha512-aBOqs0uMsYufFXSE4q6cA6Ty1fwZuMk4BJRHfiGSna59F1otnxiDelwhN4fEwmBtIymmF0ZqXHnpSigr2ps9Cg==
   dependencies:
     "@emotion/is-prop-valid" "1.2.1"
-    "@emotion/unitless" "0.8.0"
+    "@emotion/unitless" "0.8.1"
     "@types/stylis" "4.2.0"
     css-to-react-native "3.2.0"
     csstype "3.1.2"
