@@ -20,7 +20,7 @@
         "@mdx-js/react": "^3.0.0",
         "@mui/icons-material": "^5.16.0",
         "@mui/material": "^5.16.0",
-        "@mui/styled-engine-sc": "^6.0.0-alpha.10",
+        "@mui/styled-engine-sc": "^6.0.0",
         "@next/mdx": "^14.0.4",
         "@nivo/core": "^0.86.0",
         "@nivo/line": "^0.87.0",
