@@ -70,7 +70,7 @@ export default function About() {
                     yield a shallower (smaller, tighter) depth of field.
                 </Typography>
                 <Grid container>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                         <Figure>
                             <Image
                                 src={Tree_bud_in_spring_f18}
@@ -95,7 +95,7 @@ export default function About() {
                             </figcaption>
                         </Figure>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                         <Figure>
                             <Image
                                 src={Tree_bud_at_f22}
