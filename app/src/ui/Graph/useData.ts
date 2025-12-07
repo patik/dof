@@ -1,4 +1,4 @@
-import { Serie } from '@nivo/line'
+import { LineSeries } from '@nivo/line'
 import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
@@ -13,12 +13,12 @@ export default function useData() {
     const isMobile = useIsMobile()
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
     const uniqueNames = getUniqueLensNames(lenses)
-    const data: Serie[] = useMemo(
+    const data: LineSeries[] = useMemo(
         () =>
             lenses.map((lens) => {
                 const { focalLength, aperture, sensorKey, id } = lens
                 const cropFactor: number = sensorList[sensorKey].value
-                const datum: Serie = {
+                const datum: LineSeries = {
                     id: uniqueNames[lens.id],
                     data: compact(
                         distances.map((distance) => {

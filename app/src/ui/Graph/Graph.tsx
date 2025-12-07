@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { ResponsiveLine, Serie } from '@nivo/line'
+import { ResponsiveLine, LineSeries } from '@nivo/line'
 import useDoFStore from '../../store'
 import { feetAndInchesString, feetString } from '../../utilities/conversion'
 import useData from './useData'
@@ -8,7 +8,7 @@ import useData from './useData'
 export default function Graph() {
     const { units } = useDoFStore()
     const theme = useTheme()
-    const data: Serie[] = useData()
+    const data: LineSeries[] = useData()
 
     return (
         <ResponsiveLine
@@ -92,30 +92,31 @@ export default function Graph() {
                 },
             ]}
             tooltip={(props) => {
-                const name = props.point.serieId
+                const name = props.point.seriesId
                 const dof = Number(props.point.data.yFormatted)
                 const dofText = units === 'imperial' ? `${feetAndInchesString(dof)}` : `${dof} meters`
                 const dist = props.point.data.xFormatted
                 const distText = units === 'imperial' ? `${feetString(Number(dist))} away` : `${dist} meters away`
+                const bgColor = props.point.seriesColor || props.point.color || '#333'
 
                 return (
                     <Box
                         sx={{
-                            bgcolor: props.point.borderColor,
+                            bgcolor: bgColor,
                             p: 2,
                             borderRadius: (theme) => theme.shape.borderRadius,
                         }}
                     >
                         <Typography
                             sx={{
-                                color: (theme) => theme.palette.getContrastText(props.point.borderColor),
+                                color: (theme) => theme.palette.getContrastText(bgColor),
                             }}
                         >
                             {name}
                         </Typography>
                         <Typography
                             sx={{
-                                color: (theme) => theme.palette.getContrastText(props.point.borderColor),
+                                color: (theme) => theme.palette.getContrastText(bgColor),
                             }}
                         >{`DoF is ${dofText} for a subject that is ${distText}`}</Typography>
                     </Box>
