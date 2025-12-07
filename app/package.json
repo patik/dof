@@ -1,6 +1,6 @@
 {
     "name": "app",
-    "version": "2.1.2",
+    "version": "3.0.0",
     "private": true,
     "scripts": {
         "dev": "next dev",
@@ -8,7 +8,7 @@
         "start": "serve out",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "next lint && yarn typecheck && yarn code-lint && yarn unused-exports",
+        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
         "test": "yarn jest",
         "unused-exports": "ts-prune -p ./tsconfig.json"
     },
@@ -18,26 +18,28 @@
         "@fontsource/open-sans": "^5.0.20",
         "@mdx-js/loader": "^3.1.0",
         "@mdx-js/react": "^3.0.0",
-        "@mui/icons-material": "^5.16.0",
-        "@mui/material": "^5.16.0",
-        "@mui/styled-engine-sc": "^6.1.0",
+        "@mui/icons-material": "^7.3.6",
+        "@mui/material": "^7.3.6",
+        "@mui/styled-engine-sc": "^7.3.6",
         "@next/mdx": "^14.0.4",
-        "@nivo/core": "^0.88.0",
-        "@nivo/line": "^0.87.0",
+        "@nivo/core": "^0.99.0",
+        "@nivo/line": "^0.99.0",
         "@types/mdx": "^2.0.10",
         "dof": "^2.0.0",
         "footinch": "^1.0.2",
         "idb-keyval": "^6.2.1",
         "next": "14.2.0",
-        "react": "18.3.0",
+        "react": "19.2.1",
         "react-copy-to-clipboard": "^5.1.0",
-        "react-dom": "18.3.0",
-        "react-error-boundary": "^4.0.12",
+        "react-dom": "19.2.1",
+        "react-error-boundary": "^6.0.0",
+        "sharp": "^0.34.5",
         "styled-components": "^6.1.6",
-        "zustand": "^4.4.7"
+        "zustand": "^5.0.9"
     },
     "devDependencies": {
         "@types/react-copy-to-clipboard": "^5.0.7",
+        "eslint-config-next": "16.0.7",
         "serve": "^14.2.1"
     },
     "config": {

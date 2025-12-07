@@ -1,12 +1,14 @@
 import { Box } from '@mui/material'
+import dynamic from 'next/dynamic'
 import { useAddPlaceholderLenses } from '../utilities/useAddPlaceholderLenses'
 import useReadFromHash from '../utilities/useReadFromHash'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
 import useWriteToHash from '../utilities/useWriteToHash'
 import { useWriteToStorage } from '../utilities/useWriteToStorage'
-import Graph from './Graph/Graph'
 import LensTable from './LensTable/Table/LensTable'
 import TopToolbar from './LensTable/TopToolbar/TopToolbar'
+
+const Graph = dynamic(() => import('./Graph/Graph'), { ssr: false })
 
 export default function Main() {
     const hasReadFromHash = useReadFromHash()
