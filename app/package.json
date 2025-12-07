@@ -8,7 +8,7 @@
         "start": "serve out",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "next lint && yarn typecheck && yarn code-lint && yarn unused-exports",
+        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
         "test": "yarn jest",
         "unused-exports": "ts-prune -p ./tsconfig.json"
     },
@@ -39,6 +39,7 @@
     },
     "devDependencies": {
         "@types/react-copy-to-clipboard": "^5.0.7",
+        "eslint-config-next": "16.0.7",
         "serve": "^14.2.1"
     },
     "config": {
