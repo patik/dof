@@ -92,12 +92,12 @@ export default function Graph() {
                 },
             ]}
             tooltip={(props) => {
-                const name = props.point.seriesId
+                const name = props.point.seriesId ?? 'Unknown'
                 const dof = Number(props.point.data.yFormatted)
                 const dofText = units === 'imperial' ? `${feetAndInchesString(dof)}` : `${dof} meters`
                 const dist = props.point.data.xFormatted
                 const distText = units === 'imperial' ? `${feetString(Number(dist))} away` : `${dist} meters away`
-                const bgColor = props.point.seriesColor || props.point.color || theme.palette.grey[800]
+                const bgColor = props.point.seriesColor ?? props.point.color ?? theme.palette.grey[800]
 
                 return (
                     <Box
