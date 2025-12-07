@@ -48,6 +48,7 @@ export default function Permalink() {
 
     return (
         <>
+            {/* @ts-expect-error Fixed with next major package release */}
             <CopyToClipboard text={fullUrl} onCopy={handleClick}>
                 <a
                     href={fullUrl}
