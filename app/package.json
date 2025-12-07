@@ -35,7 +35,7 @@
         "react-error-boundary": "^6.0.0",
         "sharp": "^0.34.5",
         "styled-components": "^6.1.6",
-        "zustand": "^4.4.7"
+        "zustand": "^5.0.9"
     },
     "devDependencies": {
         "@types/react-copy-to-clipboard": "^5.0.7",
