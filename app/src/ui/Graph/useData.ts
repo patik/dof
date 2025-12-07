@@ -1,11 +1,11 @@
 import { LineSeries } from '@nivo/line'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
+import { Lens } from '../../../../package/dist/Lens'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
 import useIsMobile from '../../utilities/useIsMobile'
 import getDistanceSteps from './getDistanceSteps'
-import { Lens } from 'dof'
 import getUniqueLensNames from './getUniqueLensNames'
 
 export default function useData() {
