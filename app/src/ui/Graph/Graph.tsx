@@ -97,7 +97,7 @@ export default function Graph() {
                 const dofText = units === 'imperial' ? `${feetAndInchesString(dof)}` : `${dof} meters`
                 const dist = props.point.data.xFormatted
                 const distText = units === 'imperial' ? `${feetString(Number(dist))} away` : `${dist} meters away`
-                const bgColor = props.point.seriesColor || props.point.color || '#333'
+                const bgColor = props.point.seriesColor || props.point.color || theme.palette.grey[800]
 
                 return (
                     <Box
