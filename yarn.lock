@@ -1370,10 +1370,10 @@
   dependencies:
     fast-glob "3.3.1"
 
-"@next/mdx@^14.0.4":
-  version "14.2.33"
-  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-14.2.33.tgz#41b93db1281a6b53e185d6dd08a3ffdc8bb97cbe"
-  integrity sha512-mVKLMRIiE/JUoa+FmDCWS1z8CR1BEqy/1hCdhKW3K2dSUtPQk49GKLA2did7uLRC79KAxijbyjg775nLPC1eNw==
+"@next/mdx@^16.0.7":
+  version "16.0.7"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-16.0.7.tgz#8db0760924a5e301206360e0b17a191cb4c1256b"
+  integrity sha512-ysX8mH24XuTwXStJLbecHO97I4EdUT9vHQymXLypLb3956cYXfVb/36nukH0C4Q2iA7RZE04yNpHs84Br77nNg==
   dependencies:
     source-map "^0.7.0"
 
@@ -3437,6 +3437,13 @@ doctrine@^2.1.0:
   integrity sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==
   dependencies:
     esutils "^2.0.2"
+
+dof@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/dof/-/dof-2.1.2.tgz#7d44723b8721725bd30d9970478341933a1a4125"
+  integrity sha512-u/DykEdlMFTa7pxBjW9dub7kU4xHvb7FQlOnVau6hKZGyrW+9E4lfsTRQtMQOnGxN6ctlwbA8g3EtaGb+BPrhQ==
+  dependencies:
+    lodash "^4.17.21"
 
 dom-helpers@^5.0.1:
   version "5.2.1"
