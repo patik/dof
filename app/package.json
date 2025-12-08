@@ -21,7 +21,7 @@
         "@mui/icons-material": "^7.3.6",
         "@mui/material": "^7.3.6",
         "@mui/styled-engine-sc": "^7.3.6",
-        "@next/mdx": "^14.0.4",
+        "@next/mdx": "^16.0.7",
         "@nivo/core": "^0.99.0",
         "@nivo/line": "^0.99.0",
         "@types/mdx": "^2.0.10",
