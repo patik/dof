@@ -1,4 +1,4 @@
-import { isApertureString } from 'dof'
+import { isApertureString } from '../../../module/dist'
 import { compact } from 'lodash'
 import { useEffect, useState } from 'react'
 import useDoFStore from '../store'

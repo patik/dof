@@ -1,7 +1,7 @@
 import { LineSeries } from '@nivo/line'
-import { Lens } from 'dof'
 import { compact } from 'lodash'
 import { useMemo } from 'react'
+import { Lens } from '../../../../package/dist/Lens'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
 import useIsMobile from '../../utilities/useIsMobile'
