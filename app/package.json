@@ -39,7 +39,7 @@
     },
     "devDependencies": {
         "@types/react-copy-to-clipboard": "^5.0.7",
-        "eslint-config-next": "16.0.7",
+        "eslint-config-next": "16.0.10",
         "serve": "^14.2.1"
     },
     "config": {
