@@ -7,6 +7,6 @@ for (const path of ['/', '/about/']) {
         const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
         const violations = results.violations.filter(({ impact }) => impact === 'serious' || impact === 'critical')
 
-        expect(violations).toEqual([])
+        expect(violations, JSON.stringify(violations, null, 2)).toEqual([])
     })
 }
