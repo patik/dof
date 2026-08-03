@@ -14,7 +14,7 @@ export default defineConfig({
         trace: 'on-first-retry',
     },
     webServer: {
-        command: 'bun run start:ci',
+        command: `bun run build && bun run --cwd app preview --host 127.0.0.1 --port ${port}`,
         cwd: '..',
         env: { PORT: port },
         url: baseURL,

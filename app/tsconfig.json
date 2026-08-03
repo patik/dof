@@ -2,7 +2,6 @@
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
         "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
         "skipLibCheck": true,
         "noEmit": true,
         "esModuleInterop": true,
@@ -10,9 +9,10 @@
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "jsx": "preserve",
-        "incremental": true
+        "jsx": "react-jsx",
+        "incremental": true,
+        "types": ["vite/client", "vitest/globals"]
     },
-    "include": ["next-env.d.ts", "src/", "public/", "pages/", "./index.d.ts"],
+    "include": ["src/", "public/", "e2e/", "./index.d.ts", "vite.config.ts", "playwright.config.ts"],
     "exclude": ["node_modules"]
 }

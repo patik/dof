@@ -32,7 +32,7 @@
         "lint": "biome check . && bun run typecheck",
         "format": "biome format --write .",
         "preversion": "bun run build && bun run cover",
-        "test": "bun run jest"
+        "test": "vitest run --config ../vitest.config.ts --project package"
     },
     "keywords": [
         "depth-of-field",

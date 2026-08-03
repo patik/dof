@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import dynamic from 'next/dynamic'
+import { lazy, Suspense } from 'react'
 import { useAddPlaceholderLenses } from '../utilities/useAddPlaceholderLenses'
 import useReadFromHash from '../utilities/useReadFromHash'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
@@ -8,7 +8,7 @@ import { useWriteToStorage } from '../utilities/useWriteToStorage'
 import LensTable from './LensTable/Table/LensTable'
 import TopToolbar from './LensTable/TopToolbar/TopToolbar'
 
-const Graph = dynamic(() => import('./Graph/Graph'), { ssr: false })
+const Graph = lazy(() => import('./Graph/Graph'))
 
 export default function Main() {
     const hasReadFromHash = useReadFromHash()
@@ -29,7 +29,9 @@ export default function Main() {
             </Box>
 
             <Box mb={2} height={400} width="100%">
-                <Graph />
+                <Suspense fallback={null}>
+                    <Graph />
+                </Suspense>
             </Box>
         </>
     )

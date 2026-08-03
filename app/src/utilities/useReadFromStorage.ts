@@ -11,7 +11,7 @@ export function useReadFromStorage() {
     const { applyFromLocalStorage } = useDoFStore()
 
     // Read from localStorage
-    // Note that on Next.js dev server this hook will run twice which could cause duplicate lenses to be added to state
+    // React Strict Mode runs this hook twice in development, so duplicate lenses are skipped.
     useEffect(() => {
         if (hasStartedReading || hasFinishedReading || typeof window === 'undefined') {
             return

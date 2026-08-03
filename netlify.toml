@@ -1,0 +1,6 @@
+[build]
+command = "bun run deploy"
+publish = "app/dist"
+
+[build.environment]
+IS_DEPLOYMENT = "true"

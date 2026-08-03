@@ -2,14 +2,16 @@
     "name": "app",
     "version": "4.0.0",
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev": "node ../node_modules/next/dist/bin/next dev",
-        "build": "node ../node_modules/next/dist/bin/next build",
-        "start": "node ../node_modules/serve/build/main.js out",
+        "dev": "vite",
+        "build": "vite build && bun run prerender",
+        "preview": "vite preview",
+        "prerender": "bun run scripts/prerender.ts",
         "typecheck": "tsc --noEmit",
         "lint": "biome check . && bun run typecheck",
         "format": "biome format --write .",
-        "test": "bun run jest"
+        "test": "vitest run --config ../vitest.config.ts --project app"
     },
     "dependencies": {
         "@emotion/react": "^11.11.3",
@@ -18,19 +20,13 @@
         "@mui/icons-material": "^7.3.6",
         "@mui/material": "^7.3.6",
         "@nivo/line": "^0.99.0",
+        "@tanstack/react-router": "^1.170.18",
         "dof": "workspace:*",
         "footinch": "^1.0.2",
         "idb-keyval": "^6.2.1",
-        "next": "14.2.0",
         "react": "19.2.1",
         "react-dom": "19.2.1",
         "react-error-boundary": "^6.0.0",
         "zustand": "^5.0.9"
-    },
-    "devDependencies": {
-        "serve": "^14.2.1"
-    },
-    "config": {
-        "basePath": "/dof"
     }
 }

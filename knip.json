@@ -3,8 +3,8 @@
     "ignoreDependencies": ["@types/react-dom"],
     "workspaces": {
         "app": {
-            "entry": ["pages/**/*.{ts,tsx}", "playwright.config.ts"],
-            "project": ["src/**/*.{ts,tsx}", "pages/**/*.{ts,tsx}", "e2e/**/*.{ts,tsx}"],
+            "entry": ["src/main.tsx", "vite.config.ts", "playwright.config.ts", "scripts/prerender.ts"],
+            "project": ["src/**/*.{ts,tsx}", "e2e/**/*.{ts,tsx}", "scripts/**/*.ts"],
             "ignore": ["src/utilities/sensorList.ts"]
         },
         "package": {
