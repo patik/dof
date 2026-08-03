@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { JSDOM } from 'jsdom'
 
 const outputDirectory = join(import.meta.dir, '..', 'dist')
 const shell = await readFile(join(outputDirectory, 'index.html'), 'utf8')
@@ -20,15 +21,23 @@ const routes = [
 ]
 
 for (const route of routes) {
-    const html = shell
-        .replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`)
-        .replace(
-            /<meta name="description" content="[^"]*" \/>/,
-            `<meta name="description" content="${route.description}" />`,
-        )
-        .replace(/<div id="root">[\s\S]*?<\/div>\s*<script/, `<div id="root">${route.content}</div>\n        <script`)
+    const dom = new JSDOM(shell)
+    const { document } = dom.window
+    const description = document.querySelector('meta[name="description"]')
+    const root = document.getElementById('root')
+
+    if (!description || !root) {
+        throw new Error('Built app shell is missing required metadata or root element')
+    }
+
+    document.title = route.title
+    description.setAttribute('content', route.description)
+    root.innerHTML = route.content
+
+    const html = `<!doctype html>\n${document.documentElement.outerHTML}\n`
     const directory = join(outputDirectory, route.path)
 
     await mkdir(directory, { recursive: true })
     await writeFile(join(directory, 'index.html'), html)
+    dom.window.close()
 }

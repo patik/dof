@@ -13,7 +13,11 @@ const codeStyles = {
 
 function Software() {
     return (
-        <Layout title="Software: Node.js Package" noMainHeading>
+        <Layout
+            title="Software: Node.js Package"
+            description="Use the dof JavaScript package to calculate depth of field for camera lenses."
+            noMainHeading
+        >
             <Typography component="h1" variant="h3" gutterBottom>
                 <Link href="https://patik.com/dof/">Depth of Field Calculator</Link>
             </Typography>

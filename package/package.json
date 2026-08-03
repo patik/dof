@@ -27,12 +27,12 @@
     "scripts": {
         "build": "rm -rf dist/*; bun run tsc && cp ../README.md ./README.md",
         "clean": "git clean -fdx",
-        "cover": "bun run test --collectCoverage",
+        "cover": "bun run tsc && vitest run --coverage --config ../vitest.config.ts --project package",
         "typecheck": "tsc --noEmit",
         "lint": "biome check . && bun run typecheck",
         "format": "biome format --write .",
         "preversion": "bun run build && bun run cover",
-        "test": "vitest run --config ../vitest.config.ts --project package"
+        "test": "bun run tsc && vitest run --config ../vitest.config.ts --project package"
     },
     "keywords": [
         "depth-of-field",

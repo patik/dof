@@ -30,7 +30,10 @@ function About() {
     const isMobile = useIsMobile()
 
     return (
-        <Layout title="About">
+        <Layout
+            title="About"
+            description="Learn how depth of field works and how to compare camera lenses with the calculator."
+        >
             <Box mb={3}>
                 <Typography variant="h2" gutterBottom>
                     What is depth of field?

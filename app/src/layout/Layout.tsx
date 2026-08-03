@@ -11,15 +11,22 @@ function FallbackComponent() {
 
 type Props = PropsWithChildren<{
     title?: string
+    description?: string
     hasPermalink?: boolean
     noMainHeading?: boolean
 }>
 
-export default function Layout({ title, hasPermalink, noMainHeading, children }: Props): ReactElement {
+export default function Layout({
+    title,
+    description = 'Depth of field calculator and camera lens comparison tool',
+    hasPermalink,
+    noMainHeading,
+    children,
+}: Props): ReactElement {
     return (
         <Box display="flex" flexDirection="column" minHeight="100%">
             <title>{`${title ? `${title} | ` : ''} Depth of Field Calculator & Comparison Tool for Camera Lenses`}</title>
-            <meta name="description" content="Depth of field calculator and camera lens comparison tool" />
+            <meta name="description" content={description} />
 
             <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
                 {noMainHeading ? null : (
