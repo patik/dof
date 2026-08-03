@@ -11,10 +11,6 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
     const parts = piece.split(',')
     const [distancePart = '', unitsPart] = parts
 
-    if (parts.length === 0) {
-        return { distance, units }
-    }
-
     distance = parseInt(distancePart, 10)
 
     if (Number.isNaN(distance)) {

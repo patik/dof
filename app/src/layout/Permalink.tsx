@@ -26,16 +26,18 @@ export default function Permalink() {
     const [open, setOpen] = useState(false)
 
     const handleClick = async (event: React.MouseEvent<HTMLAnchorElement>) => {
-        // Allow opening in a new tab
-        if (!event.metaKey) {
-            event.preventDefault()
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || !navigator.clipboard?.writeText) {
+            return
         }
+
+        event.preventDefault()
 
         try {
             await navigator.clipboard.writeText(fullUrl)
             setOpen(true)
         } catch {
             setOpen(false)
+            window.location.assign(fullUrl)
         }
     }
 
