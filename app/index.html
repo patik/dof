@@ -16,6 +16,25 @@
         <link rel="canonical" href="https://patik.com/dof/" />
         <link rel="icon" href="/favicon.ico" />
         <title>Depth of Field Calculator &amp; Comparison Tool for Camera Lenses</title>
+        <script>
+            ;(() => {
+                try {
+                    const storedTheme = localStorage.getItem('dof-theme')
+                    const theme =
+                        storedTheme === 'light' || storedTheme === 'dark'
+                            ? storedTheme
+                            : matchMedia('(prefers-color-scheme: dark)').matches
+                              ? 'dark'
+                              : 'light'
+
+                    document.documentElement.dataset.theme = theme
+                    document.documentElement.style.colorScheme = theme
+                } catch {
+                    document.documentElement.dataset.theme = 'light'
+                    document.documentElement.style.colorScheme = 'light'
+                }
+            })()
+        </script>
     </head>
     <body>
         <noscript>

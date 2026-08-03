@@ -1,25 +1,33 @@
-import { Box, Typography } from '@mui/material'
-import { THEME_SPACING } from '../../../styles/theme'
-import useIsMobile from '../../../utilities/useIsMobile'
 import Distance from './Distance'
 import UnitsToggle from './UnitsToggle'
 
-export const SPACE_BETWEEN_FIELDS = `${THEME_SPACING}px`
-
 export default function TopToolbar() {
-    const isMobile = useIsMobile()
-
     return (
-        <Box display="flex" sx={isMobile ? { flexWrap: 'wrap' } : null}>
-            <Box flexGrow={1} sx={isMobile ? { minWidth: '100%', pb: 2 } : null}>
-                <Typography variant="h5" component="h2">
-                    Lenses
-                </Typography>
-            </Box>
-            <Box mr={SPACE_BETWEEN_FIELDS} sx={isMobile ? { width: '50%' } : null}>
-                <Distance />
-            </Box>
-            <UnitsToggle />
-        </Box>
+        <section
+            aria-labelledby="lens-workbench-title"
+            className="relative overflow-hidden rounded-2xl border border-line bg-panel px-4 py-5 shadow-[var(--soft-shadow)] sm:px-6 sm:py-6"
+        >
+            <div aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-accent" />
+            <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end">
+                <div className="min-w-0 flex-1">
+                    <p className="mb-1 text-[0.68rem] font-semibold tracking-[0.18em] text-accent-strong uppercase">
+                        Focus plane 01
+                    </p>
+                    <h2
+                        id="lens-workbench-title"
+                        className="font-display text-3xl leading-none font-medium text-ink sm:text-4xl"
+                    >
+                        Lens workbench
+                    </h2>
+                    <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
+                        Set the subject distance, then compare optical behavior across your kit.
+                    </p>
+                </div>
+                <div className="flex min-w-0 gap-3 sm:justify-end">
+                    <Distance />
+                    <UnitsToggle />
+                </div>
+            </div>
+        </section>
     )
 }

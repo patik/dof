@@ -1,59 +1,81 @@
-import { CssBaseline, useMediaQuery } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import { createTheme, ThemeProvider as MuiThemeProvider, responsiveFontSizes } from '@mui/material/styles'
-import { type PropsWithChildren, useMemo } from 'react'
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react'
 
-export const THEME_SPACING = 8
+type ColorTheme = 'light' | 'dark'
+
+type ThemeContextValue = {
+    theme: ColorTheme
+    toggleTheme: () => void
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+function getInitialTheme(): ColorTheme {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
+}
 
 export function ThemeProvider({ children }: PropsWithChildren) {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+    const [theme, setTheme] = useState<ColorTheme>(getInitialTheme)
 
-    const theme = useMemo(
+    useEffect(() => {
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+
+        try {
+            localStorage.setItem('dof-theme', theme)
+        } catch {
+            // Browsers can deny storage access; the in-memory theme still works.
+        }
+    }, [theme])
+
+    const muiTheme = useMemo(
         () =>
             responsiveFontSizes(
                 createTheme({
-                    spacing: THEME_SPACING,
                     palette: {
-                        mode: prefersDarkMode ? 'dark' : 'light',
+                        mode: theme,
                         primary: {
-                            main: prefersDarkMode ? '#90caf9' : '#1565c0',
+                            main: theme === 'dark' ? '#f6b85d' : '#a64917',
+                        },
+                        background: {
+                            default: theme === 'dark' ? '#171512' : '#f6f1e8',
+                            paper: theme === 'dark' ? '#211e1a' : '#fffaf2',
                         },
                     },
                     typography: {
-                        body1: {
-                            fontFamily:
-                                "'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
-                        },
+                        fontFamily: "'Archivo Variable', sans-serif",
                         fontSize: 16,
-                        h1: {
-                            // fontSize: '2rem',
-                        },
-                        h2: {
-                            // fontSize: '1.75rem',
-                        },
-                        h3: {
-                            // fontSize: '1.5rem',
-                        },
-                        h4: {
-                            // fontSize: '1.25rem',
-                            // fontWeight: 600,
-                        },
-                        h5: {
-                            // fontSize: '1.25rem',
-                        },
-                        h6: {
-                            // fontSize: '1rem',
-                            // fontWeight: 600,
-                        },
                     },
                 }),
             ),
-        [prefersDarkMode],
+        [theme],
+    )
+
+    const value = useMemo(
+        () => ({
+            theme,
+            toggleTheme: () => setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light')),
+        }),
+        [theme],
     )
 
     return (
-        <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-            {children}
-        </MuiThemeProvider>
+        <ThemeContext.Provider value={value}>
+            <MuiThemeProvider theme={muiTheme}>
+                <CssBaseline />
+                {children}
+            </MuiThemeProvider>
+        </ThemeContext.Provider>
     )
+}
+
+export function useColorTheme(): ThemeContextValue {
+    const context = useContext(ThemeContext)
+
+    if (!context) {
+        throw new Error('useColorTheme must be used within ThemeProvider')
+    }
+
+    return context
 }

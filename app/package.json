@@ -14,9 +14,11 @@
         "test": "vitest run --config ../vitest.config.ts --project app"
     },
     "dependencies": {
+        "@base-ui/react": "^1.6.0",
         "@emotion/react": "^11.11.3",
         "@emotion/styled": "^11.13.0",
-        "@fontsource/open-sans": "^5.0.20",
+        "@fontsource-variable/archivo": "^5.3.0",
+        "@fontsource-variable/newsreader": "^5.3.0",
         "@mui/icons-material": "^7.3.6",
         "@mui/material": "^7.3.6",
         "@nivo/line": "^0.99.0",

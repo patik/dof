@@ -29,6 +29,7 @@
         "@axe-core/playwright": "^4.12.1",
         "@biomejs/biome": "^2.5.6",
         "@playwright/test": "^1.62.1",
+        "@tailwindcss/vite": "^4.3.3",
         "@tanstack/router-plugin": "^1.168.23",
         "@types/node": "24.10.1",
         "@types/react": "19.2.7",
@@ -37,6 +38,7 @@
         "@vitejs/plugin-react": "^6.0.5",
         "jsdom": "^30.0.1",
         "knip": "^6.31.0",
+        "tailwindcss": "^4.3.3",
         "typescript": "^5.6.2",
         "vite": "^8.2.0",
         "vitest": "^4.1.10"
