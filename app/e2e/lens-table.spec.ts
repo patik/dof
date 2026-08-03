@@ -73,6 +73,16 @@ test('updates the metric depth of field when distance changes', async ({ page })
     await expect(page.getByTestId('dof-precise').last()).toHaveText('12.81430309460011')
 })
 
+test('accepts a fractional distance beginning with zero', async ({ page }) => {
+    await resetToSingleLens(page)
+    const distance = page.getByTestId('distance').locator('input')
+
+    await distance.fill('0.5')
+
+    await expect(distance).toHaveValue('0.5')
+    await expect(page).toHaveURL(/#0\.5,m;/)
+})
+
 test('updates the imperial depth of field when distance changes', async ({ page }) => {
     await resetToSingleLens(page)
     await page.locator('button[value="imperial"]').click()

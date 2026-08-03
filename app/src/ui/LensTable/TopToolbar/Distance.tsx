@@ -1,8 +1,14 @@
 import { Input } from '@base-ui/react/input'
+import { useEffect, useState } from 'react'
 import useDoFStore from '../../../store'
 
 export default function Distance() {
     const { units, distance, setDistance } = useDoFStore()
+    const [inputValue, setInputValue] = useState(String(distance))
+
+    useEffect(() => {
+        setInputValue(String(distance))
+    }, [distance])
 
     return (
         <div data-testid="distance" className="flex min-w-0 flex-1 flex-col gap-2 sm:max-w-48">
@@ -21,12 +27,20 @@ export default function Distance() {
                     inputMode="decimal"
                     autoComplete="off"
                     aria-label="Distance"
-                    value={distance}
+                    value={inputValue}
                     onChange={(event) => {
+                        setInputValue(event.target.value)
                         const nextDistance = Number.parseFloat(event.target.value)
 
                         if (nextDistance > 0) {
                             setDistance(nextDistance)
+                        }
+                    }}
+                    onBlur={() => {
+                        const nextDistance = Number.parseFloat(inputValue)
+
+                        if (!(nextDistance > 0)) {
+                            setInputValue(String(distance))
                         }
                     }}
                     className="tabular-nums min-w-0 flex-1 border-0 bg-transparent px-4 text-lg font-semibold text-ink outline-none"

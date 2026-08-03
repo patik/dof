@@ -18,21 +18,20 @@
         <title>Depth of Field Calculator &amp; Comparison Tool for Camera Lenses</title>
         <script>
             ;(() => {
+                const systemTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+                let theme = systemTheme
+
                 try {
                     const storedTheme = localStorage.getItem('dof-theme')
-                    const theme =
-                        storedTheme === 'light' || storedTheme === 'dark'
-                            ? storedTheme
-                            : matchMedia('(prefers-color-scheme: dark)').matches
-                              ? 'dark'
-                              : 'light'
-
-                    document.documentElement.dataset.theme = theme
-                    document.documentElement.style.colorScheme = theme
+                    if (storedTheme === 'light' || storedTheme === 'dark') {
+                        theme = storedTheme
+                    }
                 } catch {
-                    document.documentElement.dataset.theme = 'light'
-                    document.documentElement.style.colorScheme = 'light'
+                    // Storage may be unavailable, so retain the system theme.
                 }
+
+                document.documentElement.dataset.theme = theme
+                document.documentElement.style.colorScheme = theme
             })()
         </script>
     </head>
