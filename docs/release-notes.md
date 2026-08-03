@@ -1,5 +1,9 @@
 # Release Notes
 
+## 4.0.0
+
+- Now requires Node v24
+
 ## 2.1.0
 
 - Completely rebuilt GUI web app
@@ -17,7 +21,7 @@
 
 - public API for making calculations directly within your own app
 
-*A subsequent release will strip the GUI (moving it to a separate repository) to create a simple utility that can be dropped into any app.*
+_A subsequent release will strip the GUI (moving it to a separate repository) to create a simple utility that can be dropped into any app._
 
 ## 0.3.0
 
