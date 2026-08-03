@@ -8,6 +8,8 @@
             "!**/out",
             "!**/dist",
             "!**/coverage",
+            "!**/playwright-report",
+            "!**/test-results",
             "!.github/copilot-instructions.md"
         ]
     },

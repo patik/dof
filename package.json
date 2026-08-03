@@ -22,15 +22,16 @@
         "preversion": "bun run --filter dof preversion",
         "postversion": "git push && git push --tags",
         "test": "bun run --workspaces test",
-        "cypress:open": "cypress open --project ./app"
+        "e2e": "playwright test --config app/playwright.config.ts"
     },
     "devDependencies": {
+        "@axe-core/playwright": "^4.12.1",
         "@biomejs/biome": "^2.5.6",
+        "@playwright/test": "^1.62.1",
         "@types/jest": "^30.0.0",
         "@types/node": "24.10.1",
         "@types/react": "19.2.7",
         "@types/react-dom": "19.2.3",
-        "cypress": "^15.7.1",
         "jest": "^30.2.0",
         "knip": "^6.31.0",
         "ts-jest": "^29.1.1",

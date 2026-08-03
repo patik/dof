@@ -4,10 +4,6 @@ node_modules/
 *.sublime-*
 *.DS_Store
 .vscode/
-app/cypress/e2e/examples
-app/cypress/fixtures
-app/cypress/support
-
 # Shared Copilot instruction symlinks
 .github/instructions/*.instructions.md
 .github/chatmodes

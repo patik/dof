@@ -12,6 +12,7 @@ export default function Graph() {
 
     return (
         <ResponsiveLine
+            ariaLabel="Depth of field by subject distance for each lens"
             data={data}
             colors={{ scheme: 'nivo' }}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}

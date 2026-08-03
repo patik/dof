@@ -3,5 +3,5 @@ module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
     rootDir: '.',
-    testPathIgnorePatterns: ['.js'],
+    testPathIgnorePatterns: ['.js', '<rootDir>/e2e/'],
 }
