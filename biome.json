@@ -30,6 +30,9 @@
             "correctness": {
                 "useExhaustiveDependencies": "error",
                 "useHookAtTopLevel": "error"
+            },
+            "suspicious": {
+                "noApproximativeNumericConstant": "off"
             }
         },
         "domains": {

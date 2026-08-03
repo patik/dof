@@ -1,7 +1,7 @@
 import { del } from 'idb-keyval'
 import useDofStore from '../../src/store/index'
 
-const baseUrl = `http://localhost:3000`
+const baseUrl = Cypress.config('baseUrl')
 
 describe('LensTable', () => {
     beforeEach(async () => {
