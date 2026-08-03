@@ -86,6 +86,7 @@ test('updates the imperial depth of field when distance changes', async ({ page 
 test('adds another lens', async ({ page }) => {
     await page.goto('/')
     const lenses = page.getByTestId(/^lens-name-/)
+    await expect(lenses).toHaveCount(2)
     const initialCount = await lenses.count()
 
     await page.getByRole('button', { name: 'Add Lens' }).click()
