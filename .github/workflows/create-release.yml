@@ -1,0 +1,31 @@
+name: Create GitHub Release
+
+on:
+    push:
+        tags:
+            # Only create release on version tags like v1.2.3
+            # git tag v1.2.3 && git push origin v1.2.3
+            # git tag -d v1.2.3 && git push origin :refs/tags/v1.2.3
+            - 'v*.*.*'
+
+permissions:
+    contents: write
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Fetch all history for changelog generation
+
+            - name: Create Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  generate_release_notes: true # Auto-generate release notes from PRs and commits
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

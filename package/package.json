@@ -26,14 +26,14 @@
         "doc": "./docs"
     },
     "scripts": {
-        "build": "rm -rf dist/*; yarn tsc && cp ../README.md ./README.md",
+        "build": "rm -rf dist/*; bun run tsc && cp ../README.md ./README.md",
         "clean": "git clean -fdx",
-        "cover": "yarn test --collectCoverage",
+        "cover": "bun run test --collectCoverage",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
-        "preversion": "yarn build && yarn cover",
-        "test": "yarn jest",
+        "lint": "bun run typecheck && bun run code-lint && bun run unused-exports",
+        "preversion": "bun run build && bun run cover",
+        "test": "bun run jest",
         "unused-exports": "ts-prune -p ./tsconfig.json"
     },
     "keywords": [

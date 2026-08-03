@@ -9,10 +9,15 @@ The general idea is to create a **lens object**, with specified aperture, focal 
 ### Install
 
 ```sh
+bun add dof
+
+# or
 yarn add dof
 
 # or
+pnpm add dof
 
+# or
 npm install dof
 ```
 

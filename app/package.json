@@ -8,8 +8,8 @@
         "start": "serve out",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
-        "test": "yarn jest",
+        "lint": "bun run typecheck && bun run code-lint && bun run unused-exports",
+        "test": "bun run jest",
         "unused-exports": "ts-prune -p ./tsconfig.json"
     },
     "dependencies": {
