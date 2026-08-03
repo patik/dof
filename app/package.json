@@ -3,9 +3,9 @@
     "version": "3.0.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "serve out",
+        "dev": "node ../node_modules/next/dist/bin/next dev",
+        "build": "node ../node_modules/next/dist/bin/next build",
+        "start": "node ../node_modules/serve/build/main.js out",
         "typecheck": "tsc --noEmit",
         "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
         "lint": "bun run typecheck && bun run code-lint && bun run unused-exports",
