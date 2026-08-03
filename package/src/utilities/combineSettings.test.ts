@@ -28,8 +28,8 @@ describe('combineSettings', () => {
                     {},
                     {
                         focalLength: 40,
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 40,
                 aperture: 2,
@@ -44,8 +44,8 @@ describe('combineSettings', () => {
                     {},
                     {
                         aperture: 'f/3.4',
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 35,
                 aperture: 3.363586,
@@ -61,8 +61,8 @@ describe('combineSettings', () => {
                     {
                         aperture: 'f/2',
                         cropFactor: 2,
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 35,
                 aperture: 2,
@@ -77,8 +77,8 @@ describe('combineSettings', () => {
                     {},
                     {
                         id: 'foo',
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 35,
                 aperture: 2,
@@ -96,8 +96,8 @@ describe('combineSettings', () => {
                         aperture: 'f/3.4',
                         cropFactor: 2,
                         id: 'foo',
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 40,
                 aperture: 3.363586,
@@ -113,7 +113,7 @@ describe('combineSettings', () => {
                 expect(
                     combineSettings({
                         focalLength: 40,
-                    })
+                    }),
                 ).toStrictEqual({
                     focalLength: 40,
                     aperture: 2,
@@ -126,7 +126,7 @@ describe('combineSettings', () => {
                 expect(
                     combineSettings({
                         aperture: 'f/3.4',
-                    })
+                    }),
                 ).toStrictEqual({
                     focalLength: 35,
                     aperture: 3.363586,
@@ -139,7 +139,7 @@ describe('combineSettings', () => {
                 expect(
                     combineSettings({
                         cropFactor: 2,
-                    })
+                    }),
                 ).toStrictEqual({
                     focalLength: 35,
                     aperture: 2,
@@ -152,7 +152,7 @@ describe('combineSettings', () => {
                 expect(
                     combineSettings({
                         id: 'foo',
-                    })
+                    }),
                 ).toStrictEqual({
                     focalLength: 35,
                     aperture: 2,
@@ -168,7 +168,7 @@ describe('combineSettings', () => {
                         aperture: 'f/3.4',
                         cropFactor: 2,
                         id: 'foo',
-                    })
+                    }),
                 ).toStrictEqual({
                     focalLength: 40,
                     aperture: 3.363586,
@@ -185,8 +185,8 @@ describe('combineSettings', () => {
                         {
                             focalLength: 40,
                         },
-                        {}
-                    )
+                        {},
+                    ),
                 ).toStrictEqual({
                     focalLength: 40,
                     aperture: 2,
@@ -201,8 +201,8 @@ describe('combineSettings', () => {
                         {
                             aperture: 'f/3.4',
                         },
-                        {}
-                    )
+                        {},
+                    ),
                 ).toStrictEqual({
                     focalLength: 35,
                     aperture: 3.363586,
@@ -217,8 +217,8 @@ describe('combineSettings', () => {
                         {
                             cropFactor: 2,
                         },
-                        {}
-                    )
+                        {},
+                    ),
                 ).toStrictEqual({
                     focalLength: 35,
                     aperture: 2,
@@ -233,8 +233,8 @@ describe('combineSettings', () => {
                         {
                             id: 'foo',
                         },
-                        {}
-                    )
+                        {},
+                    ),
                 ).toStrictEqual({
                     focalLength: 35,
                     aperture: 2,
@@ -252,8 +252,8 @@ describe('combineSettings', () => {
                             cropFactor: 2,
                             id: 'foo',
                         },
-                        {}
-                    )
+                        {},
+                    ),
                 ).toStrictEqual({
                     focalLength: 40,
                     aperture: 3.363586,
@@ -273,8 +273,8 @@ describe('combineSettings', () => {
                     },
                     {
                         focalLength: 50,
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 40,
                 aperture: 2,
@@ -291,8 +291,8 @@ describe('combineSettings', () => {
                     },
                     {
                         aperture: 'f/4',
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 35,
                 aperture: 3.363586,
@@ -309,8 +309,8 @@ describe('combineSettings', () => {
                     },
                     {
                         cropFactor: 3,
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 35,
                 aperture: 2,
@@ -327,8 +327,8 @@ describe('combineSettings', () => {
                     },
                     {
                         id: 'bar',
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 35,
                 aperture: 2,
@@ -351,8 +351,8 @@ describe('combineSettings', () => {
                         aperture: 'f/4',
                         cropFactor: 3,
                         id: 'bar',
-                    }
-                )
+                    },
+                ),
             ).toStrictEqual({
                 focalLength: 40,
                 aperture: 3.363586,

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { ResponsiveLine, LineSeries } from '@nivo/line'
+import { type LineSeries, ResponsiveLine } from '@nivo/line'
 import useDoFStore from '../../store'
 import { feetAndInchesString, feetString } from '../../utilities/conversion'
 import useData from './useData'

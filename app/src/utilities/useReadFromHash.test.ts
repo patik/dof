@@ -39,8 +39,8 @@ describe('parseHash', () => {
         test('with four lenses', () => {
             const result = parseHash(
                 `20,${units.charAt(
-                    0
-                )};Lens%201,35,f-2,APSC;Lens%203,55,f-5,APSC;Lens%204,20,f-3.6,full;Lens%205,35,f-2,mft`
+                    0,
+                )};Lens%201,35,f-2,APSC;Lens%203,55,f-5,APSC;Lens%204,20,f-3.6,full;Lens%205,35,f-2,mft`,
             )
 
             expect(result).toStrictEqual({
@@ -156,7 +156,7 @@ describe('parseHash', () => {
 
         test('with four lenses', () => {
             const result = parseHash(
-                '20;Lens%201,35,f-2,APSC;Lens%203,55,f-5,APSC;Lens%204,20,f-3.6,full;Lens%205,35,f-2,mft'
+                '20;Lens%201,35,f-2,APSC;Lens%203,55,f-5,APSC;Lens%204,20,f-3.6,full;Lens%205,35,f-2,mft',
             )
 
             expect(result).toStrictEqual({

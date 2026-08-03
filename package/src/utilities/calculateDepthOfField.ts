@@ -15,7 +15,7 @@ export function calculateDepthOfField(
     aperture: number,
     cropFactor: number,
     distance: number,
-    imperialUnits: boolean
+    imperialUnits: boolean,
 ): DoFResult {
     const result: DoFResult = {
         dof: 0,
@@ -40,7 +40,7 @@ export function calculateDepthOfField(
 
     result.coc = Math.round(0.03 * cropFactor * 1000) / 1000
 
-    result.hf = Math.pow(focalLength, 2) / (aperture * result.coc) + focalLength * 1.0
+    result.hf = focalLength ** 2 / (aperture * result.coc) + focalLength * 1.0
     result.near = (distance * (result.hf - focalLength)) / (result.hf + distance - 2 * focalLength)
     result.far = (distance * (result.hf - focalLength)) / (result.hf - distance)
 
@@ -59,13 +59,9 @@ export function calculateDepthOfField(
     result.eighthDof = result.dof / 8
 
     if (imperialUnits) {
-        result.toString = function () {
-            return formatFeet(result.dof)
-        }
+        result.toString = () => formatFeet(result.dof)
     } else {
-        result.toString = function () {
-            return `${result.dof}`
-        }
+        result.toString = () => `${result.dof}`
     }
 
     return result

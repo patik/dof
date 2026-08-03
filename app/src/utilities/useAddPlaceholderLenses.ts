@@ -6,7 +6,9 @@ import placeholderLenses from './placeholderLenses'
  * Populate the empty table with some data
  */
 function addPlaceholderLenses(addLens: LensDataState['addLens']) {
-    placeholderLenses.forEach((l) => addLens(l, true))
+    placeholderLenses.forEach((lens) => {
+        addLens(lens, true)
+    })
 }
 
 export function useAddPlaceholderLenses(hasReadFromHash: boolean, hasReadFromStorage: boolean) {

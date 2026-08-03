@@ -88,5 +88,3 @@ describe('LensTable', () => {
         cy.get('[data-testid^="dof-"]').last().contains(`4' 9"`)
     })
 })
-
-export {}

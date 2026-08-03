@@ -1,5 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import useDoFStore from '../../../../store'
 import useIsMobile from '../../../../utilities/useIsMobile'
 
@@ -20,7 +20,7 @@ export default function FocalLength({ lens }: { lens: LensDefinition }) {
                 type: 'number',
                 endAdornment: <InputAdornment position="end">mm</InputAdornment>,
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
+                // @ts-expect-error
                 min: 0,
                 step: 1,
             }}

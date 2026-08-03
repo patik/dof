@@ -9,7 +9,7 @@ const useDoFStore = create<TableState & LensDataState & StorageState>()(
         ...createTableSlice(set, get, state),
         ...createLensDataSlice(set, get, state),
         ...createStorageSlice(set, get, state),
-    }))
+    })),
 )
 
 export default useDoFStore

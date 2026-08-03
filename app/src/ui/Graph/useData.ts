@@ -1,4 +1,4 @@
-import { LineSeries } from '@nivo/line'
+import type { LineSeries } from '@nivo/line'
 import { Lens } from 'dof'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
@@ -25,7 +25,7 @@ export default function useData() {
 
                             // The graph doesn't handle infinite values well
                             if (!Number.isFinite(dofLength)) {
-                                return
+                                return undefined
                             }
 
                             return {
@@ -38,7 +38,7 @@ export default function useData() {
 
                 return datum
             }),
-        [distances, lenses, uniqueNames]
+        [distances, lenses, uniqueNames],
     )
 
     return data

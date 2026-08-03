@@ -1,8 +1,8 @@
-import { StateCreator } from 'zustand'
+import type { StateCreator } from 'zustand'
 
 export const createTableSlice: StateCreator<TableState & LensDataState & StorageState, [], [], TableState> = (
     set,
-    get
+    get,
 ) => ({
     order: 'asc',
     orderBy: 'id',

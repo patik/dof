@@ -17,7 +17,7 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
 
     distance = parseInt(distancePart, 10)
 
-    if (isNaN(distance)) {
+    if (Number.isNaN(distance)) {
         if (process.env.NODE_ENV !== 'test') {
             console.error(`distance could not be parsed from “${distancePart}”`)
         }
@@ -26,7 +26,7 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
         distance = DEFAULT_DISTANCE
     }
 
-    if (parts.length === 1 && !isNaN(parseInt(distancePart, 10))) {
+    if (parts.length === 1 && !Number.isNaN(parseInt(distancePart, 10))) {
         // Pre-2023, the units were not in the URL, and only imperial units were supported, so assume that this is an old URL from those times
         units = 'imperial'
     } else {
@@ -49,7 +49,7 @@ function parseLenses(pieces: string[]): ParsedLens[] {
 
             if (lensParts.length !== 4) {
                 console.error(`lens had wrong number of parts: “${piece}”`)
-                return
+                return undefined
             }
 
             const [encodedName = '', focalLengthPart = '', aperturePart = '', sensorKey = ''] = lensParts
@@ -58,11 +58,11 @@ function parseLenses(pieces: string[]): ParsedLens[] {
             const aperture = aperturePart.replace('-', '/')
 
             if (!isApertureString(aperture)) {
-                return
+                return undefined
             }
 
             if (!isSensorKey(sensorKey)) {
-                return
+                return undefined
             }
 
             return { name, focalLength, aperture, sensorKey }
@@ -113,7 +113,9 @@ export default function useReadFromHash(): boolean {
 
         setDistance(distance)
         setUnits(units)
-        lenses.forEach((lens) => addLens(lens, true))
+        lenses.forEach((lens) => {
+            addLens(lens, true)
+        })
     }, [addLens, hasRead, setDistance, setUnits])
 
     return hasRead

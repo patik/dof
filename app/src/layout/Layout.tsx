@@ -1,13 +1,13 @@
-import { ErrorBoundary } from 'react-error-boundary'
-import Footer from './Footer'
+import { Divider, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Head from 'next/head'
-import { PropsWithChildren, ReactElement } from 'react'
-import { Divider, Typography } from '@mui/material'
 import Link from 'next/link'
+import type { PropsWithChildren, ReactElement } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import Footer from './Footer'
 
 function FallbackComponent() {
-    return <></>
+    return null
 }
 
 type Props = PropsWithChildren<{

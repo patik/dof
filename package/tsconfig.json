@@ -3,7 +3,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "verbatimModuleSyntax": false,
-        "lib": ["es5", "es6", "es2020"],
+        "lib": ["ES2022"],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,

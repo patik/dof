@@ -12,7 +12,7 @@ describe('createHash', () => {
                     depthOfField: 7,
                     id: '7',
                 },
-            ])
+            ]),
         ).toBe('5,m;Alpha%20bravo,55,f-3.4,APSC')
     })
 
@@ -35,7 +35,7 @@ describe('createHash', () => {
                     depthOfField: 7,
                     id: '7',
                 },
-            ])
+            ]),
         ).toBe('15,m;Alpha%20bravo,55,f-3.4,APSC;Charlie-%3EDelta,200,f-2,full')
     })
 })

@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { ChangeEvent, useMemo } from 'react'
+import { type ChangeEvent, useMemo } from 'react'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
 
@@ -70,7 +70,7 @@ export default function Header() {
 
             setSelected([])
         },
-        [lenses, setSelected]
+        [lenses, setSelected],
     )
 
     const createSortHandler = (col: ColumnName) => () => {

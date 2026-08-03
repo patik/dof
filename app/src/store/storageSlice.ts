@@ -1,8 +1,8 @@
-import { StateCreator } from 'zustand'
+import type { StateCreator } from 'zustand'
 
 export const createStorageSlice: StateCreator<TableState & LensDataState & StorageState, [], [], StorageState> = (
     _set,
-    get
+    get,
 ) => ({
     extractForLocalStorage() {
         const { lenses, units, distance, order, orderBy } = get()
@@ -20,6 +20,8 @@ export const createStorageSlice: StateCreator<TableState & LensDataState & Stora
         setSorting(orderBy, order)
         setDistance(distance)
 
-        lenses.forEach((lens) => addLens(lens, true))
+        lenses.forEach((lens) => {
+            addLens(lens, true)
+        })
     },
 })
