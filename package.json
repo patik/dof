@@ -16,7 +16,7 @@
         "clean": "git clean -fdx",
         "cover": "bun run --cwd package test --collectCoverage",
         "lint": "bun run --workspaces lint",
-        "preversion": "bun run --workspaces preversion",
+        "preversion": "bun run --filter dof preversion",
         "postversion": "git push && git push --tags",
         "test": "bun run --workspaces test",
         "cypress:open": "cypress open --project ./app",
