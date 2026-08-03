@@ -51,8 +51,12 @@ export const preciseApertureMap: Record<string, number> = {
 // We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
 /* istanbul ignore next line */
 const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1 : -1))
-const smallestDocumentedAperture = sortedValues.slice(undefined, 1)[0]
-const largestDocumentedAperture = sortedValues.slice(-1)[0]
+const smallestDocumentedAperture = sortedValues[0]
+const largestDocumentedAperture = sortedValues[sortedValues.length - 1]
+
+if (smallestDocumentedAperture === undefined || largestDocumentedAperture === undefined) {
+    throw new Error('The aperture map must contain at least one value')
+}
 
 /**
  * Takes a human-friendly string and returns a precise numeric value that is equivalent

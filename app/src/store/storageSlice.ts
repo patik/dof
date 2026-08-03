@@ -1,4 +1,3 @@
-import { pick } from 'lodash'
 import { StateCreator } from 'zustand'
 
 export const createStorageSlice: StateCreator<TableState & LensDataState & StorageState, [], [], StorageState> = (
@@ -6,8 +5,10 @@ export const createStorageSlice: StateCreator<TableState & LensDataState & Stora
     get
 ) => ({
     extractForLocalStorage() {
+        const { lenses, units, distance, order, orderBy } = get()
+
         return {
-            state: pick(get(), ['lenses', 'units', 'distance', 'order', 'orderBy']),
+            state: { lenses, units, distance, order, orderBy },
             version: 1,
         }
     },

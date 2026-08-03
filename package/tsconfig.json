@@ -1,7 +1,8 @@
 {
+    "extends": "../tsconfig.base.json",
     "compilerOptions": {
-        "target": "es6",
         "module": "commonjs",
+        "verbatimModuleSyntax": false,
         "lib": ["es5", "es6", "es2020"],
         "declaration": true,
         "declarationMap": true,
@@ -9,11 +10,6 @@
         "outDir": "dist",
         "rootDir": "src",
         "baseUrl": ".",
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "strictPropertyInitialization": true,
         "skipLibCheck": true,
         "noImplicitThis": true,
         "noUnusedLocals": true,

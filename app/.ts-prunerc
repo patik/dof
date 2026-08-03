@@ -1,4 +1,0 @@
-{
-    "ignore": "./dist|.next|pages/",
-    "error": true
-}

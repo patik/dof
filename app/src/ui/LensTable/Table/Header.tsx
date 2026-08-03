@@ -4,7 +4,6 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { visuallyHidden } from '@mui/utils'
 import { ChangeEvent, useMemo } from 'react'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
@@ -41,6 +40,18 @@ const headCells: readonly HeadCell[] = [
         label: 'Depth of Field',
     },
 ]
+
+const visuallyHidden = {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    width: 1,
+} as const
 
 export default function Header() {
     const isMobile = useIsMobile()

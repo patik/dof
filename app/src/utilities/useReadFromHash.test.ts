@@ -1,5 +1,15 @@
 import { parseHash } from './useReadFromHash'
 
+function lensAt(lenses: LensDefinition[], index: number): LensDefinition {
+    const lens = lenses[index]
+
+    if (lens === undefined) {
+        throw new Error(`Expected a lens at index ${index}`)
+    }
+
+    return lens
+}
+
 /**
  * @example https://patik.com/dof/#20,m;Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC
  */
@@ -19,8 +29,8 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                 ],
             })
@@ -42,32 +52,32 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'APSC',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                     {
                         name: 'Lens 3',
                         focalLength: 55,
                         aperture: 'f/5',
                         sensorKey: 'APSC',
-                        depthOfField: result.lenses[1].depthOfField,
-                        id: result.lenses[1].id,
+                        depthOfField: lensAt(result.lenses, 1).depthOfField,
+                        id: lensAt(result.lenses, 1).id,
                     },
                     {
                         name: 'Lens 4',
                         focalLength: 20,
                         aperture: 'f/3.6',
                         sensorKey: 'full',
-                        depthOfField: result.lenses[2].depthOfField,
-                        id: result.lenses[2].id,
+                        depthOfField: lensAt(result.lenses, 2).depthOfField,
+                        id: lensAt(result.lenses, 2).id,
                     },
                     {
                         name: 'Lens 5',
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[3].depthOfField,
-                        id: result.lenses[3].id,
+                        depthOfField: lensAt(result.lenses, 3).depthOfField,
+                        id: lensAt(result.lenses, 3).id,
                     },
                 ],
             })
@@ -95,8 +105,8 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                 ],
             })
@@ -114,8 +124,8 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                 ],
             })
@@ -137,8 +147,8 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                 ],
             })
@@ -158,32 +168,32 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'APSC',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                     {
                         name: 'Lens 3',
                         focalLength: 55,
                         aperture: 'f/5',
                         sensorKey: 'APSC',
-                        depthOfField: result.lenses[1].depthOfField,
-                        id: result.lenses[1].id,
+                        depthOfField: lensAt(result.lenses, 1).depthOfField,
+                        id: lensAt(result.lenses, 1).id,
                     },
                     {
                         name: 'Lens 4',
                         focalLength: 20,
                         aperture: 'f/3.6',
                         sensorKey: 'full',
-                        depthOfField: result.lenses[2].depthOfField,
-                        id: result.lenses[2].id,
+                        depthOfField: lensAt(result.lenses, 2).depthOfField,
+                        id: lensAt(result.lenses, 2).id,
                     },
                     {
                         name: 'Lens 5',
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[3].depthOfField,
-                        id: result.lenses[3].id,
+                        depthOfField: lensAt(result.lenses, 3).depthOfField,
+                        id: lensAt(result.lenses, 3).id,
                     },
                 ],
             })
@@ -211,8 +221,8 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                 ],
             })
@@ -230,8 +240,8 @@ describe('parseHash', () => {
                         focalLength: 35,
                         aperture: 'f/2',
                         sensorKey: 'mft',
-                        depthOfField: result.lenses[0].depthOfField,
-                        id: result.lenses[0].id,
+                        depthOfField: lensAt(result.lenses, 0).depthOfField,
+                        id: lensAt(result.lenses, 0).id,
                     },
                 ],
             })
