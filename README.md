@@ -140,4 +140,4 @@ Calculate the depth of field for multiple lenses and compare them side-by-side
 
 [Documentation](https://patik.com/dof/about/)
 
-[![Screenshot of two lens configurations](./app/public/images/with-graph.png 'Lens comparison')](https://patik.com/dof/#5m;Panasonic%2025mm,25,f-1.4,mft;Olympus%2025mm,25,f-1.8,mft)
+[![Screenshot of two lens configurations](https://raw.githubusercontent.com/patik/dof/main/app/src/assets/images/with-graph.png 'Lens comparison')](https://patik.com/dof/#5m;Panasonic%2025mm,25,f-1.4,mft;Olympus%2025mm,25,f-1.8,mft)
