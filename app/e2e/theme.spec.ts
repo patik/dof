@@ -44,3 +44,36 @@ test('uses the system theme and persists a manual override', async ({ page }) =>
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
     await expect(page.getByRole('button', { name: 'Use light theme' })).toBeVisible()
 })
+
+for (const path of ['/about/', '/software/']) {
+    test(`${path} uses the shared heading hierarchy`, async ({ page }) => {
+        await page.goto(path)
+
+        const h1 = page.locator('h1').first()
+        const h2 = page.locator('h2').first()
+        const [h1Styles, h2Styles] = await Promise.all([
+            h1.evaluate((element) => ({
+                family: getComputedStyle(element).fontFamily,
+                size: Number.parseFloat(getComputedStyle(element).fontSize),
+            })),
+            h2.evaluate((element) => ({
+                family: getComputedStyle(element).fontFamily,
+                size: Number.parseFloat(getComputedStyle(element).fontSize),
+            })),
+        ])
+
+        expect(h1Styles.family).toBe('"Newsreader Variable", serif')
+        expect(h2Styles.family).toBe(h1Styles.family)
+        expect(h2Styles.size).toBeLessThan(h1Styles.size)
+
+        if (path === '/software/') {
+            const h3Size = await page
+                .locator('h3')
+                .first()
+                .evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))
+
+            expect(h3Size).toBeLessThan(h2Styles.size)
+            await expect(page.getByText('Optical field notes')).toBeVisible()
+        }
+    })
+}

@@ -11,6 +11,11 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
+const displayTypography = {
+    fontFamily: "'Newsreader Variable', serif",
+    fontWeight: 500,
+}
+
 function getInitialTheme(): ColorTheme {
     return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
 }
@@ -46,6 +51,20 @@ export function ThemeProvider({ children }: PropsWithChildren) {
                     typography: {
                         fontFamily: "'Archivo Variable', sans-serif",
                         fontSize: 16,
+                        h1: displayTypography,
+                        h2: {
+                            ...displayTypography,
+                            fontSize: '2rem',
+                            lineHeight: 1.2,
+                        },
+                        h3: {
+                            ...displayTypography,
+                            fontSize: '1.5rem',
+                            lineHeight: 1.3,
+                        },
+                        h4: displayTypography,
+                        h5: displayTypography,
+                        h6: displayTypography,
                     },
                 }),
             ),
