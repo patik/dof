@@ -32,7 +32,7 @@ export default function Main() {
                 <LensTable />
             </Box>
 
-            <Box mb={2} height={400} width="100%">
+            <Box mb={2} width="100%">
                 <Suspense fallback={null}>
                     <Graph />
                 </Suspense>

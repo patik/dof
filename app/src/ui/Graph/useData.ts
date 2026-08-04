@@ -1,44 +1,41 @@
-import type { LineSeries } from '@nivo/line'
 import { Lens } from 'dof'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
 import useIsMobile from '../../utilities/useIsMobile'
+import type { ChartSeries } from './chartTypes'
 import getDistanceSteps from './getDistanceSteps'
 import getUniqueLensNames from './getUniqueLensNames'
 
-export default function useData() {
+export default function useData(): ChartSeries[] {
     const { lenses, units } = useDoFStore()
     const isMobile = useIsMobile()
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
     const uniqueNames = getUniqueLensNames(lenses)
-    const data: LineSeries[] = useMemo(
+    const data = useMemo(
         () =>
             lenses.map((lens) => {
                 const { focalLength, aperture, sensorKey, id } = lens
                 const cropFactor: number = sensorList[sensorKey].value
-                const datum: LineSeries = {
+                const calculator = new Lens({ focalLength, aperture, cropFactor, id })
+                const points = distances.map((distance) => {
+                    if (distance === 0) {
+                        return { distance, dof: 0 }
+                    }
+
+                    const { dof } = calculator.dof(distance, units === 'imperial')
+                    return { distance, dof }
+                })
+                const datum: ChartSeries = {
                     id: uniqueNames[lens.id] ?? lens.name,
-                    data: distances
-                        .map((distance) => {
-                            const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
-
-                            // The graph doesn't handle infinite values well
-                            if (!Number.isFinite(dofLength)) {
-                                return undefined
-                            }
-
-                            return {
-                                x: distance,
-                                y: dofLength,
-                            }
-                        })
-                        .filter((point): point is { x: number; y: number } => point !== undefined),
+                    lensId: lens.id,
+                    hyperfocal: calculator.dof(1, units === 'imperial').hf,
+                    points,
                 }
 
                 return datum
             }),
-        [distances, lenses, uniqueNames],
+        [distances, lenses, uniqueNames, units],
     )
 
     return data
