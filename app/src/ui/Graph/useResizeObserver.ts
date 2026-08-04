@@ -17,6 +17,13 @@ export default function useResizeObserver<T extends HTMLElement>(initialWidth = 
         }
         updateWidth(element.getBoundingClientRect().width)
 
+        if (typeof ResizeObserver === 'undefined') {
+            const handleResize = () => updateWidth(element.getBoundingClientRect().width)
+            window.addEventListener('resize', handleResize)
+
+            return () => window.removeEventListener('resize', handleResize)
+        }
+
         const observer = new ResizeObserver(([entry]) => {
             if (entry) {
                 updateWidth(entry.contentRect.width)

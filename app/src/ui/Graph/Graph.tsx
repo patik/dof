@@ -49,7 +49,7 @@ function formatDepth(value: number, units: Units): string {
 export default function Graph() {
     const { units } = useDoFStore()
     const data = useData()
-    const { ref, width } = useResizeObserver<HTMLDivElement>()
+    const { ref, width } = useResizeObserver<HTMLElement>()
     const svgRef = useRef<SVGSVGElement>(null)
     const hoverKeyRef = useRef<string | null>(null)
     const titleId = useId()
