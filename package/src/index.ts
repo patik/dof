@@ -8,6 +8,10 @@ export { Lens } from './Lens'
 export type {
     ApertureResult,
     ApertureString,
+    CalculateApertureOptions,
+    CalculateCropFactorOptions,
+    CalculateDepthOfFieldOptions,
+    CalculateFocalLengthOptions,
     CropFactorResult,
     DoFResult as DepthOfFieldDetails,
     DoFResult,

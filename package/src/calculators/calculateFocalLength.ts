@@ -1,4 +1,4 @@
-import type { FocalLengthResult } from '../types'
+import type { CalculateFocalLengthOptions, FocalLengthResult } from '../types'
 import { decimalAdjust } from '../utilities/decimalAdjust'
 import { toMillimeters } from '../utilities/units'
 
@@ -10,14 +10,8 @@ export function calculateFocalLength({
     aperture,
     cropFactor,
     distance,
-    imperialUnits,
-}: {
-    near: number
-    aperture: number
-    cropFactor: number
-    distance: number
-    imperialUnits: boolean
-}): FocalLengthResult {
+    imperialUnits = false,
+}: CalculateFocalLengthOptions): FocalLengthResult {
     // Convert to millimeters
     const mmDist = toMillimeters(distance, imperialUnits)
     const mmNear = toMillimeters(near, imperialUnits)

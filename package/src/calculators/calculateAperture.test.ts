@@ -52,7 +52,8 @@ describe('Calculating the depth of field with calculateAperture()', () => {
                 imperialUnits: false,
             })
 
-            expect(result.aperture).toBe(NaN)
+            expect(result.aperture).toBe(16)
+            expect(result.fStop).toBe('f/16')
         })
     })
 

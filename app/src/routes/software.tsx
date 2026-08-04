@@ -84,11 +84,36 @@ metricResult.toString()`}</code>
                 </Typography>
 
                 <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                    Use standalone calculators
+                </Typography>
+                <Typography gutterBottom>
+                    For calculations that do not need a <code>Lens</code> instance, the package exports functions for
+                    calculating depth of field, aperture, crop factor, and focal length directly.
+                </Typography>
+                <pre className={styles.code}>
+                    <code>{`import { calculateDepthOfField } from 'dof'
+
+const result = calculateDepthOfField({
+    focalLength: 35,
+    aperture: 2,
+    cropFactor: 1,
+    distance: 5,
+})`}</code>
+                </pre>
+                <Typography>
+                    Metric units are used by default. Pass <code>imperialUnits: true</code> to use feet. See the{' '}
+                    <Link href="https://github.com/patik/dof/tree/main/package#use-the-standalone-calculators">
+                        package README
+                    </Link>{' '}
+                    for examples of <code>calculateAperture</code>, <code>calculateCropFactor</code>, and{' '}
+                    <code>calculateFocalLength</code>.
+                </Typography>
+
+                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
                     TypeScript
                 </Typography>
                 <Typography>
-                    The package includes its own declarations. The calculator also exports the{' '}
-                    <code>DepthOfFieldDetails</code> result type.
+                    The package includes its own declarations and exports input and result types for its calculators.
                 </Typography>
 
                 <Typography component="h2" variant="h2" className={styles.webHeading} gutterBottom>

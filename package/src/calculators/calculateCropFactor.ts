@@ -1,8 +1,8 @@
-import type { CropFactorResult } from '../types'
+import type { CalculateCropFactorOptions, CropFactorResult } from '../types'
 import { toMillimeters } from '../utilities/units'
 
 /**
- * Returns the depth of field characteristics for a given lens' attributes
+ * Returns the crop factor for a given lens' attributes and depth of field
  */
 export function calculateCropFactor({
     near,
@@ -10,15 +10,8 @@ export function calculateCropFactor({
     focalLength,
     aperture,
     distance,
-    imperialUnits,
-}: {
-    near: number
-    dof: number
-    focalLength: number
-    aperture: number
-    distance: number
-    imperialUnits: boolean
-}): CropFactorResult {
+    imperialUnits = false,
+}: CalculateCropFactorOptions): CropFactorResult {
     const mmDist = toMillimeters(distance, imperialUnits)
     const mmDof = toMillimeters(dof, imperialUnits)
     const mmNear = toMillimeters(near, imperialUnits)

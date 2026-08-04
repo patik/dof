@@ -1,4 +1,4 @@
-import type { DoFResult } from '../types'
+import type { CalculateDepthOfFieldOptions, DoFResult } from '../types'
 import { decimalAdjust } from '../utilities/decimalAdjust'
 import { formatFeet } from '../utilities/formatFeet'
 import { fromMillimeters, toMillimeters } from '../utilities/units'
@@ -11,14 +11,8 @@ export function calculateDepthOfField({
     aperture,
     cropFactor,
     distance,
-    imperialUnits,
-}: {
-    focalLength: number
-    aperture: number
-    cropFactor: number
-    distance: number
-    imperialUnits: boolean
-}): DoFResult {
+    imperialUnits = false,
+}: CalculateDepthOfFieldOptions): DoFResult {
     // Convert to millimeters
     const mmDist = toMillimeters(distance, imperialUnits)
 
