@@ -1,0 +1,15 @@
+{
+    "$schema": "https://unpkg.com/knip@6/schema.json",
+    "ignoreDependencies": ["@types/react-dom", "tailwindcss"],
+    "workspaces": {
+        "app": {
+            "entry": ["src/main.tsx", "vite.config.ts", "playwright.config.ts", "scripts/prerender.ts"],
+            "project": ["src/**/*.{ts,tsx}", "e2e/**/*.{ts,tsx}", "scripts/**/*.ts"],
+            "ignore": ["src/utilities/sensorList.ts"]
+        },
+        "package": {
+            "entry": ["src/index.ts"],
+            "project": ["src/**/*.{ts,tsx}"]
+        }
+    }
+}

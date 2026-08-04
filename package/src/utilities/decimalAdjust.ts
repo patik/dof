@@ -11,17 +11,17 @@ export function decimalAdjust(value: number): number {
     value = +value
 
     // If the value is not a number or the exp is not an integer...
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
         return NaN
     }
 
     // Shift
     const parts = value.toString().split('e')
 
-    const shifted = Math.round(+(parts[0] + 'e' + (parts[1] ? +parts[1] - exp : -exp)))
+    const shifted = Math.round(+`${parts[0]}e${parts[1] ? +parts[1] - exp : -exp}`)
 
     // Shift back
     const unshifted = shifted.toString().split('e')
 
-    return +(unshifted[0] + 'e' + (unshifted[1] ? +unshifted[1] + exp : exp))
+    return +`${unshifted[0]}e${unshifted[1] ? +unshifted[1] + exp : exp}`
 }

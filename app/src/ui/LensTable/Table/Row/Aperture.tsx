@@ -1,5 +1,5 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { apertureMap } from '../../../../../../package/dist'
+import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from '@mui/material'
+import { apertureMap } from 'dof'
 import useDoFStore from '../../../../store'
 import useIsMobile from '../../../../utilities/useIsMobile'
 

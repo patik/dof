@@ -10,7 +10,7 @@ export function createHash(distance: Distance, units: Units, lenses: LensDefinit
             (lens) =>
                 `${encodeURIComponent(lens.name.trim())},${lens.focalLength},${lens.aperture.replace('/', '-')},${
                     lens.sensorKey
-                }`
+                }`,
         )
         .join(';')}`
 
@@ -24,8 +24,8 @@ export function getNonPlaceholderLenses(lenses: LensDefinition[]) {
     return lenses.filter(
         (stateLens) =>
             !placeholderLenses.some((placeholderLens) =>
-                areDuplicateLenses(stateLens, createLensDefinition(placeholderLens))
-            )
+                areDuplicateLenses(stateLens, createLensDefinition(placeholderLens)),
+            ),
     )
 }
 

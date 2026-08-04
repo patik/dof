@@ -3,13 +3,13 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { IconButton, Typography } from '@mui/material'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
-import { Box } from '@mui/system'
 import { useState } from 'react'
 import useDoFStore from '../../../../store'
 import { metersToFeet, rounded } from '../../../../utilities/conversion'
 import { getRowLabelId } from '../../../../utilities/getRowLabelId'
 import useIsMobile from '../../../../utilities/useIsMobile'
 import DeleteButton from '../DeleteButton'
+import styles from '../Table.module.css'
 import Aperture from './Aperture'
 import DepthOfFieldDetails from './DepthOfFieldDetails'
 import FocalLength from './FocalLength'
@@ -28,24 +28,10 @@ export default function Row({ lens }: { lens: LensDefinition }) {
         <>
             <MuiTableRow
                 hover
-                role="checkbox"
-                aria-checked={isRowSelected}
-                tabIndex={-1}
                 key={lens.id}
                 selected={isRowSelected}
-                className={`lens-table-row`}
+                className={isMobile ? `lens-table-row ${styles.mobileRow}` : 'lens-table-row'}
                 data-testid={`lens-table-row-${lens.id}`}
-                sx={
-                    isMobile
-                        ? {
-                              display: 'flex',
-                              flexWrap: 'wrap',
-                              borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-                              my: 2,
-                              pb: 2,
-                          }
-                        : undefined
-                }
             >
                 {isMobile ? null : (
                     <TableCell padding="checkbox">
@@ -57,86 +43,42 @@ export default function Row({ lens }: { lens: LensDefinition }) {
                     id={getRowLabelId(lens)}
                     scope="row"
                     padding="none"
-                    sx={
-                        isMobile
-                            ? {
-                                  minWidth: '100%',
-                                  p: 2,
-                                  border: 'none',
-                              }
-                            : undefined
-                    }
+                    className={isMobile ? `${styles.mobileCell} ${styles.nameCell}` : undefined}
                 >
                     <Name lens={lens} />
                 </TableCell>
                 <TableCell
                     align={isMobile ? undefined : 'right'}
-                    sx={
-                        isMobile
-                            ? {
-                                  width: '50%',
-                                  border: 'none',
-                                  pr: 0,
-                                  mb: 1,
-                              }
-                            : undefined
-                    }
+                    className={isMobile ? `${styles.mobileCell} ${styles.focalLengthCell}` : undefined}
                 >
                     <FocalLength lens={lens} />
                 </TableCell>
                 <TableCell
                     align={isMobile ? undefined : 'right'}
-                    sx={
-                        isMobile
-                            ? {
-                                  width: '50%',
-                                  border: 'none',
-                              }
-                            : undefined
-                    }
+                    className={isMobile ? `${styles.mobileCell} ${styles.apertureCell}` : undefined}
                 >
                     <Aperture lens={lens} />
                 </TableCell>
                 <TableCell
                     align={isMobile ? undefined : 'right'}
-                    sx={
-                        isMobile
-                            ? {
-                                  minWidth: '100%',
-                                  border: 'none',
-                                  mb: 1,
-                              }
-                            : undefined
-                    }
+                    className={isMobile ? `${styles.mobileCell} ${styles.sensorCell}` : undefined}
                 >
                     <Sensor lens={lens} />
                 </TableCell>
                 <TableCell
                     align={isMobile ? undefined : 'right'}
                     data-testid={`dof-${lens.id}`}
-                    sx={
-                        isMobile
-                            ? {
-                                  marginBottom: 2,
-                                  border: 'none',
-                                  width: '100%',
-                              }
-                            : undefined
-                    }
+                    className={isMobile ? `${styles.mobileCell} ${styles.dofCell}` : undefined}
                 >
-                    <Box
-                        display="flex"
-                        alignItems="center"
-                        sx={isMobile ? { alignItems: 'center' } : { width: '100%' }}
-                    >
-                        <Typography sx={{ flexGrow: 1, mr: 1 }}>{`${
+                    <div className={`${styles.dofLayout} ${isMobile ? '' : styles.desktopDofLayout}`}>
+                        <Typography className={styles.dofValue}>{`${
                             isMobile ? 'Depth of field: ' : ''
                         }${displayDof}`}</Typography>
                         {isMobile ? <DeleteButton lenses={[lens.id]} /> : null}
                         <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
-                    </Box>
+                    </div>
                 </TableCell>
             </MuiTableRow>
             <DepthOfFieldDetails lens={lens} open={open} />

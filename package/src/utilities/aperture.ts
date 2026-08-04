@@ -1,4 +1,5 @@
 import { preciseApertureMap } from '../data/preciseApertureMap'
+import type { ApertureString } from '../types'
 import { objectKeysArray } from './objectKeysArray'
 
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
@@ -7,8 +8,19 @@ const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 // We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
 /* istanbul ignore next line */
 const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1 : -1))
-const smallestDocumentedAperture = sortedValues.slice(undefined, 1)[0]
-const largestDocumentedAperture = sortedValues.slice(-1)[0]
+
+function getApertureBounds(values: number[]): [number, number] {
+    const smallest = values[0]
+    const largest = values[values.length - 1]
+
+    if (smallest === undefined || largest === undefined) {
+        throw new Error('The aperture map must contain at least one value')
+    }
+
+    return [smallest, largest]
+}
+
+const [smallestDocumentedAperture, largestDocumentedAperture] = getApertureBounds(sortedValues)
 
 /**
  * Takes a human-friendly string and returns a precise numeric value that is equivalent
@@ -17,7 +29,7 @@ const largestDocumentedAperture = sortedValues.slice(-1)[0]
 function getPreciseAperture(humanValue: ApertureString): number | undefined {
     if (
         humanValue in preciseApertureMap &&
-        Object.prototype.hasOwnProperty.call(preciseApertureMap, humanValue) &&
+        Object.hasOwn(preciseApertureMap, humanValue) &&
         preciseApertureMap[humanValue]
     ) {
         return preciseApertureMap[humanValue]
@@ -27,25 +39,21 @@ function getPreciseAperture(humanValue: ApertureString): number | undefined {
     return
 }
 
-/**
- * Finds the nearest known aperture to a given number
- * @example nearestValue(1.99) // 2.0
- *
- * @param {number} targetAperture the ideal value for which the nearest or equal should be found
- */
-const nearestValue = (targetAperture: number) =>
-    sortedValues.reduce((p, n) => (Math.abs(p) > Math.abs(n - targetAperture) ? n - targetAperture : p), Infinity) +
-    targetAperture
+function getNearestApertureValue(targetAperture: number): number {
+    return sortedValues.reduce((nearest, current) =>
+        Math.abs(current - targetAperture) < Math.abs(nearest - targetAperture) ? current : nearest,
+    )
+}
 
 /**
  * Takes a numeric value and returns a human-friendly string that is equivalent
  * @example 5.039684 => 'f/5'
  */
 export function getApertureName(value: number): keyof typeof preciseApertureMap | undefined {
-    const asKnownAperture = nearestValue(value)
+    const nearestValue = getNearestApertureValue(value)
 
     return objectKeysArray(preciseApertureMap).find((key) => {
-        return preciseApertureMap[key] === asKnownAperture
+        return preciseApertureMap[key] === nearestValue
     })
 }
 
@@ -75,7 +83,7 @@ export function toActualAperture({
         return input
     }
 
-    let apertureString: ApertureString | undefined = undefined
+    let apertureString: ApertureString | undefined
 
     if (typeof input === 'number') {
         apertureString = `f/${input}`

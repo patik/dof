@@ -1,5 +1,5 @@
-import { Lens as SrcLens } from './Lens'
 import { Lens as BuildLens } from 'dof'
+import { Lens as SrcLens } from './Lens'
 
 describe.each([SrcLens, BuildLens])('Class basics [%#]', (Lens) => {
     test('constructor will create an object with the default settings', () => {

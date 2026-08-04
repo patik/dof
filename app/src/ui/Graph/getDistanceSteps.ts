@@ -1,8 +1,8 @@
-export default function getDistanceSteps(units: Units, isMobile: boolean): Distance[] {
+export default function getDistanceSteps(units: Units, compact: boolean): Distance[] {
     if (units === 'imperial') {
         const allValues = Array.from(Array(101).keys())
 
-        if (isMobile) {
+        if (compact) {
             return allValues.filter((v) => v % 10 === 0)
         }
 
@@ -11,7 +11,7 @@ export default function getDistanceSteps(units: Units, isMobile: boolean): Dista
 
     const allValues = Array.from(Array(26).keys())
 
-    if (isMobile) {
+    if (compact) {
         return allValues.filter((v) => v % 2 === 0)
     }
 

@@ -1,5 +1,4 @@
-import { isApertureString } from '../../../package/dist'
-import { compact } from 'lodash'
+import { isApertureString } from 'dof'
 import { useEffect, useState } from 'react'
 import useDoFStore from '../store'
 import { createLensDefinition, DEFAULT_DISTANCE, DEFAULT_UNITS } from '../store/lensSlice'
@@ -9,28 +8,26 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
     let distance: Distance = 5
     let units: Units = DEFAULT_UNITS
 
-    const parts = (piece ?? '').split(',')
+    const parts = piece.split(',')
+    const [distancePart = '', unitsPart] = parts
+    const parsedDistance = Number.parseFloat(distancePart)
 
-    if (parts.length === 0) {
-        return { distance, units }
-    }
+    distance = parsedDistance
 
-    distance = parseInt(parts[0], 10)
-
-    if (isNaN(distance)) {
+    if (Number.isNaN(distance)) {
         if (process.env.NODE_ENV !== 'test') {
-            console.error(`distance could not be parsed from “${parts[0]}”`)
+            console.error(`distance could not be parsed from “${distancePart}”`)
         }
 
         // Use default value
         distance = DEFAULT_DISTANCE
     }
 
-    if (parts.length === 1 && !isNaN(parseInt(parts[0], 10))) {
+    if (parts.length === 1 && !Number.isNaN(parsedDistance)) {
         // Pre-2023, the units were not in the URL, and only imperial units were supported, so assume that this is an old URL from those times
         units = 'imperial'
     } else {
-        units = parts[1] === 'i' ? 'imperial' : 'metric'
+        units = unitsPart === 'i' ? 'imperial' : 'metric'
     }
 
     return { distance, units }
@@ -43,32 +40,31 @@ type ParsedLens = Omit<LensInputs, 'id'>
  * @example 'Lens%201,35,f-2,APSC;Lens%202,35,f-2,full;Lens%203,35,f-2,APSC;Lens%204,35,f-2,APSC;Lens%205,35,f-2,APSC'
  */
 function parseLenses(pieces: string[]): ParsedLens[] {
-    return compact(
-        pieces.map((piece): ParsedLens | undefined => {
+    return pieces
+        .map((piece): ParsedLens | undefined => {
             const lensParts = piece.split(',')
 
             if (lensParts.length !== 4) {
                 console.error(`lens had wrong number of parts: “${piece}”`)
-                return
+                return undefined
             }
 
-            const name = decodeURIComponent(lensParts[0])
-            const focalLength: ParsedLens['focalLength'] = parseInt(lensParts[1], 10)
-            const aperture = (lensParts[2] ?? '').replace('-', '/')
+            const [encodedName = '', focalLengthPart = '', aperturePart = '', sensorKey = ''] = lensParts
+            const name = decodeURIComponent(encodedName)
+            const focalLength: ParsedLens['focalLength'] = parseInt(focalLengthPart, 10)
+            const aperture = aperturePart.replace('-', '/')
 
             if (!isApertureString(aperture)) {
-                return
+                return undefined
             }
 
-            const sensorKey = lensParts[3]
-
             if (!isSensorKey(sensorKey)) {
-                return
+                return undefined
             }
 
             return { name, focalLength, aperture, sensorKey }
         })
-    )
+        .filter((lens): lens is ParsedLens => lens !== undefined)
 }
 
 /**
@@ -82,7 +78,7 @@ export function parseHash(hash: string): { distance: Distance; lenses: LensDefin
         console.log('hash did not contain any pieces')
     }
 
-    const { distance, units } = parseDistanceAndUnits(pieces[0])
+    const { distance, units } = parseDistanceAndUnits(pieces[0] ?? '')
     const lenses = parseLenses(pieces.slice(1)).map((lens) => {
         return createLensDefinition({ distance, units: 'metric', ...lens })
     })
@@ -95,7 +91,7 @@ export default function useReadFromHash(): boolean {
     const { addLens, setDistance, setUnits } = useDoFStore()
 
     // Read from localStorage
-    // Note that on Next.js dev server this hook will run twice, causing duplicate lenses to be added to state
+    // React Strict Mode runs this hook twice in development, so duplicate lenses are skipped.
     useEffect(() => {
         if (hasRead || typeof window === 'undefined') {
             return
@@ -114,7 +110,9 @@ export default function useReadFromHash(): boolean {
 
         setDistance(distance)
         setUnits(units)
-        lenses.forEach((lens) => addLens(lens, true))
+        lenses.forEach((lens) => {
+            addLens(lens, true)
+        })
     }, [addLens, hasRead, setDistance, setUnits])
 
     return hasRead

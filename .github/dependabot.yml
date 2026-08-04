@@ -1,17 +1,35 @@
 version: 2
 updates:
-- package-ecosystem: npm
+- package-ecosystem: bun
   directory: "/"
+  exclude-paths:
+  - app/**
+  - package/**
   schedule:
     interval: daily
   open-pull-requests-limit: 5
-- package-ecosystem: npm
+  groups:
+    minor-and-patch:
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: bun
   directory: "/app"
   schedule:
     interval: daily
   open-pull-requests-limit: 5
-- package-ecosystem: npm
+  groups:
+    minor-and-patch:
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: bun
   directory: "/package"
   schedule:
     interval: daily
   open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      update-types:
+      - minor
+      - patch

@@ -1,6 +1,5 @@
-import { Lens } from '../../../package/dist'
-import { compact, defaults } from 'lodash'
-import { StateCreator } from 'zustand'
+import { Lens } from 'dof'
+import type { StateCreator } from 'zustand'
 import areDuplicateLenses from '../utilities/areDuplicateLenses'
 import IDGenerator from '../utilities/IDGenerator'
 import sensorList from '../utilities/sensorList'
@@ -53,7 +52,7 @@ const defaultLensData: (numLenses: number) => DefaultLensData = (numLenses = 0) 
 
 export const createLensDataSlice: StateCreator<TableState & LensDataState & StorageState, [], [], LensDataState> = (
     set,
-    get
+    get,
 ) => {
     return {
         units: DEFAULT_UNITS,
@@ -61,7 +60,13 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
         lenses: [],
         addLens(config, skipIfDuplicate = false) {
             const { lenses, distance, units } = get()
-            const settings = defaults({}, config, defaultLensData(lenses.length))
+            const defaults = defaultLensData(lenses.length)
+            const settings: DefaultLensData = {
+                name: config?.name ?? defaults.name,
+                focalLength: config?.focalLength ?? defaults.focalLength,
+                aperture: config?.aperture ?? defaults.aperture,
+                sensorKey: config?.sensorKey ?? defaults.sensorKey,
+            }
             const lens = createLensDefinition({
                 ...settings,
                 id: idGenerator.getNext(),
@@ -115,8 +120,8 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
         },
         duplicateLenses(lensesToDuplicate: readonly SelectedItem[]) {
             set((state) => {
-                const newLenses: LensDefinition[] = compact(
-                    lensesToDuplicate.map((id) => {
+                const newLenses: LensDefinition[] = lensesToDuplicate
+                    .map((id) => {
                         const existingLens = state.lenses.find((lens) => lens.id === id)
 
                         if (!existingLens) {
@@ -131,7 +136,7 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                             units: state.units,
                         })
                     })
-                )
+                    .filter((lens): lens is LensDefinition => lens !== undefined)
 
                 if (newLenses.length === 0) {
                     return state
@@ -154,7 +159,7 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                         ...lens,
                         distance: newValue,
                         units: state.units,
-                    })
+                    }),
                 ),
             }))
         },
@@ -169,7 +174,7 @@ export const createLensDataSlice: StateCreator<TableState & LensDataState & Stor
                         ...lens,
                         distance: state.distance,
                         units: newValue,
-                    })
+                    }),
                 ),
             }))
         },

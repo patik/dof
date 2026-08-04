@@ -1,4 +1,5 @@
 import { Lens } from './Lens'
+import type { Options } from './types'
 
 /**
  * Generates a lens-creator (factory) where each lens shares a common set of defaults

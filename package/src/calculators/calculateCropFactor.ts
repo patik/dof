@@ -1,3 +1,4 @@
+import type { CropFactorResult } from '../types'
 import { toMillimeters } from '../utilities/units'
 
 /**
@@ -24,7 +25,7 @@ export function calculateCropFactor({
 
     const mmFar = mmNear + mmDof
     const mmHF = (-1 * mmDist * focalLength + mmDist * mmFar) / (-1 * mmDist + mmFar)
-    const coc = Math.pow(focalLength, 2) / (aperture * mmHF - aperture * focalLength)
+    const coc = focalLength ** 2 / (aperture * mmHF - aperture * focalLength)
     const cropMultiplier = (100 * coc) / 3
     const cropFactor = Math.round((1 / cropMultiplier) * 1000) / 1000
 

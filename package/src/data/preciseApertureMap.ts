@@ -1,3 +1,5 @@
+import type { ApertureString } from '../types'
+
 /**
  * Map of human-friendly f-stop values to their precise numeric values
  */

@@ -8,10 +8,10 @@ import storage from './storage'
 export function useReadFromStorage() {
     const [hasStartedReading, setHasStartedReading] = useState(false)
     const [hasFinishedReading, setHasFinishedReading] = useState(false)
-    const { addLens, applyFromLocalStorage } = useDoFStore()
+    const { applyFromLocalStorage } = useDoFStore()
 
     // Read from localStorage
-    // Note that on Next.js dev server this hook will run twice which could cause duplicate lenses to be added to state
+    // React Strict Mode runs this hook twice in development, so duplicate lenses are skipped.
     useEffect(() => {
         if (hasStartedReading || hasFinishedReading || typeof window === 'undefined') {
             return
@@ -21,21 +21,22 @@ export function useReadFromStorage() {
         setHasStartedReading(true)
 
         async function fetchData() {
-            const stored = await storage.getItem()
-            const stateFromLocalStorage: LocalStorageData | null = stored ? JSON.parse(stored)?.state : null
+            try {
+                const stored = await storage.getItem()
+                const stateFromLocalStorage: LocalStorageData | null = stored ? JSON.parse(stored)?.state : null
 
-            if (!stateFromLocalStorage) {
+                if (stateFromLocalStorage) {
+                    applyFromLocalStorage(stateFromLocalStorage)
+                }
+            } catch {
+                // IndexedDB may be unavailable; continue with the placeholder lenses.
+            } finally {
                 setHasFinishedReading(true)
-
-                return
             }
-
-            applyFromLocalStorage(stateFromLocalStorage)
-            setHasFinishedReading(true)
         }
 
         fetchData()
-    }, [addLens, applyFromLocalStorage, hasFinishedReading, hasStartedReading])
+    }, [applyFromLocalStorage, hasFinishedReading, hasStartedReading])
 
     return hasFinishedReading
 }

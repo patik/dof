@@ -1,41 +1,39 @@
 {
     "name": "dof",
-    "description": "Depth-of-field calculator for comparing camera lenses",
-    "version": "3.1.0",
+    "version": "4.0.0",
+    "type": "module",
+    "sideEffects": false,
+    "author": {
+        "name": "Craig Patik",
+        "email": "craig@patik.com",
+        "url": "https://patik.com"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/patik/dof.git"
+        "url": "git+https://github.com/patik/dof.git"
     },
-    "devDependencies": {
-        "@types/lodash": "^4.17.0",
-        "source-map-support": "^0.5.21"
-    },
-    "dependencies": {
-        "lodash": "^4.17.21"
+    "main": "./dist/index.js",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
     },
     "bugs": {
         "url": "https://github.com/patik/dof/issues"
     },
-    "homepage": "https://github.com/patik/dof",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
+    "description": "Depth-of-field calculator for comparing camera lenses",
     "files": [
-        "./dist/"
+        "dist"
     ],
-    "directories": {
-        "doc": "./docs"
+    "engines": {
+        "node": ">=20.19"
     },
-    "scripts": {
-        "build": "rm -rf dist/*; yarn tsc && cp ../README.md ./README.md",
-        "clean": "git clean -fdx",
-        "cover": "yarn test --collectCoverage",
-        "typecheck": "tsc --noEmit",
-        "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
-        "preversion": "yarn build && yarn cover",
-        "test": "yarn jest",
-        "unused-exports": "ts-prune -p ./tsconfig.json"
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
     },
+    "homepage": "https://github.com/patik/dof",
     "keywords": [
         "depth-of-field",
         "lens",
@@ -48,10 +46,23 @@
         "focus",
         "blur"
     ],
-    "author": {
-        "name": "Craig Patik",
-        "email": "craig@patik.com",
-        "url": "https://patik.com"
+    "license": "BSD-3-Clause",
+    "scripts": {
+        "build": "tsdown",
+        "clean": "git clean -fdx",
+        "cover": "bun run build && cd .. && vitest run --coverage --project package",
+        "typecheck": "tsc --noEmit",
+        "lint": "biome check . && bun run typecheck",
+        "format": "biome format --write .",
+        "test": "bun run build && cd .. && vitest run --project package",
+        "publint": "publint",
+        "attw": "attw --pack . --profile esm-only",
+        "check:package": "bun run publint && bun run attw"
     },
-    "license": "BSD-3-Clause"
+    "types": "./dist/index.d.ts",
+    "devDependencies": {
+        "@arethetypeswrong/cli": "^0.18.5",
+        "publint": "^0.3.23",
+        "tsdown": "^0.22.14"
+    }
 }

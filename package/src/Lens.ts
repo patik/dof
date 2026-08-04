@@ -1,4 +1,5 @@
 import { calculateDepthOfField } from './calculators/calculateDepthOfField'
+import type { DefaultOptions, DoFResult, Options, Settings } from './types'
 import { combineSettings } from './utilities/combineSettings'
 
 export const builtInDefaults: DefaultOptions = Object.freeze({
@@ -41,7 +42,7 @@ export class Lens {
      * @param imperialUnits Whether to use imperial units (feet) instead of metric
      */
     public dof = (distance?: number, imperialUnits = false): DoFResult => {
-        if (distance === undefined || isNaN(distance)) {
+        if (distance === undefined || Number.isNaN(distance)) {
             distance = imperialUnits ? defaultDistanceImperial : defaultDistanceMetric
         }
 

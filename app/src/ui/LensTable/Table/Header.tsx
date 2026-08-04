@@ -1,13 +1,12 @@
-import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { visuallyHidden } from '@mui/utils'
-import { ChangeEvent, useMemo } from 'react'
+import { type ChangeEvent, useMemo } from 'react'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
+import styles from './Table.module.css'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -59,7 +58,7 @@ export default function Header() {
 
             setSelected([])
         },
-        [lenses, setSelected]
+        [lenses, setSelected],
     )
 
     const createSortHandler = (col: ColumnName) => () => {
@@ -68,9 +67,9 @@ export default function Header() {
 
     return (
         <TableHead>
-            <TableRow sx={isMobile ? { borderBottom: 'none' } : undefined}>
+            <TableRow className={isMobile ? styles.mobileHeaderRow : undefined}>
                 {isMobile ? (
-                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }} />
+                    <TableCell colSpan={5} className={styles.mobileHeaderCell} />
                 ) : (
                     <>
                         <TableCell padding="checkbox">
@@ -79,9 +78,7 @@ export default function Header() {
                                 indeterminate={numSelected > 0 && numSelected < rowCount}
                                 checked={rowCount > 0 && numSelected === rowCount}
                                 onChange={handleSelectAllClick}
-                                inputProps={{
-                                    'aria-label': 'Select all lenses',
-                                }}
+                                slotProps={{ input: { 'aria-label': 'Select all lenses' } }}
                                 data-testid="select-all"
                             />
                         </TableCell>
@@ -104,9 +101,9 @@ export default function Header() {
                                             : ''
                                     }`}
                                     {orderBy === headCell.id ? (
-                                        <Box component="span" sx={visuallyHidden}>
+                                        <span className={styles.visuallyHidden}>
                                             {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                        </Box>
+                                        </span>
                                     ) : null}
                                 </TableSortLabel>
                             </TableCell>

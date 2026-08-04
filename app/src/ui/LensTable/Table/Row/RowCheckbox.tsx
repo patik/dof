@@ -27,9 +27,7 @@ export default function RowCheckbox({ lens }: { lens: LensDefinition }) {
             onChange={() => onRowClick(lens.id)}
             color="primary"
             checked={isSelected(lens.id)}
-            inputProps={{
-                'aria-labelledby': getRowLabelId(lens),
-            }}
+            slotProps={{ input: { 'aria-labelledby': getRowLabelId(lens) } }}
             data-testid={`lens-checkbox-${lens.id}`}
         />
     )

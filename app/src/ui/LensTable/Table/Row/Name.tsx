@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import useDoFStore from '../../../../store'
 import useIsMobile from '../../../../utilities/useIsMobile'
 

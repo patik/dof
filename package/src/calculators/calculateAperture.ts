@@ -1,3 +1,4 @@
+import type { ApertureResult } from '../types'
 import { getApertureName } from '../utilities/aperture'
 import { toMillimeters } from '../utilities/units'
 
@@ -27,7 +28,7 @@ export function calculateAperture({
     const mmHF = (-1 * mmDist * focalLength + mmDist * mmFar) / (-1 * mmDist + mmFar)
     const cropMultiplier = 1 / cropFactor
     const coc = Math.round(0.03 * cropMultiplier * 1000) / 1000
-    const aperture = Math.pow(focalLength, 2) / (coc * mmHF - coc * focalLength)
+    const aperture = focalLength ** 2 / (coc * mmHF - coc * focalLength)
 
     const result: ApertureResult = {
         aperture,

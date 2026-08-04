@@ -1,4 +1,7 @@
+import { Lens } from 'dof'
 import { createHash } from './useWriteToHash'
+
+const depthOfField = new Lens().dof(5)
 
 describe('createHash', () => {
     test('simple example with one lens', () => {
@@ -9,10 +12,10 @@ describe('createHash', () => {
                     aperture: 'f/3.4',
                     focalLength: 55,
                     sensorKey: 'APSC',
-                    depthOfField: 7,
+                    depthOfField,
                     id: '7',
                 },
-            ])
+            ]),
         ).toBe('5,m;Alpha%20bravo,55,f-3.4,APSC')
     })
 
@@ -24,7 +27,7 @@ describe('createHash', () => {
                     aperture: 'f/3.4',
                     focalLength: 55,
                     sensorKey: 'APSC',
-                    depthOfField: 7,
+                    depthOfField,
                     id: '7',
                 },
                 {
@@ -32,10 +35,10 @@ describe('createHash', () => {
                     aperture: 'f/2',
                     focalLength: 200,
                     sensorKey: 'full',
-                    depthOfField: 7,
+                    depthOfField,
                     id: '7',
                 },
-            ])
+            ]),
         ).toBe('15,m;Alpha%20bravo,55,f-3.4,APSC;Charlie-%3EDelta,200,f-2,full')
     })
 })

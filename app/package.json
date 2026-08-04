@@ -1,48 +1,42 @@
 {
     "name": "app",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "serve out",
+        "dev": "vite",
+        "build": "vite build && bun run prerender",
+        "preview": "vite preview",
+        "prerender": "bun run scripts/prerender.ts",
         "typecheck": "tsc --noEmit",
-        "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "yarn typecheck && yarn code-lint && yarn unused-exports",
-        "test": "yarn jest",
-        "unused-exports": "ts-prune -p ./tsconfig.json"
+        "lint": "biome check . && bun run typecheck",
+        "format": "biome format --write .",
+        "test": "cd .. && vitest run --project app"
     },
     "dependencies": {
+        "@base-ui/react": "^1.6.0",
         "@emotion/react": "^11.11.3",
         "@emotion/styled": "^11.13.0",
-        "@fontsource/open-sans": "^5.0.20",
-        "@mdx-js/loader": "^3.1.0",
-        "@mdx-js/react": "^3.0.0",
-        "@mui/icons-material": "^7.3.6",
-        "@mui/material": "^7.3.6",
-        "@mui/styled-engine-sc": "^7.3.6",
-        "@next/mdx": "^14.0.4",
-        "@nivo/core": "^0.99.0",
-        "@nivo/line": "^0.99.0",
-        "@types/mdx": "^2.0.10",
-        "dof": "^2.0.0",
+        "@fontsource-variable/archivo": "^5.3.0",
+        "@fontsource-variable/newsreader": "^5.3.0",
+        "@mui/icons-material": "^9.2.0",
+        "@mui/material": "^9.2.0",
+        "@tanstack/react-router": "^1.170.18",
+        "d3-array": "^3.2.4",
+        "d3-scale": "^4.0.2",
+        "d3-shape": "^3.2.0",
+        "dof": "workspace:*",
         "footinch": "^1.0.2",
         "idb-keyval": "^6.2.1",
-        "next": "14.2.0",
         "react": "19.2.1",
-        "react-copy-to-clipboard": "^5.1.0",
         "react-dom": "19.2.1",
         "react-error-boundary": "^6.0.0",
-        "sharp": "^0.34.5",
-        "styled-components": "^6.1.6",
         "zustand": "^5.0.9"
     },
     "devDependencies": {
-        "@types/react-copy-to-clipboard": "^5.0.7",
-        "eslint-config-next": "16.0.7",
-        "serve": "^14.2.1"
-    },
-    "config": {
-        "basePath": "/dof"
+        "@types/d3-array": "^3.2.2",
+        "@types/d3-scale": "^4.0.9",
+        "@types/d3-shape": "^3.1.8",
+        "vite-plugin-pwa": "^1.3.0"
     }
 }

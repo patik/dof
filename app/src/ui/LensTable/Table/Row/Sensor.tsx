@@ -1,8 +1,8 @@
-import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, type SelectChangeEvent } from '@mui/material'
 import useDoFStore from '../../../../store'
-import sensorList from '../../../../utilities/sensorList'
-import { objectKeysArray } from '../../../../utilities/objectKeysArray'
 import { isSensorKey } from '../../../../utilities/isSensorKey'
+import { objectKeysArray } from '../../../../utilities/objectKeysArray'
+import sensorList from '../../../../utilities/sensorList'
 import useIsMobile from '../../../../utilities/useIsMobile'
 
 const allSensorKeys = objectKeysArray(sensorList)

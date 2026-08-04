@@ -1,5 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material'
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 import useDoFStore from '../../../../store'
 import useIsMobile from '../../../../utilities/useIsMobile'
 
@@ -16,16 +16,17 @@ export default function FocalLength({ lens }: { lens: LensDefinition }) {
             onChange={onChange}
             value={lens.focalLength}
             type="number"
-            InputProps={{
-                type: 'number',
-                endAdornment: <InputAdornment position="end">mm</InputAdornment>,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                min: 0,
-                step: 1,
-            }}
-            InputLabelProps={{
-                shrink: true,
+            slotProps={{
+                input: {
+                    endAdornment: <InputAdornment position="end">mm</InputAdornment>,
+                },
+                htmlInput: {
+                    min: 0,
+                    step: 1,
+                },
+                inputLabel: {
+                    shrink: true,
+                },
             }}
             data-testid={`focal-length-${lens.id}`}
             size="small"

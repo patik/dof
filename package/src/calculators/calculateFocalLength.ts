@@ -1,3 +1,4 @@
+import type { FocalLengthResult } from '../types'
 import { decimalAdjust } from '../utilities/decimalAdjust'
 import { toMillimeters } from '../utilities/units'
 
@@ -27,10 +28,9 @@ export function calculateFocalLength({
     const focalLength = Math.round(
         (mmNear * aperture * coc -
             Math.sqrt(
-                Math.pow(mmNear, 2) * Math.pow(aperture, 2) * Math.pow(coc, 2) -
-                    4 * mmNear * mmDist * aperture * coc * (mmNear - mmDist)
+                mmNear ** 2 * aperture ** 2 * coc ** 2 - 4 * mmNear * mmDist * aperture * coc * (mmNear - mmDist),
             )) /
-            (2 * (mmNear - mmDist))
+            (2 * (mmNear - mmDist)),
     )
 
     const result = {

@@ -1,9 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Archivo Variable", sans-serif;
+    --font-display: "Newsreader Variable", serif;
+    --text-caption: 0.6875rem;
+    --text-title: 2.25rem;
+    --tracking-caption: 0.16em;
+    --spacing-field: 0.75rem;
+    --radius-control: 0.75rem;
+    --radius-panel: 1rem;
+    --color-canvas: var(--canvas);
+    --color-panel: var(--panel);
+    --color-panel-raised: var(--panel-raised);
+    --color-ink: var(--ink);
+    --color-muted: var(--muted);
+    --color-line: var(--line);
+    --color-accent: var(--accent);
+    --color-accent-strong: var(--accent-strong);
+    --color-accent-ink: var(--accent-ink);
+    --color-series-1: var(--series-1);
+    --color-series-2: var(--series-2);
+    --color-series-3: var(--series-3);
+    --color-series-4: var(--series-4);
+    --color-series-5: var(--series-5);
+    --color-series-6: var(--series-6);
+}
+
+:root {
+    --canvas: #f6f1e8;
+    --panel: #fffaf2;
+    --panel-raised: #fffdf8;
+    --ink: #29241e;
+    --muted: #6f665b;
+    --line: #d9cec0;
+    --accent: #c7652c;
+    --accent-strong: #a64917;
+    --accent-ink: #fffaf3;
+    --focus: #9a4617;
+    --table-divider: rgb(0 0 0 / 12%);
+    --soft-shadow: 0 18px 55px rgb(74 54 30 / 10%);
+    --series-1: #a64917;
+    --series-2: #12656d;
+    --series-3: #315f98;
+    --series-4: #8b4567;
+    --series-5: #4e702d;
+    --series-6: #70518f;
+}
+
+:root[data-theme="dark"] {
+    --canvas: #171512;
+    --panel: #211e1a;
+    --panel-raised: #29251f;
+    --ink: #f4ecdf;
+    --muted: #b8ad9f;
+    --line: #494139;
+    --accent: #e89a45;
+    --accent-strong: #f6b85d;
+    --accent-ink: #21170c;
+    --focus: #f6b85d;
+    --table-divider: rgb(255 255 255 / 12%);
+    --soft-shadow: 0 22px 60px rgb(0 0 0 / 28%);
+    --series-1: #f6b85d;
+    --series-2: #6fc6cc;
+    --series-3: #83afe1;
+    --series-4: #e38cac;
+    --series-5: #a7cc79;
+    --series-6: #c1a8df;
+}
+
 html,
 body {
+    min-height: 100%;
     padding: 0;
     margin: 0;
-    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans,
-        Droid Sans, Helvetica Neue, sans-serif;
+    font-family: "Archivo Variable", sans-serif;
+    color: var(--ink);
+    background: var(--canvas);
+}
+
+body {
+    background-image:
+        radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--accent) 9%, transparent) 0, transparent 34rem),
+        linear-gradient(90deg, color-mix(in srgb, var(--ink) 2%, transparent) 1px, transparent 1px);
+    background-size:
+        auto,
+        4rem 100%;
+    transition:
+        color 180ms ease,
+        background-color 180ms ease;
 }
 
 a {
@@ -15,12 +99,21 @@ a {
     box-sizing: border-box;
 }
 
-/* @media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
-    }
-    body {
-        color: white;
-        background: black;
-    }
-} */
+button,
+input {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--focus) 70%, transparent);
+    outline-offset: 3px;
+}
+
+::selection {
+    color: var(--accent-ink);
+    background: var(--accent-strong);
+}
+
+@utility lining-tabular-nums {
+    font-variant-numeric: tabular-nums lining-nums;
+}

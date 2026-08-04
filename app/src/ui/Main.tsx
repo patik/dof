@@ -1,5 +1,4 @@
-import { Box } from '@mui/material'
-import dynamic from 'next/dynamic'
+import { lazy, Suspense } from 'react'
 import { useAddPlaceholderLenses } from '../utilities/useAddPlaceholderLenses'
 import useReadFromHash from '../utilities/useReadFromHash'
 import { useReadFromStorage } from '../utilities/useReadFromStorage'
@@ -8,7 +7,7 @@ import { useWriteToStorage } from '../utilities/useWriteToStorage'
 import LensTable from './LensTable/Table/LensTable'
 import TopToolbar from './LensTable/TopToolbar/TopToolbar'
 
-const Graph = dynamic(() => import('./Graph/Graph'), { ssr: false })
+const Graph = lazy(() => import('./Graph/Graph'))
 
 export default function Main() {
     const hasReadFromHash = useReadFromHash()
@@ -16,21 +15,27 @@ export default function Main() {
 
     useWriteToStorage(hasReadFromStorage)
     useWriteToHash(hasReadFromHash)
-    useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
+    const hasInitializedLenses = useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
+
+    if (!hasInitializedLenses) {
+        return <div className="min-h-[42rem] min-[600px]:min-h-[36rem]" aria-hidden="true" />
+    }
 
     return (
         <>
-            <Box my={3}>
+            <div className="my-6">
                 <TopToolbar />
-            </Box>
+            </div>
 
-            <Box mb={2}>
+            <div className="mb-4">
                 <LensTable />
-            </Box>
+            </div>
 
-            <Box mb={2} height={400} width="100%">
-                <Graph />
-            </Box>
+            <div className="mb-4 w-full">
+                <Suspense fallback={null}>
+                    <Graph />
+                </Suspense>
+            </div>
         </>
     )
 }

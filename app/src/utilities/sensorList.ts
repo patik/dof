@@ -30,7 +30,7 @@ const fullList = {
         name: '1" CCD, Nikon CX, Sony RX100',
         value: 2.72,
     },
-    iPhone14Pro: {
+    iPhone14: {
         name: 'iPhone 14 Pro (2022)',
         // https://www.dpreview.com/articles/6110937480
         // 48MP Type 1/1.28 (9.8x7.3mm, or 71.54mm^2)
@@ -99,6 +99,5 @@ const fullList = {
 
 export default fullList
 
-// This is imported by types.d.ts so it can be used globally without importing
-// ts-prune-ignore-next
+// This is imported by types.d.ts so it can be used globally without importing.
 export type SensorKey = keyof typeof fullList
