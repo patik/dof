@@ -1,17 +1,17 @@
 import { Collapse, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material'
-import Box from '@mui/material/Box'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
 import useDoFStore from '../../../../store'
+import styles from '../Table.module.css'
 
 export default function DepthOfFieldDetails({ lens, open }: { lens: LensDefinition; open: boolean }) {
     const { units } = useDoFStore()
 
     return (
         <MuiTableRow className="dof-detail-row">
-            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <TableCell className={styles.detailCell} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                    <Box sx={{ margin: 1 }}>
+                    <div className={styles.details}>
                         <Typography variant="h6" gutterBottom component="div">
                             Depth of field (DoF) details
                         </Typography>
@@ -69,7 +69,7 @@ export default function DepthOfFieldDetails({ lens, open }: { lens: LensDefiniti
                                 </TableRow>
                             </TableBody>
                         </Table>
-                    </Box>
+                    </div>
                 </Collapse>
             </TableCell>
         </MuiTableRow>

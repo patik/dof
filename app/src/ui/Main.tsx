@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import { lazy, Suspense } from 'react'
 import { useAddPlaceholderLenses } from '../utilities/useAddPlaceholderLenses'
 import useReadFromHash from '../utilities/useReadFromHash'
@@ -19,24 +18,24 @@ export default function Main() {
     const hasInitializedLenses = useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
 
     if (!hasInitializedLenses) {
-        return <Box sx={{ minHeight: { xs: '42rem', sm: '36rem' } }} aria-hidden="true" />
+        return <div className="min-h-[42rem] min-[600px]:min-h-[36rem]" aria-hidden="true" />
     }
 
     return (
         <>
-            <Box sx={{ my: 3 }}>
+            <div className="my-6">
                 <TopToolbar />
-            </Box>
+            </div>
 
-            <Box sx={{ mb: 2 }}>
+            <div className="mb-4">
                 <LensTable />
-            </Box>
+            </div>
 
-            <Box sx={{ mb: 2, width: '100%' }}>
+            <div className="mb-4 w-full">
                 <Suspense fallback={null}>
                     <Graph />
                 </Suspense>
-            </Box>
+            </div>
         </>
     )
 }

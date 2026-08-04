@@ -1,29 +1,24 @@
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate'
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
+import { Button, IconButton, Tooltip, Typography } from '@mui/material'
 import MuiToolbar from '@mui/material/Toolbar'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
 import DeleteButton from './DeleteButton'
+import styles from './Table.module.css'
 
 export default function BottomToolbar() {
     const { addLens, duplicateLenses, selected } = useDoFStore()
     const isMobile = useIsMobile()
 
     return (
-        <MuiToolbar
-            sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-            }}
-            data-testid="bottom-toolbar"
-        >
+        <MuiToolbar className={styles.toolbar} data-testid="bottom-toolbar">
             {isMobile ? null : (
-                <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                <div className={styles.toolbarSelection}>
                     {selected.length > 0 ? (
                         <>
-                            <Box sx={{ mr: 1 }}>
+                            <div className={styles.selectionLabel}>
                                 <Typography
-                                    sx={{ flex: '1 1 100%' }}
+                                    className={styles.selectedCount}
                                     color="inherit"
                                     variant="subtitle1"
                                     component="div"
@@ -31,22 +26,22 @@ export default function BottomToolbar() {
                                 >
                                     {selected.length} selected
                                 </Typography>
-                            </Box>
-                            <Box>
+                            </div>
+                            <div>
                                 <DeleteButton lenses={selected} />
                                 <Tooltip title="Duplicate">
                                     <IconButton onClick={() => duplicateLenses(selected)}>
                                         <ControlPointDuplicateIcon />
                                     </IconButton>
                                 </Tooltip>
-                            </Box>
+                            </div>
                         </>
                     ) : null}
-                </Box>
+                </div>
             )}
-            <Box sx={isMobile ? { textAlign: 'center', flexGrow: 1 } : undefined}>
+            <div className={isMobile ? styles.mobileAction : undefined}>
                 <Button onClick={() => addLens()}>Add Lens</Button>
-            </Box>
+            </div>
         </MuiToolbar>
     )
 }

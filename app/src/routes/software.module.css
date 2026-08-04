@@ -1,0 +1,26 @@
+.article {
+    max-width: 820px;
+}
+
+.paragraph {
+    margin-bottom: 16px;
+}
+
+.subsectionHeading.subsectionHeading {
+    margin-top: 24px;
+}
+
+.code {
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    box-shadow: var(--soft-shadow);
+}
+
+.webHeading.webHeading {
+    margin-top: 32px;
+}

@@ -37,6 +37,7 @@
     --accent-strong: #a64917;
     --accent-ink: #fffaf3;
     --focus: #9a4617;
+    --table-divider: rgb(0 0 0 / 12%);
     --soft-shadow: 0 18px 55px rgb(74 54 30 / 10%);
     --series-1: #a64917;
     --series-2: #12656d;
@@ -57,6 +58,7 @@
     --accent-strong: #f6b85d;
     --accent-ink: #21170c;
     --focus: #f6b85d;
+    --table-divider: rgb(255 255 255 / 12%);
     --soft-shadow: 0 22px 60px rgb(0 0 0 / 28%);
     --series-1: #f6b85d;
     --series-2: #6fc6cc;
