@@ -1,17 +1,18 @@
 import { Box, type BoxProps, Divider, Grid, Typography } from '@mui/material'
-import Image from 'next/image'
-import Link from 'next/link'
+import { createFileRoute } from '@tanstack/react-router'
 import type { PropsWithChildren } from 'react'
-import addOrDuplicate from '../../public/images/add-duplicate.png'
-import detailsImg from '../../public/images/details.png'
-import PrintedTextShallowDoF from '../../public/images/printed-text-shallow-dof.jpg'
-import sharingImg from '../../public/images/sharing.png'
-import singleLensImg from '../../public/images/single-lens.png'
-import Tree_bud_at_f22 from '../../public/images/Tree_bud_at_f22.jpg'
-import Tree_bud_in_spring_f18 from '../../public/images/Tree_bud_in_spring_f1.8.jpg'
-import withGraphImg from '../../public/images/with-graph.png'
-import Layout from '../../src/layout/Layout'
-import useIsMobile from '../../src/utilities/useIsMobile'
+import addOrDuplicate from '../assets/images/add-duplicate.png'
+import detailsImg from '../assets/images/details.png'
+import PrintedTextShallowDoF from '../assets/images/printed-text-shallow-dof.jpg'
+import sharingImg from '../assets/images/sharing.png'
+import singleLensImg from '../assets/images/single-lens.png'
+import Tree_bud_at_f22 from '../assets/images/Tree_bud_at_f22.jpg'
+import Tree_bud_in_spring_f18 from '../assets/images/Tree_bud_in_spring_f1.8.jpg'
+import withGraphImg from '../assets/images/with-graph.png'
+import Layout from '../layout/Layout'
+import useIsMobile from '../utilities/useIsMobile'
+
+export const Route = createFileRoute('/about')({ component: About })
 
 function Figure({ narrow, children, ...props }: PropsWithChildren & BoxProps & { narrow?: boolean }) {
     return (
@@ -25,11 +26,14 @@ function Space() {
     return <>{` `}</>
 }
 
-export default function About() {
+function About() {
     const isMobile = useIsMobile()
 
     return (
-        <Layout title="About">
+        <Layout
+            title="About"
+            description="Learn how depth of field works and how to compare camera lenses with the calculator."
+        >
             <Box mb={3}>
                 <Typography variant="h2" gutterBottom>
                     What is depth of field?
@@ -42,7 +46,7 @@ export default function About() {
                     <a href="https://en.wikipedia.org/wiki/Bokeh">bokeh</a>.
                 </Typography>
                 <Figure textAlign="center">
-                    <Image
+                    <img
                         src={PrintedTextShallowDoF}
                         width={997}
                         height={717}
@@ -72,7 +76,7 @@ export default function About() {
                 <Grid container>
                     <Grid size={{ xs: 12, sm: 6 }}>
                         <Figure>
-                            <Image
+                            <img
                                 src={Tree_bud_in_spring_f18}
                                 height={427}
                                 width={640}
@@ -97,7 +101,7 @@ export default function About() {
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                         <Figure>
-                            <Image
+                            <img
                                 src={Tree_bud_at_f22}
                                 height={427}
                                 width={640}
@@ -139,8 +143,8 @@ export default function About() {
                     Focal length values should be in absolute size (millimeters), not the 35mm equivalent.
                 </Typography>
                 <Figure textAlign="center">
-                    <Link href="images/single-lens.png" target="_blank">
-                        <Image
+                    <a href={singleLensImg} target="_blank" rel="noreferrer">
+                        <img
                             src={singleLensImg}
                             sizes="100vw"
                             style={{
@@ -149,7 +153,7 @@ export default function About() {
                             }}
                             alt="Screenshot of lens input"
                         />
-                    </Link>
+                    </a>
                 </Figure>
                 <Typography gutterBottom>
                     Be sure to use the <strong>actual focal length</strong> of the lens (e.g. as printed on the front of
@@ -162,8 +166,8 @@ export default function About() {
                     The depth of field calculation can be expanded to view more related statistics:
                 </Typography>
                 <Figure textAlign="center">
-                    <Link href="images/details.png" target="_blank">
-                        <Image
+                    <a href={detailsImg} target="_blank" rel="noreferrer">
+                        <img
                             src={detailsImg}
                             sizes="100vw"
                             style={{
@@ -172,7 +176,7 @@ export default function About() {
                             }}
                             alt="Further details about a lens’ depth of field"
                         />
-                    </Link>
+                    </a>
                 </Figure>
             </Box>
             <Box mb={3}>
@@ -183,8 +187,8 @@ export default function About() {
                     Click on the “Add Lens” box to add an additional lens, then enter the second lens’ characteristics.
                 </Typography>
                 <Figure>
-                    <Link href="images/add-duplicate.png" target="_blank">
-                        <Image
+                    <a href={addOrDuplicate} target="_blank" rel="noreferrer">
+                        <img
                             src={addOrDuplicate}
                             sizes="100vw"
                             style={{
@@ -193,7 +197,7 @@ export default function About() {
                             }}
                             alt="Comparison of two lenses, with the Add Lens button and Duplicate icon button highlighted"
                         />
-                    </Link>
+                    </a>
                 </Figure>
                 <Typography gutterBottom>
                     If the lenses have similar characteristics, you may save time by selecting a lense and clicking the
@@ -206,8 +210,8 @@ export default function About() {
                     the length of the depth of field at 1-meter (or 5-foot) intervals.
                 </Typography>
                 <Figure>
-                    <Link href="images/with-graph.png" target="_blank">
-                        <Image
+                    <a href={withGraphImg} target="_blank" rel="noreferrer">
+                        <img
                             src={withGraphImg}
                             sizes="100vw"
                             style={{
@@ -216,7 +220,7 @@ export default function About() {
                             }}
                             alt="Chart comparing two lenses at various distances"
                         />
-                    </Link>
+                    </a>
                 </Figure>
             </Box>
             <Box mb={3}>
@@ -231,8 +235,8 @@ export default function About() {
                     You can also bookmark the page to come back to the same lens configuration later.
                 </Typography>
                 <Figure>
-                    <Link href="images/sharing.png" target="_blank">
-                        <Image
+                    <a href={sharingImg} target="_blank" rel="noreferrer">
+                        <img
                             src={sharingImg}
                             sizes="100vw"
                             style={{
@@ -241,7 +245,7 @@ export default function About() {
                             }}
                             alt="screenshot with the browser address bar highlighted"
                         />
-                    </Link>
+                    </a>
                 </Figure>
             </Box>
         </Layout>

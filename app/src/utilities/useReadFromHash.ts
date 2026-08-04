@@ -90,7 +90,7 @@ export default function useReadFromHash(): boolean {
     const { addLens, setDistance, setUnits } = useDoFStore()
 
     // Read from localStorage
-    // Note that on Next.js dev server this hook will run twice, causing duplicate lenses to be added to state
+    // React Strict Mode runs this hook twice in development, so duplicate lenses are skipped.
     useEffect(() => {
         if (hasRead || typeof window === 'undefined') {
             return

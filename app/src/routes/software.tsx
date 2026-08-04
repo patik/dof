@@ -1,5 +1,8 @@
 import { Box, Link, Typography } from '@mui/material'
-import Layout from '../../src/layout/Layout'
+import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
+import Layout from '../layout/Layout'
+
+export const Route = createFileRoute('/software')({ component: Software })
 
 const codeStyles = {
     backgroundColor: 'action.hover',
@@ -8,9 +11,13 @@ const codeStyles = {
     padding: 2,
 }
 
-export default function Software() {
+function Software() {
     return (
-        <Layout title="Software: Node.js Package" noMainHeading>
+        <Layout
+            title="Software: Node.js Package"
+            description="Use the dof JavaScript package to calculate depth of field for camera lenses."
+            noMainHeading
+        >
             <Typography component="h1" variant="h3" gutterBottom>
                 <Link href="https://patik.com/dof/">Depth of Field Calculator</Link>
             </Typography>
@@ -96,7 +103,7 @@ metricResult.toString()`}</code>
             </Typography>
             <Typography paragraph>
                 <Link href="https://patik.com/dof/">Compare multiple lenses side by side</Link>, or read the{' '}
-                <Link href="/about/">calculator documentation</Link>.
+                <RouterLink to="/about">calculator documentation</RouterLink>.
             </Typography>
         </Layout>
     )

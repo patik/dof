@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material'
-import Link from 'next/link'
+import { Link } from '@tanstack/react-router'
 import Permalink from './Permalink'
 
 export default function Footer({ hasPermalink }: { hasPermalink?: boolean }) {
@@ -7,12 +7,12 @@ export default function Footer({ hasPermalink }: { hasPermalink?: boolean }) {
         <Grid container component="footer" mb={3} textAlign="center">
             <Grid size={{ xs: 3 }}>
                 <Typography variant="body2">
-                    {hasPermalink ? <Permalink /> : <Link href="/">Back to the calculator</Link>}
+                    {hasPermalink ? <Permalink /> : <Link to="/">Back to the calculator</Link>}
                 </Typography>
             </Grid>
             <Grid size={{ xs: 3 }}>
                 <Typography variant="body2">
-                    <Link href="/about/">How to use</Link>
+                    <Link to="/about">How to use</Link>
                 </Typography>
             </Grid>
             <Grid size={{ xs: 3 }}>
@@ -22,7 +22,7 @@ export default function Footer({ hasPermalink }: { hasPermalink?: boolean }) {
             </Grid>
             <Grid size={{ xs: 3 }}>
                 <Typography variant="body2">
-                    <Link href="/software">Tech & software details</Link>
+                    <Link to="/software">Tech & software details</Link>
                 </Typography>
             </Grid>
         </Grid>
