@@ -16,7 +16,8 @@ test.beforeEach(async ({ page }) => {
 test('renders the responsive lens chart', async ({ page }) => {
     const chart = page.getByRole('region', { name: 'Depth across distance' })
 
-    await expect(chart.getByRole('img')).toHaveAccessibleName(/A linear scale line chart comparing 2 lenses/)
+    await expect(chart.getByRole('img')).toHaveAccessibleName('Depth of field by subject distance for each lens')
+    await expect(chart.getByRole('img')).toHaveAccessibleDescription(/A linear scale line chart comparing 2 lenses/)
     await expect(chart).toHaveScreenshot('depth-chart-linear.png', {
         animations: 'disabled',
     })

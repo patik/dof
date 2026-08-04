@@ -52,6 +52,7 @@ export default function Graph() {
     const { ref, width } = useResizeObserver<HTMLElement>()
     const svgRef = useRef<SVGSVGElement>(null)
     const hoverKeyRef = useRef<string | null>(null)
+    const headingId = useId()
     const titleId = useId()
     const descriptionId = useId()
     const clipId = useId()
@@ -109,6 +110,20 @@ export default function Graph() {
             ),
         )
     }, [compact, margin.top, plotBottom, plottedSeries, scales.y])
+    const hyperfocalLabelPositions = useMemo(
+        () =>
+            new Map(
+                layoutEndLabels(
+                    plottedSeries.map((series) => ({ id: series.lensId, y: margin.top + 13 })),
+                    {
+                        minY: margin.top + 13,
+                        maxY: Math.min(plotBottom - 10, margin.top + 13 + Math.max(0, plottedSeries.length - 1) * 14),
+                        gap: 14,
+                    },
+                ).map((label) => [label.id, label.y]),
+            ),
+        [margin.top, plotBottom, plottedSeries],
+    )
     const infinityMarkers = plottedSeries.filter(
         (series): series is (typeof plottedSeries)[number] & { infinityAt: number } => series.infinityAt !== null,
     )
@@ -133,7 +148,7 @@ export default function Graph() {
         const bounds = svg.getBoundingClientRect()
         const pointerX = (event.clientX - bounds.left) * (width / bounds.width)
         const pointerY = (event.clientY - bounds.top) * (height / bounds.height)
-        const nearest = findNearestPoint({ series: data, x: scales.x, y: scales.y, pointerX, pointerY })
+        const nearest = findNearestPoint({ series: plottedSeries, x: scales.x, y: scales.y, pointerX, pointerY })
 
         if (!nearest) {
             return
@@ -157,7 +172,7 @@ export default function Graph() {
     return (
         <section
             ref={ref}
-            aria-labelledby="chart-heading"
+            aria-labelledby={headingId}
             className="overflow-hidden rounded-panel border border-line bg-panel shadow-[var(--soft-shadow)]"
         >
             <header className="flex flex-col gap-4 border-b border-line px-4 py-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
@@ -165,7 +180,7 @@ export default function Graph() {
                     <p className="mb-1 text-caption font-semibold tracking-caption text-accent-strong uppercase">
                         Focus field
                     </p>
-                    <h2 id="chart-heading" className="font-display text-2xl font-medium text-ink sm:text-3xl">
+                    <h2 id={headingId} className="font-display text-2xl font-medium text-ink sm:text-3xl">
                         Depth across distance
                     </h2>
                     <p className="mt-1 max-w-2xl text-sm text-muted">
@@ -194,7 +209,8 @@ export default function Graph() {
                 <svg
                     ref={svgRef}
                     role="img"
-                    aria-labelledby={`${titleId} ${descriptionId}`}
+                    aria-labelledby={titleId}
+                    aria-describedby={descriptionId}
                     viewBox={`0 0 ${width} ${height}`}
                     className="block h-auto w-full select-none"
                 >
@@ -315,7 +331,7 @@ export default function Graph() {
                     </text>
 
                     <g clipPath={`url(#${clipId})`}>
-                        {plottedSeries.map((series, index) => {
+                        {plottedSeries.map((series) => {
                             const markerX = Math.min(plotRight, Math.max(margin.left, scales.x(series.hyperfocal)))
                             const [, maxDistance = 0] = scales.x.domain()
                             const isBeyondRange = series.hyperfocal > maxDistance
@@ -333,7 +349,7 @@ export default function Graph() {
                                     />
                                     <text
                                         x={Math.min(markerX + 4, plotRight - 4)}
-                                        y={margin.top + 13 + (index % 3) * 14}
+                                        y={hyperfocalLabelPositions.get(series.lensId) ?? margin.top + 13}
                                         textAnchor={markerX > plotRight - 80 ? 'end' : 'start'}
                                         fill={series.color}
                                         fontSize={compact ? 9 : 10}
@@ -471,7 +487,7 @@ export default function Graph() {
                         width={Math.max(0, plotRight - margin.left)}
                         height={plotBottom - margin.top}
                         fill="transparent"
-                        style={{ touchAction: 'none' }}
+                        style={{ touchAction: 'pan-y' }}
                         onPointerMove={handlePointerMove}
                         onPointerLeave={clearHover}
                     />

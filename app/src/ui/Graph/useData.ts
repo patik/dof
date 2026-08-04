@@ -11,7 +11,7 @@ export default function useData(): ChartSeries[] {
     const { lenses, units } = useDoFStore()
     const isMobile = useIsMobile()
     const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
-    const uniqueNames = getUniqueLensNames(lenses)
+    const uniqueNames = useMemo(() => getUniqueLensNames(lenses), [lenses])
     const data = useMemo(
         () =>
             lenses.map((lens) => {

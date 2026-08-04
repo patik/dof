@@ -143,7 +143,7 @@ export function findNearestPoint({
     let nearest: { series: ChartSeries; point: ChartPoint; x: number; y: number; distance: number } | null = null
 
     for (const item of series) {
-        for (const point of clampSeriesAtInfinity(item).finitePoints) {
+        for (const point of item.points) {
             if (point.dof <= 0 || !Number.isFinite(point.dof)) {
                 continue
             }
