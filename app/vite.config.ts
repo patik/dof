@@ -4,5 +4,8 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
     base: process.env.IS_DEPLOYMENT ? '/dof/' : '/',
+    optimizeDeps: {
+        include: ['dof'],
+    },
     plugins: [tanstackRouter({ target: 'react', autoCodeSplitting: true }), react()],
 })
