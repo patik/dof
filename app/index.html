@@ -5,10 +5,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui,viewport-fit=cover" />
         <meta name="author" content="Craig Patik" />
         <meta name="description" content="Depth of field calculator and camera lens comparison tool" />
-        <meta
-            name="keywords"
-            content="depth of field, camera, lens, photography, calculator, compare, comparison"
-        />
+        <meta name="keywords" content="depth of field, camera, lens, photography, calculator, compare, comparison" />
         <meta name="HandheldFriendly" content="True" />
         <meta name="MobileOptimized" content="320" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -26,7 +23,7 @@
                 --initial-accent: #a64917;
             }
 
-            :root[data-theme="dark"] {
+            :root[data-theme='dark'] {
                 --initial-canvas: #171512;
                 --initial-panel: #211e1a;
                 --initial-ink: #f4ecdf;
@@ -45,7 +42,7 @@
             }
 
             body {
-                font-family: "Archivo Variable", "Helvetica Neue", sans-serif;
+                font-family: 'Archivo Variable', 'Helvetica Neue', sans-serif;
                 background-image:
                     radial-gradient(
                         circle at 12% 0%,
@@ -120,11 +117,11 @@
             }
 
             .initial-theme-label::before {
-                content: "Light";
+                content: 'Light';
             }
 
-            :root[data-theme="dark"] .initial-theme-label::before {
-                content: "Dark";
+            :root[data-theme='dark'] .initial-theme-label::before {
+                content: 'Dark';
             }
 
             .initial-title {
@@ -134,10 +131,36 @@
                 line-height: 1.235;
             }
 
+            .initial-subtitle-row {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
             .initial-subtitle {
                 margin: 0;
                 font-size: 1rem;
                 line-height: 1.5;
+            }
+
+            .initial-howto {
+                font-size: 0.875rem;
+                line-height: 1.43;
+                text-align: right;
+                color: var(--initial-accent);
+            }
+
+            @media (min-width: 600px) {
+                .initial-subtitle-row {
+                    flex-direction: row;
+                    align-items: baseline;
+                    justify-content: space-between;
+                    gap: 16px;
+                }
+
+                .initial-howto {
+                    flex-shrink: 0;
+                }
             }
 
             .initial-content-space {
@@ -202,7 +225,10 @@
                         </span>
                     </div>
                     <h1 class="initial-title">Depth of Field Calculator &amp; Lens Comparison Tool</h1>
-                    <p class="initial-subtitle">Compare multiple camera lenses side-by-side</p>
+                    <div class="initial-subtitle-row">
+                        <p class="initial-subtitle">Compare multiple camera lenses side-by-side</p>
+                        <span class="initial-howto" aria-hidden="true">How to use</span>
+                    </div>
                 </header>
                 <div class="initial-content-space" aria-hidden="true"></div>
             </main>
