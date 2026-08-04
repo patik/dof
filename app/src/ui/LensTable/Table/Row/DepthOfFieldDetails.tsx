@@ -1,7 +1,7 @@
 import { Collapse, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import TableCell from '@mui/material/TableCell'
 import MuiTableRow from '@mui/material/TableRow'
-import { Box } from '@mui/system'
 import useDoFStore from '../../../../store'
 
 export default function DepthOfFieldDetails({ lens, open }: { lens: LensDefinition; open: boolean }) {

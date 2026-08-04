@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "verbatimModuleSyntax": true,
+        "forceConsistentCasingInFileNames": true
+    }
+}

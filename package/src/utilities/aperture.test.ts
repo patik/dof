@@ -14,21 +14,21 @@ describe.each(customSettingsApertures)('toActualAperture', (customSettingsApertu
                     customSettingsAperture === 2.4
                         ? 2.378414
                         : customSettingsAperture === 'f/3.4'
-                        ? 3.363586
-                        : undefined
+                          ? 3.363586
+                          : undefined
 
                 // Verify the test setup
                 expect(expectedValue).not.toBeUndefined()
 
                 // Run the test
                 expect(toActualAperture({ input: 'ff//2', customSettingsAperture, defaultOptionsAperture })).toBe(
-                    expectedValue
+                    expectedValue,
                 )
             })
         } else {
             test('invalid string format is ignored and replaced with the default value', () => {
                 expect(toActualAperture({ input: 'ff//2', customSettingsAperture, defaultOptionsAperture })).toBe(
-                    defaultOptionsApertureNumber
+                    defaultOptionsApertureNumber,
                 )
             })
 

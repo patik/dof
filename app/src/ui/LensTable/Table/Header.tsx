@@ -4,8 +4,7 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { visuallyHidden } from '@mui/utils'
-import { ChangeEvent, useMemo } from 'react'
+import { type ChangeEvent, useMemo } from 'react'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
 
@@ -42,6 +41,18 @@ const headCells: readonly HeadCell[] = [
     },
 ]
 
+const visuallyHidden = {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    width: 1,
+} as const
+
 export default function Header() {
     const isMobile = useIsMobile()
     const { units, lenses, order, orderBy, selected, setSelected, setSorting } = useDoFStore()
@@ -59,7 +70,7 @@ export default function Header() {
 
             setSelected([])
         },
-        [lenses, setSelected]
+        [lenses, setSelected],
     )
 
     const createSortHandler = (col: ColumnName) => () => {

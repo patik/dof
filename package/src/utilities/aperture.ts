@@ -51,8 +51,19 @@ export const preciseApertureMap: Record<string, number> = {
 // We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
 /* istanbul ignore next line */
 const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1 : -1))
-const smallestDocumentedAperture = sortedValues.slice(undefined, 1)[0]
-const largestDocumentedAperture = sortedValues.slice(-1)[0]
+
+function getApertureBounds(values: number[]): [number, number] {
+    const smallest = values[0]
+    const largest = values[values.length - 1]
+
+    if (smallest === undefined || largest === undefined) {
+        throw new Error('The aperture map must contain at least one value')
+    }
+
+    return [smallest, largest]
+}
+
+const [smallestDocumentedAperture, largestDocumentedAperture] = getApertureBounds(sortedValues)
 
 /**
  * Takes a human-friendly string and returns a precise numeric value that is equivalent
@@ -61,7 +72,7 @@ const largestDocumentedAperture = sortedValues.slice(-1)[0]
 function getPreciseAperture(humanValue: string): number | undefined {
     if (
         humanValue in preciseApertureMap &&
-        Object.prototype.hasOwnProperty.call(preciseApertureMap, humanValue) &&
+        Object.hasOwn(preciseApertureMap, humanValue) &&
         preciseApertureMap[humanValue]
     ) {
         return preciseApertureMap[humanValue]
@@ -107,7 +118,7 @@ export function toActualAperture({
         return input
     }
 
-    let apertureString: ApertureString | undefined = undefined
+    let apertureString: ApertureString | undefined
 
     if (typeof input === 'number') {
         apertureString = `f/${input}`

@@ -25,7 +25,7 @@ export function useWriteToStorage(hasReadFromStorage: boolean) {
                         lenses,
                     },
                     version: 0,
-                })
+                }),
             )
         }
 

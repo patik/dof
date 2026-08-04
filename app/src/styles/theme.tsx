@@ -1,6 +1,6 @@
 import { CssBaseline, useMediaQuery } from '@mui/material'
-import { createTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
-import { PropsWithChildren, useMemo } from 'react'
+import { createTheme, ThemeProvider as MuiThemeProvider, responsiveFontSizes } from '@mui/material/styles'
+import { type PropsWithChildren, useMemo } from 'react'
 
 export const THEME_SPACING = 8
 
@@ -42,9 +42,9 @@ export function ThemeProvider({ children }: PropsWithChildren) {
                             // fontWeight: 600,
                         },
                     },
-                })
+                }),
             ),
-        [prefersDarkMode]
+        [prefersDarkMode],
     )
 
     return (

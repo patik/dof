@@ -8,7 +8,7 @@ import storage from './storage'
 export function useReadFromStorage() {
     const [hasStartedReading, setHasStartedReading] = useState(false)
     const [hasFinishedReading, setHasFinishedReading] = useState(false)
-    const { addLens, applyFromLocalStorage } = useDoFStore()
+    const { applyFromLocalStorage } = useDoFStore()
 
     // Read from localStorage
     // Note that on Next.js dev server this hook will run twice which could cause duplicate lenses to be added to state
@@ -35,7 +35,7 @@ export function useReadFromStorage() {
         }
 
         fetchData()
-    }, [addLens, applyFromLocalStorage, hasFinishedReading, hasStartedReading])
+    }, [applyFromLocalStorage, hasFinishedReading, hasStartedReading])
 
     return hasFinishedReading
 }

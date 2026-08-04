@@ -1,0 +1,15 @@
+{
+    "$schema": "https://unpkg.com/knip@6/schema.json",
+    "ignoreDependencies": ["@types/react-dom"],
+    "workspaces": {
+        "app": {
+            "entry": ["pages/**/*.{ts,tsx}", "cypress.config.ts"],
+            "project": ["src/**/*.{ts,tsx}", "pages/**/*.{ts,tsx}", "cypress/**/*.{ts,tsx}"],
+            "ignore": ["src/utilities/sensorList.ts"]
+        },
+        "package": {
+            "entry": ["src/index.ts"],
+            "project": ["src/**/*.{ts,tsx}"]
+        }
+    }
+}

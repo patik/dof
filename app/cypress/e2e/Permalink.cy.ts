@@ -1,6 +1,6 @@
 import { del } from 'idb-keyval'
 
-const baseUrl = `http://localhost:3000`
+const baseUrl = Cypress.config('baseUrl')
 
 describe('LensTable', () => {
     beforeEach(async () => {
@@ -88,5 +88,3 @@ describe('LensTable', () => {
         cy.get('[data-testid^="dof-"]').last().contains(`4' 9"`)
     })
 })
-
-export {}

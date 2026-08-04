@@ -36,7 +36,7 @@ function descendingComparator(a: LensDefinition, b: LensDefinition, orderBy: Col
 
 function getComparator<Key extends ColumnName>(
     order: Order,
-    orderBy: Key
+    orderBy: Key,
 ): (a: LensDefinition, b: LensDefinition) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)

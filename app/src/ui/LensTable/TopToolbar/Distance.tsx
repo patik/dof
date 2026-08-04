@@ -1,5 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material'
-import { ChangeEvent, ChangeEventHandler } from 'react'
+import type { ChangeEvent, ChangeEventHandler } from 'react'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
 

@@ -3,7 +3,6 @@ import { Portal } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Snackbar from '@mui/material/Snackbar'
 import { useEffect, useState } from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 function usePermalink(): string {
     const [fullUrl, setFullUrl] = useState('')
@@ -26,13 +25,23 @@ export default function Permalink() {
 
     const [open, setOpen] = useState(false)
 
-    const handleClick = (_text: string, result: boolean) => {
-        if (result) {
+    const handleClick = async (event: React.MouseEvent<HTMLAnchorElement>) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || !navigator.clipboard?.writeText) {
+            return
+        }
+
+        event.preventDefault()
+
+        try {
+            await navigator.clipboard.writeText(fullUrl)
             setOpen(true)
+        } catch {
+            setOpen(false)
+            window.location.assign(fullUrl)
         }
     }
 
-    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (_event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return
         }
@@ -48,19 +57,9 @@ export default function Permalink() {
 
     return (
         <>
-            <CopyToClipboard text={fullUrl} onCopy={handleClick}>
-                <a
-                    href={fullUrl}
-                    onClick={(e) => {
-                        // Allow opening in a new tab
-                        if (!e.metaKey) {
-                            e.preventDefault()
-                        }
-                    }}
-                >
-                    Link to this comparison
-                </a>
-            </CopyToClipboard>
+            <a href={fullUrl} onClick={handleClick}>
+                Link to this comparison
+            </a>
             {/* Use Portal to prevent this <div> from being a descendant of the <p> that holds this link */}
             <Portal>
                 <Snackbar

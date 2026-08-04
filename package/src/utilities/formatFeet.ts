@@ -10,6 +10,6 @@ export function formatFeet(feet: number): string {
     if (!Number.isFinite(feet)) {
         return 'Infinity'
     } else {
-        return Math.floor(feet) + "' " + ((feet * 12) % 12).toFixed(1) + '"'
+        return `${Math.floor(feet)}' ${((feet * 12) % 12).toFixed(1)}"`
     }
 }

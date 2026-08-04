@@ -7,8 +7,7 @@
         "url": "https://github.com/patik/dof.git"
     },
     "devDependencies": {
-        "@types/lodash": "^4.17.25",
-        "source-map-support": "^0.5.21"
+        "@types/lodash": "^4.17.25"
     },
     "dependencies": {
         "lodash": "^4.18.1"
@@ -30,11 +29,10 @@
         "clean": "git clean -fdx",
         "cover": "bun run test --collectCoverage",
         "typecheck": "tsc --noEmit",
-        "code-lint": "eslint --ext .ts --fix ./src/**/*.ts",
-        "lint": "bun run typecheck && bun run code-lint && bun run unused-exports",
+        "lint": "biome check . && bun run typecheck",
+        "format": "biome format --write .",
         "preversion": "bun run build && bun run cover",
-        "test": "bun run jest",
-        "unused-exports": "ts-prune -p ./tsconfig.json"
+        "test": "bun run jest"
     },
     "keywords": [
         "depth-of-field",

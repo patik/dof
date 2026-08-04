@@ -1,6 +1,5 @@
-import { LineSeries } from '@nivo/line'
+import type { LineSeries } from '@nivo/line'
 import { Lens } from 'dof'
-import { compact } from 'lodash'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
@@ -19,14 +18,14 @@ export default function useData() {
                 const { focalLength, aperture, sensorKey, id } = lens
                 const cropFactor: number = sensorList[sensorKey].value
                 const datum: LineSeries = {
-                    id: uniqueNames[lens.id],
-                    data: compact(
-                        distances.map((distance) => {
+                    id: uniqueNames[lens.id] ?? lens.name,
+                    data: distances
+                        .map((distance) => {
                             const { dof: dofLength } = new Lens({ focalLength, aperture, cropFactor, id }).dof(distance)
 
                             // The graph doesn't handle infinite values well
                             if (!Number.isFinite(dofLength)) {
-                                return
+                                return undefined
                             }
 
                             return {
@@ -34,12 +33,12 @@ export default function useData() {
                                 y: dofLength,
                             }
                         })
-                    ),
+                        .filter((point): point is { x: number; y: number } => point !== undefined),
                 }
 
                 return datum
             }),
-        [distances, lenses, uniqueNames]
+        [distances, lenses, uniqueNames],
     )
 
     return data
