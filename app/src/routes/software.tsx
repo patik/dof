@@ -27,7 +27,11 @@ function Software() {
                     Install
                 </Typography>
                 <pre className={styles.code}>
-                    <code>bun add dof</code>
+                    <code>{`bun add dof
+
+# or: yarn add dof
+# or: pnpm add dof
+# or: npm install dof`}</code>
                 </pre>
 
                 <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
