@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material'
 import { createTheme, ThemeProvider as MuiThemeProvider, responsiveFontSizes } from '@mui/material/styles'
-import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, type PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 type ColorTheme = 'light' | 'dark'
 
@@ -20,15 +20,46 @@ function getInitialTheme(): ColorTheme {
     return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
 }
 
+function getStoredTheme(): ColorTheme | null {
+    try {
+        const storedTheme = localStorage.getItem('dof-theme')
+        return storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : null
+    } catch {
+        return null
+    }
+}
+
 export function ThemeProvider({ children }: PropsWithChildren) {
     const [theme, setTheme] = useState<ColorTheme>(getInitialTheme)
+    const [hasManualOverride, setHasManualOverride] = useState(() => getStoredTheme() !== null)
 
     useEffect(() => {
         document.documentElement.dataset.theme = theme
         document.documentElement.style.colorScheme = theme
+    }, [theme])
 
+    useEffect(() => {
+        if (hasManualOverride) {
+            return
+        }
+
+        const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
+        const followSystemTheme = () => {
+            setTheme(colorScheme.matches ? 'dark' : 'light')
+        }
+
+        followSystemTheme()
+        colorScheme.addEventListener('change', followSystemTheme)
+        return () => colorScheme.removeEventListener('change', followSystemTheme)
+    }, [hasManualOverride])
+
+    const toggleTheme = useCallback(() => {
+        const nextTheme = theme === 'light' ? 'dark' : 'light'
+
+        setHasManualOverride(true)
+        setTheme(nextTheme)
         try {
-            localStorage.setItem('dof-theme', theme)
+            localStorage.setItem('dof-theme', nextTheme)
         } catch {
             // Browsers can deny storage access; the in-memory theme still works.
         }
@@ -74,9 +105,9 @@ export function ThemeProvider({ children }: PropsWithChildren) {
     const value = useMemo(
         () => ({
             theme,
-            toggleTheme: () => setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light')),
+            toggleTheme,
         }),
-        [theme],
+        [theme, toggleTheme],
     )
 
     return (

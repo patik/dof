@@ -6,8 +6,11 @@ export default function UnitsToggle() {
     const { units, setUnits } = useDoFStore()
 
     return (
-        <div className="flex min-w-0 flex-1 flex-col gap-2 sm:max-w-64">
-            <span className="text-[0.68rem] font-semibold tracking-[0.16em] text-muted uppercase">
+        <div className="flex min-w-0 flex-1 flex-col gap-field sm:max-w-64">
+            <span
+                id="measurement-system-label"
+                className="text-caption font-semibold tracking-caption text-muted uppercase"
+            >
                 Measurement system
             </span>
             <ToggleGroup
@@ -19,7 +22,7 @@ export default function UnitsToggle() {
                         setUnits(nextUnits)
                     }
                 }}
-                aria-label="Units"
+                aria-labelledby="measurement-system-label"
                 className="grid h-12 grid-cols-2 rounded-xl border border-line bg-panel-raised p-1 shadow-sm"
             >
                 <Toggle

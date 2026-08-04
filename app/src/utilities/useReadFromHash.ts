@@ -10,8 +10,9 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
 
     const parts = piece.split(',')
     const [distancePart = '', unitsPart] = parts
+    const parsedDistance = Number.parseFloat(distancePart)
 
-    distance = parseInt(distancePart, 10)
+    distance = parsedDistance
 
     if (Number.isNaN(distance)) {
         if (process.env.NODE_ENV !== 'test') {
@@ -22,7 +23,7 @@ function parseDistanceAndUnits(piece: string): { distance: Distance; units: Unit
         distance = DEFAULT_DISTANCE
     }
 
-    if (parts.length === 1 && !Number.isNaN(parseInt(distancePart, 10))) {
+    if (parts.length === 1 && !Number.isNaN(parsedDistance)) {
         // Pre-2023, the units were not in the URL, and only imperial units were supported, so assume that this is an old URL from those times
         units = 'imperial'
     } else {

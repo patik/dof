@@ -5,6 +5,7 @@
     --font-display: "Newsreader Variable", serif;
     --text-caption: 0.6875rem;
     --text-title: 2.25rem;
+    --tracking-caption: 0.16em;
     --spacing-field: 0.75rem;
     --radius-control: 0.75rem;
     --radius-panel: 1rem;
@@ -93,6 +94,6 @@ input {
     background: var(--accent-strong);
 }
 
-.tabular-nums {
+@utility lining-tabular-nums {
     font-variant-numeric: tabular-nums lining-nums;
 }

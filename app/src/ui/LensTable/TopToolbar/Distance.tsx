@@ -11,10 +11,10 @@ export default function Distance() {
     }, [distance])
 
     return (
-        <div data-testid="distance" className="flex min-w-0 flex-1 flex-col gap-2 sm:max-w-48">
+        <div data-testid="distance" className="flex min-w-0 flex-1 flex-col gap-field sm:max-w-48">
             <label
                 htmlFor="subject-distance"
-                className="text-[0.68rem] font-semibold tracking-[0.16em] text-muted uppercase"
+                className="text-caption font-semibold tracking-caption text-muted uppercase"
             >
                 Subject distance
             </label>
@@ -26,7 +26,6 @@ export default function Distance() {
                     step="0.1"
                     inputMode="decimal"
                     autoComplete="off"
-                    aria-label="Distance"
                     value={inputValue}
                     onChange={(event) => {
                         setInputValue(event.target.value)
@@ -43,9 +42,9 @@ export default function Distance() {
                             setInputValue(String(distance))
                         }
                     }}
-                    className="tabular-nums min-w-0 flex-1 border-0 bg-transparent px-4 text-lg font-semibold text-ink outline-none"
+                    className="lining-tabular-nums min-w-0 flex-1 border-0 bg-transparent px-4 text-lg font-semibold text-ink outline-none"
                 />
-                <span className="border-l border-line px-3 text-xs font-semibold tracking-[0.12em] text-muted uppercase">
+                <span className="border-l border-line px-3 text-caption font-semibold tracking-caption text-muted uppercase">
                     {units === 'metric' ? 'm' : 'ft'}
                 </span>
             </div>

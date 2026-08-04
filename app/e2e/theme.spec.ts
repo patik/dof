@@ -9,7 +9,7 @@ test('styles the initial shell before JavaScript loads', async ({ browser }) => 
 
     const shell = page.locator('.initial-shell')
     await expect(shell).toBeVisible()
-    await expect(page.locator('.initial-brand')).toContainText('Optical field notes')
+    await expect(page.locator('.initial-iris')).toBeVisible()
 
     const criticalStyles = await shell.evaluate((element) => ({
         bodyBackground: getComputedStyle(document.body).backgroundColor,
@@ -45,6 +45,19 @@ test('uses the system theme and persists a manual override', async ({ page }) =>
     await expect(page.getByRole('button', { name: 'Use light theme' })).toBeVisible()
 })
 
+test('follows system theme changes until the user chooses an override', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' })
+    await page.addInitScript(() => localStorage.removeItem('dof-theme'))
+    await page.goto('/')
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+    expect(await page.evaluate(() => localStorage.getItem('dof-theme'))).toBeNull()
+
+    await page.emulateMedia({ colorScheme: 'dark' })
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+    expect(await page.evaluate(() => localStorage.getItem('dof-theme'))).toBeNull()
+})
+
 for (const path of ['/about/', '/software/']) {
     test(`${path} uses the shared heading hierarchy`, async ({ page }) => {
         await page.goto(path)
@@ -73,7 +86,7 @@ for (const path of ['/about/', '/software/']) {
                 .evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize))
 
             expect(h3Size).toBeLessThan(h2Styles.size)
-            await expect(page.getByText('Optical field notes')).toBeVisible()
+            await expect(page.getByRole('link', { name: 'Depth of Field Calculator home' })).toBeVisible()
         }
     })
 }

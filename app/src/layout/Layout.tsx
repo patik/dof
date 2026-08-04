@@ -37,12 +37,9 @@ export default function Layout({
                             <Link
                                 to="/"
                                 aria-label="Depth of Field Calculator home"
-                                className="inline-flex items-center gap-3"
+                                className="inline-flex items-center"
                             >
                                 <IrisMark />
-                                <span className="text-xs font-semibold tracking-[0.19em] text-muted uppercase">
-                                    Optical field notes
-                                </span>
                             </Link>
                             <ThemeToggle />
                         </div>
