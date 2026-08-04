@@ -69,7 +69,7 @@ const lens2 = lensMaker({ aperture: 'f/3.6' })`}</code>
                     Pass the distance between the camera and subject in meters, or pass <code>true</code> as the second
                     argument to use feet.
                 </Typography>
-                <pre className={styles.code}>
+                <pre className={`${styles.code} mb-2`}>
                     <code>{`const metricResult = lens.dof(5)
 const imperialResult = lens.dof(15, true)
 
@@ -81,7 +81,7 @@ metricResult.far
 metricResult.coc
 metricResult.toString()`}</code>
                 </pre>
-                <Typography>
+                <Typography gutterBottom>
                     Results include the total depth of field, one-eighth depth of field, hyperfocal distance, near and
                     far limits, focal-length equivalency, and circle of confusion. Distance values may be{' '}
                     <code>Infinity</code>.
