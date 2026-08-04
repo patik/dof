@@ -18,7 +18,7 @@
         "cover": "bun run --cwd package build && vitest run --coverage --project package",
         "lint": "biome check . && bun run typecheck && bun run knip",
         "format": "biome format --write .",
-        "typecheck": "bun run --workspaces typecheck",
+        "typecheck": "bun run --cwd package build && bun run --workspaces typecheck",
         "knip": "knip",
         "test": "bun run --cwd package build && vitest run",
         "e2e": "playwright test --config app/playwright.config.ts",
