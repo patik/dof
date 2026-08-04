@@ -3,7 +3,7 @@
 ## 4.0.0
 
 - ESM-only package with zero runtime dependencies
-- Requires Node.js 20.19 or newer
+- Declares Node.js 20.19 or newer as the package runtime requirement; repository development and releases continue to use Node.js 24
 - Automated releases with npm provenance
 
 Version 3.0.0 is the final CommonJS release. Starting with 4.0.0, `dof` is ESM-only and consumers must load it as an ES module.
@@ -12,6 +12,8 @@ Release notes for v4 and later live in [GitHub Releases](https://github.com/pati
 
 ## 3.0.0
 
+- Raised the repository development environment from Node.js 20 to Node.js 24 and standardized CI and publishing on Node.js 24
+- The published package did not declare an `engines` requirement, so Node.js 24 was a development, CI, and publishing requirement rather than an npm-enforced consumer runtime minimum
 - Final CommonJS release; v4 and later are ESM-only
 
 ## 2.1.0
