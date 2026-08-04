@@ -1,3 +1,6 @@
+/* Selectors are doubled throughout this file to outrank MUI's own single-class
+   component styles, which would otherwise win on specificity. */
+
 .paper.paper {
     width: 100%;
     margin-bottom: 16px;
