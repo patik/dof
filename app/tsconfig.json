@@ -14,5 +14,5 @@
         "incremental": true
     },
     "include": ["next-env.d.ts", "src/", "public/", "pages/", "./index.d.ts"],
-    "exclude": ["node_modules", "./cypress"]
+    "exclude": ["node_modules"]
 }

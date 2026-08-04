@@ -14,6 +14,9 @@ export function ThemeProvider({ children }: PropsWithChildren) {
                     spacing: THEME_SPACING,
                     palette: {
                         mode: prefersDarkMode ? 'dark' : 'light',
+                        primary: {
+                            main: prefersDarkMode ? '#90caf9' : '#1565c0',
+                        },
                     },
                     typography: {
                         body1: {

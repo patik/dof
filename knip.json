@@ -3,8 +3,8 @@
     "ignoreDependencies": ["@types/react-dom"],
     "workspaces": {
         "app": {
-            "entry": ["pages/**/*.{ts,tsx}", "cypress.config.ts"],
-            "project": ["src/**/*.{ts,tsx}", "pages/**/*.{ts,tsx}", "cypress/**/*.{ts,tsx}"],
+            "entry": ["pages/**/*.{ts,tsx}", "playwright.config.ts"],
+            "project": ["src/**/*.{ts,tsx}", "pages/**/*.{ts,tsx}", "e2e/**/*.{ts,tsx}"],
             "ignore": ["src/utilities/sensorList.ts"]
         },
         "package": {

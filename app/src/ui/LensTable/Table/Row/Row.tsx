@@ -28,9 +28,6 @@ export default function Row({ lens }: { lens: LensDefinition }) {
         <>
             <MuiTableRow
                 hover
-                role="checkbox"
-                aria-checked={isRowSelected}
-                tabIndex={-1}
                 key={lens.id}
                 selected={isRowSelected}
                 className={`lens-table-row`}
