@@ -1,3 +1,4 @@
+import { builtInDefaults } from '../Lens'
 import { combineSettings } from './combineSettings'
 
 describe('combineSettings', () => {
@@ -18,6 +19,10 @@ describe('combineSettings', () => {
                 cropFactor: 1,
                 id: undefined,
             })
+        })
+
+        test('an explicitly undefined custom id falls back to the built-in id', () => {
+            expect(combineSettings({}, { id: undefined }).id).toBe(builtInDefaults.id)
         })
     })
 

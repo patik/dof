@@ -1,12 +1,11 @@
-import { defaults } from 'lodash'
 import { builtInDefaults } from '../Lens'
+import type { Options, Settings } from '../types'
 import { toActualAperture } from './aperture'
 
 /**
  * Guarantees that all settings have a defined value
  */
 export function combineSettings(options: Options, customDefaults: Options = builtInDefaults): Settings {
-    const combined = defaults({}, options, customDefaults, builtInDefaults)
     const aperture = toActualAperture({
         input: options.aperture,
         defaultOptionsAperture: builtInDefaults.aperture,
@@ -14,7 +13,15 @@ export function combineSettings(options: Options, customDefaults: Options = buil
     })
 
     return {
-        ...combined,
+        focalLength:
+            options.focalLength !== undefined
+                ? options.focalLength
+                : (customDefaults.focalLength ?? builtInDefaults.focalLength),
         aperture,
+        cropFactor:
+            options.cropFactor !== undefined
+                ? options.cropFactor
+                : (customDefaults.cropFactor ?? builtInDefaults.cropFactor),
+        id: options.id !== undefined ? options.id : (customDefaults.id ?? builtInDefaults.id),
     }
 }
