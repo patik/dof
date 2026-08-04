@@ -1,10 +1,12 @@
+import { preciseApertureMap } from '../data/preciseApertureMap'
 import { builtInDefaults } from '../Lens'
-import { toActualAperture } from './aperture'
+import { getApertureName, toActualAperture } from './aperture'
+import { objectKeysArray } from './objectKeysArray'
 
 const defaultOptionsAperture = builtInDefaults.aperture
 const defaultOptionsApertureNumber = Number(builtInDefaults.aperture.replace('f/', ''))
 
-const customSettingsApertures = [undefined /* , 2.4, 'f/3.4' */]
+const customSettingsApertures = [undefined, 2.4, 'f/3.4']
 
 describe.each(customSettingsApertures)('toActualAperture', (customSettingsAperture) => {
     describe(`customSettingsAperture: ${customSettingsAperture}`, () => {
@@ -60,6 +62,56 @@ describe.each(customSettingsApertures)('toActualAperture', (customSettingsApertu
         test('larger than any value in our aperture map', () => {
             expect(toActualAperture({ input: 'f/128', customSettingsAperture, defaultOptionsAperture })).toBe(128)
             expect(toActualAperture({ input: 205, customSettingsAperture, defaultOptionsAperture })).toBe(205)
+        })
+    })
+})
+
+describe('getApertureName', () => {
+    describe.each(objectKeysArray(preciseApertureMap))('Verify every value in the mapping', (fstop) => {
+        test(`${preciseApertureMap[fstop]} -> ${fstop}`, () => {
+            expect(getApertureName(preciseApertureMap[fstop])).toBe(fstop)
+        })
+
+        test(`1% below the documented value still finds the applicable f-stop: ${
+            preciseApertureMap[fstop] * 0.99
+        } -> ${fstop}`, () => {
+            expect(getApertureName(preciseApertureMap[fstop] * 0.99)).toBe(fstop)
+        })
+
+        test(`1% above the documented value still finds the applicable f-stop: ${
+            preciseApertureMap[fstop] * 1.01
+        } -> ${fstop}`, () => {
+            expect(getApertureName(preciseApertureMap[fstop] * 1.01)).toBe(fstop)
+        })
+    })
+
+    test(`Documented value 5.039684 results in the value it's mapped to, f/5`, () => {
+        expect(getApertureName(5.039684)).toBe('f/5')
+    })
+
+    test(`Undocumented value 5.01 results in the nearest aperture, f/5`, () => {
+        expect(getApertureName(5.01)).toBe('f/5')
+    })
+
+    test(`Undocumented value 4.99 results in the nearest aperture, f/5`, () => {
+        expect(getApertureName(4.99)).toBe('f/5')
+    })
+
+    describe('values that cannot describe an aperture', () => {
+        // Every comparison against these is false, so the nearest-match search would otherwise settle on the first
+        // entry in the map and confidently report `f/1`
+        test.each([Number.NaN, Infinity, -Infinity, 0, -5])('%p has no name', (value) => {
+            expect(getApertureName(value)).toBeUndefined()
+        })
+    })
+
+    describe('values beyond the documented range', () => {
+        test('below the smallest documented f-stop', () => {
+            expect(getApertureName(0.5)).toBe('f/1')
+        })
+
+        test('above the largest documented f-stop', () => {
+            expect(getApertureName(1000)).toBe('f/64')
         })
     })
 })

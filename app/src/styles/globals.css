@@ -90,9 +90,18 @@ body {
         background-color 180ms ease;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+/* In @layer base so a `text-*` utility can opt an individual link out — unlayered rules outrank Tailwind's
+   utilities layer, which is why the masthead links carry `text-inherit`. */
+@layer base {
+    a {
+        color: var(--accent-strong);
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+        text-decoration: underline;
+    }
 }
 
 * {

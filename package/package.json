@@ -51,7 +51,7 @@
         "build": "tsdown",
         "clean": "git clean -fdx",
         "cover": "bun run build && cd .. && vitest run --coverage --project package",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "bun run build && tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
         "lint": "biome check . && bun run typecheck",
         "format": "biome format --write .",
         "test": "bun run build && cd .. && vitest run --project package",

@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import { Link } from '@tanstack/react-router'
+import { Link, useMatchRoute } from '@tanstack/react-router'
 import type { PropsWithChildren, ReactElement } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import IrisMark from '../components/ui/IrisMark'
@@ -24,6 +24,10 @@ export default function Layout({
     noMainHeading,
     children,
 }: Props): ReactElement {
+    const matchRoute = useMatchRoute()
+    // No point linking to the page you are already reading
+    const isHowToUsePage = Boolean(matchRoute({ to: '/about' }))
+
     return (
         <div className="flex min-h-full flex-col">
             <title>{`${title ? `${title} | ` : ''} Depth of Field Calculator & Comparison Tool for Camera Lenses`}</title>
@@ -43,9 +47,18 @@ export default function Layout({
                             <ThemeToggle />
                         </div>
                         <Typography variant="h4" component="h1" gutterBottom>
-                            <Link to="/">Depth of Field Calculator &amp; Lens Comparison Tool</Link>
+                            <Link to="/" className="text-inherit">
+                                Depth of Field Calculator &amp; Lens Comparison Tool
+                            </Link>
                         </Typography>
-                        <Typography>Compare multiple camera lenses side-by-side</Typography>
+                        <div className="flex flex-col gap-1 min-[600px]:flex-row min-[600px]:items-baseline min-[600px]:justify-between min-[600px]:gap-4">
+                            <Typography>Compare multiple camera lenses side-by-side</Typography>
+                            {isHowToUsePage ? null : (
+                                <Typography variant="body2" className="shrink-0 text-right">
+                                    <Link to="/about">How to use</Link>
+                                </Typography>
+                            )}
+                        </div>
                     </header>
                 )}
 

@@ -80,6 +80,74 @@ Numeric result properties can be `Infinity` when the far focus limit extends to 
 
 If distance is omitted, `dof()` uses 5 meters or, in imperial mode, 15 feet.
 
+## Use the standalone calculators
+
+The package also exports individual functions for calculating depth of field, aperture, crop factor, or focal length
+without creating a `Lens` instance:
+
+```js
+import {
+    calculateAperture,
+    calculateCropFactor,
+    calculateDepthOfField,
+    calculateFocalLength,
+} from 'dof'
+
+const depthOfField = calculateDepthOfField({
+    focalLength: 35,
+    aperture: 2,
+    cropFactor: 1,
+    distance: 5,
+})
+
+const aperture = calculateAperture({
+    focalLength: 35,
+    cropFactor: 1,
+    distance: 5,
+    dof: depthOfField.dof,
+    near: depthOfField.near,
+}) // { aperture: 2, fStop: 'f/2' }
+
+const cropFactor = calculateCropFactor({
+    focalLength: 35,
+    aperture: 2,
+    distance: 5,
+    dof: depthOfField.dof,
+    near: depthOfField.near,
+}) // { cropFactor: 1 }
+
+const focalLength = calculateFocalLength({
+    aperture: 2,
+    cropFactor: 1,
+    distance: 5,
+    near: depthOfField.near,
+}) // { focalLength: 35, focalLengthEquiv: 35 }
+```
+
+`focalLength` is always in millimeters. `distance`, `near`, and `dof` use meters by default; pass
+`imperialUnits: true` to use feet. Aperture values are precise numeric f-numbers, and crop factor is relative to full
+frame.
+
+`calculateAperture()` and `calculateCropFactor()` accept an infinite `dof`, in which case they derive the result from
+`near` alone. `calculateFocalLength()` only reads `near`, so it is unaffected either way.
+
+### Accuracy
+
+The inverse calculators recover their answer from a depth-of-field range, which is a lossy starting point:
+
+- The circle of confusion is quantized to three decimal places, and a crop factor recovered through it can differ from
+  the original by a few percent. The error grows with the crop factor — round-tripping a full-frame sensor is exact,
+  while a phone sensor near 7.2× lands around 7.5×.
+- `calculateFocalLength()` rounds to a whole millimeter, so a 24.5mm lens comes back as `25`.
+- `calculateAperture()` returns an unrounded f-number that may carry floating-point dust, such as `2.000000000000001`.
+  Use the accompanying `fStop` when you want a value to display.
+
+### Errors
+
+The inverse calculators throw a `RangeError` when the input cannot describe a real depth of field — a non-positive or
+non-finite measurement, a `near` limit that is not closer than `distance`, or a far limit (`near + dof`) that is not
+beyond it. `calculateDepthOfField()` does not validate its input and is unchanged in this respect.
+
 ## Aperture helpers
 
 ```js
@@ -95,12 +163,25 @@ isApertureString('f/2.8') // true
 The package includes bundled declarations and exports its public input and result types:
 
 ```ts
-import { Lens, type DepthOfFieldDetails, type DoFResult, type Options } from 'dof'
+import {
+    Lens,
+    type CalculateDepthOfFieldOptions,
+    type DepthOfFieldDetails,
+    type DoFResult,
+    type Options,
+} from 'dof'
 
 const options: Options = { focalLength: 50, aperture: 'f/2' }
 const lens = new Lens(options)
 const result: DoFResult = lens.dof(4)
 const details: DepthOfFieldDetails = result
+
+const calculatorOptions: CalculateDepthOfFieldOptions = {
+    focalLength: 50,
+    aperture: 2,
+    cropFactor: 1,
+    distance: 4,
+}
 ```
 
 `DepthOfFieldDetails` remains an alias of `DoFResult` for compatibility.

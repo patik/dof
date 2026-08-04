@@ -23,6 +23,40 @@ export type DefaultOptions = {
     id: Options['id']
 }
 
+export type CalculateApertureOptions = {
+    focalLength: number
+    cropFactor: number
+    distance: number
+    dof: number
+    near: number
+    imperialUnits?: boolean
+}
+
+export type CalculateCropFactorOptions = {
+    near: number
+    dof: number
+    focalLength: number
+    aperture: number
+    distance: number
+    imperialUnits?: boolean
+}
+
+export type CalculateDepthOfFieldOptions = {
+    focalLength: number
+    aperture: number
+    cropFactor: number
+    distance: number
+    imperialUnits?: boolean
+}
+
+export type CalculateFocalLengthOptions = {
+    near: number
+    aperture: number
+    cropFactor: number
+    distance: number
+    imperialUnits?: boolean
+}
+
 export type DoFResult = {
     dof: number
     focalLengthEquiv: number
@@ -32,4 +66,18 @@ export type DoFResult = {
     far: number
     coc: number
     toString: () => string
+}
+
+export type FocalLengthResult = {
+    focalLength: number
+    focalLengthEquiv: number
+}
+
+export type ApertureResult = {
+    aperture: number
+    fStop: ApertureString | undefined
+}
+
+export type CropFactorResult = {
+    cropFactor: number
 }
