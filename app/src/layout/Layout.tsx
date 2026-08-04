@@ -26,11 +26,14 @@ export default function Layout({
     children,
 }: Props): ReactElement {
     return (
-        <Box display="flex" flexDirection="column" minHeight="100%">
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
             <title>{`${title ? `${title} | ` : ''} Depth of Field Calculator & Comparison Tool for Camera Lenses`}</title>
             <meta name="description" content={description} />
 
-            <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
+            <Box
+                component="main"
+                sx={{ width: '100%', maxWidth: '1020px', alignSelf: 'center', px: 2, my: 3, flexGrow: 1 }}
+            >
                 {noMainHeading ? null : (
                     <header className="mb-8 border-b border-line pb-5">
                         <div className="mb-4 flex items-center justify-between gap-4">

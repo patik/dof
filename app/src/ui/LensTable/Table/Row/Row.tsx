@@ -121,11 +121,7 @@ export default function Row({ lens }: { lens: LensDefinition }) {
                             : undefined
                     }
                 >
-                    <Box
-                        display="flex"
-                        alignItems="center"
-                        sx={isMobile ? { alignItems: 'center' } : { width: '100%' }}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center', width: isMobile ? undefined : '100%' }}>
                         <Typography sx={{ flexGrow: 1, mr: 1 }}>{`${
                             isMobile ? 'Depth of field: ' : ''
                         }${displayDof}`}</Typography>

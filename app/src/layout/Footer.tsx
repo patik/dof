@@ -4,7 +4,7 @@ import Permalink from './Permalink'
 
 export default function Footer({ hasPermalink }: { hasPermalink?: boolean }) {
     return (
-        <Grid container component="footer" mb={3} textAlign="center">
+        <Grid container component="footer" sx={{ mb: 3, textAlign: 'center' }}>
             <Grid size={{ xs: 3 }}>
                 <Typography variant="body2">
                     {hasPermalink ? <Permalink /> : <Link to="/">Back to the calculator</Link>}

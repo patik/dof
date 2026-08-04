@@ -1,6 +1,6 @@
 import { Box, type BoxProps, Divider, Grid, Typography } from '@mui/material'
 import { createFileRoute } from '@tanstack/react-router'
-import type { PropsWithChildren } from 'react'
+import type { CSSProperties, PropsWithChildren } from 'react'
 import addOrDuplicate from '../assets/images/add-duplicate.png'
 import detailsImg from '../assets/images/details.png'
 import PrintedTextShallowDoF from '../assets/images/printed-text-shallow-dof.jpg'
@@ -14,9 +14,14 @@ import useIsMobile from '../utilities/useIsMobile'
 
 export const Route = createFileRoute('/about')({ component: About })
 
-function Figure({ narrow, children, ...props }: PropsWithChildren & BoxProps & { narrow?: boolean }) {
+function Figure({
+    narrow,
+    children,
+    textAlign,
+    ...props
+}: PropsWithChildren<Omit<BoxProps, 'sx'> & { narrow?: boolean; textAlign?: CSSProperties['textAlign'] }>) {
     return (
-        <Box component="figure" maxWidth={narrow ? '300px' : undefined} {...props}>
+        <Box component="figure" sx={{ maxWidth: narrow ? '300px' : undefined, textAlign }} {...props}>
             {children}
         </Box>
     )
@@ -34,7 +39,7 @@ function About() {
             title="About"
             description="Learn how depth of field works and how to compare camera lenses with the calculator."
         >
-            <Box mb={3}>
+            <Box sx={{ mb: 3 }}>
                 <Typography variant="h2" gutterBottom>
                     What is depth of field?
                 </Typography>
@@ -126,7 +131,7 @@ function About() {
                     </Grid>
                 </Grid>
             </Box>
-            <Box mb={3}>
+            <Box sx={{ mb: 3 }}>
                 <Typography variant="h2" id="calculate" gutterBottom>
                     Using the calculator
                 </Typography>
@@ -179,7 +184,7 @@ function About() {
                     </a>
                 </Figure>
             </Box>
-            <Box mb={3}>
+            <Box sx={{ mb: 3 }}>
                 <Typography variant="h2" id="compare" gutterBottom>
                     Comparing lenses
                 </Typography>
@@ -223,7 +228,7 @@ function About() {
                     </a>
                 </Figure>
             </Box>
-            <Box mb={3}>
+            <Box sx={{ mb: 3 }}>
                 <Typography variant="h2" id="sharing" gutterBottom>
                     Sharing and saving
                 </Typography>

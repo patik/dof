@@ -90,9 +90,7 @@ export default function Header() {
                                 indeterminate={numSelected > 0 && numSelected < rowCount}
                                 checked={rowCount > 0 && numSelected === rowCount}
                                 onChange={handleSelectAllClick}
-                                inputProps={{
-                                    'aria-label': 'Select all lenses',
-                                }}
+                                slotProps={{ input: { 'aria-label': 'Select all lenses' } }}
                                 data-testid="select-all"
                             />
                         </TableCell>

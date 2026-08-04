@@ -19,20 +19,20 @@ export default function Main() {
     const hasInitializedLenses = useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
 
     if (!hasInitializedLenses) {
-        return <Box minHeight={{ xs: '42rem', sm: '36rem' }} aria-hidden="true" />
+        return <Box sx={{ minHeight: { xs: '42rem', sm: '36rem' } }} aria-hidden="true" />
     }
 
     return (
         <>
-            <Box my={3}>
+            <Box sx={{ my: 3 }}>
                 <TopToolbar />
             </Box>
 
-            <Box mb={2}>
+            <Box sx={{ mb: 2 }}>
                 <LensTable />
             </Box>
 
-            <Box mb={2} width="100%">
+            <Box sx={{ mb: 2, width: '100%' }}>
                 <Suspense fallback={null}>
                     <Graph />
                 </Suspense>

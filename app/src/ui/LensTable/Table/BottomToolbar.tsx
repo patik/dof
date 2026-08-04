@@ -18,10 +18,10 @@ export default function BottomToolbar() {
             data-testid="bottom-toolbar"
         >
             {isMobile ? null : (
-                <Box flexGrow={1} display="flex" alignItems="center">
+                <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
                     {selected.length > 0 ? (
                         <>
-                            <Box mr={1}>
+                            <Box sx={{ mr: 1 }}>
                                 <Typography
                                     sx={{ flex: '1 1 100%' }}
                                     color="inherit"
