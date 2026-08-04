@@ -9,8 +9,8 @@ export type {
     ApertureResult,
     ApertureString,
     CropFactorResult,
-    DoFResult,
     DoFResult as DepthOfFieldDetails,
+    DoFResult,
     FocalLengthResult,
     Options,
 } from './types'
