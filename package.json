@@ -19,6 +19,7 @@
         "cover": "bun run --cwd package build && vitest run --coverage --project package",
         "lint": "biome check . && bun run typecheck && bun run knip",
         "format": "biome format --write .",
+        "fix:staged": "lint-staged",
         "typecheck": "bun run --cwd package build && bun run --workspaces typecheck",
         "knip": "knip",
         "test": "bun run --cwd package build && vitest run",
@@ -42,10 +43,14 @@
         "@vitest/coverage-v8": "^4.1.10",
         "jsdom": "^30.0.1",
         "knip": "^6.31.0",
+        "lint-staged": "^17.3.0",
         "tailwindcss": "^4.3.3",
         "typescript": "^5.6.2",
         "vite": "^8.2.0",
         "vitest": "^4.1.10"
+    },
+    "lint-staged": {
+        "*.{ts,tsx,js,jsx,json,jsonc,css}": "biome check --write --no-errors-on-unmatched"
     },
     "repository": {
         "type": "git",

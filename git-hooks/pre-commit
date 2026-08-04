@@ -26,10 +26,20 @@ if ! command -v bun >/dev/null 2>&1; then
     exit 1
 fi
 
+# Auto-fixes formatting and safe lint issues in the staged files, then re-stages
+# them. lint-staged stashes unstaged work first, so a file that is only partially
+# staged does not get its uncommitted changes swept into the commit.
+echo "pre-commit: auto-fixing staged files..."
+if ! bun run fix:staged; then
+    echo >&2
+    echo "pre-commit: staged files have problems that cannot be fixed automatically." >&2
+    exit 1
+fi
+
 echo "pre-commit: checking lint, formatting, and types..."
 if ! bun run lint; then
     echo >&2
-    echo "pre-commit: lint failed. Run 'bun run format' to fix formatting, then stage the result." >&2
+    echo "pre-commit: lint failed." >&2
     exit 1
 fi
 
