@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test'
 test('adds the current comparison to a clean URL', async ({ page }) => {
     await page.goto('/')
     await expect(page).not.toHaveURL(/#/)
+    await expect(page.getByTestId(/^lens-name-/)).toHaveCount(2)
     await page.getByRole('button', { name: 'Add Lens' }).click()
     await expect(page).toHaveURL(/#5,m;Lens%203,35,f-2,full$/)
 })
