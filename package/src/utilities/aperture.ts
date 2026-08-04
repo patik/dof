@@ -1,3 +1,4 @@
+import type { ApertureString } from '../types'
 import { objectKeysArray } from './objectKeysArray'
 
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/

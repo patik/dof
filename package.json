@@ -24,7 +24,7 @@
         "e2e": "playwright test --config app/playwright.config.ts",
         "changeset": "changeset",
         "version-packages": "changeset version",
-        "release": "bun run --cwd package build && bun run --cwd package check:package && changeset publish"
+        "release": "bun run test && bun run --cwd package check:package && changeset publish"
     },
     "devDependencies": {
         "@axe-core/playwright": "^4.12.1",

@@ -6,7 +6,13 @@
 - Requires Node.js 20.19 or newer
 - Automated releases with npm provenance
 
+Version 3.0.0 is the final CommonJS release. Starting with 4.0.0, `dof` is ESM-only and consumers must load it as an ES module.
+
 Release notes for v4 and later live in [GitHub Releases](https://github.com/patik/dof/releases).
+
+## 3.0.0
+
+- Final CommonJS release; v4 and later are ESM-only
 
 ## 2.1.0
 

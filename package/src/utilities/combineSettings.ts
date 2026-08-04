@@ -1,4 +1,5 @@
 import { builtInDefaults } from '../Lens'
+import type { Options, Settings } from '../types'
 import { toActualAperture } from './aperture'
 
 /**

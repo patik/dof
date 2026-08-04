@@ -47,8 +47,19 @@ export default defineConfig({
             },
             workbox: {
                 cleanupOutdatedCaches: true,
-                globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+                globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
                 navigateFallback: 'index.html',
+                runtimeCaching: [
+                    {
+                        urlPattern: ({ request }) => request.destination === 'font',
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'font-assets',
+                            cacheableResponse: { statuses: [0, 200] },
+                            expiration: { maxEntries: 12, maxAgeSeconds: 60 * 60 * 24 * 365 },
+                        },
+                    },
+                ],
             },
         }),
     ],

@@ -1,3 +1,4 @@
+import type { DoFResult } from '../types'
 import { decimalAdjust } from './decimalAdjust'
 import { formatFeet } from './formatFeet'
 

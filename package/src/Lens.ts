@@ -1,3 +1,4 @@
+import type { DefaultOptions, DoFResult, Options, Settings } from './types'
 import { calculateDepthOfField } from './utilities/calculateDepthOfField'
 import { combineSettings } from './utilities/combineSettings'
 
