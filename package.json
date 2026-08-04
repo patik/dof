@@ -15,6 +15,7 @@
         "build": "bun run --cwd package lint && bun run --cwd package build && bun run --cwd app build",
         "deploy": "bun run --cwd package lint && bun run --cwd package build && IS_DEPLOYMENT=true bun run --cwd app build",
         "clean": "git clean -fdx",
+        "prepare": "git config core.hooksPath git-hooks || true",
         "cover": "bun run --cwd package build && vitest run --coverage --project package",
         "lint": "biome check . && bun run typecheck && bun run knip",
         "format": "biome format --write .",

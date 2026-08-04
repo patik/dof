@@ -1,0 +1,41 @@
+#!/bin/sh
+# Runs linting, formatting, and unit tests before every commit.
+#
+# Enabled by the root `prepare` script, which points core.hooksPath at this
+# directory on `bun install`. Skip the checks for a single commit with:
+#
+#     git commit --no-verify
+
+set -e
+
+# Git clients launched from the desktop rather than a shell often start with a
+# minimal PATH that does not include bun.
+if ! command -v bun >/dev/null 2>&1; then
+    for candidate in "$HOME/.bun/bin" /opt/homebrew/bin /usr/local/bin; do
+        if [ -x "$candidate/bun" ]; then
+            PATH="$candidate:$PATH"
+            export PATH
+            break
+        fi
+    done
+fi
+
+if ! command -v bun >/dev/null 2>&1; then
+    echo "pre-commit: bun was not found on PATH." >&2
+    echo "pre-commit: install bun, or commit with --no-verify to skip these checks." >&2
+    exit 1
+fi
+
+echo "pre-commit: checking lint, formatting, and types..."
+if ! bun run lint; then
+    echo >&2
+    echo "pre-commit: lint failed. Run 'bun run format' to fix formatting, then stage the result." >&2
+    exit 1
+fi
+
+echo "pre-commit: running unit tests..."
+if ! bun run test; then
+    echo >&2
+    echo "pre-commit: unit tests failed." >&2
+    exit 1
+fi
