@@ -38,8 +38,9 @@ test('persists the log scale and exposes the nearest point tooltip', async ({ pa
     }
 
     await pointerArea.hover({ position: { x: bounds.width * 0.45, y: bounds.height * 0.55 } })
-    await expect(chart.getByRole('status')).toContainText('DoF is')
-    await expect(chart.getByRole('status')).toContainText('for a subject that is')
+    const tooltip = page.getByTestId('chart-tooltip')
+    await expect(tooltip).toContainText('DoF is')
+    await expect(tooltip).toContainText('for a subject that is')
 
     await page.reload()
     await expect(chart.getByRole('button', { name: 'log' })).toHaveAttribute('aria-pressed', 'true')

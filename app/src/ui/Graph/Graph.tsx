@@ -9,13 +9,17 @@ import useResizeObserver from './useResizeObserver'
 
 const SCALE_STORAGE_KEY = 'dof-chart-scale:v1'
 const SERIES_COLOR_COUNT = 6
+// Matches the `sm` breakpoint the rest of the app switches layouts at, measured
+// against the chart's own container rather than the viewport.
+const COMPACT_WIDTH = 600
 
-type HoveredPoint = {
-    series: ChartSeries
-    point: ChartPoint
-    x: number
-    y: number
-    color: string
+// Only the identity of the hovered sample is held in state. Its pixel position is
+// derived from the current scales on every render, so changing units, resizing, or
+// switching scales can never leave a crosshair stranded at stale coordinates, and
+// deleting the lens simply makes the hover resolve to nothing.
+type HoveredKey = {
+    lensId: ChartSeries['lensId']
+    distance: ChartPoint['distance']
 }
 
 function readScaleMode(): ChartScaleMode {
@@ -48,17 +52,16 @@ function formatDepth(value: number, units: Units): string {
 
 export default function Graph() {
     const { units } = useDoFStore()
-    const data = useData()
     const { ref, width } = useResizeObserver<HTMLElement>()
+    const compact = width < COMPACT_WIDTH
+    const data = useData(compact)
     const svgRef = useRef<SVGSVGElement>(null)
-    const hoverKeyRef = useRef<string | null>(null)
     const headingId = useId()
     const titleId = useId()
     const descriptionId = useId()
     const clipId = useId()
     const [scaleMode, setScaleMode] = useState<ChartScaleMode>(readScaleMode)
-    const [hovered, setHovered] = useState<HoveredPoint | null>(null)
-    const compact = width < 640
+    const [hoveredKey, setHoveredKey] = useState<HoveredKey | null>(null)
     const height = compact ? 430 : 470
     const margin = {
         top: compact ? 68 : 74,
@@ -128,10 +131,24 @@ export default function Graph() {
         (series): series is (typeof plottedSeries)[number] & { infinityAt: number } => series.infinityAt !== null,
     )
 
+    const hovered = useMemo(() => {
+        if (!hoveredKey) {
+            return null
+        }
+
+        const series = plottedSeries.find((item) => item.lensId === hoveredKey.lensId)
+        // A lens can be removed, or its sample dropped from the plot, while it is hovered.
+        const point = series?.points.find((item) => item.distance === hoveredKey.distance)
+
+        if (!series || !point) {
+            return null
+        }
+
+        return { series, point, color: series.color, x: scales.x(point.distance), y: scales.y(point.dof) }
+    }, [hoveredKey, plottedSeries, scales.x, scales.y])
+
     const changeScale = (nextMode: ChartScaleMode) => {
         setScaleMode(nextMode)
-        setHovered(null)
-        hoverKeyRef.current = null
         try {
             localStorage.setItem(SCALE_STORAGE_KEY, nextMode)
         } catch {
@@ -154,20 +171,14 @@ export default function Graph() {
             return
         }
 
-        const key = `${nearest.series.lensId}:${nearest.point.distance}`
-        if (hoverKeyRef.current === key) {
+        if (hoveredKey?.lensId === nearest.series.lensId && hoveredKey.distance === nearest.point.distance) {
             return
         }
 
-        hoverKeyRef.current = key
-        const color = plottedSeries.find((series) => series.lensId === nearest.series.lensId)?.color ?? seriesColor(0)
-        setHovered({ ...nearest, color })
+        setHoveredKey({ lensId: nearest.series.lensId, distance: nearest.point.distance })
     }
 
-    const clearHover = () => {
-        hoverKeyRef.current = null
-        setHovered(null)
-    }
+    const clearHover = () => setHoveredKey(null)
 
     return (
         <section
@@ -216,7 +227,7 @@ export default function Graph() {
                 >
                     <title id={titleId}>Depth of field by subject distance for each lens</title>
                     <desc id={descriptionId}>
-                        {`A ${scaleMode} scale line chart comparing ${data.length} ${data.length === 1 ? 'lens' : 'lenses'}. Hyperfocal distances and where depth becomes infinite are marked. The lens table above presents the same calculations as accessible text.`}
+                        {`A ${scaleMode} scale line chart comparing ${data.length} ${data.length === 1 ? 'lens' : 'lenses'}. Hyperfocal distances and where depth becomes infinite are marked.${scales.depthClipped ? ' Depths that run away near the hyperfocal distance continue above the top of the plot.' : ''} The lens table above presents the same calculations as accessible text.`}
                     </desc>
                     <defs>
                         <clipPath id={clipId}>
@@ -421,30 +432,22 @@ export default function Graph() {
                         ) : null}
                     </g>
 
+                    {/* The infinity threshold is the hyperfocal distance, so the dashed marker
+                        drawn above already sits at this x; only the label is added here. */}
                     {infinityMarkers.map((series, index) => {
                         const markerX = scales.x(series.infinityAt)
                         return (
-                            <g key={`infinity-${series.lensId}`}>
-                                <line
-                                    x1={markerX}
-                                    x2={markerX}
-                                    y1={margin.top}
-                                    y2={plotBottom}
-                                    stroke={series.color}
-                                    strokeWidth="1.5"
-                                    strokeDasharray="2 4"
-                                />
-                                <text
-                                    x={Math.min(markerX + 5, plotRight - 4)}
-                                    y={plotBottom - 9 - index * 15}
-                                    textAnchor={markerX > plotRight - 120 ? 'end' : 'start'}
-                                    fill={series.color}
-                                    fontSize={compact ? 9 : 10}
-                                    fontWeight="700"
-                                >
-                                    {`∞ ${series.id} beyond ${formatDistance(series.infinityAt, units)}`}
-                                </text>
-                            </g>
+                            <text
+                                key={`infinity-${series.lensId}`}
+                                x={Math.min(markerX + 5, plotRight - 4)}
+                                y={plotBottom - 9 - index * 15}
+                                textAnchor={markerX > plotRight - 120 ? 'end' : 'start'}
+                                fill={series.color}
+                                fontSize={compact ? 9 : 10}
+                                fontWeight="700"
+                            >
+                                {`∞ ${series.id} beyond ${formatDistance(series.infinityAt, units)}`}
+                            </text>
                         )
                     })}
 
@@ -453,7 +456,9 @@ export default function Graph() {
                             return null
                         }
 
-                        const pointY = scales.y(series.lastPoint.dof)
+                        // The depth axis may stop short of a runaway final sample, so keep the
+                        // leader line anchored to the edge of the plot instead of off-canvas.
+                        const pointY = Math.min(plotBottom, Math.max(margin.top, scales.y(series.lastPoint.dof)))
                         const labelY = labelPositions.get(series.lensId) ?? pointY
                         const startX = scales.x(series.lastPoint.distance)
                         const endX = Math.min(width - 6, plotRight + (compact ? 8 : 13))
@@ -494,9 +499,11 @@ export default function Graph() {
                 </svg>
 
                 {hovered ? (
+                    // Pointer-only affordance: a live region here would re-announce on every
+                    // mouse move, and the lens table already exposes these figures as text.
                     <div
-                        role="status"
-                        aria-live="polite"
+                        data-testid="chart-tooltip"
+                        aria-hidden="true"
                         className="pointer-events-none absolute z-10 max-w-60 rounded-control border bg-panel-raised px-3 py-2 text-xs text-ink shadow-xl"
                         style={{
                             borderColor: hovered.color,

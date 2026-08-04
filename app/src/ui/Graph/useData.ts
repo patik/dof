@@ -2,15 +2,19 @@ import { Lens } from 'dof'
 import { useMemo } from 'react'
 import useDoFStore from '../../store'
 import sensorList from '../../utilities/sensorList'
-import useIsMobile from '../../utilities/useIsMobile'
 import type { ChartSeries } from './chartTypes'
 import getDistanceSteps from './getDistanceSteps'
 import getUniqueLensNames from './getUniqueLensNames'
 
-export default function useData(): ChartSeries[] {
+export default function useData(
+    /**
+     * `compact` comes from the chart's own measured width so that sampling density and
+     * chart layout always switch at the same point.
+     */
+    compact: boolean,
+): ChartSeries[] {
     const { lenses, units } = useDoFStore()
-    const isMobile = useIsMobile()
-    const distances = useMemo(() => getDistanceSteps(units, isMobile), [units, isMobile])
+    const distances = useMemo(() => getDistanceSteps(units, compact), [units, compact])
     const uniqueNames = useMemo(() => getUniqueLensNames(lenses), [lenses])
     const data = useMemo(
         () =>
@@ -29,6 +33,8 @@ export default function useData(): ChartSeries[] {
                 const datum: ChartSeries = {
                     id: uniqueNames[lens.id] ?? lens.name,
                     lensId: lens.id,
+                    // The hyperfocal distance does not depend on subject distance, so any
+                    // distance may be passed here just to read `hf` back out.
                     hyperfocal: calculator.dof(1, units === 'imperial').hf,
                     points,
                 }

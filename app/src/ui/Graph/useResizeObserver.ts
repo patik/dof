@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 export default function useResizeObserver<T extends HTMLElement>(initialWidth = 960) {
     const ref = useRef<T>(null)
     const [width, setWidth] = useState(initialWidth)
 
-    useEffect(() => {
+    // Measuring before paint keeps a narrow viewport from briefly rendering the chart
+    // at the desktop fallback width.
+    useLayoutEffect(() => {
         const element = ref.current
         if (!element) {
             return
