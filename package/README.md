@@ -128,8 +128,25 @@ const focalLength = calculateFocalLength({
 `imperialUnits: true` to use feet. Aperture values are precise numeric f-numbers, and crop factor is relative to full
 frame.
 
-The inverse calculations derive their results from the supplied depth-of-field boundaries, so minor rounding is
-expected. `calculateAperture()` also supports an infinite `dof` when a finite `near` boundary is supplied.
+`calculateAperture()` and `calculateCropFactor()` accept an infinite `dof`, in which case they derive the result from
+`near` alone. `calculateFocalLength()` only reads `near`, so it is unaffected either way.
+
+### Accuracy
+
+The inverse calculators recover their answer from a depth-of-field range, which is a lossy starting point:
+
+- The circle of confusion is quantized to three decimal places, and a crop factor recovered through it can differ from
+  the original by a few percent. The error grows with the crop factor — round-tripping a full-frame sensor is exact,
+  while a phone sensor near 7.2× lands around 7.5×.
+- `calculateFocalLength()` rounds to a whole millimeter, so a 24.5mm lens comes back as `25`.
+- `calculateAperture()` returns an unrounded f-number that may carry floating-point dust, such as `2.000000000000001`.
+  Use the accompanying `fStop` when you want a value to display.
+
+### Errors
+
+The inverse calculators throw a `RangeError` when the input cannot describe a real depth of field — a non-positive or
+non-finite measurement, a `near` limit that is not closer than `distance`, or a far limit (`near + dof`) that is not
+beyond it. `calculateDepthOfField()` does not validate its input and is unchanged in this respect.
 
 ## Aperture helpers
 

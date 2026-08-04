@@ -96,4 +96,22 @@ describe('getApertureName', () => {
     test(`Undocumented value 4.99 results in the nearest aperture, f/5`, () => {
         expect(getApertureName(4.99)).toBe('f/5')
     })
+
+    describe('values that cannot describe an aperture', () => {
+        // Every comparison against these is false, so the nearest-match search would otherwise settle on the first
+        // entry in the map and confidently report `f/1`
+        test.each([Number.NaN, Infinity, -Infinity, 0, -5])('%p has no name', (value) => {
+            expect(getApertureName(value)).toBeUndefined()
+        })
+    })
+
+    describe('values beyond the documented range', () => {
+        test('below the smallest documented f-stop', () => {
+            expect(getApertureName(0.5)).toBe('f/1')
+        })
+
+        test('above the largest documented f-stop', () => {
+            expect(getApertureName(1000)).toBe('f/64')
+        })
+    })
 })

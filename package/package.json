@@ -1,6 +1,6 @@
 {
     "name": "dof",
-    "version": "4.1.0",
+    "version": "4.0.0",
     "type": "module",
     "sideEffects": false,
     "author": {
@@ -51,7 +51,7 @@
         "build": "tsdown",
         "clean": "git clean -fdx",
         "cover": "bun run build && cd .. && vitest run --coverage --project package",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
         "lint": "biome check . && bun run typecheck",
         "format": "biome format --write .",
         "test": "bun run build && cd .. && vitest run --project package",

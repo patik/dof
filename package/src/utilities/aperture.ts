@@ -22,21 +22,21 @@ function getApertureBounds(values: number[]): [number, number] {
 
 const [smallestDocumentedAperture, largestDocumentedAperture] = getApertureBounds(sortedValues)
 
+type DocumentedAperture = keyof typeof preciseApertureMap
+
+/**
+ * Narrows an arbitrary f-stop string to one the map actually documents
+ */
+function isDocumentedAperture(value: ApertureString): value is DocumentedAperture {
+    return Object.hasOwn(preciseApertureMap, value)
+}
+
 /**
  * Takes a human-friendly string and returns a precise numeric value that is equivalent
  * @example 'f/5' => 5.039684
  */
 function getPreciseAperture(humanValue: ApertureString): number | undefined {
-    if (
-        humanValue in preciseApertureMap &&
-        Object.hasOwn(preciseApertureMap, humanValue) &&
-        preciseApertureMap[humanValue]
-    ) {
-        return preciseApertureMap[humanValue]
-    }
-
-    // Jest needs an explicit return for each code path
-    return
+    return isDocumentedAperture(humanValue) ? preciseApertureMap[humanValue] : undefined
 }
 
 function getNearestApertureValue(targetAperture: number): number {
@@ -46,10 +46,19 @@ function getNearestApertureValue(targetAperture: number): number {
 }
 
 /**
- * Takes a numeric value and returns a human-friendly string that is equivalent
+ * Takes a numeric value and returns the human-friendly string for the closest documented f-stop
+ *
+ * Returns `undefined` for values that cannot describe an aperture, since every finite comparison against `NaN` or
+ * `Infinity` is false and the nearest-match search would otherwise report the smallest f-stop in the map.
+ *
  * @example 5.039684 => 'f/5'
+ * @example 5.01 => 'f/5'
  */
 export function getApertureName(value: number): keyof typeof preciseApertureMap | undefined {
+    if (!Number.isFinite(value) || value <= 0) {
+        return
+    }
+
     const nearestValue = getNearestApertureValue(value)
 
     return objectKeysArray(preciseApertureMap).find((key) => {

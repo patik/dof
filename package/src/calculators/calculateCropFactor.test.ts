@@ -1,6 +1,6 @@
 import { calculateCropFactor } from './calculateCropFactor'
 
-describe('Calculating the depth of field with calculateCropFactor()', () => {
+describe('Calculating the crop factor with calculateCropFactor()', () => {
     describe('metric units (meters)', () => {
         test('35mm, f/2, crop factor of 1, 5 meters', () => {
             const result = calculateCropFactor({
@@ -41,6 +41,19 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
 
             expect(result.cropFactor).toBe(3)
         })
+
+        test('such that the far end of the range is infinity', () => {
+            const result = calculateCropFactor({
+                focalLength: 24,
+                aperture: 16,
+                dof: Infinity,
+                near: 0.9715025906735751,
+                distance: 5,
+                imperialUnits: false,
+            })
+
+            expect(result.cropFactor).toBe(1)
+        })
     })
 
     describe('imperial units (feet)', () => {
@@ -68,6 +81,28 @@ describe('Calculating the depth of field with calculateCropFactor()', () => {
             })
 
             expect(result.cropFactor).toBe(2.727)
+        })
+    })
+
+    describe('invalid input', () => {
+        const valid = {
+            focalLength: 35,
+            aperture: 2,
+            dof: 2.584690961719362,
+            near: 4.021931840567339,
+            distance: 5,
+        }
+
+        test.each([
+            ['a zero focal length', { focalLength: 0 }],
+            ['a negative aperture', { aperture: -2 }],
+            ['an infinite distance', { distance: Infinity }],
+            ['a NaN near limit', { near: Number.NaN }],
+            ['a zero depth of field', { dof: 0 }],
+            ['a near limit beyond the subject', { near: 6 }],
+            ['a far limit in front of the subject', { near: 1, dof: 0.5 }],
+        ])('throws for %s', (_label, override) => {
+            expect(() => calculateCropFactor({ ...valid, ...override })).toThrow(RangeError)
         })
     })
 })

@@ -1,7 +1,7 @@
 import { Link, Typography } from '@mui/material'
 import { createFileRoute, Link as RouterLink } from '@tanstack/react-router'
 import Layout from '../layout/Layout'
-import styles from './software.module.css'
+import css from './software.module.css'
 
 export const Route = createFileRoute('/software')({ component: Software })
 
@@ -11,33 +11,27 @@ function Software() {
             title="Software: Node.js Package"
             description="Use the dof JavaScript package to calculate depth of field for camera lenses."
         >
-            <article className={styles.article}>
-                <Typography component="h2" variant="h2" gutterBottom>
+            <article className={css.article}>
+                <Typography component="h2" variant="h2">
                     Node module
                 </Typography>
-                <Typography gutterBottom>
-                    A JavaScript tool for calculating the depth of field of camera lenses.
-                </Typography>
-                <Typography gutterBottom>
+                <Typography>A JavaScript tool for calculating the depth of field of camera lenses.</Typography>
+                <Typography>
                     Create a lens with aperture, focal length, and crop factor values, then calculate its depth of field
                     for a given subject distance.
                 </Typography>
 
-                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                <Typography component="h3" variant="h3">
                     Install
                 </Typography>
-                <pre className={styles.code}>
-                    <code>{`bun add dof
-
-# or: yarn add dof
-# or: pnpm add dof
-# or: npm install dof`}</code>
+                <pre>
+                    <code>bun add dof</code>
                 </pre>
 
-                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                <Typography component="h3" variant="h3">
                     Create a lens
                 </Typography>
-                <pre className={styles.code}>
+                <pre>
                     <code>{`import { Lens } from 'dof'
 
 const lens = new Lens({
@@ -46,15 +40,15 @@ const lens = new Lens({
     cropFactor: 1.62,
 })`}</code>
                 </pre>
-                <Typography gutterBottom>
+                <Typography>
                     The defaults are a 35 mm focal length, f/2 aperture, and a crop factor of 1 for a full-frame sensor.
                     Lenses may also have arbitrary string IDs.
                 </Typography>
 
-                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                <Typography component="h3" variant="h3">
                     Reuse defaults
                 </Typography>
-                <pre className={styles.code}>
+                <pre>
                     <code>{`import { createLensMaker } from 'dof'
 
 const lensMaker = createLensMaker({ cropFactor: 1.62 })
@@ -62,14 +56,14 @@ const lens1 = lensMaker()
 const lens2 = lensMaker({ aperture: 'f/3.6' })`}</code>
                 </pre>
 
-                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                <Typography component="h3" variant="h3">
                     Calculate depth of field
                 </Typography>
                 <Typography>
                     Pass the distance between the camera and subject in meters, or pass <code>true</code> as the second
                     argument to use feet.
                 </Typography>
-                <pre className={`${styles.code} mb-2`}>
+                <pre>
                     <code>{`const metricResult = lens.dof(5)
 const imperialResult = lens.dof(15, true)
 
@@ -81,20 +75,20 @@ metricResult.far
 metricResult.coc
 metricResult.toString()`}</code>
                 </pre>
-                <Typography gutterBottom>
+                <Typography>
                     Results include the total depth of field, one-eighth depth of field, hyperfocal distance, near and
                     far limits, focal-length equivalency, and circle of confusion. Distance values may be{' '}
                     <code>Infinity</code>.
                 </Typography>
 
-                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                <Typography component="h3" variant="h3">
                     Use standalone calculators
                 </Typography>
-                <Typography gutterBottom>
+                <Typography>
                     For calculations that do not need a <code>Lens</code> instance, the package exports functions for
                     calculating depth of field, aperture, crop factor, and focal length directly.
                 </Typography>
-                <pre className={styles.code}>
+                <pre>
                     <code>{`import { calculateDepthOfField } from 'dof'
 
 const result = calculateDepthOfField({
@@ -113,14 +107,14 @@ const result = calculateDepthOfField({
                     <code>calculateFocalLength</code>.
                 </Typography>
 
-                <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
+                <Typography component="h3" variant="h3">
                     TypeScript
                 </Typography>
                 <Typography>
                     The package includes its own declarations and exports input and result types for its calculators.
                 </Typography>
 
-                <Typography component="h2" variant="h2" className={styles.webHeading} gutterBottom>
+                <Typography component="h2" variant="h2">
                     Web app
                 </Typography>
                 <Typography>

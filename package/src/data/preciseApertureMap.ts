@@ -2,8 +2,12 @@ import type { ApertureString } from '../types'
 
 /**
  * Map of human-friendly f-stop values to their precise numeric values
+ *
+ * `satisfies` rather than a type annotation, so the key type stays the exact union of documented f-stops. Annotating
+ * it as `Record<ApertureString, number>` would widen the keys to the open-ended `f/${string}`, which behaves as an
+ * index signature: every lookup would be `number | undefined` and `getApertureName()` would return the open type.
  */
-export const preciseApertureMap: Record<ApertureString, number> = {
+export const preciseApertureMap = {
     'f/1': 1,
     'f/1.2': 1.189207,
     'f/1.4': 1.414214,
@@ -45,4 +49,4 @@ export const preciseApertureMap: Record<ApertureString, number> = {
     'f/32': 32,
     'f/45': 45.254834,
     'f/64': 64,
-}
+} satisfies Record<ApertureString, number>

@@ -1,0 +1,7 @@
+// Typechecks the test files, which the main config excludes. Without this, the types asserted in `publicApi.test.ts`
+// are never verified and a broken export would still pass CI.
+{
+    "extends": "./tsconfig.json",
+    "include": ["**/*.ts", "../node_modules/vitest/globals.d.ts"],
+    "exclude": ["node_modules", "dist"]
+}

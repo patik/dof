@@ -1,6 +1,6 @@
 import { calculateFocalLength } from './calculateFocalLength'
 
-describe('Calculating the depth of field with calculateFocalLength()', () => {
+describe('Calculating the focal length with calculateFocalLength()', () => {
     describe('metric units (meters)', () => {
         test('35mm, f/2, crop factor of 1, 5 meters', () => {
             const result = calculateFocalLength({
@@ -75,6 +75,40 @@ describe('Calculating the depth of field with calculateFocalLength()', () => {
             })
 
             expect(result.focalLength).toBe(55)
+        })
+    })
+
+    describe('rounding', () => {
+        test('rounds to a whole millimeter', () => {
+            const result = calculateFocalLength({
+                near: 3.339248759429449,
+                aperture: 2,
+                cropFactor: 1,
+                distance: 5,
+            })
+
+            // The lens that produced this near limit was 24.5mm
+            expect(result.focalLength).toBe(25)
+        })
+    })
+
+    describe('invalid input', () => {
+        const valid = {
+            near: 4.021931840567339,
+            aperture: 2,
+            cropFactor: 1,
+            distance: 5,
+        }
+
+        test.each([
+            ['a zero aperture', { aperture: 0 }],
+            ['a negative crop factor', { cropFactor: -1 }],
+            ['an infinite distance', { distance: Infinity }],
+            ['a NaN near limit', { near: Number.NaN }],
+            ['a near limit beyond the subject', { near: 6 }],
+            ['a near limit equal to the subject distance', { near: 5 }],
+        ])('throws for %s', (_label, override) => {
+            expect(() => calculateFocalLength({ ...valid, ...override })).toThrow(RangeError)
         })
     })
 })
