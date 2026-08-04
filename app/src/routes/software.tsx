@@ -15,13 +15,13 @@ function Software() {
                 <Typography component="h2" variant="h2" gutterBottom>
                     Node module
                 </Typography>
-                <p className={styles.paragraph}>
+                <Typography gutterBottom>
                     A JavaScript tool for calculating the depth of field of camera lenses.
-                </p>
-                <p className={styles.paragraph}>
+                </Typography>
+                <Typography gutterBottom>
                     Create a lens with aperture, focal length, and crop factor values, then calculate its depth of field
                     for a given subject distance.
-                </p>
+                </Typography>
 
                 <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
                     Install
@@ -42,10 +42,10 @@ const lens = new Lens({
     cropFactor: 1.62,
 })`}</code>
                 </pre>
-                <p className={styles.paragraph}>
+                <Typography gutterBottom>
                     The defaults are a 35 mm focal length, f/2 aperture, and a crop factor of 1 for a full-frame sensor.
                     Lenses may also have arbitrary string IDs.
-                </p>
+                </Typography>
 
                 <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
                     Reuse defaults
@@ -61,10 +61,10 @@ const lens2 = lensMaker({ aperture: 'f/3.6' })`}</code>
                 <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
                     Calculate depth of field
                 </Typography>
-                <p className={styles.paragraph}>
+                <Typography>
                     Pass the distance between the camera and subject in meters, or pass <code>true</code> as the second
                     argument to use feet.
-                </p>
+                </Typography>
                 <pre className={styles.code}>
                     <code>{`const metricResult = lens.dof(5)
 const imperialResult = lens.dof(15, true)
@@ -77,24 +77,24 @@ metricResult.far
 metricResult.coc
 metricResult.toString()`}</code>
                 </pre>
-                <p className={styles.paragraph}>
+                <Typography>
                     Results include the total depth of field, one-eighth depth of field, hyperfocal distance, near and
                     far limits, focal-length equivalency, and circle of confusion. Distance values may be{' '}
                     <code>Infinity</code>.
-                </p>
+                </Typography>
 
                 <Typography component="h3" variant="h3" className={styles.subsectionHeading} gutterBottom>
                     TypeScript
                 </Typography>
-                <p className={styles.paragraph}>
+                <Typography>
                     The package includes its own declarations. The calculator also exports the{' '}
                     <code>DepthOfFieldDetails</code> result type.
-                </p>
+                </Typography>
 
                 <Typography component="h2" variant="h2" className={styles.webHeading} gutterBottom>
                     Web app
                 </Typography>
-                <p className={styles.paragraph}>
+                <Typography>
                     <Link href="https://patik.com/dof/">Compare multiple lenses side by side</Link>, or read the{' '}
                     <RouterLink
                         to="/about"
@@ -103,7 +103,7 @@ metricResult.toString()`}</code>
                         calculator documentation
                     </RouterLink>
                     .
-                </p>
+                </Typography>
             </article>
         </Layout>
     )
