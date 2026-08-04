@@ -20,13 +20,13 @@ export function useAddPlaceholderLenses(hasReadFromHash: boolean, hasReadFromSto
             return
         }
 
-        // Don't try to read more than once
-        setHasFinished(true)
-
-        // The call above may or may not have added anything to the state (based on duplicates, validation, etc) so check the count again
+        // The earlier initialization may or may not have added anything to the state (based on duplicates, validation, etc), so check the count again.
         if (useDoFStore.getState().lenses.length === 0) {
             addPlaceholderLenses(addLens)
         }
+
+        // Mark initialization complete only after the placeholder lenses are in the store.
+        setHasFinished(true)
     }, [addLens, hasFinished, hasReadFromHash, hasReadFromStorage])
 
     return hasFinished

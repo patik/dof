@@ -16,7 +16,11 @@ export default function Main() {
 
     useWriteToStorage(hasReadFromStorage)
     useWriteToHash(hasReadFromHash)
-    useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
+    const hasInitializedLenses = useAddPlaceholderLenses(hasReadFromHash, hasReadFromStorage)
+
+    if (!hasInitializedLenses) {
+        return <Box minHeight={{ xs: '42rem', sm: '36rem' }} aria-hidden="true" />
+    }
 
     return (
         <>

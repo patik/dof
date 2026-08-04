@@ -21,17 +21,18 @@ export function useReadFromStorage() {
         setHasStartedReading(true)
 
         async function fetchData() {
-            const stored = await storage.getItem()
-            const stateFromLocalStorage: LocalStorageData | null = stored ? JSON.parse(stored)?.state : null
+            try {
+                const stored = await storage.getItem()
+                const stateFromLocalStorage: LocalStorageData | null = stored ? JSON.parse(stored)?.state : null
 
-            if (!stateFromLocalStorage) {
+                if (stateFromLocalStorage) {
+                    applyFromLocalStorage(stateFromLocalStorage)
+                }
+            } catch {
+                // IndexedDB may be unavailable; continue with the placeholder lenses.
+            } finally {
                 setHasFinishedReading(true)
-
-                return
             }
-
-            applyFromLocalStorage(stateFromLocalStorage)
-            setHasFinishedReading(true)
         }
 
         fetchData()
