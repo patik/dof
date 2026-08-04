@@ -12,9 +12,9 @@ Release notes for v4 and later live in [GitHub Releases](https://github.com/pati
 
 ## 3.0.0
 
+- Final CommonJS release; v4 and later are ESM-only
 - Raised the repository development environment from Node.js 20 to Node.js 24 and standardized CI and publishing on Node.js 24
 - The published package did not declare an `engines` requirement, so Node.js 24 was a development, CI, and publishing requirement rather than an npm-enforced consumer runtime minimum
-- Final CommonJS release; v4 and later are ESM-only
 
 ## 2.1.0
 
