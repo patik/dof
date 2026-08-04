@@ -15,6 +15,13 @@ function lensAt(lenses: LensDefinition[], index: number): LensDefinition {
  */
 describe('parseHash', () => {
     describe.each(['metric', 'imperial'])('URLs with units', (units) => {
+        test('with a fractional distance', () => {
+            const result = parseHash(`0.5,${units.charAt(0)}`)
+
+            expect(result.distance).toBe(0.5)
+            expect(result.units).toBe(units)
+        })
+
         test('with ones lens', () => {
             // Note that `depthOfField` and `id` are not part of the hash -- they're calculated by the app at runtime -- so we extract those values from `parseHash()` and manually add them below for the sake of the test
             // The spirit of the test is to verify the parsing of the values in the string

@@ -9,6 +9,7 @@ test('adds the current comparison to a clean URL', async ({ page }) => {
 })
 
 for (const { name, hash, distance, units } of [
+    { name: 'fractional metric permalink', hash: '#0.5,m', distance: '0.5', units: 'metric' },
     { name: 'metric permalink', hash: '#23,m', distance: '23', units: 'metric' },
     { name: 'imperial permalink', hash: '#34,i', distance: '34', units: 'imperial' },
     { name: 'legacy permalink without units', hash: '#56', distance: '56', units: 'imperial' },

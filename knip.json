@@ -1,6 +1,6 @@
 {
     "$schema": "https://unpkg.com/knip@6/schema.json",
-    "ignoreDependencies": ["@types/react-dom"],
+    "ignoreDependencies": ["@types/react-dom", "tailwindcss"],
     "workspaces": {
         "app": {
             "entry": ["src/main.tsx", "vite.config.ts", "playwright.config.ts", "scripts/prerender.ts"],

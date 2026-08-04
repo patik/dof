@@ -16,15 +16,195 @@
         <link rel="canonical" href="https://patik.com/dof/" />
         <link rel="icon" href="/favicon.ico" />
         <title>Depth of Field Calculator &amp; Comparison Tool for Camera Lenses</title>
+        <style>
+            :root {
+                --initial-canvas: #f6f1e8;
+                --initial-panel: #fffaf2;
+                --initial-ink: #29241e;
+                --initial-muted: #6f665b;
+                --initial-line: #d9cec0;
+                --initial-accent: #a64917;
+            }
+
+            :root[data-theme="dark"] {
+                --initial-canvas: #171512;
+                --initial-panel: #211e1a;
+                --initial-ink: #f4ecdf;
+                --initial-muted: #b8ad9f;
+                --initial-line: #494139;
+                --initial-accent: #f6b85d;
+            }
+
+            html,
+            body {
+                min-height: 100%;
+                padding: 0;
+                margin: 0;
+                color: var(--initial-ink);
+                background-color: var(--initial-canvas);
+            }
+
+            body {
+                font-family: "Archivo Variable", "Helvetica Neue", sans-serif;
+                background-image:
+                    radial-gradient(
+                        circle at 12% 0%,
+                        color-mix(in srgb, var(--initial-accent) 9%, transparent) 0,
+                        transparent 34rem
+                    ),
+                    linear-gradient(90deg, color-mix(in srgb, var(--initial-ink) 2%, transparent) 1px, transparent 1px);
+                background-size:
+                    auto,
+                    4rem 100%;
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            .initial-shell {
+                width: 100%;
+                max-width: 1020px;
+                min-height: 100%;
+                padding: 0 16px;
+                margin: 24px auto;
+            }
+
+            .initial-header {
+                padding-bottom: 20px;
+                margin-bottom: 32px;
+                border-bottom: 1px solid var(--initial-line);
+            }
+
+            .initial-meta {
+                display: flex;
+                gap: 16px;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 16px;
+            }
+
+            .initial-brand {
+                display: inline-flex;
+                align-items: center;
+                color: var(--initial-muted);
+            }
+
+            .initial-iris {
+                width: 36px;
+                height: 36px;
+                color: var(--initial-accent);
+            }
+
+            .initial-theme {
+                display: inline-flex;
+                height: 40px;
+                gap: 8px;
+                align-items: center;
+                padding: 0 12px;
+                color: var(--initial-ink);
+                font-size: 0.875rem;
+                font-weight: 500;
+                background: var(--initial-panel);
+                border: 1px solid var(--initial-line);
+                border-radius: 999px;
+            }
+
+            .initial-theme-mark {
+                width: 12px;
+                height: 12px;
+                border: 2px solid currentColor;
+                border-radius: 50%;
+            }
+
+            .initial-theme-label::before {
+                content: "Light";
+            }
+
+            :root[data-theme="dark"] .initial-theme-label::before {
+                content: "Dark";
+            }
+
+            .initial-title {
+                margin: 0 0 0.35em;
+                font-size: clamp(1.5rem, 2.5vw, 2.125rem);
+                font-weight: 400;
+                line-height: 1.235;
+            }
+
+            .initial-subtitle {
+                margin: 0;
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .initial-content-space {
+                min-height: 36rem;
+            }
+
+            @media (max-width: 599px) {
+                .initial-theme-label {
+                    display: none;
+                }
+
+                .initial-content-space {
+                    min-height: 42rem;
+                }
+            }
+        </style>
+        <script>
+            ;(() => {
+                const systemTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+                let theme = systemTheme
+
+                try {
+                    const storedTheme = localStorage.getItem('dof-theme')
+                    if (storedTheme === 'light' || storedTheme === 'dark') {
+                        theme = storedTheme
+                    }
+                } catch {
+                    // Storage may be unavailable, so retain the system theme.
+                }
+
+                document.documentElement.dataset.theme = theme
+                document.documentElement.style.colorScheme = theme
+            })()
+        </script>
     </head>
     <body>
         <noscript>
             <p>This tool requires <a href="https://enable-javascript.com/">JavaScript</a>.</p>
         </noscript>
         <div id="root">
-            <main>
-                <h1>Depth of Field Calculator &amp; Lens Comparison Tool</h1>
-                <p>Compare multiple camera lenses side by side.</p>
+            <main class="initial-shell">
+                <header class="initial-header">
+                    <div class="initial-meta">
+                        <span class="initial-brand">
+                            <svg viewBox="0 0 48 48" aria-hidden="true" class="initial-iris">
+                                <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2" />
+                                <path
+                                    d="M24 3 34.5 21 24 24 13.5 6.2M45 24 27 34.5 24 24l17.8-10.5M24 45 13.5 27 24 24l10.5 17.8M3 24l18-10.5L24 24 6.2 34.5"
+                                    fill="currentColor"
+                                    fill-opacity=".16"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.5"
+                                />
+                                <circle cx="24" cy="24" r="4.25" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <span class="initial-theme" aria-hidden="true">
+                            <span class="initial-theme-mark"></span>
+                            <span class="initial-theme-label"></span>
+                        </span>
+                    </div>
+                    <h1 class="initial-title">Depth of Field Calculator &amp; Lens Comparison Tool</h1>
+                    <p class="initial-subtitle">Compare multiple camera lenses side-by-side</p>
+                </header>
+                <div class="initial-content-space" aria-hidden="true"></div>
             </main>
         </div>
         <script type="module" src="/src/main.tsx"></script>

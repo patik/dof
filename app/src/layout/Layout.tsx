@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import { Link } from '@tanstack/react-router'
 import type { PropsWithChildren, ReactElement } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import IrisMark from '../components/ui/IrisMark'
+import ThemeToggle from '../components/ui/ThemeToggle'
 import Footer from './Footer'
 
 function FallbackComponent() {
@@ -30,12 +32,22 @@ export default function Layout({
 
             <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
                 {noMainHeading ? null : (
-                    <Box mb={3}>
+                    <header className="mb-8 border-b border-line pb-5">
+                        <div className="mb-4 flex items-center justify-between gap-4">
+                            <Link
+                                to="/"
+                                aria-label="Depth of Field Calculator home"
+                                className="inline-flex items-center"
+                            >
+                                <IrisMark />
+                            </Link>
+                            <ThemeToggle />
+                        </div>
                         <Typography variant="h4" component="h1" gutterBottom>
                             <Link to="/">Depth of Field Calculator &amp; Lens Comparison Tool</Link>
                         </Typography>
                         <Typography>Compare multiple camera lenses side-by-side</Typography>
-                    </Box>
+                    </header>
                 )}
 
                 <ErrorBoundary FallbackComponent={FallbackComponent}>{children}</ErrorBoundary>
