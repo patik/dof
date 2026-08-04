@@ -16,7 +16,7 @@ interface LensInputs {
 }
 
 interface LensDefinition extends LensInputs {
-    depthOfField: import('../module/dist').DepthOfFieldDetails
+    depthOfField: import('../package/dist').DepthOfFieldDetails
 }
 
 type DefaultLensData = Pick<LensDefinition, 'name' | 'focalLength' | 'aperture' | 'sensorKey'>
