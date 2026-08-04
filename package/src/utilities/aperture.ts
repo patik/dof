@@ -4,7 +4,7 @@ import { objectKeysArray } from './objectKeysArray'
 
 const apertureRegex = /^f\/(\d+(?:\.\d+)?)$/
 
-// It's possible that lenses might excede what we have listed in this map, so let's give the benefit of the doubt and accept those numbers as-is. To do this, we need to know the smallest and largest values in our map.
+// It's possible that lenses might exceed what we have listed in this map, so let's give the benefit of the doubt and accept those numbers as-is. To do this, we need to know the smallest and largest values in our map.
 // We need to ignore test coverage for this line, otherwise it is marked as uncovered; this happens because we're ignoring the thrown exception near the end
 /* istanbul ignore next line */
 const sortedValues = Object.values(preciseApertureMap).sort((a, b) => (a > b ? 1 : -1))

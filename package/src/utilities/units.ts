@@ -1,5 +1,5 @@
 /**
- * Returns a number that a value can be multiplied by to assure the value is metric
+ * Returns a number that a value can be multiplied by to ensure the value is metric
  *
  * @param imperialUnits true if value is in feet instead of meters
  */

@@ -1,5 +1,9 @@
 // Typechecks the test files, which the main config excludes. Without this, the types asserted in `publicApi.test.ts`
 // are never verified and a broken export would still pass CI.
+//
+// `Lens.test.ts` and `publicApi.test.ts` import from 'dof' rather than a relative path, deliberately: they check the
+// package's real entry point as a consumer sees it. That resolves through the workspace link to `dist`, so the
+// `typecheck` script builds first — running tsc against a clean checkout would otherwise fail on the missing module.
 {
     "extends": "./tsconfig.json",
     "include": ["**/*.ts", "../node_modules/vitest/globals.d.ts"],
