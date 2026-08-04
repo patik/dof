@@ -21,6 +21,6 @@ export function combineSettings(options: Options, customDefaults: Options = buil
             options.cropFactor !== undefined
                 ? options.cropFactor
                 : (customDefaults.cropFactor ?? builtInDefaults.cropFactor),
-        id: options.id !== undefined ? options.id : customDefaults.id,
+        id: options.id !== undefined ? options.id : (customDefaults.id ?? builtInDefaults.id),
     }
 }

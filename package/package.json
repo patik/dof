@@ -23,9 +23,6 @@
         "url": "https://github.com/patik/dof/issues"
     },
     "description": "Depth-of-field calculator for comparing camera lenses",
-    "directories": {
-        "doc": "./docs"
-    },
     "files": [
         "dist"
     ],
