@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Depth of Field aperture mark</title>
+  <rect width="512" height="512" rx="112" fill="#171512"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#f6b85d" stroke-width="18"/>
+  <g fill="#f6b85d" fill-opacity=".18" stroke="#f6b85d" stroke-linecap="round" stroke-linejoin="round" stroke-width="14">
+    <path d="M256 68 350 229 256 256 162 97"/>
+    <path d="m444 256-161 94-27-94 159-94"/>
+    <path d="m256 444-94-161 94-27 94 159"/>
+    <path d="m68 256 161-94 27 94-159 94"/>
+  </g>
+  <circle cx="256" cy="256" r="38" fill="#f6b85d"/>
+</svg>

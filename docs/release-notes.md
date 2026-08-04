@@ -2,7 +2,11 @@
 
 ## 4.0.0
 
-- Now requires Node v24
+- ESM-only package with zero runtime dependencies
+- Requires Node.js 20.19 or newer
+- Automated releases with npm provenance
+
+Release notes for v4 and later live in [GitHub Releases](https://github.com/patik/dof/releases).
 
 ## 2.1.0
 
