@@ -1,4 +1,4 @@
-import { Box, type BoxProps, Divider, Grid, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { createFileRoute } from '@tanstack/react-router'
 import type { PropsWithChildren } from 'react'
 import addOrDuplicate from '../assets/images/add-duplicate.png'
@@ -10,16 +10,11 @@ import Tree_bud_at_f22 from '../assets/images/Tree_bud_at_f22.jpg'
 import Tree_bud_in_spring_f18 from '../assets/images/Tree_bud_in_spring_f1.8.jpg'
 import withGraphImg from '../assets/images/with-graph.png'
 import Layout from '../layout/Layout'
-import useIsMobile from '../utilities/useIsMobile'
 
 export const Route = createFileRoute('/about')({ component: About })
 
-function Figure({ narrow, children, ...props }: PropsWithChildren & BoxProps & { narrow?: boolean }) {
-    return (
-        <Box component="figure" maxWidth={narrow ? '300px' : undefined} {...props}>
-            {children}
-        </Box>
-    )
+function Figure({ centered, children }: PropsWithChildren<{ centered?: boolean }>) {
+    return <figure className={centered ? 'text-center' : undefined}>{children}</figure>
 }
 
 function Space() {
@@ -27,14 +22,12 @@ function Space() {
 }
 
 function About() {
-    const isMobile = useIsMobile()
-
     return (
         <Layout
             title="About"
             description="Learn how depth of field works and how to compare camera lenses with the calculator."
         >
-            <Box mb={3}>
+            <div className="mb-6">
                 <Typography variant="h2" gutterBottom>
                     What is depth of field?
                 </Typography>
@@ -45,16 +38,13 @@ function About() {
                     <Space />
                     <a href="https://en.wikipedia.org/wiki/Bokeh">bokeh</a>.
                 </Typography>
-                <Figure textAlign="center">
+                <Figure centered>
                     <img
                         src={PrintedTextShallowDoF}
                         width={997}
                         height={717}
                         sizes="100vw"
-                        style={{
-                            width: isMobile ? '100%' : '60%',
-                            height: 'auto',
-                        }}
+                        className="h-auto w-full min-[600px]:w-3/5"
                         alt="A page of text with the middle section in focus, and the foreground and background out of focus"
                     />
                     <figcaption>
@@ -73,18 +63,15 @@ function About() {
                     length (or zoom). Larger sensors, longer focal lengths (being more zoomed in), and larger apertures
                     yield a shallower (smaller, tighter) depth of field.
                 </Typography>
-                <Grid container>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                <div className="grid min-[600px]:grid-cols-2">
+                    <div>
                         <Figure>
                             <img
                                 src={Tree_bud_in_spring_f18}
                                 height={427}
                                 width={640}
                                 sizes="100vw"
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                }}
+                                className="h-auto w-full"
                                 alt="A bud on a tree branch, which is the only part that's in focus, taken at f/1.8"
                             />
                             <figcaption>
@@ -98,18 +85,15 @@ function About() {
                                 </Typography>
                             </figcaption>
                         </Figure>
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
+                    </div>
+                    <div>
                         <Figure>
                             <img
                                 src={Tree_bud_at_f22}
                                 height={427}
                                 width={640}
                                 sizes="100vw"
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                }}
+                                className="h-auto w-full"
                                 alt="A bud on a tree branch, taken at f/22; nearly everything is in focus here, so the bud doesn't stand out very much"
                             />
                             <figcaption>
@@ -123,10 +107,10 @@ function About() {
                                 </Typography>
                             </figcaption>
                         </Figure>
-                    </Grid>
-                </Grid>
-            </Box>
-            <Box mb={3}>
+                    </div>
+                </div>
+            </div>
+            <div className="mb-6">
                 <Typography variant="h2" id="calculate" gutterBottom>
                     Using the calculator
                 </Typography>
@@ -142,15 +126,12 @@ function About() {
                 <Typography gutterBottom>
                     Focal length values should be in absolute size (millimeters), not the 35mm equivalent.
                 </Typography>
-                <Figure textAlign="center">
+                <Figure centered>
                     <a href={singleLensImg} target="_blank" rel="noreferrer">
                         <img
                             src={singleLensImg}
                             sizes="100vw"
-                            style={{
-                                width: isMobile ? '100%' : '50%',
-                                height: 'auto',
-                            }}
+                            className="h-auto w-full min-[600px]:w-1/2"
                             alt="Screenshot of lens input"
                         />
                     </a>
@@ -165,21 +146,18 @@ function About() {
                 <Typography gutterBottom>
                     The depth of field calculation can be expanded to view more related statistics:
                 </Typography>
-                <Figure textAlign="center">
+                <Figure centered>
                     <a href={detailsImg} target="_blank" rel="noreferrer">
                         <img
                             src={detailsImg}
                             sizes="100vw"
-                            style={{
-                                width: isMobile ? '100%' : '75%',
-                                height: 'auto',
-                            }}
+                            className="h-auto w-full min-[600px]:w-3/4"
                             alt="Further details about a lens’ depth of field"
                         />
                     </a>
                 </Figure>
-            </Box>
-            <Box mb={3}>
+            </div>
+            <div className="mb-6">
                 <Typography variant="h2" id="compare" gutterBottom>
                     Comparing lenses
                 </Typography>
@@ -191,10 +169,7 @@ function About() {
                         <img
                             src={addOrDuplicate}
                             sizes="100vw"
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                            }}
+                            className="h-auto w-full"
                             alt="Comparison of two lenses, with the Add Lens button and Duplicate icon button highlighted"
                         />
                     </a>
@@ -204,7 +179,7 @@ function About() {
                     Duplicate button to carry over the same values to a new lens.
                 </Typography>
                 <Typography gutterBottom>You can add an unlimited number of lenses.</Typography>
-                <Divider sx={{ my: 2 }} />
+                <hr className="my-4 border-0 border-t border-line" />
                 <Typography gutterBottom>
                     You can also see how lenses compare at various distances from the subject. The graph will display
                     the length of the depth of field at 1-meter (or 5-foot) intervals.
@@ -214,16 +189,13 @@ function About() {
                         <img
                             src={withGraphImg}
                             sizes="100vw"
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                            }}
+                            className="h-auto w-full"
                             alt="Chart comparing two lenses at various distances"
                         />
                     </a>
                 </Figure>
-            </Box>
-            <Box mb={3}>
+            </div>
+            <div className="mb-6">
                 <Typography variant="h2" id="sharing" gutterBottom>
                     Sharing and saving
                 </Typography>
@@ -239,15 +211,12 @@ function About() {
                         <img
                             src={sharingImg}
                             sizes="100vw"
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                            }}
+                            className="h-auto w-full"
                             alt="screenshot with the browser address bar highlighted"
                         />
                     </a>
                 </Figure>
-            </Box>
+            </div>
         </Layout>
     )
 }

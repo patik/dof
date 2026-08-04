@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
@@ -7,6 +6,7 @@ import TableSortLabel from '@mui/material/TableSortLabel'
 import { type ChangeEvent, useMemo } from 'react'
 import useDoFStore from '../../../store'
 import useIsMobile from '../../../utilities/useIsMobile'
+import styles from './Table.module.css'
 
 const headCells: readonly HeadCell[] = [
     {
@@ -41,18 +41,6 @@ const headCells: readonly HeadCell[] = [
     },
 ]
 
-const visuallyHidden = {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    whiteSpace: 'nowrap',
-    width: 1,
-} as const
-
 export default function Header() {
     const isMobile = useIsMobile()
     const { units, lenses, order, orderBy, selected, setSelected, setSorting } = useDoFStore()
@@ -79,9 +67,9 @@ export default function Header() {
 
     return (
         <TableHead>
-            <TableRow sx={isMobile ? { borderBottom: 'none' } : undefined}>
+            <TableRow className={isMobile ? styles.mobileHeaderRow : undefined}>
                 {isMobile ? (
-                    <TableCell colSpan={5} sx={{ borderBottom: 'none' }} />
+                    <TableCell colSpan={5} className={styles.mobileHeaderCell} />
                 ) : (
                     <>
                         <TableCell padding="checkbox">
@@ -90,9 +78,7 @@ export default function Header() {
                                 indeterminate={numSelected > 0 && numSelected < rowCount}
                                 checked={rowCount > 0 && numSelected === rowCount}
                                 onChange={handleSelectAllClick}
-                                inputProps={{
-                                    'aria-label': 'Select all lenses',
-                                }}
+                                slotProps={{ input: { 'aria-label': 'Select all lenses' } }}
                                 data-testid="select-all"
                             />
                         </TableCell>
@@ -115,9 +101,9 @@ export default function Header() {
                                             : ''
                                     }`}
                                     {orderBy === headCell.id ? (
-                                        <Box component="span" sx={visuallyHidden}>
+                                        <span className={styles.visuallyHidden}>
                                             {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                        </Box>
+                                        </span>
                                     ) : null}
                                 </TableSortLabel>
                             </TableCell>

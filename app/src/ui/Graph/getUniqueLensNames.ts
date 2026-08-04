@@ -1,6 +1,6 @@
 type LensName = LensDefinition['name']
 
-// The Nivo chart needs a unique name for each lens because it uses that name as a React `key`. Also, it could be confusing for the user until they change one of the names.
+// Unique labels keep repeated placeholder names distinguishable in the chart and tooltip.
 export default function getUniqueLensNames(lenses: LensDefinition[]): Record<LensDefinition['id'], LensName> {
     const uniqueNameMap: Record<LensDefinition['id'], LensDefinition['name']> = {}
 

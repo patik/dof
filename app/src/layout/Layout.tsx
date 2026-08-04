@@ -1,5 +1,4 @@
-import { Divider, Typography } from '@mui/material'
-import Box from '@mui/material/Box'
+import { Typography } from '@mui/material'
 import { Link } from '@tanstack/react-router'
 import type { PropsWithChildren, ReactElement } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -26,11 +25,11 @@ export default function Layout({
     children,
 }: Props): ReactElement {
     return (
-        <Box display="flex" flexDirection="column" minHeight="100%">
+        <div className="flex min-h-full flex-col">
             <title>{`${title ? `${title} | ` : ''} Depth of Field Calculator & Comparison Tool for Camera Lenses`}</title>
             <meta name="description" content={description} />
 
-            <Box width="100%" maxWidth="1020px" alignSelf="center" component="main" px={2} my={3} flexGrow={1}>
+            <main className="my-6 w-full max-w-[1020px] grow self-center px-4">
                 {noMainHeading ? null : (
                     <header className="mb-8 border-b border-line pb-5">
                         <div className="mb-4 flex items-center justify-between gap-4">
@@ -52,12 +51,12 @@ export default function Layout({
 
                 <ErrorBoundary FallbackComponent={FallbackComponent}>{children}</ErrorBoundary>
 
-                <Divider sx={{ my: 2 }} />
+                <hr className="my-4 border-0 border-t border-line" />
 
                 <ErrorBoundary FallbackComponent={FallbackComponent}>
                     <Footer hasPermalink={hasPermalink} />
                 </ErrorBoundary>
-            </Box>
-        </Box>
+            </main>
+        </div>
     )
 }

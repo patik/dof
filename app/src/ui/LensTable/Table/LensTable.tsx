@@ -6,6 +6,7 @@ import useDoFStore from '../../../store'
 import BottomToolbar from './BottomToolbar'
 import Header from './Header'
 import Row from './Row/Row'
+import styles from './Table.module.css'
 
 function removeAperturePrefix(value: LensDefinition['aperture']) {
     return value.replace(/^f\//, '')
@@ -47,7 +48,7 @@ export default function LensTable() {
     const { lenses, order, orderBy } = useDoFStore()
 
     return (
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <Paper className={styles.paper}>
             <TableContainer>
                 <Table aria-labelledby="tableTitle" size="small">
                     <Header />
