@@ -62,7 +62,7 @@
     "types": "./dist/index.d.ts",
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.5",
-        "publint": "^0.3.23",
+        "publint": "^0.3.24",
         "tsdown": "^0.22.14"
     }
 }
